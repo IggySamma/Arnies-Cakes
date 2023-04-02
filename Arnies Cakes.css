@@ -1,5 +1,6 @@
 body {
     background: #aaa;
+    padding-top: 70px;
   }
   .parentBox {
     width: 99vw;
@@ -16,8 +17,17 @@ body {
     top: -50%;
     height: 200%;
     background: rgba(255,0,0,0.3);
+    animation-name: flo;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
   }
 
 ::-webkit-scrollbar {
     width:0em;
 }
+
+@keyframes flo{
+    50%{
+      transform: translateY(5px);
+    }
+  }
