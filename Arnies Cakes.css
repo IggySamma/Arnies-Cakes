@@ -9,6 +9,9 @@ body {
     margin: 15vw auto;
     box-shadow: 0 0 2em 0 rgba(0,0,0,0.2);
     position: relative;
+    animation-name: fill;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
   }
   .childBox {
     position: absolute;
@@ -17,7 +20,7 @@ body {
     top: -50%;
     height: 200%;
     background: rgba(255,0,0,0.3);
-    animation-name: flo;
+    animation-name: flow;
     animation-duration: 5s;
     animation-iteration-count: infinite;
   }
@@ -26,8 +29,13 @@ body {
     width:0em;
 }
 
-@keyframes flo{
+@keyframes flow{
     50%{
-      transform: translateY(5px);
+      transform: translateY(10px);
     }
+  }
+
+ @keyframes fill {
+    0%   { width: 0; }
+    100% { width: 99vw; }
   }
