@@ -1,8 +1,12 @@
-
-
+body {
+  background-image: url("./Background.jpg");
+  background-attachment: fixed;
+  padding-top: 70px;
+}
 
 .bg {
   background-image: url("./Background.jpg");
+
 }
 
 .logo {
@@ -15,12 +19,6 @@
   border: 3px solid 	rgb(255,204,0);
 }
 
-body {
-  background: #aaa;
-  background-image: url("./Background.jpg");
-  background-attachment: fixed;
-  padding-top: 70px;
-}
 
 /* ============================================== Opening
 */
@@ -28,7 +26,8 @@ body {
 .parentBox {
   width: 99vw;
   height: 20%;
-  background: #fff;
+  /*background: #fff;*/
+  background-color: #dcdde3;
   margin: 15vw auto;
   box-shadow: 0 0 2em 0 rgba(0,0,0,0.2);
   position: relative;
@@ -44,14 +43,14 @@ body {
   left: 10%;
   top: -50%;
   height: 200%;
-  background: blue;
+  background: linear-gradient(45deg, #C8A2C8, #E3D0E3);
+
   /*background: rgb(248,248,255);*/
   animation-delay: 1s, 6.5s;
   animation-name: drop, bounce;
   animation-duration: 1s, 2s;
   align-self: flex-end;
   animation-duration: 2s;
-  background-color:blue;
     /*background-color: rgb(248,248,255);*/
   transform-origin: bottom;
   animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
