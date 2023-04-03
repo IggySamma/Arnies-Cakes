@@ -1,3 +1,138 @@
+
+
+
+.bg {
+  background-image: url("./Background.jpg");
+}
+
+.logo {
+  width: 25%;
+  height: 100%;
+}
+
+.hr-line {
+  width: 100%;
+  border: 3px solid 	rgb(255,204,0);
+}
+
+body {
+  background: #aaa;
+  background-image: url("./Background.jpg");
+  background-attachment: fixed;
+  padding-top: 70px;
+}
+
+/* ============================================== Opening
+*/
+
+.parentBox {
+  width: 99vw;
+  height: 20%;
+  background: #fff;
+  margin: 15vw auto;
+  box-shadow: 0 0 2em 0 rgba(0,0,0,0.2);
+  position: relative;
+  animation-name: fill, text;
+  animation-duration: 1s, 1s;
+  animation-iteration-count: 1, 1;
+  animation-delay: 1s, 1s;
+}
+
+.childBox {
+  position: absolute;
+  width: 25%;
+  left: 10%;
+  top: -50%;
+  height: 200%;
+  background: blue;
+  /*background: rgb(248,248,255);*/
+  animation-delay: 1s, 6.5s;
+  animation-name: drop, bounce;
+  animation-duration: 1s, 2s;
+  align-self: flex-end;
+  animation-duration: 2s;
+  background-color:blue;
+    /*background-color: rgb(248,248,255);*/
+  transform-origin: bottom;
+  animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
+  animation-iteration-count: 1, infinite;
+}
+
+::-webkit-scrollbar {
+  width:0em;
+}
+
+.drop {
+  animation: drop 1.1s both;
+}
+
+@keyframes drop {
+0% {
+  transform: translateY(-500px);
+  animation-timing-function: ease-in;
+  opacity: 0;
+}
+20% {
+  transform: translateY(-500px);
+  animation-timing-function: ease-in;
+  opacity: 0;
+}
+38% {
+  transform: translateY(0);
+  animation-timing-function: ease-out;
+  opacity: 1;
+}
+55% {
+  transform: translateY(-65px);
+  animation-timing-function: ease-in;
+}
+72% {
+  transform: translateY(0);
+  animation-timing-function: ease-out;
+}
+81% {
+  transform: translateY(-28px);
+  animation-timing-function: ease-in;
+}
+90% {
+  transform: translateY(0);
+  animation-timing-function: ease-out;
+}
+95% {
+  transform: translateY(-8px);
+  animation-timing-function: ease-in;
+}
+100% {
+  transform: translateY(0);
+  animation-timing-function: ease-out;
+}
+}
+
+
+@keyframes bounce{
+  0%   { transform: scale(1,1)      translateY(0); }
+  10%  { transform: scale(1.1,.9)   translateY(0); }
+  30%  { transform: scale(.9,1.1)   translateY(-20px); }
+  50%  { transform: scale(1.05,.95) translateY(0); }
+  57%  { transform: scale(1,1)      translateY(-7px); }
+  64%  { transform: scale(1,1)      translateY(0); }
+  100% { transform: scale(1,1)      translateY(0); }
+}
+
+
+@keyframes fill {
+    0%   { width: 0; }
+    100% { width: 99vw; }
+}
+
+@keyframes text {
+  0% {opacity: 0;}
+  100% {opacity: 100%;}
+}
+
+/* ============================================== Cake
+*/
+
 #cake {
   display: block;
   position: relative;
@@ -21,7 +156,7 @@
   height: 7%;
   transform: translateY(-10000px);
   backface-visibility: hidden;
-  animation: in 500ms 6s ease-out forwards;
+  animation: in 500ms 5s ease-out forwards;
 }
 .candles:after,
 .candles:before {
@@ -88,135 +223,4 @@
   to {
     transform: translateY(0);
   }
-}
-
-
-.bg {
-  background-image: url("./Background.jpg");
-}
-
-.logo {
-  width: 25%;
-  height: 100%;
-}
-
-.hr-line {
-  width: 100%;
-  border: 3px solid 	rgb(255,204,0);
-}
-
-body {
-  background: #aaa;
-  background-image: url("./Background.jpg");
-  background-attachment: fixed;
-  padding-top: 70px;
-}
-
-.parentBox {
-  width: 99vw;
-  height: 20%;
-  background: #fff;
-  margin: 15vw auto;
-  box-shadow: 0 0 2em 0 rgba(0,0,0,0.2);
-  position: relative;
-  animation-name: fill, text;
-  animation-duration: 1s, 1s;
-  animation-iteration-count: 1, 1;
-  animation-delay: 1s, 1s;
-}
-
-.childBox {
-  position: absolute;
-  width: 25%;
-  left: 10%;
-  top: -50%;
-  height: 200%;
-  background: blue;
-  /*background: rgb(248,248,255);*/
-  animation-delay: 1s, 3s;
-  animation-name: drop, bounce;
-  animation-duration: 1s, 2s;
-  align-self: flex-end;
-  animation-duration: 2s;
-  background-color:blue;
-    /*background-color: rgb(248,248,255);*/
-  transform-origin: bottom;
-  animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
-  animation-iteration-count: 1, infinite;
-}
-
-
-
-
-
-::-webkit-scrollbar {
-  width:0em;
-}
-
-.drop {
-  animation: drop 1.1s both;
-}
-
-@keyframes drop {
-0% {
-  transform: translateY(-500px);
-  animation-timing-function: ease-in;
-  opacity: 0;
-}
-20% {
-  transform: translateY(-500px);
-  animation-timing-function: ease-in;
-  opacity: 0;
-}
-38% {
-  transform: translateY(0);
-  animation-timing-function: ease-out;
-  opacity: 1;
-}
-55% {
-  transform: translateY(-65px);
-  animation-timing-function: ease-in;
-}
-72% {
-  transform: translateY(0);
-  animation-timing-function: ease-out;
-}
-81% {
-  transform: translateY(-28px);
-  animation-timing-function: ease-in;
-}
-90% {
-  transform: translateY(0);
-  animation-timing-function: ease-out;
-}
-95% {
-  transform: translateY(-8px);
-  animation-timing-function: ease-in;
-}
-100% {
-  transform: translateY(0);
-  animation-timing-function: ease-out;
-}
-}
-
-/*
-@keyframes bounce{
-  0%   { transform: scale(1,1)      translateY(0); }
-  10%  { transform: scale(1.1,.9)   translateY(0); }
-  30%  { transform: scale(.9,1.1)   translateY(-20px); }
-  50%  { transform: scale(1.05,.95) translateY(0); }
-  57%  { transform: scale(1,1)      translateY(-7px); }
-  64%  { transform: scale(1,1)      translateY(0); }
-  100% { transform: scale(1,1)      translateY(0); }
-}
-*/
-
-@keyframes fill {
-    0%   { width: 0; }
-    100% { width: 99vw; }
-}
-
-@keyframes text {
-  0% {opacity: 0;}
-  100% {opacity: 100%;}
 }
