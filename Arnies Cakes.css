@@ -1,10 +1,20 @@
+.bg {
+  background-image: url("./Background.jpg");
+}
+
+.logo {
+  width: 25%;
+  height: 100%;
+}
 body {
     background: #aaa;
+    background-image: url("./Background.jpg");
+    background-attachment: fixed;
     padding-top: 70px;
   }
   .parentBox {
     width: 99vw;
-    height: 20vw;
+    height: 20%;
     background: #fff;
     margin: 15vw auto;
     box-shadow: 0 0 2em 0 rgba(0,0,0,0.2);
