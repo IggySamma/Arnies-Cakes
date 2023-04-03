@@ -1,7 +1,9 @@
 #cake {
   display: block;
   position: relative;
-  margin: -60% auto 0 auto;
+  padding: auto;
+  margin: auto;
+  margin-top: -105%;
 }
 
 /* ============================================== Candle
@@ -11,9 +13,10 @@
   background: #ffffff;
   border-radius: 10px;
   position: absolute;
-  top: 54%;
+  top: 18vw;
   left: 50%;
-  margin: 0 auto;
+  margin: 15% 0;
+  /*margin: 0 auto;*/
   width: 1.75%;
   height: 7%;
   transform: translateY(-10000px);
