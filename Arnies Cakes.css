@@ -20,9 +20,9 @@ body {
 }
 
 .navbar-brand {
-  flex: 0 1 auto;
+  flex: 1 5 0 5;
   display: block;
-  width: 15vw;
+
   height: 15vh; 
   position: absolute;
   left: 50%;
