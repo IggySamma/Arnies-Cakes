@@ -16,14 +16,19 @@ body {
 
 .hr-line {
   width: 100%;
-  border: 3px solid rgb(255, 217, 0);
+  border: 6px solid rgb(255, 217, 0);
+  position: absolute;
+  z-index: -1;
+  animation-name: fill;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-delay: 1s;
 }
-
+  
 .navbar-brand {
   flex: 1 5 0 5;
   display: block;
-
-  height: 15vh; 
+  height: 10vw; 
   position: absolute;
   left: 50%;
   top: 0;
@@ -32,6 +37,7 @@ body {
   transform: translateX(-50%);
   text-align: center;
 }
+
 
 .navbar-brand img {
   max-height: 100%;
@@ -46,9 +52,8 @@ body {
   width: 99vw;
   height: 20%;
   /*background: #fff;*/
-  background-color: #F8C0C8;
+  background-color: #FFD4DB;
   margin: 15vw auto;
-  box-shadow: 0 0 1em 0 rgba(0,0,0,0.2);
   position: relative;
   animation-name: fill, text;
   animation-duration: 1s, 1s;
