@@ -19,6 +19,25 @@ body {
   border: 3px solid 	rgb(255,204,0);
 }
 
+.navbar-brand {
+  flex: 0 1 auto;
+  display: block;
+  width: 250%;
+  height: 250%; 
+  position: absolute;
+  left: 50%;
+  top: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.navbar-brand img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
 
 /* ============================================== Opening
 */
