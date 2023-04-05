@@ -24,11 +24,20 @@ body {
   animation-iteration-count: 1;
   animation-delay: 1s;
 }
-  
-.navbar-brand {
+
+.ribbon {
+  opacity: 90%;
+  position: absolute; 
+  width: 126px;
+  margin: 0 !important;
+  padding: 0 !important;
+  z-index: -1;
+}
+.centerLogo {
   flex: 1 5 0 5;
   display: block;
   height: 10vw; 
+  max-height: 300px;
   position: absolute;
   left: 50%;
   top: 0;
@@ -36,6 +45,22 @@ body {
   padding: 0 !important;
   transform: translateX(-50%);
   text-align: center;
+  border: 1px;
+}
+.navbar-brand {
+  /*flex: 1 5 0 5;*/
+  /*display: block;*/
+  height: 300px;
+  Width: 300px;
+  /*height: 10vw; */
+  /*max-height: 300px;*/
+  /*position: absolute;*/
+  /*left: 50%;*/
+  /*top: 0;*/
+  /*margin: 0 !important;*/
+  /*padding: 0 !important;*/
+  /*transform: translateX(-50%);*/
+  /*text-align: center;*/
 }
 
 
