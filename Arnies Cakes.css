@@ -37,8 +37,8 @@ body {
   opacity: 90%;
   position: absolute; 
   width: 118px;
-  margin: 0 !important;
-  padding: 0 !important;
+  margin-top: -100px !important;
+  padding: 0px !important;
   z-index: -1;
 }
 .centerLogo {
