@@ -22,27 +22,30 @@ body {
 .hr-line {
   width: 100%;
   border: 10px solid rgb(255, 217, 0);
+  opacity: 70%;
   position: absolute;
   z-index: -2;
   animation-name: fill;
   animation-duration: 1s;
   animation-iteration-count: 1;
   animation-delay: 1s;
+  clip-path: polygon(0% 0%, 0% 100%, 45.5vw 100%, 46vw 0%, 52.8% 0%, 52.9% 100%, 25% 100%, 25% 100%, 100% 100%, 100% 0%);
 }
+
 
 .ribbon {
   opacity: 90%;
   position: absolute; 
-  width: 120px;
+  width: 118px;
   margin: 0 !important;
   padding: 0 !important;
   z-index: -1;
 }
 .centerLogo {
-  flex: 1 5 0 5;
+  flex: 0 auto;
   display: block;
   height: 10vw; 
-  max-height: 300px;
+  max-height: 250px;
   width: 300px;
   position: absolute;
   left: 50%;
@@ -52,7 +55,9 @@ body {
   transform: translateX(-50%);
   text-align: center;
   border: 1px;
+  clip-path: circle(55%);
 }
+
 .navbar-brand {
   flex: 1 5 0 5;
   display: block;
