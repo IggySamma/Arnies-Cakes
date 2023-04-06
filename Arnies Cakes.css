@@ -84,7 +84,10 @@ body {
 
 .parentBox {
   width: 99vw;
+  min-width: 1010px;
   height: 20%;
+  /*max-height: 256px;*/
+  min-height: 200px;
   /*background: #fff;*/
   background-color: #FFD4DB;
   margin: 15vw auto;
@@ -93,6 +96,14 @@ body {
   animation-duration: 1s, 1s;
   animation-iteration-count: 1, 1;
   animation-delay: 1s, 1s;
+}
+
+.mainContain {
+  min-height: 40vh;
+  height: 30%;
+  width: 100%;
+  align-content: center;
+  text-align: center;
 }
 
 .childBox {
