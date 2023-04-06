@@ -101,9 +101,31 @@ body {
 .mainContain {
   min-height: 40vh;
   height: 30%;
+  max-height: 500px;
   width: 100%;
+  min-width: 1500px;
   align-content: center;
   text-align: center;
+}
+
+.mainContain div:nth-child(1) {
+  min-width: 60px;
+}
+
+.mainContain div:nth-child(3) {
+  min-width: 250px;
+}
+
+.mainContain div:nth-child(4) {
+  min-width: 250px;
+}
+
+.mainContain div:nth-child(5) {
+  min-width: 250px;
+}
+.mainContain img {
+  max-width: 30vh;
+  max-height: 35vh;
 }
 
 .childBox {
