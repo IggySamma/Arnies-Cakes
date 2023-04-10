@@ -84,7 +84,7 @@ body {
 
 .parentBox {
   width: 99vw;
-  min-width: 1010px;
+  min-width: 1550px;
   height: 20%;
   /*max-height: 256px;*/
   min-height: 200px;
@@ -103,7 +103,6 @@ body {
   height: 30%;
   max-height: 500px;
   width: 100%;
-  min-width: 1500px;
   align-content: center;
   text-align: center;
 }
@@ -122,10 +121,40 @@ body {
 
 .mainContain div:nth-child(5) {
   min-width: 250px;
+
 }
 .mainContain img {
   max-width: 30vh;
   max-height: 35vh;
+}
+
+a:link {
+  text-decoration: none;
+  color: black;
+}
+
+a:visited { 
+  text-decoration: none; 
+  color: black;
+}
+
+a:hover { 
+  text-decoration: none; 
+  color: black;
+}
+
+a:active { 
+  text-decoration: none; 
+  color: black;
+}
+
+.lowerContain {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.lowerContain img {
+  max-width: 50px;
 }
 
 .childBox {
