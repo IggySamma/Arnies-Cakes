@@ -1,7 +1,15 @@
+@font-face {
+  font-family: 'EBGaramond';
+  font-style: normal;
+  font-weight: 400;
+  src: local('EBGaramond Regular'), local('EBGaramond-Regular'), url('./fonts/EBGaramond-Regular.ttf') format('truetype');
+}
+
 body {
   background-image: url("./Background.jpg");
   background-attachment: fixed;
   padding-top: 70px;
+  font-family: 'EBGaramond';
 }
 
 .bg {
@@ -15,7 +23,7 @@ body {
 }
 
 .fontsize {
-  font-size: 25px;
+  font-size: 29px;
   font-weight: bold;
 }
 
@@ -36,7 +44,8 @@ body {
 .ribbon {
   opacity: 90%;
   position: absolute; 
-  width: 118px;
+  margin: -6px;
+  width: 128px;
   margin-top: -100px !important;
   padding: 0px !important;
   z-index: -1;
