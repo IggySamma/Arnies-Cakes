@@ -67,22 +67,22 @@
 
         </nav>
     </header>
-    <body>
+
+        <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <script src="" async defer></script>
-        
         <div class="div container-fluid m-3 p-3">
             <div class="row m-3 p-3">
-                <div class="col m-3 p-3">
-                <select class="form-select-lg sort m-2 p-2 float-end" for="cakeType" value="cakes" aria-label="Filter by type of cake">
+                <div class="col m-3 p-3 stopGap position-fixed">
+                <select class="form-select-lg sort m-2 p-2 sticky-lg-top float-end z-1" for="cakeType" value="cakes" aria-label="Filter by type of cake">
                     <option value="cakes">Cakes</option>
                     <option value="treats">Treats</option>
                     <option value="gifts">Gifts</option>
                 </select>
                 </div>
-                <div class="row fullSize m-2 p-3">
+                <div class="row fullSize overflow-scroll stopGap">
                     <div class="col m-2 p-3">
                         <img class="img-thumbnail" src="./Index Images/Main Cake 1.jpg">
                     </div>
@@ -116,6 +116,7 @@
                 </div>
             </div>
         </div>
+        <script src="header.js"></script>
     </body>
     <footer>
     </footer>

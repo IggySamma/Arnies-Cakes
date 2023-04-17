@@ -354,20 +354,28 @@ a:active {
 
 /* ============================================== Gallery Pages */
 
+.stopGap {
+  top: 100px;
+}
+
 .sort { 
-  top: 150px;
+  top: 50px;
+  right: 0px;
   width: 20vw;
 }
 
 .fullSize {
-  width: 100%;
-
+  top: 200px;
+  left: 2vw;
+  min-height:10vh;
+  max-height: 75vh;
+  position: absolute;
+  width: 100vw;
   overflow: hidden;
 }
 
 .fullSize img {
   max-width: 15vw;
   min-width: 250px;
-  z-index: 1;
   overflow: hidden;
 }
