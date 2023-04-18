@@ -372,6 +372,7 @@ a:active {
   position: absolute;
   width: 100vw;
   overflow: hidden;
+  visibility: hidden;
 }
 
 .fullSize img {
