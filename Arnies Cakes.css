@@ -20,7 +20,6 @@ body {
 
 .bg {
   background-image: url("./Index Images/Background.jpg");
-
 }
 
 .logo {
@@ -110,8 +109,7 @@ body {
   position: relative;
   animation-name: fill, text;
   animation-duration: 2s, 1s;
-  animation-iteration-count: 1, 1;
-  animation-delay: 0s, 1s;
+  animation-iteration-count: 1;
 }
 
 .mainContain {
@@ -361,8 +359,7 @@ a:active {
 /* ============================================== Gallery Pages */
 
 .stopGap {
-  top: 100px;
-
+  top: 150px;
 }
 
 .sort { 
@@ -372,21 +369,20 @@ a:active {
 }
 
 .fullSize {
-  top:200px;
+  top:250px;
   left: 2vw;
   position: absolute;
   width: 98vw;
-  overflow: hidden;
 }
 
 .fullSize img {
   max-width: 15vw;
   min-width: 250px;
+  max-height: 40vh;
   -webkit-transform: scale(1);
 	transform: scale(1);
 	-webkit-transition: .3s ease-in-out;
 	transition: .3s ease-in-out;
-  overflow: hidden;
 }
 
 .fullSize img:hover {
@@ -394,7 +390,6 @@ a:active {
   min-width: 250px;
 	-webkit-transform: scale(1.1);
 	transform: scale(1.1);
-  overflow: hidden;
 }
 
 .userForm {
@@ -404,4 +399,19 @@ a:active {
   top: 300px;
   max-width: 70vw;
   min-width: 40vw;
+}
+
+.flavoursBox{
+  left: 2.5vw;
+  width: 95vw;
+  top: 200px;
+  min-height: 50vh;
+  max-height: 75vh;
+  bottom: 20px;
+  background: linear-gradient(45deg, #D3BBDD, #FFD4DB);
+  position: relative;
+  animation-name: text;
+  animation-duration: 1.5s;
+  animation-iteration-count: 1;
+  animation-delay: 0s;
 }

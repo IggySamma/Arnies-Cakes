@@ -54,7 +54,7 @@
                         <li class="nav-item me-4 ms-4 pe-4 ps-4">
                         </li>
                         <li class="nav-item m-4 me-2 ms-2 pe-1 ps-1">
-                            <a class="nav-link fontsize" href="">Flavours</a>
+                            <a class="nav-link fontsize" href="./Flavours.html">Flavours</a>
                         </li>
                         <li class="nav-item active m-4 me-2 ms-2 pe-1 ps-1">
                             <img class="ribbon" src="./Index Images/Ribbon end.svg">
@@ -65,12 +65,10 @@
         </nav>
     </header>
 
-        <body>
+    <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <script src="" async defer></script>
-
         <div class="div container-fluid m-3 p-3">
             <div class="row m-3 p-3">
                 <div class="col m-3 p-3 stopGap position-fixed">
@@ -82,35 +80,48 @@
                     </select>
                 </div>
                 <div class="row fullSize overflow-scroll stopGap bottom-0" id="Gallery">
-                    <div class="Cakes col m-2 p-3" >
+                    <div class="Cakes col m-2 p-3" data-bs-toggle="modal" data-bs-target="#modalImages">
                         <img class="img-thumbnail" src="./Index Images/Main Cake 1.jpg">
                     </div>
-                    <div class="Treats col m-2 p-3">
+                    <div class="Treats col m-2 p-3" data-bs-toggle="modal" data-bs-target="#modalImages">
                         <img class="img-thumbnail" src="./Index Images/Main Cake 2.jpg">
                     </div>
-                    <div class="Gifts col m-2 p-3">
+                    <div class="Gifts col m-2 p-3" data-bs-toggle="modal" data-bs-target="#modalImages">
                         <img class="img-thumbnail" src="./Index Images/Main Cake 3.jpg">
                     </div>
-                    <div class="Cakes col m-2 p-3" >
+                    <div class="Cakes col m-2 p-3" data-bs-toggle="modal" data-bs-target="#modalImages">
                         <img class="img-thumbnail" src="./Index Images/Main Cake 1.jpg">
                     </div>
-                    <div class="Treats col m-2 p-3">
+                    <div class="Treats col m-2 p-3" data-bs-toggle="modal" data-bs-target="#modalImages">
                         <img class="img-thumbnail" src="./Index Images/Main Cake 2.jpg">
                     </div>
-                    <div class="Cakes col m-2 p-3" >
+                    <div class="Cakes col m-2 p-3" data-bs-toggle="modal" data-bs-target="#modalImages">
                         <img class="img-thumbnail" src="./Index Images/Main Cake 1.jpg">
                     </div>
-                    <div class="Gifts col m-2 p-3">
+                    <div class="Gifts col m-2 p-3" data-bs-toggle="modal" data-bs-target="#modalImages">
                         <img class="img-thumbnail" src="./Index Images/Main Cake 3.jpg">
                     </div>
-                    <div class="Cakes col m-2 p-3">
+                    <div class="Cakes col m-2 p-3" data-bs-toggle="modal" data-bs-target="#modalImages">
                         <img class="img-thumbnail" src="./Index Images/Main Cake 1.jpg">
                     </div>
-                    <div class="Treats col m-2 p-3">
+                    <div class="Treats col m-2 p-3" data-bs-toggle="modal" data-bs-target="#modalImages">
                         <img class="img-thumbnail" src="./Index Images/Main Cake 2.jpg">
                     </div>
-                    <div class="Gifts col m-2 p-3">
+                    <div class="Gifts col m-2 p-3" data-bs-toggle="modal" data-bs-target="#modalImages">
                         <img class="img-thumbnail" src="./Index Images/Main Cake 3.jpg">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="modalImages" aria-hidden="true" tab-index="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body mb-3">
+                        <p>Body</p>
+                    </div>
+                    <div class="modal-footer mb-3 start-50">
+                        <label class="form-label" for="orderSimilar">Like what you see ?</label>
+                        <button type="button" id="orderSimilar" class="btn btn-primary mb-3 p-2 px-4">Order for your self</button>
                     </div>
                 </div>
             </div>
