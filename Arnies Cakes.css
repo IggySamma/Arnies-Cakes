@@ -373,6 +373,10 @@ a:active {
   left: 2vw;
   position: absolute;
   width: 98vw;
+  animation-name: text;
+  animation-duration: 1.5s;
+  animation-iteration-count: 1;
+  animation-delay: 0s;
 }
 
 .fullSize img {
@@ -400,6 +404,32 @@ a:active {
   max-width: 70vw;
   min-width: 40vw;
 }
+
+.enquiresBox {
+  background: linear-gradient(45deg, #D3BBDD, #FFD4DB);
+  max-width: 65vw;
+  min-width: 50vw;
+  min-height: 800px;
+  max-height: 900px;
+  position: static;
+  margin-right: 1vw; 
+  margin-left: 1vw;
+  padding-right: 1vw; 
+  padding-left: 1vw;
+}
+
+.enquiresWrapper {
+  margin-right: 23vw; 
+  margin-left: 23vw; 
+  max-width:1160px; 
+  padding-right: 10px; 
+  padding-left: 10px;
+  padding-top: 180px;
+  animation-name: text;
+  animation-duration: 1.5s;
+  animation-iteration-count: 1;
+  animation-delay: 0s;
+}  
 
 .flavoursBox{
   left: 2.5vw;
