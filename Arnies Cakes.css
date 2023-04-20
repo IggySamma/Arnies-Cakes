@@ -406,11 +406,11 @@ a:active {
 }
 
 .enquiresBox {
-  background: linear-gradient(45deg, #D3BBDD, #FFD4DB);
+  background: linear-gradient(45deg, #D3BBDD, #ECE3F0);
   max-width: 65vw;
   min-width: 50vw;
-  min-height: 800px;
-  max-height: 900px;
+  min-height: 900px;
+  max-height: 1000px;
   position: static;
   margin-right: 1vw; 
   margin-left: 1vw;
@@ -438,10 +438,15 @@ a:active {
   min-height: 50vh;
   max-height: 75vh;
   bottom: 20px;
-  background: linear-gradient(45deg, #D3BBDD, #FFD4DB);
+  background: linear-gradient(45deg, #D3BBDD, #ECE3F0);
   position: relative;
   animation-name: text;
   animation-duration: 1.5s;
   animation-iteration-count: 1;
   animation-delay: 0s;
+}
+
+.datetime {
+  border: 0px;
+  font-size: 25px;
 }

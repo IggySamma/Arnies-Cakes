@@ -72,7 +72,7 @@
                         <form>
                             <div class="mb-3">
                                 <label for="fullNameInput" class="form-label">Full Name</label>
-                                <input type="text" class="form-control form-control-lg" id="fullNameInput" placeholder="First and Last name">
+                                <input type="text" class="form-control form-control-lg" id="fullNameInput" placeholder="Name">
                             </div>
                             <div class="mb-3">
                                 <label for="emailInput" class="form-label">Email Address</label>
@@ -80,8 +80,13 @@
                             </div>
                         </form>
                         <div class="mb-3">
-                            <label for="enquireInput" class="form-label">Enquire</label>
-                            <textarea class="form-control form-control-lg" id="enquireInput" rows="8" placeholder="Tell us about the cake you'd like"></textarea>
+                            <label for="datetime-local" class="form-label">Date for collection</label>
+                            <br>
+                            <input type="datetime-local" class="datetime rounded">
+                        </div>
+                        <div class="mb-3">
+                            <label for="enquireInput" class="form-label">Details</label>
+                            <textarea class="form-control form-control-lg" id="enquireInput" rows="8" placeholder="Tell us about the cake you'd like.&#10Please include the cake flavour and any other information we should know."></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="fileUpload" class="form-label">Upload examples of the cake you'd like</label>
