@@ -65,57 +65,29 @@
         </nav>
     </header>
     <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        <script src="" async defer></script>
-        <div class="parentBox rounded">
-            <div class="childBox rounded">
-                <div class="candles">
-                    <div class="fire"></div>
-                    <div class="fire"></div>
-                    <div class="fire"></div>
-                    <div class="fire"></div>
-                    <div class="fire"></div>
+        <div class="container-fluid">
+            <div class="col userForm align-middle position-absolute fontsize">
+                <form>
+                    <div class="mb-3">
+                        <label for="fullNameInput" class="form-label">Full Name</label>
+                        <input type="text" class="form-control form-control-lg" id="fullNameInput" placeholder="First and Last name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="emailInput" class="form-label">Email Address</label>
+                        <input type="email" class="form-control form-control-lg" id="emailInput" placeholder="name@example.com">
+                    </div>
+                </form>
+                <div class="mb-3">
+                    <label for="enquireInput" class="form-label">Enquire</label>
+                    <textarea class="form-control form-control-lg" id="enquireInput" rows="8" placeholder="Tell us about the cake you'd like"></textarea>
                 </div>
-                <object id="cake" data="./Index Images/cake.svg"></object>
-            </div>
-            <div class="row d-flex-inline mainContain pt-4">
-                <div class="col m-5">
+                <div class="mb-3">
+                    <label for="fileUpload" class="form-label">Upload examples of the cake you'd like</label>
+                    <input class="form-control" id="fileUpload" type="file">
                 </div>
-                <div class="col m-5">
+                <div class="col position-absolute end-0">
+                    <button type="submit" class="btn btn-primary mb-3">Submit</button>
                 </div>
-                <div class="col m-5">
-                    <img class="img-thumbnail" src="./Index Images/Main Cake 1.jpg">
-                </div>
-                <div class="col m-5">
-                    <img class="img-thumbnail" src="./Index Images/Main Cake 2.jpg">
-                </div>
-                <div class="col m-5">
-                    <img class="img-thumbnail" src="./Index Images/Main Cake 3.jpg">
-                </div>
-            </div>
-            <div class="row lowerContain m-2 p-2">
-                <div class="col">
-                </div>
-                <div class="col">
-                </div>
-                <div class="col">
-                    <a href="https://www.instagram.com/arnies_cakes/" target="_blank">
-                        <img src="./Index Images/Instagram.svg">
-                        @Arnies_Cakes
-                    </a>
-                </div>
-                <div class="col">
-                    <a href="https://www.facebook.com/ArniesCakes" target="_blank">
-                        <img src="./Index Images/facebook.svg">
-                        Dublin Tortai - 'Arnie's Cakes'
-                    </a>
-                </div>
-                           
-            </div>
+        </div>
         </div>
     </body>
-    <footer>
-    </footer>
-</html>

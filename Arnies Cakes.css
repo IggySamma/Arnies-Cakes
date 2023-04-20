@@ -379,3 +379,12 @@ a:active {
   min-width: 250px;
   overflow: hidden;
 }
+
+.userForm {
+  position: absolute;
+  left: 30vw;
+  right: 30vw;
+  top: 300px;
+  max-width: 70vw;
+  min-width: 40vw;
+}
