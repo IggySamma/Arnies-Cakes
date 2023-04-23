@@ -120,7 +120,6 @@ body {
   align-content: center;
   text-align: center;
   overflow: hidden;
- 
 }
 
 .mainContain div:nth-child(1) {
@@ -431,16 +430,27 @@ a:active {
   animation-delay: 0s;
 }  
 
+.behindBox {
+  width: 99vw;
+  top: 35vh;
+  left: .5vw;
+  height: 400px;
+  background-color: #FFD4DB;
+  margin: .5vw;
+  position: fixed;
+}
+
 .flavoursBox{
   top: 15vh;
   width: 650px;
   height: 820px;
   background: linear-gradient(45deg, #D3BBDD, #ECE3F0);
   position: relative;
-  animation-name: text;
-  animation-duration: 1.5s;
-  animation-iteration-count: 1;
-  animation-delay: 0s;
+
+}
+
+.FlavoursContain {
+  width: 100%;
 }
 
 .datetime {
@@ -455,13 +465,14 @@ h2 {
 
 .fontsizeL {
   font-size: 25px;
+  font-weight: 100;
 }
 
 .flavoursRibbon img{
-  top: -22px;
+  top: -40px;
   right: -50px;
-  width: 500px;
-  height: 450px;
+  width: 550px;
+  height: 550px;
   min-height: 400px;
 }
 
@@ -470,4 +481,19 @@ h2 {
   height: 400px;
   left: -80px;
   bottom: -50px;
+}
+
+
+.toolTip1 {
+  position:absolute;
+  height: 350px;
+  width: 250px;
+  left: 15vw;
+}
+
+.toolTip2 {
+  position:absolute;
+  height: 350px;
+  width: 250px;
+  right: 15vw;
 }
