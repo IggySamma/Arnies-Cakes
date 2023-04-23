@@ -432,10 +432,9 @@ a:active {
 }  
 
 .flavoursBox{
-  width: 550px;
-  top: 200px;
-  height: 720px;
-  bottom: 20px;
+  top: 15vh;
+  width: 650px;
+  height: 820px;
   background: linear-gradient(45deg, #D3BBDD, #ECE3F0);
   position: relative;
   animation-name: text;
@@ -450,12 +449,12 @@ a:active {
 }
 
 h2 {
-  font-size: 25px;
+  font-size: 28px;
   font-weight: bold;
 }
 
 .fontsizeL {
-  font-size: 20px;
+  font-size: 25px;
 }
 
 .flavoursRibbon img{
