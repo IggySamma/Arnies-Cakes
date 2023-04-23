@@ -432,11 +432,9 @@ a:active {
 }  
 
 .flavoursBox{
-  left: 2.5vw;
-  width: 95vw;
+  width: 550px;
   top: 200px;
-  min-height: 50vh;
-  max-height: 75vh;
+  height: 720px;
   bottom: 20px;
   background: linear-gradient(45deg, #D3BBDD, #ECE3F0);
   position: relative;
@@ -449,4 +447,28 @@ a:active {
 .datetime {
   border: 0px;
   font-size: 25px;
+}
+
+h2 {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.fontsizeL {
+  font-size: 20px;
+}
+
+.flavoursRibbon img{
+  top: -22px;
+  right: -50px;
+  width: 500px;
+  height: 450px;
+  min-height: 400px;
+}
+
+.flavoursFlower img{
+  width: 250px;
+  height: 400px;
+  left: -80px;
+  bottom: -50px;
 }
