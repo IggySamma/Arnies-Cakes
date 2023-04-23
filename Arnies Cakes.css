@@ -436,7 +436,7 @@ a:active {
   left: .5vw;
   height: 400px;
   background-color: #FFD4DB;
-  margin: .5vw;
+  margin: 0 0 .5vw 0;
   position: fixed;
 }
 
