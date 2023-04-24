@@ -100,3 +100,12 @@ function clearTipDiv() {
     Div2[0].style.display = 'none';
   }
 }
+
+function addAllPhotos() {
+  /*<div class="Cakes col m-2 p-3" data-bs-toggle="modal" data-bs-target="#modalImages">
+    <img class="img-thumbnail" src="./Index Images/Main Cake 1.jpg">
+  </div>*/  
+}
+
+
+

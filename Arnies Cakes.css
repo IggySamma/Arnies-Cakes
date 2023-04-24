@@ -15,7 +15,8 @@ body {
   background-attachment: fixed;
   padding-top: 70px;
   font-family: 'EBGaramond';
-  width: 99vw;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .bg {
@@ -45,7 +46,6 @@ body {
   clip-path: polygon(0% 0%, 0% 100%, 45.5vw 100%, 46vw 0%, 52.8% 0%, 52.9% 100%, 25% 100%, 25% 100%, 100% 100%, 100% 0%);
 }
 
-
 .ribbon {
   opacity: 90%;
   position: absolute; 
@@ -55,6 +55,7 @@ body {
   padding: 0px !important;
   z-index: -2;
 }
+
 .centerLogo {
   flex: 0 auto;
   display: block;
@@ -70,7 +71,6 @@ body {
   text-align: center;
   border: 1px;
   clip-path: circle(55%);
-  overflow: hidden;
   z-index: -1;
 }
 
@@ -98,7 +98,7 @@ body {
 /* ============================================== Opening */
 
 .parentBox {
-  width: 99vw;
+  width: 99%;
   min-width: 1550px;
   height: 20%;
   /*max-height: 256px;*/
@@ -190,11 +190,11 @@ a:active {
   animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
   animation-iteration-count: 1, infinite;
 }
-
+/*
 ::-webkit-scrollbar {
-  width:0em;
+  width:1em;
 }
-
+*/
 
 .drop {
   animation: drop 1.1s both;
@@ -363,7 +363,7 @@ a:active {
 
 .sort { 
   top: 50px;
-  right: 0px;
+  right: 10px;
   width: 20vw;
 }
 
