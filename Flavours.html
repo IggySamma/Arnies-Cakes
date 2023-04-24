@@ -68,12 +68,12 @@
         <div class="container flavoursContain">
             <div class="row behindBox rounded">
                 <!--Make images as a tool top on hover and based on hover <LI> -->
-                <div class="col m-2 p-2">
-                    <img class="img-thumbnail toolTip1" src="./Index Images/Main Cake 1.jpg">
+                <div class="col m-2 p-2 toolTip1">
+                    <img class="img-thumbnail" id="tt1" src="./Index Images/Main Cake 1.jpg">
                 </div>
                 <!--Make images as a tool top on hover and based on hover <LI> -->
-                <div class="col  m-2 p-2">
-                    <img class="img-thumbnail toolTip2" src="./Index Images/Main Cake 2.jpg">
+                <div class="col m-2 p-2 toolTip2">
+                    <img class="img-thumbnail" id="tt2" src="./Index Images/Main Cake 2.jpg">
                 </div>
             </div>
                 <div class="container flavoursBox rounded fontsize">
@@ -91,10 +91,10 @@
                                 <ul class="fontsizeL">
                                     <li>Vanilla</li>
                                     <li>Chocolate</li>
-                                    <li>Raffaello (Coconut)</li>
-                                    <li>Honey</li>
+                                    <li onmouseover="showToolTipDiv('raffaello', 'tt1');" onmouseleave="clearTipDiv();">Raffaello (Coconut)</li>
+                                    <li onmouseover="showToolTipDiv('honey', 'tt1');" onmouseleave="clearTipDiv();">Honey</li>
                                     <li>Black Forest</li>
-                                    <li>Napoleon</li>
+                                    <li onmouseover="showToolTipDiv('napoleon', 'tt1');" onmouseleave="clearTipDiv();">Napoleon</li>
                                     <li>Lemon</li>
                                     <li>Fresh Fruit</li>
                                 </ul>
@@ -104,15 +104,16 @@
                         <div class="cols m-2 p-2">
                             <h2>Treats:</h2>
                             <ul class="fontsizeL">
-                                <li>Chocolate Strawberries</li>
-                                <li>3D Chocolate Heart</li>
-                                <li>Gift Box</li>
-                                <li>Cakepops</li>
-                                <li>Cakesicles</li>
+                                <li onmouseover="showToolTipDiv('strawberries', 'tt2');" onmouseleave="clearTipDiv();">Chocolate Strawberries</li>
+                                <li onmouseover="showToolTipDiv('3d', 'tt2');" onmouseleave="clearTipDiv();">3D Chocolate Heart</li>
+                                <li onmouseover="showToolTipDiv('giftBox', 'tt2');" onmouseleave="clearTipDiv();">Gift Box</li>
+                                <li onmouseover="showToolTipDiv('cakePops', 'tt2');" onmouseleave="clearTipDiv();">Cakepops</li>
+                                <li onmouseover="showToolTipDiv('cakeSicles', 'tt2');" onmouseleave="clearTipDiv();">Cakesicles</li>
                             </ul>
                         </div>
                     </div>
                 </div>
         </div>
+        <script src="./header.js" onload="showToolTipDiv(id, className)"></script>
     </body>
 </html>

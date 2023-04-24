@@ -51,3 +51,42 @@ if (currentSelection.value === 'All') {
     }
   }
 }
+
+function showToolTipDiv(id, className) {
+  const selectToolTipDiv = document.getElementById(className);
+  const Div1 = document.getElementsByClassName('toolTip1');
+  const Div2 = document.getElementsByClassName('toolTip2');
+  const toolTipMap = new Map([
+    ['raffaello', './Index Images/Main Cake 1.jpg'],
+    ['honey', './Index Images/Main Cake 2.jpg'],
+    ['napoleon', './Index Images/Main Cake 3.jpg'],
+    ['strawberries', './Index Images/Main Cake 1.jpg'],
+    ['3d', './Index Images/Main Cake 2.jpg'],
+    ['giftBox', './Index Images/Main Cake 3.jpg'],
+    ['cakePops', './Index Images/Main Cake 1.jpg'],
+    ['cakeSicles', './Index Images/Main Cake 2.jpg'],
+  ]);
+
+  if (className === 'tt1') {
+      for(i = 0; i < Div1.length; i++) {
+      Div1[i].style.display = 'flex';
+      selectToolTipDiv.src = toolTipMap.get(id);
+    }
+  } else if (className === 'tt2') {
+    for(i = 0; i < Div2.length; i++) {
+      Div2[i].style.display = 'flex';
+      selectToolTipDiv.src = toolTipMap.get(id);
+    }
+  }
+}
+
+function clearTipDiv() {
+  const Div1 = document.getElementsByClassName('toolTip1');
+  const Div2 = document.getElementsByClassName('toolTip2');
+  for(i = 0; i < Div1.length; i++) {
+    Div1[0].style.display = 'none';
+  }
+  for(i = 0; i < Div2.length; i++) {
+    Div2[0].style.display = 'none';
+  }
+}

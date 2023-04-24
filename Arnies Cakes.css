@@ -489,6 +489,7 @@ h2 {
   height: 350px;
   width: 250px;
   left: 15vw;
+  display: none;
 }
 
 .toolTip2 {
@@ -496,4 +497,5 @@ h2 {
   height: 350px;
   width: 250px;
   right: 15vw;
+  display: none;
 }
