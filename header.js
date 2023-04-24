@@ -69,13 +69,13 @@ function showToolTipDiv(id, className) {
 
   if (className === 'tt1') {
       for(i = 0; i < Div1.length; i++) {
-      Div1[i].style.display = 'flex';
       selectToolTipDiv.src = toolTipMap.get(id);
+      Div1[i].style.display = 'flex';
     }
   } else if (className === 'tt2') {
     for(i = 0; i < Div2.length; i++) {
-      Div2[i].style.display = 'flex';
       selectToolTipDiv.src = toolTipMap.get(id);
+      Div2[i].style.display = 'flex';
     }
   }
 }

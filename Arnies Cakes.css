@@ -499,3 +499,7 @@ h2 {
   right: 15vw;
   display: none;
 }
+
+.modalFontSize {
+  font-size: 20px;
+}
