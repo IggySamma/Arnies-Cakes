@@ -57,14 +57,13 @@ function showToolTipDiv(id, className) {
   const Div1 = document.getElementsByClassName('toolTip1');
   const Div2 = document.getElementsByClassName('toolTip2');
   const toolTipMap = new Map([
-    ['raffaello', './Index Images/Main Cake 1.jpg'],
-    ['honey', './Index Images/Main Cake 2.jpg'],
-    ['napoleon', './Index Images/Main Cake 3.jpg'],
-    ['strawberries', './Index Images/Main Cake 1.jpg'],
-    ['3d', './Index Images/Main Cake 2.jpg'],
-    ['giftBox', './Index Images/Main Cake 3.jpg'],
-    ['cakePops', './Index Images/Main Cake 1.jpg'],
-    ['cakeSicles', './Index Images/Main Cake 2.jpg'],
+    ['honey', './Flavours Images/honey cake.jpg'],
+    ['napoleon', './Flavours Images/napoleon.jpeg'],
+    ['3d', './Flavours Images/3d heart.jpg'],
+    ['giftBox', './Flavours Images/giftbox.jpg'],
+    ['cakePops', './Flavours Images/cakepops.jpg'],
+    ['cakeSicles', './Flavours Images/cakesicles.jpg'],
+    ['plikyti', './Flavours Images/plikyti.jpg'],
   ]);
 
   if (className === 'tt1') {
@@ -76,6 +75,17 @@ function showToolTipDiv(id, className) {
     for(i = 0; i < Div2.length; i++) {
       selectToolTipDiv.src = toolTipMap.get(id);
       Div2[i].style.display = 'flex';
+      if (id === '3d') {
+        Div2[i].style.height = '300px';
+        Div2[i].style.width = '350px';
+        Div2[i].style.right = '10vw';
+        Div2[i].style.top = '10%';
+      } else {
+        Div2[i].style.height = '350px';
+        Div2[i].style.width = '250px';
+        Div2[i].style.right = '15vw';
+        Div2[i].style.top = '5%';
+      }
     }
   }
 }
