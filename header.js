@@ -52,6 +52,11 @@ if (currentSelection.value === 'All') {
   }
 }
 
+function requestGallery(){
+  fetch('/api/gallery')
+  .then((result) => {console.log(result)});
+}
+
 function showToolTipDiv(id, className) {
   const selectToolTipDiv = document.getElementById(className);
   const Div1 = document.getElementsByClassName('toolTip1');
