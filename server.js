@@ -59,12 +59,14 @@ function insertNewToGallery(newType, newPath) {
      });
 }
 
-app.get('/api/gallery', function(req, res){
-    return new Promise((resolve, reject) => {
+app.get('/api/gallery', getGallery);
+
+function getGallery(){
+    new Promise((resolve, reject) => {
         connection.query(selectAll,(error, result) => {
             if (error) reject(error);
             console.log(JSON.parse(JSON.stringify(result)));
             resolve(JSON.parse(JSON.stringify(result)));
-        })
+        });
     });
-});
+};
