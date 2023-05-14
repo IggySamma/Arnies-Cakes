@@ -61,7 +61,6 @@ app.get('/api/gallery', (req, res) => {
             res.json(new Error("Error rows is undefined"));
         }else{
             var obj = JSON.parse(JSON.stringify(result));
-            console.log(obj);
             res.json(obj);
     }}); 
 });
