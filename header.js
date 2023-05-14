@@ -52,11 +52,9 @@ if (currentSelection.value === 'All') {
   }
 }
 
-function requestGallery(){
-
-  fetch('/api/gallery')
-  .then((result) => {console.log(result)});
-
+function Gallery(){
+  fetch('/api/gallery', {Method: 'GET'})
+  .then((results) => {console.log(results.json())});
 }
 
 function showToolTipDiv(id, className) {

@@ -19,6 +19,7 @@ const config = require('./bin/config.js');
 const connection = mysql.createConnection(config);
 const insert = 'INSERT INTO Gallery(Type, Path) Values(?, ?);';
 const selectAll = 'SELECT * FROM gallery;'
+const selectByType = 'SELECT ? FROM gallery;'
 
 const path = require('path');
 
@@ -38,11 +39,6 @@ function uploadFiles(req, res) {
     for (var i = 0; i < req.files.length; i++) {
         insertNewToGallery(req.body.name, "./gallery/" + req.files[i].filename + req.files[i].mimetype.replace('image/', '.'));
     }
-    //console.log(req.body.name);
-    //console.log(req.files)
-    //console.log(req.body);
-    //console.log(req.files);
-    //res.json({ message: "Successfully uploaded files" });
 }
 
 app.get('/', function(req, res) {
@@ -59,14 +55,13 @@ function insertNewToGallery(newType, newPath) {
      });
 }
 
-app.get('/api/gallery', getGallery);
-
-function getGallery(){
-    new Promise((resolve, reject) => {
-        connection.query(selectAll,(error, result) => {
-            if (error) reject(error);
-            console.log(JSON.parse(JSON.stringify(result)));
-            resolve(JSON.parse(JSON.stringify(result)));
-        });
-    });
-};
+app.get('/api/gallery', (req, res) => {
+    connection.query(selectAll,(error, result) => {
+        if(result === undefined){
+            res.json(new Error("Error rows is undefined"));
+        }else{
+            var obj = JSON.parse(JSON.stringify(result));
+            console.log(obj);
+            res.json(obj);
+    }}); 
+});
