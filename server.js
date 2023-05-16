@@ -1,4 +1,6 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const JSONParser = bodyParser.json();
 const app = express();
 
 const multer = require("multer");
@@ -16,6 +18,7 @@ const upload = multer({
 const mysql = require('mysql');
 const config = require('./bin/config.js');
 
+
 const connection = mysql.createConnection(config);
 const insert = 'INSERT INTO Gallery(Type, Path) Values(?, ?);';
 const selectAll = 'SELECT * FROM gallery;'
@@ -26,6 +29,7 @@ const path = require('path');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
+app.use(express.static('/gallery/'));
 
 
 
@@ -37,7 +41,8 @@ app.post('/api/upload', upload.array("myFiles"), uploadFiles);
 
 function uploadFiles(req, res) {
     for (var i = 0; i < req.files.length; i++) {
-        insertNewToGallery(req.body.name, "./gallery/" + req.files[i].filename + req.files[i].mimetype.replace('image/', '.'));
+        //insertNewToGallery(req.body.name, "./gallery/" + req.files[i].filename + req.files[i].mimetype.replace('image/', '.'));
+        insertNewToGallery(req.body.name, "/gallery/" + req.files[i].filename);
     }
 }
 
@@ -55,7 +60,8 @@ function insertNewToGallery(newType, newPath) {
      });
 }
 
-app.get('/api/gallery', (req, res) => {
+app.post('/api/gallery', JSONParser, (req, res) => {  
+    console.log(req.body);
     connection.query(selectAll,(error, result) => {
         if(result === undefined){
             res.json(new Error("Error rows is undefined"));

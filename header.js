@@ -3,59 +3,13 @@ var sectionName = urlParams.get('type');
 const select = document.getElementById('select-box');
 select.value = sectionName;
 
-function showDiv() {
-  const currentSelection = document.getElementById('select-box');
-  const selectCakes = document.getElementsByClassName('Cakes');
-  const selectTreats = document.getElementsByClassName('Treats');
-  const selectGifts = document.getElementsByClassName('Gifts');
-
-if (currentSelection.value === 'All') {
-    for (i = 0; i < selectCakes.length; i++) {
-      selectCakes[i].style.display = 'flex';
-    }
-    for (i = 0; i < selectTreats.length; i++) {
-      selectTreats[i].style.display = 'flex';
-    }
-    for (i = 0; i < selectGifts.length; i++) {
-      selectGifts[i].style.display = 'flex';
-    }
-} else if (currentSelection.value === 'Cakes') {
-    for (i = 0; i < selectCakes.length; i++) {
-      selectCakes[i].style.display = 'flex';
-    }
-    for (i = 0; i < selectTreats.length; i++) {
-      selectTreats[i].style.display = 'none';
-    }
-    for (i = 0; i < selectGifts.length; i++) {
-      selectGifts[i].style.display = 'none';
-    }
-} else if (currentSelection.value === 'Treats') {
-    for (i = 0; i < selectCakes.length; i++) {
-      selectCakes[i].style.display = 'none';
-    }
-    for (i = 0; i < selectTreats.length; i++) {
-      selectTreats[i].style.display = 'flex';
-    }
-    for (i = 0; i < selectGifts.length; i++) {
-      selectGifts[i].style.display = 'none';
-    }
-} else if (currentSelection.value === 'Gifts') {
-    for (i = 0; i < selectCakes.length; i++) {
-      selectCakes[i].style.display = 'none';
-    }
-    for (i = 0; i < selectTreats.length; i++) {
-      selectTreats[i].style.display = 'none';
-    }
-    for (i = 0; i < selectGifts.length; i++) {
-      selectGifts[i].style.display = 'flex';
-    }
-  }
-}
-
-function Gallery(){
+function getGallery(){
   let array = [];
   let temp = '';
-  fetch('/api/gallery', {Method: 'GET'})
+  fetch('/api/gallery', {
+    method: 'POST', 
+    body: sectionName,
+  })
   .then(response => 
     response.json().then(data => ({
         data: data,
@@ -63,11 +17,26 @@ function Gallery(){
     }))
     .then(res => {
       array = res.data;
+      console.log(array);
     for (let i = 1; i <= res.data.length; i++){
       temp = res.data.find(item => item.ID === i);
       console.log(temp.Path);
+      showGallery(temp.Type, temp.Path);
     }}))
 }
+
+function showGallery(Type, Path){
+  const domGalllery = document.getElementById('Gallery');
+  const divContainer = document.createElement('div');
+  const imgPath = document.createElement('img');
+  divContainer.className = (Type + " col m-2 p-3");
+  divContainer.setAttribute("data-bs-toggle", "modal");
+  divContainer.setAttribute("data-bs-target", "#modalImages");
+  domGalllery.appendChild(divContainer);
+  imgPath.className = ("img-thumbnail");
+  imgPath.src = Path
+  divContainer.appendChild(imgPath);
+  }
 
 function showToolTipDiv(id, className) {
   const selectToolTipDiv = document.getElementById(className);
@@ -118,11 +87,54 @@ function clearTipDiv() {
   }
 }
 
-function addAllPhotos() {
-  /*<div class="Cakes col m-2 p-3" data-bs-toggle="modal" data-bs-target="#modalImages">
-    <img class="img-thumbnail" src="./Index Images/Main Cake 1.jpg">
-  </div>*/  
-}
 
+function showDiv() {
+  const currentSelection = document.getElementById('select-box');
+  const selectCakes = document.getElementsByClassName('Cakes');
+  const selectTreats = document.getElementsByClassName('Treats');
+  const selectGifts = document.getElementsByClassName('Gifts');
+
+if (currentSelection.value === 'All') {
+    for (i = 0; i < selectCakes.length; i++) {
+      selectCakes[i].style.display = 'flex';
+    }
+    for (i = 0; i < selectTreats.length; i++) {
+      selectTreats[i].style.display = 'flex';
+    }
+    for (i = 0; i < selectGifts.length; i++) {
+      selectGifts[i].style.display = 'flex';
+    }
+} else if (currentSelection.value === 'Cakes') {
+    for (i = 0; i < selectCakes.length; i++) {
+      selectCakes[i].style.display = 'flex';
+    }
+    for (i = 0; i < selectTreats.length; i++) {
+      selectTreats[i].style.display = 'none';
+    }
+    for (i = 0; i < selectGifts.length; i++) {
+      selectGifts[i].style.display = 'none';
+    }
+} else if (currentSelection.value === 'Treats') {
+    for (i = 0; i < selectCakes.length; i++) {
+      selectCakes[i].style.display = 'none';
+    }
+    for (i = 0; i < selectTreats.length; i++) {
+      selectTreats[i].style.display = 'flex';
+    }
+    for (i = 0; i < selectGifts.length; i++) {
+      selectGifts[i].style.display = 'none';
+    }
+} else if (currentSelection.value === 'Gifts') {
+    for (i = 0; i < selectCakes.length; i++) {
+      selectCakes[i].style.display = 'none';
+    }
+    for (i = 0; i < selectTreats.length; i++) {
+      selectTreats[i].style.display = 'none';
+    }
+    for (i = 0; i < selectGifts.length; i++) {
+      selectGifts[i].style.display = 'flex';
+    }
+  }
+}
 
 
