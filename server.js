@@ -1,6 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const JSONParser = bodyParser.json();
 const app = express();
 
 const multer = require("multer");
@@ -22,7 +20,7 @@ const config = require('./bin/config.js');
 const connection = mysql.createConnection(config);
 const insert = 'INSERT INTO Gallery(Type, Path) Values(?, ?);';
 const selectAll = 'SELECT * FROM gallery;'
-const selectByType = 'SELECT ? FROM gallery;'
+const selectByType = "SELECT * FROM gallery WHERE Type = ?;";
 
 const path = require('path');
 
@@ -60,13 +58,23 @@ function insertNewToGallery(newType, newPath) {
      });
 }
 
-app.post('/api/gallery', JSONParser, (req, res) => {  
-    console.log(req.body);
-    connection.query(selectAll,(error, result) => {
-        if(result === undefined){
-            res.json(new Error("Error rows is undefined"));
-        }else{
-            var obj = JSON.parse(JSON.stringify(result));
-            res.json(obj);
-    }}); 
+app.post('/api/gallery', (req, res) => {  
+    let data = req.body
+    if (data.sectionName === 'All') {
+        connection.query(selectAll,(error, result) => {
+            if(result === undefined){
+                res.json(new Error("Error rows is undefined"));
+            }else{
+                var obj = JSON.parse(JSON.stringify(result));
+                res.json(obj);
+        }}); 
+    } else {
+        connection.query(selectByType, data.sectionName,(error, result) => {
+            if(result === undefined){
+                res.json(new Error("Error rows is undefined"));
+            }else{
+                var obj = JSON.parse(JSON.stringify(result));
+                res.json(obj);
+        }});   
+    }
 });

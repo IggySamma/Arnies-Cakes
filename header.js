@@ -5,10 +5,12 @@ select.value = sectionName;
 
 function getGallery(){
   let array = [];
-  let temp = '';
+  let temp = ''; 
+  let data = {sectionName};
   fetch('/api/gallery', {
-    method: 'POST', 
-    body: sectionName,
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data),
   })
   .then(response => 
     response.json().then(data => ({
@@ -17,26 +19,49 @@ function getGallery(){
     }))
     .then(res => {
       array = res.data;
-      console.log(array);
-    for (let i = 1; i <= res.data.length; i++){
-      temp = res.data.find(item => item.ID === i);
-      console.log(temp.Path);
-      showGallery(temp.Type, temp.Path);
+    for (let i = 0; i < res.data.length; i++){
+      temp = res.data[i];
+      showGallery(temp.ID, temp.Type, temp.Path);
     }}))
 }
 
-function showGallery(Type, Path){
+function showGallery(ID, Type, Path){
   const domGalllery = document.getElementById('Gallery');
   const divContainer = document.createElement('div');
   const imgPath = document.createElement('img');
   divContainer.className = (Type + " col m-2 p-3");
   divContainer.setAttribute("data-bs-toggle", "modal");
   divContainer.setAttribute("data-bs-target", "#modalImages");
+  divContainer.setAttribute("id", ID);
+  divContainer.setAttribute("onclick", "setActive(" + ID + ")");
   domGalllery.appendChild(divContainer);
   imgPath.className = ("img-thumbnail");
   imgPath.src = Path
   divContainer.appendChild(imgPath);
+  showCarousel("carousel" + ID, Path)
   }
+
+function showCarousel(ID, Path){
+  const domCarousel = document.getElementById('carousel');
+  const divContainer = document.createElement('div');
+  const imgPath = document.createElement('img');
+  divContainer.className = ("carousel-item");
+  divContainer.setAttribute("id", ID);
+  domCarousel.appendChild(divContainer);
+  imgPath.src = Path
+  imgPath.setAttribute = ("class", "d-block carImg");
+  divContainer.appendChild(imgPath);
+}
+
+
+function setActive(ID){
+  const carousel = document.getElementById("carousel");
+  for (i = 1; i <= carousel.getElementsByTagName('*').length/2; i++) {
+    document.getElementById("carousel" + i).className = ("carousel-item");
+  }
+  document.getElementById("carousel" + ID).className = ("carousel-item active");
+}
+
 
 function showToolTipDiv(id, className) {
   const selectToolTipDiv = document.getElementById(className);
@@ -87,54 +112,10 @@ function clearTipDiv() {
   }
 }
 
+/*
+document.getElementById("Images").addEventListener("click", setActive());
 
-function showDiv() {
-  const currentSelection = document.getElementById('select-box');
-  const selectCakes = document.getElementsByClassName('Cakes');
-  const selectTreats = document.getElementsByClassName('Treats');
-  const selectGifts = document.getElementsByClassName('Gifts');
+function setActive(){
 
-if (currentSelection.value === 'All') {
-    for (i = 0; i < selectCakes.length; i++) {
-      selectCakes[i].style.display = 'flex';
-    }
-    for (i = 0; i < selectTreats.length; i++) {
-      selectTreats[i].style.display = 'flex';
-    }
-    for (i = 0; i < selectGifts.length; i++) {
-      selectGifts[i].style.display = 'flex';
-    }
-} else if (currentSelection.value === 'Cakes') {
-    for (i = 0; i < selectCakes.length; i++) {
-      selectCakes[i].style.display = 'flex';
-    }
-    for (i = 0; i < selectTreats.length; i++) {
-      selectTreats[i].style.display = 'none';
-    }
-    for (i = 0; i < selectGifts.length; i++) {
-      selectGifts[i].style.display = 'none';
-    }
-} else if (currentSelection.value === 'Treats') {
-    for (i = 0; i < selectCakes.length; i++) {
-      selectCakes[i].style.display = 'none';
-    }
-    for (i = 0; i < selectTreats.length; i++) {
-      selectTreats[i].style.display = 'flex';
-    }
-    for (i = 0; i < selectGifts.length; i++) {
-      selectGifts[i].style.display = 'none';
-    }
-} else if (currentSelection.value === 'Gifts') {
-    for (i = 0; i < selectCakes.length; i++) {
-      selectCakes[i].style.display = 'none';
-    }
-    for (i = 0; i < selectTreats.length; i++) {
-      selectTreats[i].style.display = 'none';
-    }
-    for (i = 0; i < selectGifts.length; i++) {
-      selectGifts[i].style.display = 'flex';
-    }
-  }
 }
-
-
+*/
