@@ -382,17 +382,21 @@ a:active {
   max-width: 15vw;
   min-width: 250px;
   max-height: 40vh;
+  object-fit: cover;
   -webkit-transform: scale(1);
 	transform: scale(1);
 	-webkit-transition: .3s ease-in-out;
 	transition: .3s ease-in-out;
+  aspect-ratio: 5/7;
 }
 
 .fullSize img:hover {
   max-width: 15vw;
   min-width: 250px;
+  object-fit: cover;
 	-webkit-transform: scale(1.1);
 	transform: scale(1.1);
+  aspect-ratio: 5/7;
 }
 
 .userForm {
@@ -446,7 +450,6 @@ a:active {
   height: 820px;
   background: linear-gradient(45deg, #D3BBDD, #ECE3F0);
   position: relative;
-
 }
 
 .FlavoursContain {
@@ -507,7 +510,9 @@ h2 {
 }
 
 .carImg {
-  width: 100%;
   height: 100%;
-  aspect-ratio: 5/7;
+  max-height: 83vh;
+  margin-left: auto;
+  margin-right: auto;
+  aspect-ratio: inherit;
 }

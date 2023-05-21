@@ -3,6 +3,8 @@ var sectionName = urlParams.get('type');
 const select = document.getElementById('select-box');
 select.value = sectionName;
 
+let activeID = '';
+
 function getGallery(){
   let array = [];
   let temp = ''; 
@@ -19,16 +21,24 @@ function getGallery(){
     }))
     .then(res => {
       array = res.data;
-    for (let i = 0; i < res.data.length; i++){
+    for (let i = res.data.length-1; i >= 0; i--){
       temp = res.data[i];
       showGallery(temp.ID, temp.Type, temp.Path);
     }}))
 }
 
+$(document).ready(function(){
+  $("#modalImages").on('hide.bs.modal', function(){
+    activeID = document.getElementsByClassName('carousel-item active')[0].id
+    document.getElementById(activeID).className = ("carousel-item");
+  });
+});
+
 function showGallery(ID, Type, Path){
   const domGalllery = document.getElementById('Gallery');
   const divContainer = document.createElement('div');
   const imgPath = document.createElement('img');
+  domGalllery.appendChild(divContainer);
   divContainer.className = (Type + " col m-2 p-3");
   divContainer.setAttribute("data-bs-toggle", "modal");
   divContainer.setAttribute("data-bs-target", "#modalImages");
@@ -36,10 +46,15 @@ function showGallery(ID, Type, Path){
   divContainer.setAttribute("onclick", "setActive(" + ID + ")");
   domGalllery.appendChild(divContainer);
   imgPath.className = ("img-thumbnail");
-  imgPath.src = Path
+  imgPath.src = Path;
   divContainer.appendChild(imgPath);
-  showCarousel("carousel" + ID, Path)
-  }
+  showCarousel("carousel" + ID, Path);
+}
+
+function refreshPage(){
+  let type = document.getElementById('select-box');
+  location.replace('/Gallery.html?type=' + type.value);
+}
 
 function showCarousel(ID, Path){
   const domCarousel = document.getElementById('carousel');
@@ -49,16 +64,11 @@ function showCarousel(ID, Path){
   divContainer.setAttribute("id", ID);
   domCarousel.appendChild(divContainer);
   imgPath.src = Path
-  imgPath.setAttribute = ("class", "d-block carImg");
+  imgPath.setAttribute("class", "d-block carImg");
   divContainer.appendChild(imgPath);
 }
 
-
 function setActive(ID){
-  const carousel = document.getElementById("carousel");
-  for (i = 1; i <= carousel.getElementsByTagName('*').length/2; i++) {
-    document.getElementById("carousel" + i).className = ("carousel-item");
-  }
   document.getElementById("carousel" + ID).className = ("carousel-item active");
 }
 
@@ -111,11 +121,3 @@ function clearTipDiv() {
     Div2[0].style.display = 'none';
   }
 }
-
-/*
-document.getElementById("Images").addEventListener("click", setActive());
-
-function setActive(){
-
-}
-*/

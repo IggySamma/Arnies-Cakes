@@ -36,8 +36,10 @@
                             <div class="dropdown-menu fontsize" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="./Gallery.html?type=All">All</a>
                                 <a class="dropdown-item" href="./Gallery.html?type=Cakes">Cakes</a>
+                                <a class="dropdown-item" href="./Gallery.html?type=Cakepops">Cakepops</a>
+                                <a class="dropdown-item" href="./Gallery.html?type=Cupcakes">Cupcakes</a>
+                                <a class="dropdown-item" href="./Gallery.html?type=KidsCakes">Kids Cakes</a>
                                 <a class="dropdown-item" href="./Gallery.html?type=Treats">Treats</a>
-                                <a class="dropdown-item" href="./Gallery.html?type=Gifts">Gifts</a>
                             </div>
                         </li>
                         <li class="nav-item me-4 ms-4 pe-4 ps-4">
@@ -72,21 +74,23 @@
         <div class="container-fluid m-3 p-3">
             <div class="row m-3 p-3">
                 <div class="col m-3 p-3 stopGap position-fixed">
-                    <select id="select-box" class="form-select form-select-lg sort m-2 p-2 sticky-lg-top float-end z-1" onchange="showDiv()" aria-label="Filter by type of cake">
+                    <select id="select-box" class="form-select form-select-lg sort m-2 p-2 sticky-lg-top float-end z-1" onchange="refreshPage()" aria-label="Filter by type of cake">
                         <option value="All">All</option>
                         <option value="Cakes">Cakes</option>
+                        <option value="Cakepops">Cakepops</option>
+                        <option value="Cupcakes">Cupcakes</option>
+                        <option value="KidsCakes">Kids Cakes</option>
                         <option value="Treats">Treats</option>
-                        <option value="Gifts">Gifts</option>
                     </select>
                 </div>
                 <div class="row fullSize overflow-scroll stopGap bottom-0" id="Gallery">
                 </div>
             </div>
         </div>
-        <div class="modal" id="modalImages" aria-hidden="true" tab-index="-1">
+        <div class="modal modal-xl" id="modalImages" aria-hidden="true" tab-index="-1">
             <div class="modal-dialog ">
                 <div class="modal-content">
-                    <div class="modal-body m-2 p-2">
+                    <div class="modal-body m-2 p-2" data-bs-theme="dark">
                         <div id="carouselContainer" class="carousel slide">
                             <div class="carousel-inner" id="carousel">
                             </div>
