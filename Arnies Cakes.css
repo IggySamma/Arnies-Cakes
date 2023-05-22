@@ -11,11 +11,12 @@ body {
   font-family: 'Belleza';
   width: 100%;
   overflow-x: hidden;
+  min-width: 1250px;
 }
 
 .fontsize {
   font-size: 29px;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 
 .hr-line {
@@ -38,19 +39,78 @@ body {
 
 /* ============================================== Home Page */
 
+.homeBoxLinks{
+  font-size: 20px;
+  font-weight: bold;
+  margin: auto 0 auto 0;
+}
+
+.homeBox{
+  background-color: #D3BBDD;
+  position: absolute;
+  width: 65vw;
+  height: 35vh;
+  bottom: 50px;
+  clip-path: polygon(0 0, 87% 0%, 100% 100%, 0% 100%);
+}
+
+.homeLogo{
+  position: absolute;
+  top: 0px;
+  left: 10vw;
+  width: 100%;
+  height: 65vh;
+}
+
+.homeIconsRow{
+  bottom: -85px;
+  left: 10px;
+  position: relative;
+}
+
+.homeTextBox{
+  width: 90%;
+  height: 50%;
+  text-align: center;
+}
+
+.homeTextBox h1{
+  font-size: 50px;
+  /*font-weight: bold;*/
+  text-align: center;
+}
+
+.homeTextBox h3{
+  font-size: 35px;
+  /*font-weight: bold;*/
+  text-align: center;
+}
+.homeIcons{
+  height: 45px;
+  width: 45px;
+  position: relative;
+  font-size: 30px;
+  /*font-weight: bold;*/
+}
+
 .homeImage{
   width: 100%;
   height: 100%;
-  max-width: 30vw;
-  max-height: 55vh;
+  max-width: 400px;
+  max-height: 600px;
 }
 
 .homeImageContainer{
-  width: 45%;
+  /*width: 45%;*/
   transform: rotate(-25deg);
   position: fixed;
-  right: -10vw;
-  top: -5;
+  right: -40vw;
+  top: -50vh;
+}
+
+a{
+  text-decoration: none;
+  color: black;
 }
 
 a:link {
