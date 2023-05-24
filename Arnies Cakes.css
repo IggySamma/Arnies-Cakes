@@ -12,10 +12,6 @@
   src: local('Halimun'), url('./fonts/Halimun.ttf') format('truetype');
 }
 
-html {
-  overflow-y: scroll;
-}
-
 body {
   background-color: #FAF9F6;
   padding-top: 70px;
@@ -23,8 +19,8 @@ body {
   width: 100%;
   overflow-x: hidden;
   min-width: 1250px;
-  overflow: hidden;
   height: 100%;
+  /*overflow-y: scroll;*/
 }
 
 .fontsize {
@@ -253,10 +249,6 @@ a:active {
   left: 2vw;
   position: absolute;
   width: 98vw;
-  animation-name: text;
-  animation-duration: 1.5s;
-  animation-iteration-count: 1;
-  animation-delay: 0s;
 }
 
 .fullSize img {
@@ -357,39 +349,20 @@ a:active {
 /* ============================================== Enquires Page */
 
 .userForm {
-  position: fixed;
-  left: 30vw;
-  right: 30vw;
-  top: 300px;
-  max-width: 70vw;
-  min-width: 40vw;
+  position: relative;
+  top: 5vh;
 }
 
 .enquiresBox {
+  top: 200px;
   background-color: #D3BBDD;
-  max-width: 65vw;
-  min-width: 50vw;
-  min-height: 900px;
-  max-height: 1000px;
-  position: relative;
+  height: 950px;
   margin-right: 1vw; 
   margin-left: 1vw;
   padding-right: 1vw; 
   padding-left: 1vw;
+  width: 50vw;
 }
-
-.enquiresWrapper {
-  margin-right: 23vw; 
-  margin-left: 23vw; 
-  max-width:1160px; 
-  padding-right: 10px; 
-  padding-left: 10px;
-  padding-top: 180px;
-  animation-name: text;
-  animation-duration: 1.5s;
-  animation-iteration-count: 1;
-  animation-delay: 0s;
-}  
 
 .datetime {
   border: 0px;
@@ -399,13 +372,26 @@ a:active {
 .behindBoxEnquires {
   text-align: center;
   width: 22.5vw;
-  top: 30vh;
+  top: 18vh;
   left: 2vw;
-  height: 800px;
   background-color: #ECE3F0;
   position: fixed;
 }
 
 .behindBoxEnquires h1{
   font-family: 'Halimun';
+}
+
+.enquiresWrapper{
+  top: 200px;
+  width: 100%;
+  left: 25vw;
+  /*height: 75vh;*/
+  margin-right: 1vw; 
+  margin-left: 1vw;
+  padding-right: 1vw; 
+  padding-left: 1vw;
+  position: fixed;
+  bottom:0;
+  overflow-y: scroll;
 }
