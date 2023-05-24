@@ -1,3 +1,5 @@
+/* Gallery */
+
 var urlParams = new URLSearchParams(window.location.search);
 var sectionName = urlParams.get('type');
 const select = document.getElementById('select-box');
@@ -72,7 +74,7 @@ function setActive(ID){
   document.getElementById("carousel" + ID).className = ("carousel-item active");
 }
 
-
+/* Flavours */
 function showToolTipDiv(id, className) {
   const selectToolTipDiv = document.getElementById(className);
   const Div1 = document.getElementsByClassName('toolTip1');

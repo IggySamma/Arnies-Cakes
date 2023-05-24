@@ -12,11 +12,17 @@ body {
   width: 100%;
   overflow-x: hidden;
   min-width: 1250px;
+  overflow: hidden
 }
 
 .fontsize {
   font-size: 29px;
   /*font-weight: bold;*/
+}
+
+h2 {
+  font-size: 28px;
+  font-weight: bold;
 }
 
 .hr-line {
@@ -30,12 +36,13 @@ body {
 .ribbon {
   opacity: 90%;
   position: absolute; 
-  width: 128px;
-  margin-top: -100px !important;
+  width: 150px;
+  margin-top: -85px !important;
   padding: 0px !important;
-  margin: -5px;
+  margin: -18px;
   z-index: -2;
 }
+
 
 /* ============================================== Home Page */
 
@@ -48,18 +55,18 @@ body {
 .homeBox{
   background-color: #D3BBDD;
   position: absolute;
-  width: 65vw;
-  height: 35vh;
+  width: 1200px;
+  height: 300px;
   bottom: 50px;
-  clip-path: polygon(0 0, 87% 0%, 100% 100%, 0% 100%);
+  clip-path: polygon(0 0, 90% 0%, 100% 100%, 0% 100%);
 }
 
 .homeLogo{
   position: absolute;
-  top: 0px;
-  left: 10vw;
+  top: 50px;
+  left: 12.5vw;
   width: 100%;
-  height: 65vh;
+  height: 50vh;
 }
 
 .homeIconsRow{
@@ -94,19 +101,84 @@ body {
 }
 
 .homeImage{
-  width: 100%;
-  height: 100%;
-  max-width: 400px;
-  max-height: 600px;
+  width: 400px;
+  height: 525px;
 }
 
 .homeImageContainer{
-  /*width: 45%;*/
-  transform: rotate(-25deg);
+  transform: rotate(-21.5deg);
   position: fixed;
-  right: -40vw;
-  top: -50vh;
+  right: -30vw;
+  top: -600px;
 }
+
+@media only screen and (min-width: 0px) and (max-width: 1299px) {
+  .homeImageContainer{
+    right: -110vw;
+  }
+}
+
+
+@media only screen and (min-width: 1300px) and (max-width: 1399px) {
+  .homeImageContainer{
+    right: -100vw;
+  }
+}
+
+
+@media only screen and (min-width: 1400px) and (max-width: 1499px) {
+  .homeImageContainer{
+    right: -90vw;
+  }
+}
+
+@media only screen and (min-width: 1500px) and (max-width: 1599px) {
+  .homeImageContainer{
+    right: -80vw;
+  }
+}
+
+@media only screen and (min-width: 1600px) and (max-width: 1699px) {
+  .homeImageContainer{
+    right: -70vw;
+  }
+}
+
+@media only screen and (min-width: 1700px) and (max-width: 1784px) {
+  .homeImageContainer{
+    right: -60vw;
+  }
+}
+
+@media only screen and (min-width: 1785px) and (max-width: 2000px) {
+  .homeImageContainer{
+    right: -50vw;
+  }
+}
+
+@media only screen and (min-width: 2070px) {
+  .homeImage{
+    width: 500px;
+    height: 650px;
+  }
+}
+
+@media only screen and (min-width: 2300px) {
+  .homeImage{
+    width: 600px;
+    height: 800px;
+  }
+}
+
+@media only screen and (min-height: 1081px) {
+  .homeBox{
+    width: 1400px;
+    height: 350px;
+    bottom: 100px;
+  }
+}
+
+
 
 a{
   text-decoration: none;
@@ -133,17 +205,24 @@ a:active {
   color: black;
 }
 
-
-/*
-.lowerContain {
-  font-size: 20px;
-  font-weight: bold;
+.imageAnimationL {
+  -webkit-animation: mover 20s linear infinite;
+  animation: mover 20s linear infinite;
 }
 
-.lowerContain img {
-  max-width: 50px;
+.imageAnimationR {
+  -webkit-animation: mover 25s linear infinite;
+  animation: mover 25s linear infinite;
 }
-*/
+
+@-webkit-keyframes mover {
+  0% { transform: translateY(-300%); }
+  100% { transform: translateY(3%); }
+}
+@keyframes mover {
+  0% { transform: translateY(-300%); }
+  100% { transform: translateY(3%); }
+}
 
 /* ============================================== Gallery Page */
 
@@ -189,72 +268,19 @@ a:active {
   aspect-ratio: 5/7;
 }
 
-.userForm {
-  position: absolute;
-  left: 30vw;
-  right: 30vw;
-  top: 300px;
-  max-width: 70vw;
-  min-width: 40vw;
+.modalFontSize {
+  font-size: 20px;
 }
 
-.enquiresBox {
-  background: linear-gradient(45deg, #D3BBDD, #ECE3F0);
-  max-width: 65vw;
-  min-width: 50vw;
-  min-height: 900px;
-  max-height: 1000px;
-  position: static;
-  margin-right: 1vw; 
-  margin-left: 1vw;
-  padding-right: 1vw; 
-  padding-left: 1vw;
+.carImg {
+  height: 100%;
+  max-height: 83vh;
+  margin-left: auto;
+  margin-right: auto;
+  aspect-ratio: inherit;
 }
 
-.enquiresWrapper {
-  margin-right: 23vw; 
-  margin-left: 23vw; 
-  max-width:1160px; 
-  padding-right: 10px; 
-  padding-left: 10px;
-  padding-top: 180px;
-  animation-name: text;
-  animation-duration: 1.5s;
-  animation-iteration-count: 1;
-  animation-delay: 0s;
-}  
-
-.behindBox {
-  width: 99vw;
-  top: 35vh;
-  left: .5vw;
-  height: 400px;
-  background-color: #FFD4DB;
-  margin: 0 0 .5vw 0;
-  position: fixed;
-}
-
-.flavoursBox{
-  top: 15vh;
-  width: 650px;
-  height: 820px;
-  background: linear-gradient(45deg, #D3BBDD, #ECE3F0);
-  position: relative;
-}
-
-.FlavoursContain {
-  width: 100%;
-}
-
-.datetime {
-  border: 0px;
-  font-size: 25px;
-}
-
-h2 {
-  font-size: 28px;
-  font-weight: bold;
-}
+/* ============================================== Flavours Page */
 
 .fontsizeL {
   font-size: 25px;
@@ -276,6 +302,27 @@ h2 {
   bottom: -50px;
 }
 
+.behindBox {
+  width: 99vw;
+  top: 35vh;
+  left: .5vw;
+  height: 400px;
+  background-color: #ECE3F0;
+  margin: 0 0 .5vw 0;
+  position: fixed;
+}
+
+.flavoursBox{
+  top: 15vh;
+  width: 650px;
+  height: 820px;
+  background-color: #D3BBDD;
+  position: relative;
+}
+
+.FlavoursContain {
+  width: 100%;
+}
 
 .toolTip1 {
   position:absolute;
@@ -295,14 +342,55 @@ h2 {
   top: 5%;
 }
 
-.modalFontSize {
-  font-size: 20px;
+/* ============================================== Enquires Page */
+
+.userForm {
+  position: fixed;
+  left: 30vw;
+  right: 30vw;
+  top: 300px;
+  max-width: 70vw;
+  min-width: 40vw;
 }
 
-.carImg {
-  height: 100%;
-  max-height: 83vh;
-  margin-left: auto;
-  margin-right: auto;
-  aspect-ratio: inherit;
+.enquiresBox {
+  background-color: #D3BBDD;
+  max-width: 65vw;
+  min-width: 50vw;
+  min-height: 900px;
+  max-height: 1000px;
+  position: relative;
+  margin-right: 1vw; 
+  margin-left: 1vw;
+  padding-right: 1vw; 
+  padding-left: 1vw;
+}
+
+.enquiresWrapper {
+  margin-right: 23vw; 
+  margin-left: 23vw; 
+  max-width:1160px; 
+  padding-right: 10px; 
+  padding-left: 10px;
+  padding-top: 180px;
+  animation-name: text;
+  animation-duration: 1.5s;
+  animation-iteration-count: 1;
+  animation-delay: 0s;
+}  
+
+.datetime {
+  border: 0px;
+  font-size: 25px;
+}
+
+.behindBoxEnquires {
+  text-align: center;
+  width: 25vw;
+  top: 35vh;
+  left: 1vw;
+  height: 400px;
+  background-color: #ECE3F0;
+  margin: 0 0 .5vw 0;
+  position: fixed;
 }
