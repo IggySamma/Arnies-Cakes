@@ -11,6 +11,11 @@
   font-weight: 400;
   src: local('Halimun'), url('./fonts/Halimun.ttf') format('truetype');
 }
+
+html {
+  overflow-y: scroll;
+}
+
 body {
   background-color: #FAF9F6;
   padding-top: 70px;
@@ -18,7 +23,8 @@ body {
   width: 100%;
   overflow-x: hidden;
   min-width: 1250px;
-  overflow: hidden
+  overflow: hidden;
+  height: 100%;
 }
 
 .fontsize {
@@ -391,11 +397,11 @@ a:active {
 }
 
 .behindBoxEnquires {
-  text-align: left;
+  text-align: center;
   width: 22.5vw;
   top: 30vh;
   left: 2vw;
-  height: 600px;
+  height: 800px;
   background-color: #ECE3F0;
   position: fixed;
 }
