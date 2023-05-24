@@ -5,6 +5,12 @@
   src: local('Belleza-Regular'), url('./fonts/Belleza-Regular.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'Halimun';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Halimun'), url('./fonts/Halimun.ttf') format('truetype');
+}
 body {
   background-color: #FAF9F6;
   padding-top: 70px;
@@ -385,12 +391,15 @@ a:active {
 }
 
 .behindBoxEnquires {
-  text-align: center;
-  width: 25vw;
-  top: 35vh;
-  left: 1vw;
-  height: 400px;
+  text-align: left;
+  width: 22.5vw;
+  top: 30vh;
+  left: 2vw;
+  height: 600px;
   background-color: #ECE3F0;
-  margin: 0 0 .5vw 0;
   position: fixed;
+}
+
+.behindBoxEnquires h1{
+  font-family: 'Halimun';
 }
