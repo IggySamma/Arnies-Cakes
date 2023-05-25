@@ -28,11 +28,6 @@ body {
   /*font-weight: bold;*/
 }
 
-h2 {
-  font-size: 28px;
-  font-weight: bold;
-}
-
 .hr-line {
   width: 100%;
   opacity: 100%;
@@ -286,11 +281,7 @@ a:active {
 
 /* ============================================== Flavours Page */
 
-.fontsizeL {
-  font-size: 25px;
-  font-weight: 100;
-}
-
+/*
 .flavoursRibbon img{
   top: -40px;
   right: -50px;
@@ -306,6 +297,7 @@ a:active {
   bottom: -50px;
 }
 
+
 .behindBox {
   width: 99vw;
   top: 35vh;
@@ -313,21 +305,41 @@ a:active {
   height: 400px;
   background-color: #ECE3F0;
   margin: 0 0 .5vw 0;
-  position: fixed;
+  position: absolute;
 }
+*/
 
 .flavoursBox{
-  top: 15vh;
-  width: 650px;
-  height: 820px;
   background-color: #D3BBDD;
-  position: relative;
+
+  margin-right: 1vw; 
+  margin-left: 1vw;
+  padding-right: 1vw; 
+  padding-left: 1vw;
+  width: 40vw;
+  position: absolute;
+  text-align: center;
 }
 
-.FlavoursContain {
+.flavoursBox h1{
+  font-family: 'Halimun';
+}
+
+.flavoursContain {
+  top: 200px;
   width: 100%;
+  left: 28vw;
+  /*height: 75vh;*/
+  margin-right: 1vw; 
+  margin-left: 1vw;
+  padding-right: 1vw; 
+  padding-left: 1vw;
+  bottom:0px;
+  position: fixed;
+  overflow-y: scroll;
 }
 
+/*
 .toolTip1 {
   position:absolute;
   height: 350px;
@@ -345,6 +357,7 @@ a:active {
   display: none;
   top: 5%;
 }
+*/
 
 /* ============================================== Enquires Page */
 
@@ -391,7 +404,7 @@ a:active {
   margin-left: 1vw;
   padding-right: 1vw; 
   padding-left: 1vw;
+  bottom:0px;
   position: fixed;
-  bottom:0;
   overflow-y: scroll;
 }
