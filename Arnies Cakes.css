@@ -311,7 +311,7 @@ a:active {
 
 .flavoursBox{
   background-color: #D3BBDD;
-
+  left: 29vw;
   margin-right: 1vw; 
   margin-left: 1vw;
   padding-right: 1vw; 
@@ -328,7 +328,6 @@ a:active {
 .flavoursContain {
   top: 200px;
   width: 100%;
-  left: 28vw;
   /*height: 75vh;*/
   margin-right: 1vw; 
   margin-left: 1vw;
@@ -337,6 +336,17 @@ a:active {
   bottom:0px;
   position: fixed;
   overflow-y: scroll;
+}
+
+.cakeFlavours{
+  width: 100%;
+  height: 150px;
+  margin: 0px;
+  padding: 0px;
+  /*left: -2.5vw;*/
+  position: relative;
+  overflow: clip;
+  overflow-x: visible;
 }
 
 /*
