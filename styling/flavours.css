@@ -1,0 +1,65 @@
+.flavoursContainer{
+    height: 100%;
+    width: 100%;
+    float: left;
+    clear: left;
+}
+  
+.flavoursContent{
+    width: 100vw;
+    top: 150px;
+    position: fixed;
+    height: 100%;
+    float: left;
+    clear: left;
+    overflow: hidden;
+}
+
+.flavoursWrapper{
+    width: 100%;
+    left: 0px;
+    bottom: 0px;
+    height: 85vh;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+
+.flavoursBox{
+    background-color: #D3BBDD;
+    height: 550px;
+    width: 350px;
+}
+
+.flavoursText h1{
+    font-family: 'Halimun';
+}
+
+
+.flavoursBox img {
+    max-width: 15vw;
+    min-width: 250px;
+    height: 350px;
+    object-fit: cover;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+    aspect-ratio: 5/7;
+}
+
+.flavoursBox img:hover {
+    max-width: 15vw;
+    min-width: 250px;
+    object-fit: cover;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    aspect-ratio: 5/7;
+}
+
+.flavoursText{
+    text-align: center;
+    position: relative;
+    width: 40%;
+}
+

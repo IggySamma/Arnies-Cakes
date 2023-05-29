@@ -1,0 +1,65 @@
+.userForm {
+    position: relative;
+    top: 2vh;
+}
+  
+  
+.enquiresContainer{
+    height: 100%;
+    width: 100%;
+    float: left;
+    clear: left;
+}
+  
+.enquiresContent{
+    width: 100vw;
+    top: 150px;
+    position: fixed;
+    height: 100%;
+    float: left;
+    clear: left;
+    overflow: hidden;
+}
+
+.enquiresWrapper{
+    width: 100%;
+    left: 0px;
+    bottom: 0px;
+    height: 85vh;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+
+.behindBoxEnquires {
+    text-align: center;
+    width: 22.5vw;
+    top: 100px;
+    left: 3vw;
+    background-color: #ECE3F0;
+    position: relative;
+}
+
+.behindBoxEnquires h1{
+    font-family: 'Halimun';
+}
+
+.enquiresBox{
+    top: 50px;
+    width: 40vw;
+    height: 900px;
+    left: 6vw;
+    margin-right: 1vw; 
+    margin-left: 1vw;
+    padding-right: 1vw; 
+    padding-left: 1vw;
+    bottom:0px;
+    background-color: #D3BBDD;
+    position: relative;
+    /*overflow-y: scroll;*/
+}
+
+.datetime {
+    border: 0px;
+    font-size: 25px;
+}

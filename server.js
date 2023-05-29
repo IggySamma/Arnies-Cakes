@@ -44,9 +44,11 @@ function uploadFiles(req, res) {
     }
 }
 
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, '/adminindex.html'));
+app.get('/login', function(req, res) {
+    res.sendFile(path.join(__dirname, '/login.html'));
 });
+
+
 
 function insertNewToGallery(newType, newPath) {
     let newImage = [
@@ -77,4 +79,8 @@ app.post('/api/gallery', (req, res) => {
                 res.json(obj);
         }});   
     }
+});
+
+app.post('/api/deleteGallery', (req, res) => {  
+    let data = req.body
 });

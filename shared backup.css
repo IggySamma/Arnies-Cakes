@@ -86,13 +86,13 @@ body {
 
 .homeTextBox h1{
   font-size: 50px;
-  /*font-weight: bold;*/
+  font-weight: bold;
   text-align: center;
 }
 
 .homeTextBox h3{
   font-size: 35px;
-  /*font-weight: bold;*/
+  font-weight: bold;
   text-align: center;
 }
 .homeIcons{
@@ -100,7 +100,7 @@ body {
   width: 45px;
   position: relative;
   font-size: 30px;
-  /*font-weight: bold;*/
+  font-weight: bold;
 }
 
 .homeImage{
@@ -109,6 +109,7 @@ body {
 }
 
 .homeImageContainer{
+  pointer-events: none;
   transform: rotate(-21.5deg);
   position: fixed;
   right: -30vw;
@@ -228,7 +229,7 @@ a:active {
 }
 
 /* ============================================== Gallery Page */
-
+/*
 .stopGap {
   top: 150px;
 }
@@ -244,6 +245,7 @@ a:active {
   left: 2vw;
   position: absolute;
   width: 98vw;
+  overflow-x: hidden;
 }
 
 .fullSize img {
@@ -282,6 +284,74 @@ a:active {
 /* ============================================== Flavours Page */
 
 /*
+.flavoursContainer{
+  height: 100%;
+  width: 100%;
+  float: left;
+  clear: left;
+}
+
+.flavoursContent{
+  width: 100vw;
+  top: 150px;
+  position: fixed;
+  height: 100%;
+  float: left;
+  clear: left;
+  overflow: hidden;
+}
+
+.flavoursWrapper{
+  width: 100%;
+  left: 0px;
+  bottom: 0px;
+  height: 85vh;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+
+.flavoursBox{
+  background-color: #D3BBDD;
+  height: 550px;
+  width: 350px;
+}
+.flavoursText h1{
+  font-family: 'Halimun';
+}
+
+
+.flavoursBox img {
+  max-width: 15vw;
+  min-width: 250px;
+  height: 350px;
+  object-fit: cover;
+  -webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+  aspect-ratio: 5/7;
+}
+
+.flavoursBox img:hover {
+  max-width: 15vw;
+  min-width: 250px;
+  object-fit: cover;
+	-webkit-transform: scale(1.1);
+	transform: scale(1.1);
+  aspect-ratio: 5/7;
+}
+
+.flavoursText{
+  text-align: center;
+  position: relative;
+  width: 40%;
+}
+
+
+
+/* ===============================================Deprecated 
+/*
 .flavoursRibbon img{
   top: -40px;
   right: -50px;
@@ -308,7 +378,7 @@ a:active {
   position: absolute;
 }
 */
-
+/*
 .flavoursBox{
   background-color: #D3BBDD;
   left: 29vw;
@@ -328,7 +398,7 @@ a:active {
 .flavoursContain {
   top: 200px;
   width: 100%;
-  /*height: 75vh;*/
+  /*height: 75vh;
   margin-right: 1vw; 
   margin-left: 1vw;
   padding-right: 1vw; 
@@ -343,12 +413,12 @@ a:active {
   height: 150px;
   margin: 0px;
   padding: 0px;
-  /*left: -2.5vw;*/
+  /*left: -2.5vw;
   position: relative;
   overflow: clip;
   overflow-x: visible;
 }
-
+*/
 /*
 .toolTip1 {
   position:absolute;
@@ -370,51 +440,69 @@ a:active {
 */
 
 /* ============================================== Enquires Page */
-
+/*
 .userForm {
   position: relative;
-  top: 5vh;
+  top: 2vh;
 }
 
-.enquiresBox {
-  top: 200px;
-  background-color: #D3BBDD;
-  height: 950px;
-  margin-right: 1vw; 
-  margin-left: 1vw;
-  padding-right: 1vw; 
-  padding-left: 1vw;
-  width: 50vw;
+
+.enquiresContainer{
+  height: 100%;
+  width: 100%;
+  float: left;
+  clear: left;
 }
 
-.datetime {
-  border: 0px;
-  font-size: 25px;
+.enquiresContent{
+  width: 100vw;
+  top: 150px;
+  position: fixed;
+  height: 100%;
+  float: left;
+  clear: left;
+  overflow: hidden;
 }
+
+.enquiresWrapper{
+  width: 100%;
+  left: 0px;
+  bottom: 0px;
+  height: 85vh;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
 
 .behindBoxEnquires {
   text-align: center;
   width: 22.5vw;
-  top: 18vh;
-  left: 2vw;
+  top: 100px;
+  left: 3vw;
   background-color: #ECE3F0;
-  position: fixed;
+  position: relative;
 }
 
 .behindBoxEnquires h1{
   font-family: 'Halimun';
 }
 
-.enquiresWrapper{
-  top: 200px;
-  width: 100%;
-  left: 25vw;
-  /*height: 75vh;*/
+.enquiresBox{
+  top: 50px;
+  width: 40vw;
+  height: 900px;
+  left: 6vw;
   margin-right: 1vw; 
   margin-left: 1vw;
   padding-right: 1vw; 
   padding-left: 1vw;
   bottom:0px;
-  position: fixed;
+  background-color: #D3BBDD;
+  position: relative;
   overflow-y: scroll;
+}
+
+.datetime {
+  border: 0px;
+  font-size: 25px;
 }
