@@ -53,11 +53,6 @@ function showGallery(ID, Type, Path){
   showCarousel("carousel" + ID, Path);
 }
 
-function refreshPage(){
-  let type = document.getElementById('select-box');
-  location.replace('/Gallery.html?type=' + type.value);
-}
-
 function showCarousel(ID, Path){
   const domCarousel = document.getElementById('carousel');
   const divContainer = document.createElement('div');
@@ -74,7 +69,13 @@ function setActive(ID){
   document.getElementById("carousel" + ID).className = ("carousel-item active");
 }
 
+function refreshPage(){
+  let type = document.getElementById('select-box');
+  location.replace('/Gallery.html?type=' + type.value);
+}
+
 /* Flavours */
+/*
 function showToolTipDiv(id, className) {
   const selectToolTipDiv = document.getElementById(className);
   const Div1 = document.getElementsByClassName('toolTip1');
@@ -123,3 +124,4 @@ function clearTipDiv() {
     Div2[0].style.display = 'none';
   }
 }
+*/

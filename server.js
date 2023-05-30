@@ -21,6 +21,7 @@ const connection = mysql.createConnection(config);
 const insert = 'INSERT INTO Gallery(Type, Path) Values(?, ?);';
 const selectAll = 'SELECT * FROM gallery;'
 const selectByType = "SELECT * FROM gallery WHERE Type = ?;";
+const deleteByID = "DELETE FROM Gallery WHERE ID= ?;";
 
 const path = require('path');
 
@@ -83,4 +84,22 @@ app.post('/api/gallery', (req, res) => {
 
 app.post('/api/deleteGallery', (req, res) => {  
     let data = req.body
+    connection.query(deleteByID, data.ID ,(error, result) => {
+        if(result === undefined){
+            res.json(new Error("Error rows is undefined"));
+        }else{
+            var obj = JSON.parse(JSON.stringify(result));
+            res.json(obj);
+    }}); 
+});
+
+app.post('/api/adminGallery', (req, res) => {  
+    let data = req.body
+    connection.query(selectAll,(error, result) => {
+        if(result === undefined){
+            res.json(new Error("Error rows is undefined"));
+        }else{
+            var obj = JSON.parse(JSON.stringify(result));
+            res.json(obj);
+    }}); 
 });

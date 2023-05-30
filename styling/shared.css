@@ -1,3 +1,6 @@
+/* lighten up nav bar colour */
+
+
 @font-face {
   font-family: 'Belleza';
   font-style: normal;
@@ -205,13 +208,13 @@ a:active {
 }
 
 .imageAnimationL {
-  -webkit-animation: mover 20s linear infinite;
-  animation: mover 20s linear infinite;
+  -webkit-animation: mover 25s linear infinite;
+  animation: mover 25s linear infinite;
 }
 
 .imageAnimationR {
-  -webkit-animation: mover 25s linear infinite;
-  animation: mover 25s linear infinite;
+  -webkit-animation: mover 30s linear infinite;
+  animation: mover 30s linear infinite;
 }
 
 @-webkit-keyframes mover {
