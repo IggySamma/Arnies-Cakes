@@ -15,7 +15,7 @@
     width: 100vw;
     top: 150px;
     position: fixed;
-    height: 100%;
+    height: 150%;
     float: left;
     clear: left;
     overflow: hidden;
@@ -47,7 +47,7 @@
 .enquiresBox{
     top: 50px;
     width: 40vw;
-    height: 900px;
+    height: 1350px;
     left: 6vw;
     margin-right: 1vw; 
     margin-left: 1vw;
@@ -62,4 +62,14 @@
 .datetime {
     border: 0px;
     font-size: 25px;
+}
+
+.incrementalNumberBoxStyle{
+    width: 60px;
+    height: 34px;
+    right: 1vw;
+    position: absolute;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
 }

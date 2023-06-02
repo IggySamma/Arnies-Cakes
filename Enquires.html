@@ -118,7 +118,7 @@
                         </h4>
                         </p>
                     </div>
-                    <div class="row d-inline-flex enquiresBox rounded">
+                    <div class="row d-inline-flex enquiresBox m-3 p-3 rounded">
                         <div class="col userForm fontsize">
                         <form>
                             <div class="mb-3">
@@ -131,13 +131,64 @@
                             </div>
                         </form>
                         <div class="mb-3">
-                            <label for="datetime-local" class="form-label">Date for collection</label>
+                            <label class="form-label">Date for collection</label>
                             <br>
-                            <input type="datetime-local" class="datetime rounded">
+                            <input type="datetime-local" class="datetime rounded" id="datetime">
+                        </div>
+                        <div class="">
+                            <label class="form-label">What item are you looking for ?</label><br>
+                            <input class="form-check-input" type="checkbox" onclick="updatePlaceholder('cakeCheckBox')" value="" id="cakeCheckBox">
+                            <label class="form-check-label" for="cakeCheckBox">
+                                Cake
+                            </label>
+                            <input type="number" id="cakeCheckBox1" for="cakeCheckBox" class="form-control mt-1 p-1 incrementalNumberBoxStyle d-inline-flex" placeholder="0" min="0" disabled>
+                            <br>
+                            <input class="form-check-input" type="checkbox" onclick="updatePlaceholder('cakepopsCheckBox')" value="" id="cakepopsCheckBox">
+                            <label class="form-check-label" for="cakepopsCheckBox">
+                                Cakepops
+                            </label>
+                            <input type="number" id="cakepopsCheckBox1" for="cakepopsCheckBox" class="form-control mt-1 p-1 incrementalNumberBoxStyle d-inline-flex" placeholder="0" min="0" disabled>
+                            <br>
+                            <input class="form-check-input" type="checkbox" onclick="updatePlaceholder('cakesiclesCheckBox')" value="" id="cakesiclesCheckBox">
+                            <label class="form-check-label" for="cakesiclesCheckBox">
+                                Cakesicles
+                            </label>
+                            <input type="number" id="cakesiclesCheckBox1" for="cakesiclesCheckBox" class="form-control mt-1 p-1 incrementalNumberBoxStyle d-inline-flex" placeholder="0" min="0" disabled>
+                            <br>
+                            <input class="form-check-input" type="checkbox" onclick="updatePlaceholder('cupcakesCheckBox')" value="" id="cupcakesCheckBox">
+                            <label class="form-check-label" for="cupcakesCheckBox">
+                                Cupcakes 
+                            </label>
+                            <input type="number" id="cupcakesCheckBox1" for="cupcakesCheckBox" class="form-control mt-1 p-1 incrementalNumberBoxStyle d-inline-flex" placeholder="0" min="0" disabled>
+                            <br>                            
+                            <label class="form-label">Treats</label><br>
+                            <input class="form-check-input" type="checkbox" onclick="updatePlaceholder('tdheartCheckBox')" value="" id="tdheartCheckBox">
+                            <label class="form-check-label" for="3dheartCheckBox">
+                                3D Chocolate heart
+                            </label>
+                            <input type="number" id="3dheartCheckBox1" for="3dheartCheckBox" class="form-control mt-1 p-1 incrementalNumberBoxStyle d-inline-flex" placeholder="0" min="0" disabled>
+                            <br>
+                            <input class="form-check-input" type="checkbox" onclick="updatePlaceholder('chocolateStraberryCheckBox')" value="" id="chocolateStraberryCheckBox">
+                            <label class="form-check-label" for="chocolateStraberryCheckBox">
+                                Chocolate covered strawberries
+                            </label>
+                            <input type="number" id="chocolateStraberryCheckBox1" for="chocolateStraberryCheckBox" class="form-control mt-1 p-1 incrementalNumberBoxStyle d-inline-flex" placeholder="0" min="0" disabled>
+                            <br>
+                            <input class="form-check-input" type="checkbox" onclick="updatePlaceholder('giftBoxCheckBox')" value="" id="giftBoxCheckBox">
+                            <label class="form-check-label" for="giftBoxCheckBox">
+                                Gift Box
+                            </label>
+                            <input type="number" id="giftBoxCheckBox1" for="giftBoxCheckBox" class="form-control mt-1 p-1 incrementalNumberBoxStyle d-inline-flex" placeholder="0" min="0" disabled>
+                            <br>
+                            <input class="form-check-input" type="checkbox" onclick="updatePlaceholder('profiterolesCheckBox')" value="" id="profiterolesCheckBox">
+                            <label class="form-check-label"  for="profiterolesCheckBox">
+                                Profiteroles
+                            </label>
+                            <input type="number" id="profiterolesCheckBox1" for="profiterolesCheckBox" class="form-control mt-1 p-1 incrementalNumberBoxStyle d-inline-flex" placeholder="0" min="0" disabled>
                         </div>
                         <div class="mb-3">
                             <label for="enquireInput" class="form-label">Details</label>
-                            <textarea class="form-control form-control-lg" id="enquireInput" rows="8" placeholder="Tell us about the cake you'd like.&#10Please include as much detail as possible regarding cake, flavour & design etc."></textarea>
+                            <textarea class="form-control form-control-lg" id="enquireInput" rows="6" placeholder="Tell us about the cake you'd like.&#10Please include as much detail as possible regarding size, flavour & design etc."></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="fileUpload" class="form-label">Upload examples of the cake you'd like</label>
@@ -151,5 +202,6 @@
                 </div>
             </div>
         </div>
+        <script src="./enquires.js"></script>
     </body>
 </html>

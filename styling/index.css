@@ -81,6 +81,7 @@ body {
 }
 
 .homeTextBox{
+    top: 50px;
     width: 90%;
     height: 50%;
     text-align: center;
