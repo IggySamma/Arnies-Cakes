@@ -1,7 +1,6 @@
 const form = document.getElementById("form");
-let activeID = '';
-
 form.addEventListener("submit", submitForm);
+let activeID = '';
 
 function submitForm(file) {
     file.preventDefault();
@@ -16,18 +15,17 @@ function submitForm(file) {
         method: 'POST',
         body: formData,
     })
-        //.then((res) => console.log(res))
-        //.catch((err) => ("Error occured", err));
+    setTimeout(()=>{
+        location.reload();
+    }, "1000");
 }
 
 function getAdminGallery(){
     let array = [];
     let temp = ''; 
-    //let data = '';
     fetch('/api/adminGallery', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        //body: JSON.stringify(data),
     })
     .then(response => 
         response.json().then(data => ({
@@ -42,7 +40,6 @@ function getAdminGallery(){
         }}))
 }
 
-  
 function showGallery(ID, Type, Path){
     const domGalllery = document.getElementById('Gallery');
     const divContainer = document.createElement('div');
@@ -55,6 +52,7 @@ function showGallery(ID, Type, Path){
     divContainer.setAttribute("onclick", "setActive(" + ID + ")");
     domGalllery.appendChild(divContainer);
     imgPath.className = ("img-thumbnail");
+    imgPath.setAttribute("id", "img" + ID);
     imgPath.src = Path;
     divContainer.appendChild(imgPath);
     showCarousel("carousel" + ID, Path);
@@ -78,32 +76,22 @@ function setActive(ID){
 
 function deleteAlert(){
     const response = confirm("Are you sure you want to delete ?");
+    const parentPath = document.getElementById('img' + activeID.replace('carousel', ''));
+    const pathSrc = parentPath.src.substring(parentPath.src.lastIndexOf('/'));
     if (response) {
-        alert(activeID.replace('carousel', '') + " would be deleted");
-        deletePicture(activeID.replace('carousel', ''));
+        deletePicture(activeID.replace('carousel', ''), pathSrc);
     } else {}
 }
 
-function deletePicture(ID){
-    //let array = [activeID.replace('carousel', '')];
-    /*let temp = ; 
-    let data = {temp};*/
+function deletePicture(ID, Path){
     fetch('/api/deleteGallery', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ID}),
-    })/*
-    .then(response => 
-        response.json().then(data => ({
-        data: data,
-        status: response.status
-    }))
-    .then(res => {
-        array = res.data;
-        for (let i = res.data.length-1; i >= 0; i--){
-            temp = res.data[i];
-            //showGallery(temp.ID, temp.Type, temp.Path);
-        }}))*/
+        body: JSON.stringify({ID, Path}),
+    })
+    setTimeout(()=>{
+        location.reload();
+    }, "1000");
 }
 
 $(document).ready(function(){
@@ -112,4 +100,3 @@ $(document).ready(function(){
         document.getElementById(activeID).className = ("carousel-item");
     });
 });
-

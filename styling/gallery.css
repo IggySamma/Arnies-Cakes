@@ -48,3 +48,7 @@
     margin-right: auto;
     aspect-ratio: inherit;
 }
+
+.img-thumbnail{
+    cursor: pointer;
+  }

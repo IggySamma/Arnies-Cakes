@@ -1,6 +1,13 @@
-.adminIndexContainers{
-    width: 40vw;
-    height: 45vh;
+.deleteFromGallery{
+    height: 50vh;
+    background-color: #D3BBDD;
+}
+
+.uploadForm{
+    width: 850px;
+}
+
+.form{
     background-color: #D3BBDD;
 }
 
@@ -8,10 +15,8 @@
     /*top:250px;
     left: 2vw;*/
     /*position: absolute;*/
-    width: 30vw;
-    height: 40vh;
-    overflow-x: hidden;
-    overflow-x: visible;
+    width: 35vw;
+    height: 45vh;
 }
 
 .fullSize img {

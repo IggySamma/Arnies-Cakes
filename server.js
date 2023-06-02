@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require('express');
 const app = express();
 
@@ -16,11 +17,11 @@ const upload = multer({
 const mysql = require('mysql');
 const config = require('./bin/config.js');
 
-
 const connection = mysql.createConnection(config);
 const insert = 'INSERT INTO Gallery(Type, Path) Values(?, ?);';
 const selectAll = 'SELECT * FROM gallery;'
 const selectByType = "SELECT * FROM gallery WHERE Type = ?;";
+const selectByID = "SELECT * FROM Gallery WHERE ID = ?;";
 const deleteByID = "DELETE FROM Gallery WHERE ID= ?;";
 
 const path = require('path');
@@ -30,8 +31,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 app.use(express.static('/gallery/'));
 
-
-
 app.listen(3000, () => {
     console.log(`Server started...`);
 });
@@ -40,7 +39,6 @@ app.post('/api/upload', upload.array("myFiles"), uploadFiles);
 
 function uploadFiles(req, res) {
     for (var i = 0; i < req.files.length; i++) {
-        //insertNewToGallery(req.body.name, "./gallery/" + req.files[i].filename + req.files[i].mimetype.replace('image/', '.'));
         insertNewToGallery(req.body.name, "/gallery/" + req.files[i].filename);
     }
 }
@@ -83,14 +81,17 @@ app.post('/api/gallery', (req, res) => {
 });
 
 app.post('/api/deleteGallery', (req, res) => {  
-    let data = req.body
+    let data = req.body;
+    fs.unlink('./gallery/' + data.Path, (err) => {
+    if (err) throw err;
+    });
     connection.query(deleteByID, data.ID ,(error, result) => {
         if(result === undefined){
             res.json(new Error("Error rows is undefined"));
         }else{
             var obj = JSON.parse(JSON.stringify(result));
             res.json(obj);
-    }}); 
+    }});
 });
 
 app.post('/api/adminGallery', (req, res) => {  

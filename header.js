@@ -1,5 +1,3 @@
-/* Gallery */
-
 var urlParams = new URLSearchParams(window.location.search);
 var sectionName = urlParams.get('type');
 const select = document.getElementById('select-box');
@@ -36,12 +34,14 @@ $(document).ready(function(){
   });
 });
 
+
+
 function showGallery(ID, Type, Path){
   const domGalllery = document.getElementById('Gallery');
   const divContainer = document.createElement('div');
   const imgPath = document.createElement('img');
   domGalllery.appendChild(divContainer);
-  divContainer.className = (Type + " col m-2 p-3");
+  divContainer.className = (Type + " col m-2 p-3 pe-auto");
   divContainer.setAttribute("data-bs-toggle", "modal");
   divContainer.setAttribute("data-bs-target", "#modalImages");
   divContainer.setAttribute("id", ID);
