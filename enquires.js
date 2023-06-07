@@ -28,7 +28,7 @@ function submitEnquire(prevent){
     for(var pair of formData.entries()) {
         console.log(pair[0]+', '+pair[1]);
     }
-      /*headers: {'Content-Type': 'application/json'},*/
+    
     fetch('/api/submitEnquire', {
       method: 'POST',
 
