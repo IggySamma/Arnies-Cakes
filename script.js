@@ -8,7 +8,7 @@ function submitForm(file) {
     const files = document.getElementById("files");
     const formData = new FormData();
     formData.append("name", name.value);
-    for(let i =0; i < files.files.length; i++) {
+    for(let i = 0; i < files.files.length; i++) {
             formData.append("myFiles", files.files[i]);
     }
     fetch("/api/upload", {

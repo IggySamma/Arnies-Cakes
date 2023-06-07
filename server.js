@@ -12,6 +12,7 @@ const upload = multer({
             cb(undefined, true);
     },
 });
+const upload1 = multer();
 
 
 const mysql = require('mysql');
@@ -30,6 +31,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 app.use(express.static('/gallery/'));
+
 
 app.listen(3000, () => {
     console.log(`Server started...`);
@@ -103,4 +105,9 @@ app.post('/api/adminGallery', (req, res) => {
             var obj = JSON.parse(JSON.stringify(result));
             res.json(obj);
     }}); 
+});
+
+app.post('/api/submitEnquire', upload.array(), (req, res) => {
+    let data = req.body;
+    console.log(data);
 });

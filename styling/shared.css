@@ -50,6 +50,11 @@ body {
   z-index: -2;
 }
 
+.homeImage{
+  width: 400px;
+  height: 525px;
+}
+
 .homeImageContainer{
   pointer-events: none;
   transform: rotate(-21.5deg);
@@ -58,71 +63,73 @@ body {
   top: -600px;
 }
 
+
 @media only screen and (min-width: 0px) and (max-width: 1299px) {
   .homeImageContainer{
-    right: -110vw;
+      right: -110vw;
   }
 }
 
 
 @media only screen and (min-width: 1300px) and (max-width: 1399px) {
   .homeImageContainer{
-    right: -100vw;
+      right: -100vw;
   }
 }
 
 
 @media only screen and (min-width: 1400px) and (max-width: 1499px) {
   .homeImageContainer{
-    right: -90vw;
+      right: -90vw;
   }
 }
 
 @media only screen and (min-width: 1500px) and (max-width: 1599px) {
   .homeImageContainer{
-    right: -80vw;
+      right: -80vw;
   }
 }
 
 @media only screen and (min-width: 1600px) and (max-width: 1699px) {
   .homeImageContainer{
-    right: -70vw;
+      right: -70vw;
   }
 }
 
 @media only screen and (min-width: 1700px) and (max-width: 1784px) {
   .homeImageContainer{
-    right: -60vw;
+      right: -60vw;
   }
 }
 
 @media only screen and (min-width: 1785px) and (max-width: 2000px) {
   .homeImageContainer{
-    right: -50vw;
+      right: -50vw;
   }
 }
 
 @media only screen and (min-width: 2070px) {
   .homeImage{
-    width: 500px;
-    height: 650px;
+      width: 500px;
+      height: 650px;
   }
 }
 
 @media only screen and (min-width: 2300px) {
   .homeImage{
-    width: 600px;
-    height: 800px;
+      width: 600px;
+      height: 800px;
   }
 }
 
 @media only screen and (min-height: 1081px) {
   .homeBox{
-    width: 1400px;
-    height: 350px;
-    bottom: 100px;
+      width: 1400px;
+      height: 350px;
+      bottom: 100px;
   }
 }
+
 
 a{
   text-decoration: none;
@@ -150,13 +157,13 @@ a:active {
 }
 
 .imageAnimationL {
-  -webkit-animation: mover 25s linear infinite;
-  animation: mover 25s linear infinite;
+  -webkit-animation: mover 20s linear infinite;
+  animation: mover 20s linear infinite;
 }
 
 .imageAnimationR {
-  -webkit-animation: mover 30s linear infinite;
-  animation: mover 30s linear infinite;
+  -webkit-animation: mover 25s linear infinite;
+  animation: mover 25s linear infinite;
 }
 
 @-webkit-keyframes mover {
