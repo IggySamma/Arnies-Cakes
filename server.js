@@ -1,3 +1,24 @@
+require('dotenv').config();
+
+let config = {
+    host: process.env.SQL_HOST,
+    user: process.env.SQL_USER,
+    password: process.env.SQL_PASSWORD,
+    database: process.env.SQL_DATABASE
+};
+
+let transporter = nodemailer.createTransport({
+    host: process.env.GMAIL_HOST,
+    port: process.env.GMAIL_PORT,
+    secure: true,
+    auth: {
+        type: "OAuth2",
+        clientId: process.env.GMAIL_CLIENT_ID,
+        clientSecret: process.env.GMAIL_CLIENT_SECRET,
+    },
+});
+
+const nodemailer = require("nodemailer");
 const fs = require('fs');
 const express = require('express');
 const app = express();
