@@ -21,10 +21,21 @@ function submitEnquire(prevent){
         'fullName': document.getElementById("fullNameInput").value,
         'email': document.getElementById("emailInput").value
     };
+    console.log(document.getElementById("cakeCheckBox1").value);
     const formData = new FormData();
     formData.append('name', document.getElementById("fullNameInput").value);
     formData.append('email', document.getElementById("emailInput").value);
-
+    formData.append('dateNtime', document.getElementById("datetime").value);
+    formData.append('cakeQuantity', document.getElementById("cakeCheckBox1").value);
+    formData.append('cakepopsQuantity', document.getElementById("cakepopsCheckBox1").value);
+    formData.append('cakesiclesQuantity', document.getElementById("cakesiclesCheckBox1").value);
+    formData.append('cupcakesQuantity', document.getElementById("cupcakesCheckBox1").value);
+    formData.append('tdHeartQuantity', document.getElementById("3dheartCheckBox1").value);
+    formData.append('chocolateStrawberryQuantity', document.getElementById("chocolateStrawberryCheckBox1").value);
+    formData.append('giftboxQuantity', document.getElementById("giftBoxCheckBox1").value);
+    formData.append('profiterolesQuantity', document.getElementById("profiterolesCheckBox1").value);
+    formData.append('enquire', document.getElementById("enquireInput").value);
+    
     for(var pair of formData.entries()) {
         console.log(pair[0]+', '+pair[1]);
     }

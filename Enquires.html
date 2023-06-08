@@ -123,11 +123,11 @@
                         <form id="form" action="/api/submitEnquire" method="POST" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="fullNameInput" class="form-label">Full Name</label>
-                                <input type="text" class="form-control form-control-lg" id="fullNameInput" placeholder="Name">
+                                <input type="text" class="form-control form-control-lg" id="fullNameInput" placeholder="Name" required>
                             </div>
                             <div class="mb-3">
                                 <label for="emailInput" class="form-label">Email Address</label>
-                                <input type="email" class="form-control form-control-lg" id="emailInput" placeholder="name@example.com">
+                                <input type="email" class="form-control form-control-lg" id="emailInput" placeholder="name@example.com" required>
                             </div>
                         <div class="mb-3">
                             <label class="form-label">Date for collection</label>
@@ -161,17 +161,17 @@
                             <input type="number" id="cupcakesCheckBox1" for="cupcakesCheckBox" class="form-control mt-1 p-1 incrementalNumberBoxStyle d-inline-flex" placeholder="0" min="0" disabled>
                             <br>                            
                             <label class="form-label">Treats</label><br>
-                            <input class="form-check-input" type="checkbox" onclick="updatePlaceholder('tdheartCheckBox')" value="" id="tdheartCheckBox">
+                            <input class="form-check-input" type="checkbox" onclick="updatePlaceholder('3dheartCheckBox')" value="" id="3dheartCheckBox">
                             <label class="form-check-label" for="3dheartCheckBox">
                                 3D Chocolate heart
                             </label>
                             <input type="number" id="3dheartCheckBox1" for="3dheartCheckBox" class="form-control mt-1 p-1 incrementalNumberBoxStyle d-inline-flex" placeholder="0" min="0" disabled>
                             <br>
-                            <input class="form-check-input" type="checkbox" onclick="updatePlaceholder('chocolateStraberryCheckBox')" value="" id="chocolateStraberryCheckBox">
-                            <label class="form-check-label" for="chocolateStraberryCheckBox">
+                            <input class="form-check-input" type="checkbox" onclick="updatePlaceholder('chocolateStrawberryCheckBox')" value="" id="chocolateStrawberryCheckBox">
+                            <label class="form-check-label" for="chocolateStrawberryCheckBox">
                                 Chocolate covered strawberries
                             </label>
-                            <input type="number" id="chocolateStraberryCheckBox1" for="chocolateStraberryCheckBox" class="form-control mt-1 p-1 incrementalNumberBoxStyle d-inline-flex" placeholder="0" min="0" disabled>
+                            <input type="number" id="chocolateStrawberryCheckBox1" for="chocolateStrawberryCheckBox" class="form-control mt-1 p-1 incrementalNumberBoxStyle d-inline-flex" placeholder="0" min="0" disabled>
                             <br>
                             <input class="form-check-input" type="checkbox" onclick="updatePlaceholder('giftBoxCheckBox')" value="" id="giftBoxCheckBox">
                             <label class="form-check-label" for="giftBoxCheckBox">
