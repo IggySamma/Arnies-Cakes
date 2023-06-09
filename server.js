@@ -1,5 +1,49 @@
 require('dotenv').config();
 
+const nodemailer = require("nodemailer");
+const { google } = require("googleapis");
+const OAuth2 = google.auth.OAuth2;
+
+const oauth2Client = new OAuth2(
+    process.env.GMAIL_CLIENT_ID, // ClientID
+    process.env.GMAIL_CLIENT_SECRET, // Client Secret
+    "https://developers.google.com/oauthplayground/" // Redirect URL
+);
+
+oauth2Client.setCredentials({
+    refresh_token: process.env.GMAIL_REFRESH_TOKEN,
+});
+const accessToken = oauth2Client.getAccessToken()
+
+
+let emailTransporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+            type: "OAuth2",
+            user: process.env.GMAIL_USER, 
+            clientId: process.env.GMAIL_CLIENT_ID,
+            clientSecret: process.env.GMAIL_CLIENT_SECRET,
+            refreshToken: process.env.GMAIL_REFRESH_TOKEN,
+            accessToken: accessToken
+    },
+    tls: {
+        rejectUnauthorized: false
+    },
+});
+
+const mailOptions = {
+    from: "arniescakes@gmail.com",
+    to: "ignasfb@yahoo.ie",
+    subject: "Node.js Email with Secure OAuth",
+    generateTextFromHTML: true,
+    html: "<b>test</b>"
+};
+
+emailTransporter.sendMail(mailOptions, (error, response) => {
+    error ? console.log(error) : console.log(response);
+    emailTransporter.close();
+});
+
 let config = {
     host: process.env.SQL_HOST,
     user: process.env.SQL_USER,
@@ -7,18 +51,6 @@ let config = {
     database: process.env.SQL_DATABASE
 };
 
-let transporter = nodemailer.createTransport({
-    host: process.env.GMAIL_HOST,
-    port: process.env.GMAIL_PORT,
-    secure: true,
-    auth: {
-        type: "OAuth2",
-        clientId: process.env.GMAIL_CLIENT_ID,
-        clientSecret: process.env.GMAIL_CLIENT_SECRET,
-    },
-});
-
-const nodemailer = require("nodemailer");
 const fs = require('fs');
 const express = require('express');
 const app = express();
@@ -33,11 +65,10 @@ const upload = multer({
             cb(undefined, true);
     },
 });
+
 const upload1 = multer();
 
-
 const mysql = require('mysql');
-const config = require('./bin/config.js');
 
 const connection = mysql.createConnection(config);
 const insert = 'INSERT INTO Gallery(Type, Path) Values(?, ?);';
@@ -69,8 +100,6 @@ function uploadFiles(req, res) {
 app.get('/login', function(req, res) {
     res.sendFile(path.join(__dirname, '/login.html'));
 });
-
-
 
 function insertNewToGallery(newType, newPath) {
     let newImage = [
@@ -131,4 +160,15 @@ app.post('/api/adminGallery', (req, res) => {
 app.post('/api/submitEnquire', upload.array(), (req, res) => {
     let data = req.body;
     console.log(data);
+    sendEmail();
 });
+
+async function sendEmail(){
+    emailTransporter.sendMail({
+        from: "arniescakes@gmail.com",
+        to: "ignasfb@yahoo.ie",
+        subject: "Message",
+        text: "I hope this message gets through!",
+    });
+};
+

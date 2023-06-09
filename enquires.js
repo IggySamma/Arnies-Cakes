@@ -42,7 +42,6 @@ function submitEnquire(prevent){
     
     fetch('/api/submitEnquire', {
       method: 'POST',
-
       body: formData,
     })/*,
     setTimeout(()=>{
