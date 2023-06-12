@@ -31,19 +31,6 @@ let emailTransporter = nodemailer.createTransport({
     },
 });
 
-const mailOptions = {
-    from: "arniescakes@gmail.com",
-    to: "ignasfb@yahoo.ie",
-    subject: "Node.js Email with Secure OAuth",
-    generateTextFromHTML: true,
-    html: "<b>test</b>"
-};
-
-emailTransporter.sendMail(mailOptions, (error, response) => {
-    error ? console.log(error) : console.log(response);
-    emailTransporter.close();
-});
-
 let config = {
     host: process.env.SQL_HOST,
     user: process.env.SQL_USER,
@@ -158,17 +145,78 @@ app.post('/api/adminGallery', (req, res) => {
 });
 
 app.post('/api/submitEnquire', upload.array(), (req, res) => {
-    let data = req.body;
+    let data = JSON.parse(JSON.stringify(req.body));
     console.log(data);
-    sendEmail();
+    sendEmailToSelf('1', data);
+    sendEmailAutoReply('1', data);
 });
 
-async function sendEmail(){
-    emailTransporter.sendMail({
+function sendEmailToSelf(enqNum, data){
+    const enquireToSelf = {
         from: "arniescakes@gmail.com",
-        to: "ignasfb@yahoo.ie",
-        subject: "Message",
-        text: "I hope this message gets through!",
+        to: "arniescakes@gmail.com",
+        subject: "Enquire: Number - " + enqNum,
+        generateTextFromHTML: true,
+        html: '<div>Name: ' + data.name.charAt(0).toUpperCase() + data.name.slice(1).toLowerCase() + 
+        '<br></div><div>Email: ' + data.email + 
+        '<br></div><div>Date: ' + data.dateNtime + 
+        '<br><br></div><div>Cakes: ' + data.cakeQuantity + 
+        '<br></div><div>Cakepops: ' + data.cakepopsQuantity + 
+        '<br></div><div>Cakesicles: ' + data.cakesiclesQuantity + 
+        '<br></div><div>Cupcakes: ' + data.cupcakesQuantity + 
+        '<br></div><div>3d Heart: ' + data.tdHeartQuantity + 
+        '<br></div><div>Chocolate Strawberries: ' + data.chocolateStrawberryQuantity + 
+        '<br></div><div>Gift Box: ' + data.giftboxQuantity + 
+        '<br></div><div>Profiteroles: ' + data.profiterolesQuantity + 
+        '<br><br></div><div>Enquire: ' + data.enquire + 
+        '<br></div>',
+    };
+
+    emailTransporter.sendMail(enquireToSelf, (error, response) => {
+        error ? console.log(error) : console.log(response);
+        emailTransporter.close();
     });
 };
 
+function sendEmailAutoReply(enqNum, data){
+    const enquireToSelf = {
+        from: "arniescakes@gmail.com",
+        to: data.email,
+        subject: "Enquire: Number - " + enqNum,
+        generateTextFromHTML: true,
+        html: '<div>Hi ' + data.name.charAt(0).toUpperCase() + data.name.slice(1).toLowerCase() + 
+        '<br><br></div><div>Thank you for your enquire, we will get back to you as soon as possible.' +
+        '<br></div><div>Below is a copy of your enquire, if any issues please reply to this email.' + 
+        '<br><br></div><div>Date: ' + data.dateNtime + 
+        '<br><br></div><div>Cakes: ' + data.cakeQuantity + 
+        '<br></div><div>Cakepops: ' + data.cakepopsQuantity + 
+        '<br></div><div>Cakesicles: ' + data.cakesiclesQuantity + 
+        '<br></div><div>Cupcakes: ' + data.cupcakesQuantity + 
+        '<br></div><div>3d Heart: ' + data.tdHeartQuantity + 
+        '<br></div><div>Chocolate Strawberries: ' + data.chocolateStrawberryQuantity + 
+        '<br></div><div>Gift Box: ' + data.giftboxQuantity + 
+        '<br></div><div>Profiteroles: ' + data.profiterolesQuantity + 
+        '<br><br></div><div>Enquire: ' + data.enquire + 
+        '<br></div>',
+    };
+
+    emailTransporter.sendMail(enquireToSelf, (error, response) => {
+        error ? console.log(error) : console.log(response);
+        emailTransporter.close();
+    });
+};
+
+
+/*
+const mailOptions = {
+    from: "arniescakes@gmail.com",
+    to: "ignasfb@yahoo.ie",
+    subject: "Node.js Email with Secure OAuth",
+    generateTextFromHTML: true,
+    html: "<b>test</b>"
+};
+
+emailTransporter.sendMail(mailOptions, (error, response) => {
+    error ? console.log(error) : console.log(response);
+    emailTransporter.close();
+});*/
