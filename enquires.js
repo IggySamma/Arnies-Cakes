@@ -35,7 +35,7 @@ function submitEnquire(prevent){
     formData.append('giftboxQuantity', document.getElementById("giftBoxCheckBox1").value);
     formData.append('profiterolesQuantity', document.getElementById("profiterolesCheckBox1").value);
     formData.append('enquire', document.getElementById("enquireInput").value);
-    /*
+    /* Checking in console if forms added correctly
     for(var pair of formData.entries()) {
         console.log(pair[0]+', '+pair[1]);
     }*/

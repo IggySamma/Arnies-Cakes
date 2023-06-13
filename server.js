@@ -13,6 +13,7 @@ const oauth2Client = new OAuth2(
 oauth2Client.setCredentials({
     refresh_token: process.env.GMAIL_REFRESH_TOKEN,
 });
+
 const accessToken = oauth2Client.getAccessToken()
 
 
@@ -201,22 +202,7 @@ function sendEmailAutoReply(enqNum, data){
     };
 
     emailTransporter.sendMail(enquireToSelf, (error, response) => {
-        error ? console.log(error) : console.log(response);
+        error ? console.log(error) : console.log('');
         emailTransporter.close();
     });
 };
-
-
-/*
-const mailOptions = {
-    from: "arniescakes@gmail.com",
-    to: "ignasfb@yahoo.ie",
-    subject: "Node.js Email with Secure OAuth",
-    generateTextFromHTML: true,
-    html: "<b>test</b>"
-};
-
-emailTransporter.sendMail(mailOptions, (error, response) => {
-    error ? console.log(error) : console.log(response);
-    emailTransporter.close();
-});*/
