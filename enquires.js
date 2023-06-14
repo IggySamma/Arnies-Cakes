@@ -14,14 +14,9 @@ function updatePlaceholder(id) {
 const form = document.getElementById("form");
 form.addEventListener("submit", submitEnquire);
 
-function submitEnquire(prevent){
-    prevent.preventDefault();
-    let array = [];
-    let data = {
-        'fullName': document.getElementById("fullNameInput").value,
-        'email': document.getElementById("emailInput").value
-    };
-    console.log(document.getElementById("cakeCheckBox1").value);
+function submitEnquire(file){
+    file.preventDefault();
+    const files = document.getElementById("files");
     const formData = new FormData();
     formData.append('name', document.getElementById("fullNameInput").value);
     formData.append('email', document.getElementById("emailInput").value);
@@ -35,6 +30,9 @@ function submitEnquire(prevent){
     formData.append('giftboxQuantity', document.getElementById("giftBoxCheckBox1").value);
     formData.append('profiterolesQuantity', document.getElementById("profiterolesCheckBox1").value);
     formData.append('enquire', document.getElementById("enquireInput").value);
+    for(let i = 0; i < files.files.length; i++) {
+            formData.append("clientPhotos", files.files[i]);
+    }
     /* Checking in console if forms added correctly
     for(var pair of formData.entries()) {
         console.log(pair[0]+', '+pair[1]);

@@ -54,6 +54,15 @@ const upload = multer({
     },
 });
 
+const clientUpload = multer({
+    fileFilter(req, file, cb) {
+        if (!file.originalname.match(/\.(png|jpg|jpeg)$/)){
+            cb(new Error('Please upload an image.'));
+        }
+            cb(undefined, true);
+    },
+});
+
 const upload1 = multer();
 
 const mysql = require('mysql');
@@ -85,10 +94,6 @@ function uploadFiles(req, res) {
     }
 }
 
-app.get('/login', function(req, res) {
-    res.sendFile(path.join(__dirname, '/login.html'));
-});
-
 function insertNewToGallery(newType, newPath) {
     let newImage = [
         Type = newType,
@@ -98,6 +103,10 @@ function insertNewToGallery(newType, newPath) {
         if (error) throw error;
      });
 }
+
+app.get('/login', function(req, res) {
+    res.sendFile(path.join(__dirname, '/login.html'));
+});
 
 app.post('/api/gallery', (req, res) => {  
     let data = req.body
@@ -145,14 +154,30 @@ app.post('/api/adminGallery', (req, res) => {
     }}); 
 });
 
-app.post('/api/submitEnquire', upload.array(), (req, res) => {
+app.post('/api/submitEnquire', clientUpload.array("clientPhotos"), (req, res) => {
     let data = JSON.parse(JSON.stringify(req.body));
-    console.log(data);
-    sendEmailToSelf('1', data);
-    sendEmailAutoReply('1', data);
+    let photos = req.files;
+    let adjData = isNotEmptyEnquire(data);
+    let textBody = '';
+    for (var i = 0; i < Object.keys(adjData).length; i++){
+        textBody += "<div>" + Object.keys(adjData)[i] + ": " + Object.values(adjData)[i] +"</div>";
+    }
+    sendEmailToSelf('1', data, textBody, photos);
+    sendEmailAutoReply('1', data, textBody, photos);
+    //res.redirect("./Enquires.html");
 });
 
-function sendEmailToSelf(enqNum, data){
+function isNotEmptyEnquire(data){
+    let adjData = {};
+    for (var i = 3; i < Object.keys(data).length; i++) {
+        if (Object.values(data)[i] != "") {
+            adjData[Object.keys(data)[i].replace('Quantity','').charAt(0).toUpperCase() + Object.keys(data)[i].replace('Quantity','').slice(1).toLowerCase()] = Object.values(data)[i];
+        }
+    };
+    return adjData;
+};
+
+function sendEmailToSelf(enqNum, data, textBody, photos){
     const enquireToSelf = {
         from: "arniescakes@gmail.com",
         to: "arniescakes@gmail.com",
@@ -161,25 +186,20 @@ function sendEmailToSelf(enqNum, data){
         html: '<div>Name: ' + data.name.charAt(0).toUpperCase() + data.name.slice(1).toLowerCase() + 
         '<br></div><div>Email: ' + data.email + 
         '<br></div><div>Date: ' + data.dateNtime + 
-        '<br><br></div><div>Cakes: ' + data.cakeQuantity + 
-        '<br></div><div>Cakepops: ' + data.cakepopsQuantity + 
-        '<br></div><div>Cakesicles: ' + data.cakesiclesQuantity + 
-        '<br></div><div>Cupcakes: ' + data.cupcakesQuantity + 
-        '<br></div><div>3d Heart: ' + data.tdHeartQuantity + 
-        '<br></div><div>Chocolate Strawberries: ' + data.chocolateStrawberryQuantity + 
-        '<br></div><div>Gift Box: ' + data.giftboxQuantity + 
-        '<br></div><div>Profiteroles: ' + data.profiterolesQuantity + 
-        '<br><br></div><div>Enquire: ' + data.enquire + 
-        '<br></div>',
+        '<br><br></div>' + textBody,     
+        attachments: [{
+            filename: photos[0].originalname,
+            content: photos[0].buffer,
+        }],
     };
 
     emailTransporter.sendMail(enquireToSelf, (error, response) => {
-        error ? console.log(error) : console.log(response);
+        error ? console.log(error) : console.log('');
         emailTransporter.close();
     });
 };
 
-function sendEmailAutoReply(enqNum, data){
+function sendEmailAutoReply(enqNum, data, textBody, photos){
     const enquireToSelf = {
         from: "arniescakes@gmail.com",
         to: data.email,
@@ -188,17 +208,11 @@ function sendEmailAutoReply(enqNum, data){
         html: '<div>Hi ' + data.name.charAt(0).toUpperCase() + data.name.slice(1).toLowerCase() + 
         '<br><br></div><div>Thank you for your enquire, we will get back to you as soon as possible.' +
         '<br></div><div>Below is a copy of your enquire, if any issues please reply to this email.' + 
-        '<br><br></div><div>Date: ' + data.dateNtime + 
-        '<br><br></div><div>Cakes: ' + data.cakeQuantity + 
-        '<br></div><div>Cakepops: ' + data.cakepopsQuantity + 
-        '<br></div><div>Cakesicles: ' + data.cakesiclesQuantity + 
-        '<br></div><div>Cupcakes: ' + data.cupcakesQuantity + 
-        '<br></div><div>3d Heart: ' + data.tdHeartQuantity + 
-        '<br></div><div>Chocolate Strawberries: ' + data.chocolateStrawberryQuantity + 
-        '<br></div><div>Gift Box: ' + data.giftboxQuantity + 
-        '<br></div><div>Profiteroles: ' + data.profiterolesQuantity + 
-        '<br><br></div><div>Enquire: ' + data.enquire + 
-        '<br></div>',
+        '<br><br></div>' + textBody,
+        attachments: [{
+            filename: photos[0].originalname,
+            content: photos[0].buffer,
+        }],
     };
 
     emailTransporter.sendMail(enquireToSelf, (error, response) => {
