@@ -161,10 +161,10 @@ app.post('/api/submitEnquire', clientUpload.array("clientPhotos"), (req, res) =>
     let textBody = '';
     for (var i = 0; i < Object.keys(adjData).length; i++){
         textBody += "<div>" + Object.keys(adjData)[i] + ": " + Object.values(adjData)[i] +"</div>";
-    }
+    };
     sendEmailToSelf('1', data, textBody, photos);
     sendEmailAutoReply('1', data, textBody, photos);
-    //res.redirect("./Enquires.html");
+    res.sendStatus(200);
 });
 
 function isNotEmptyEnquire(data){
@@ -183,19 +183,21 @@ function sendEmailToSelf(enqNum, data, textBody, photos){
         to: "arniescakes@gmail.com",
         subject: "Enquire: Number - " + enqNum,
         generateTextFromHTML: true,
-        html: '<div>Name: ' + data.name.charAt(0).toUpperCase() + data.name.slice(1).toLowerCase() + 
-        '<br></div><div>Email: ' + data.email + 
-        '<br></div><div>Date: ' + data.dateNtime + 
-        '<br><br></div>' + textBody,     
+        html: '<div style="margin:auto; padding:auto; position: relative; height: 300px; width: 300px;"><img src="cid:logo" style="height: 300px; width: 300px;"></div><div style="margin:auto; padding: 3px 3px 3px 3px; text-align: center; position: relative; top: 220px; height: auto; background-color: #D3BBDD; border-radius: 8px;"><p>Name: ' + data.name.charAt(0).toUpperCase() + data.name.slice(1).toLowerCase() + '</p><p>Email: ' + data.email + '</p><p>Date: ' + data.dateNtime + '</p><p>' + textBody + '</p></div>',    
         attachments: [{
-            filename: photos[0].originalname,
-            content: photos[0].buffer,
-        }],
+            filename: photos[0].originalname, 
+            content: photos[0].buffer, 
+        },
+        {
+            filename: "Logo.png",
+            path: "./index images/home logo.png",
+            cid: "logo"
+        }
+        ],
     };
 
     emailTransporter.sendMail(enquireToSelf, (error, response) => {
-        error ? console.log(error) : console.log('');
-        emailTransporter.close();
+        error ? console.log(error) : emailTransporter.close();
     });
 };
 
@@ -203,20 +205,21 @@ function sendEmailAutoReply(enqNum, data, textBody, photos){
     const enquireToSelf = {
         from: "arniescakes@gmail.com",
         to: data.email,
-        subject: "Enquire: Number - " + enqNum,
+        subject: "Arnies Cakes Enquire: Number - " + enqNum,
         generateTextFromHTML: true,
-        html: '<div>Hi ' + data.name.charAt(0).toUpperCase() + data.name.slice(1).toLowerCase() + 
-        '<br><br></div><div>Thank you for your enquire, we will get back to you as soon as possible.' +
-        '<br></div><div>Below is a copy of your enquire, if any issues please reply to this email.' + 
-        '<br><br></div>' + textBody,
+        html: '<div style="margin:auto; padding:auto; position: relative; height: 300px; width: 300px;"><img src="cid:logo" style="height: 300px; width: 300px;"></div><div style="margin:auto; padding: 3px 3px 3px 3px; text-align: center; position: relative; top: 220px; height: auto; background-color: #D3BBDD; border-radius: 8px;"><h3>Hi ' + data.name.charAt(0).toUpperCase() + data.name.slice(1).toLowerCase() + '</h3><p>Thank you for your enquire, we will get back to you as soon as possible.</p><p>Below is a copy of your enquire, if there is any issues please reply to this email.</p><p>' + textBody + '</p></div>',
         attachments: [{
             filename: photos[0].originalname,
             content: photos[0].buffer,
+        },
+        {
+            filename: "Logo.png",
+            path: "./index images/home logo.png",
+            cid: "logo"
         }],
     };
 
     emailTransporter.sendMail(enquireToSelf, (error, response) => {
-        error ? console.log(error) : console.log('');
-        emailTransporter.close();
+        error ? console.log(error) : emailTransporter.close();
     });
 };

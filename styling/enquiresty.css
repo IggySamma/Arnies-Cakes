@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Belleza';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Belleza-Regular'), url('./fonts/Belleza-Regular.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'Halimun';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Halimun'), url('./fonts/Halimun.ttf') format('truetype');
+  }

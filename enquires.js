@@ -41,19 +41,9 @@ function submitEnquire(file){
     fetch('/api/submitEnquire', {
       method: 'POST',
       body: formData,
-    })/*,
-    setTimeout(()=>{
-        location.reload();
-    }, "1000")
-    /*.then(response => 
-      response.json().then(data => ({
-          data: data,
-          status: response.status
-      }))
-      .then(res => {
-        array = res.data;
-      for (let i = res.data.length-1; i >= 0; i--){
-        temp = res.data[i];
-        /*showGallery(temp.ID, temp.Type, temp.Path);
-      }}))*/
-  }
+    })
+    .then((res) => {
+      setTimeout(()=>{
+        window.location.href = "/enquiresty.html";
+    }), "2000"});
+};

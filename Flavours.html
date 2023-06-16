@@ -20,8 +20,8 @@
     </head>
     <header>
         <nav class="navbar fixed-top navbar-expand-sm navbar-dark shadow-5-strong">
-            <hr class="hr-line">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <hr class="hr-line" id="hrline">
+                <button class="navbar-toggler" type="button" id="toggling" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
@@ -46,11 +46,26 @@
                             <a class="nav-link fontsize" href="./Flavours.html">Flavours</a>
                         </li>
                         <li class="nav-item active m-4 me-5 ms-5 pe-5 ps-5">
+                            <!--<img class="ribbon" src="./Index Images/Ribbon end.svg">-->
                             <img class="ribbon" src="./Index Images/ribbon.png">
                             <a class="nav-link fontsize" href="./Enquires.html">Enquires</a>
                         </li>
                     </ul>
                 </div>
+                <script>
+                    document.getElementById("toggling").addEventListener("click", updateHrLine);
+                    function updateHrLine(){
+                        const check1 = document.getElementById("navbarSupportedContent");
+                        const line = document.getElementById("hrline");
+                        if (check1.classList.contains('show') !== true) {
+                            line.style.border = '35vh solid #D3BBDD';
+                            console.log("show1");
+                        } else {
+                            line.style.border = '20px solid #D3BBDD';
+                            console.log("close");
+                        };
+                    };
+                </script>
         </nav>
     </header>
     <body>
