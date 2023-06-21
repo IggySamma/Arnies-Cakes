@@ -41,7 +41,7 @@ function showGallery(ID, Type, Path){
   const divContainer = document.createElement('div');
   const imgPath = document.createElement('img');
   domGalllery.appendChild(divContainer);
-  divContainer.className = (Type + " col m-2 p-3 pe-auto");
+  divContainer.className = (Type + " col m-1 p-1 pe-auto");
   divContainer.setAttribute("data-bs-toggle", "modal");
   divContainer.setAttribute("data-bs-target", "#modalImages");
   divContainer.setAttribute("id", ID);
