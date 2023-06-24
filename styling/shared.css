@@ -162,6 +162,60 @@ a.homeBoxLinks:nth-child(2){
 }
 
 
+
+@media only screen and (min-width: 1300px) and (max-width: 1399px) {
+  .homeImageContainer{
+      right: -100vw;
+  }
+}
+
+
+@media only screen and (min-width: 1400px) and (max-width: 1499px) {
+  .homeImageContainer{
+      right: -90vw;
+  }
+}
+
+@media only screen and (min-width: 1500px) and (max-width: 1599px) {
+  .homeImageContainer{
+      right: -80vw;
+  }
+}
+
+@media only screen and (min-width: 1600px) and (max-width: 1699px) {
+  .homeImageContainer{
+      right: -70vw;
+  }
+}
+
+@media only screen and (min-width: 1700px) and (max-width: 1784px) {
+  .homeImageContainer{
+      right: -60vw;
+  }
+}
+
+@media only screen and (min-width: 1785px) and (max-width: 2000px) {
+  .homeImageContainer{
+      right: -50vw;
+  }
+}
+
+@media only screen and (min-width: 2070px) {
+  .homeImage{
+      width: 500px;
+      height: 650px;
+  }
+}
+
+@media only screen and (min-width: 2300px) {
+  .homeImage{
+      width: 600px;
+      height: 800px;
+  }
+}
+
+
+
 /* back up */
 
 /*

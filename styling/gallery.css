@@ -42,13 +42,14 @@
 
 @media only screen and (min-width: 576px){
     .sort { 
-        top: 130px;
-        right: 0px;
+        top: 42.5px;
+        left: 38.5vw;
+        position: relative;
         width: 20vw;
     }
 
     .fullSize {
-        top: 200px;
+        top: 220px;
         left: 2vw;
         position: absolute;
         width: 98vw;
@@ -72,6 +73,7 @@
         max-width: 15vw;
         min-width: 250px;
         object-fit: cover;
+        z-index: 10;
         -webkit-transform: scale(1.1);
         transform: scale(1.1);
         aspect-ratio: 5/7;

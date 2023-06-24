@@ -13,6 +13,78 @@
   
 .enquiresContent{
     width: 100vw;
+    position: fixed;
+    float: left;
+    clear: left;
+    overflow: hidden;
+}
+
+.enquiresWrapper{
+    width: 100%;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+
+.behindBoxEnquires {
+    text-align: center;
+    width: 98vw;
+    left: 1vw;
+    right: 1vw;
+    background-color: #ECE3F0;
+    position: relative;
+}
+
+.behindBoxEnquires h1{
+    font-family: 'Halimun';
+}
+
+.enquiresBox{
+    width: 98w;
+    left: 1vw;
+    right: 1vw;
+    margin-right: 1vw; 
+    margin-left: 1vw;
+    padding-right: 1vw; 
+    padding-left: 1vw;
+    bottom:0px;
+    background-color: #D3BBDD;
+    position: relative;
+    /*overflow-y: scroll;*/
+}
+
+.datetime {
+    border: 0px;
+    font-size: 25px;
+}
+
+.incrementalNumberBoxStyle{
+    width: 60px;
+    height: 34px;
+    right: 1vw;
+    position: absolute;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* backup
+
+.userForm {
+    position: relative;
+    top: 2vh;
+}
+  
+  
+.enquiresContainer{
+    height: 100%;
+    width: 100%;
+    float: left;
+    clear: left;
+}
+  
+.enquiresContent{
+    width: 100vw;
     top: 150px;
     position: fixed;
     height: 150%;
@@ -56,7 +128,7 @@
     bottom:0px;
     background-color: #D3BBDD;
     position: relative;
-    /*overflow-y: scroll;*/
+    /*overflow-y: scroll;
 }
 
 .datetime {
@@ -73,3 +145,4 @@
     font-weight: bold;
     text-align: center;
 }
+*/
