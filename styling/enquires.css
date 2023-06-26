@@ -1,19 +1,21 @@
 .userForm {
     position: relative;
-    top: 2vh;
+    width: 98vw;
+    left: 0px;
 }
-  
-  
+    
 .enquiresContainer{
-    height: 100%;
-    width: 100%;
-    float: left;
-    clear: left;
+    top: 60px;
+    left: 1vw;
+    right: 1vw;
+    width: 98vw;
+    position: absolute;
+    overflow-x: hidden;
 }
   
 .enquiresContent{
     width: 100vw;
-    position: fixed;
+    position: relative;
     float: left;
     clear: left;
     overflow: hidden;
@@ -21,18 +23,16 @@
 
 .enquiresWrapper{
     width: 100%;
-    overflow: scroll;
+    overflow: hidden;
     overflow-x: hidden;
 }
 
-
 .behindBoxEnquires {
     text-align: center;
-    width: 98vw;
-    left: 1vw;
-    right: 1vw;
+    width: 94vw;
+    left: 2vw;
+    right: 2vw;
     background-color: #ECE3F0;
-    position: relative;
 }
 
 .behindBoxEnquires h1{
@@ -40,109 +40,108 @@
 }
 
 .enquiresBox{
-    width: 98w;
-    left: 1vw;
-    right: 1vw;
+    width: 94vw;
+    left: 2vw;
+    right: 2vw;
     margin-right: 1vw; 
     margin-left: 1vw;
     padding-right: 1vw; 
     padding-left: 1vw;
-    bottom:0px;
     background-color: #D3BBDD;
-    position: relative;
+
     /*overflow-y: scroll;*/
 }
 
 .datetime {
     border: 0px;
-    font-size: 25px;
+    font-size: 20px;
 }
 
 .incrementalNumberBoxStyle{
-    width: 60px;
-    height: 34px;
+    width: 50px;
+    height: 28px;
     right: 1vw;
     position: absolute;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
     text-align: center;
 }
 
-/* backup
-
-.userForm {
-    position: relative;
-    top: 2vh;
-}
-  
-  
-.enquiresContainer{
-    height: 100%;
-    width: 100%;
-    float: left;
-    clear: left;
-}
-  
-.enquiresContent{
-    width: 100vw;
-    top: 150px;
-    position: fixed;
-    height: 150%;
-    float: left;
-    clear: left;
-    overflow: hidden;
+.fontsizeEnquires {
+    font-size: 22px;
+    /*font-weight: bold;*/
 }
 
-.enquiresWrapper{
-    width: 100%;
-    left: 0px;
-    bottom: 0px;
-    height: 85vh;
-    overflow: scroll;
-    overflow-x: hidden;
+@media only screen and (min-width: 800px){
+    .userForm {
+        position: relative;
+        left: 0px;
+    }
+        
+    .enquiresContainer{
+        top: 150px;
+        left: 1vw;
+        right: 1vw;
+        width: 98vw;
+        position: absolute;
+        overflow-x: hidden;
+    }
+      
+    .enquiresContent{
+        width: 100vw;
+        position: relative;
+        float: left;
+        clear: left;
+        overflow: hidden;
+    }
+    
+    .enquiresWrapper{
+        width: 100%;
+        overflow: hidden;
+        overflow-x: hidden;
+    }
+    
+    .behindBoxEnquires {
+        text-align: center;
+        width: 22.5vw;
+        left: 2vw;
+        right: 2vw;
+        background-color: #ECE3F0;
+    }
+    
+    .behindBoxEnquires h1{
+        font-family: 'Halimun';
+    }
+    
+    .enquiresBox{
+        width: 40vw;
+        left: 6vw;
+        margin-right: 1vw; 
+        margin-left: 1vw;
+        padding-right: 1vw; 
+        padding-left: 1vw;
+        background-color: #D3BBDD;
+        position: relative;
+        /*overflow-y: scroll;*/
+    }
+    
+    .datetime {
+        border: 0px;
+        font-size: 20px;
+    }
+    
+    .incrementalNumberBoxStyle{
+        width: 50px;
+        height: 28px;
+        right: 1vw;
+        position: absolute;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+    }
+    
+    .fontsizeEnquires {
+        font-size: 22px;
+        /*font-weight: bold;*/
+    }
 }
-
-
-.behindBoxEnquires {
-    text-align: center;
-    width: 22.5vw;
-    top: 100px;
-    left: 3vw;
-    background-color: #ECE3F0;
-    position: relative;
-}
-
-.behindBoxEnquires h1{
-    font-family: 'Halimun';
-}
-
-.enquiresBox{
-    top: 50px;
-    width: 40vw;
-    height: 1350px;
-    left: 6vw;
-    margin-right: 1vw; 
-    margin-left: 1vw;
-    padding-right: 1vw; 
-    padding-left: 1vw;
-    bottom:0px;
-    background-color: #D3BBDD;
-    position: relative;
-    /*overflow-y: scroll;
-}
-
-.datetime {
-    border: 0px;
-    font-size: 25px;
-}
-
-.incrementalNumberBoxStyle{
-    width: 60px;
-    height: 34px;
-    right: 1vw;
-    position: absolute;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-}
-*/

@@ -11,6 +11,11 @@ function updatePlaceholder(id) {
     }
 }
 
+const date = new Date();
+const minDate = new Date().setDate(date.getDate() + 3);
+document.getElementById("datetime").min = new Date(minDate).toISOString().slice(0, 16);
+document.getElementById("datetime").defaultValue = new Date(minDate).toISOString().slice(0, 16);
+
 const form = document.getElementById("form");
 form.addEventListener("submit", submitEnquire);
 

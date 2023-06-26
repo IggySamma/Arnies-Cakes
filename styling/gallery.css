@@ -1,11 +1,11 @@
 .sort{
     left: 2vw;
+    width: 94vw;
     right: 2vw;
 }
 
 .fullSize {
     top: 140px;
-    left: 2vw;
     width: 98vw;
     position: absolute;
     overflow-x: hidden;
@@ -42,9 +42,9 @@
 
 @media only screen and (min-width: 576px){
     .sort { 
-        top: 42.5px;
-        left: 38.5vw;
-        position: relative;
+        top: 150px;
+        left: 75vw;
+        position: absolute;
         width: 20vw;
     }
 
