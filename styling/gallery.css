@@ -42,10 +42,12 @@
 
 @media only screen and (min-width: 576px){
     .sort { 
-        top: 150px;
-        left: 75vw;
-        position: absolute;
+        top: 85px;
+        /*left: 78vw;*/
+        position: relative;
+        float: right;
         width: 20vw;
+        left: -30px;
     }
 
     .fullSize {
@@ -58,9 +60,9 @@
     }
 
     .fullSize img {
-        max-width: 15vw;
+        max-width: 350px;
         min-width: 250px;
-        max-height: 40vh;
+        /*max-height: 40vh;*/
         object-fit: cover;
         -webkit-transform: scale(1);
         transform: scale(1);

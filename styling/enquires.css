@@ -72,6 +72,16 @@
     /*font-weight: bold;*/
 }
 
+.cakeFlavours{
+    visibility: hidden;
+    height: 0px;
+}
+
+input[type="checkbox"]:checked > .cakeFlavours{
+    visibility: visible;
+    height: 20px;
+}
+
 @media only screen and (min-width: 800px){
     .userForm {
         position: relative;
@@ -144,4 +154,5 @@
         font-size: 22px;
         /*font-weight: bold;*/
     }
+
 }

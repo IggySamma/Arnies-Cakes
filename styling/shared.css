@@ -17,7 +17,7 @@ body {
   padding-top: 70px;
   font-family: 'Belleza';
   width: 100vw;
-  overflow-x: hidden;
+  overflow: hidden;
   /*overflow-y: scroll;*/
 }
 

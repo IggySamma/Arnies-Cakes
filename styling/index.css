@@ -1,11 +1,11 @@
 /* ============================================== Home Page */
 
 .contain{
-    top: 60px;
+    top: 50px;
     left: .5vw;
     right: 1vw;
     width: 97vw;
-    height: 100%;
+    height: 90%;
     position: fixed;
     overflow-x: hidden;
 }
@@ -34,7 +34,6 @@
 .homeBoxLinks{
     font-size: 20px;
     font-weight: bold;
-    margin: auto 0 auto 0;
     width: 90%;
     height: 50px;
     visibility: hidden;
@@ -44,7 +43,6 @@
 .homeIconsRow{
     position: relative;
     height: 60px;
-    width: 96%;
 }
 
 .homeTextBox{
@@ -73,12 +71,28 @@
     /*font-weight: bold;*/
 }
 
+.homeBoxLinksWrapper1{
+    position: absolute;
+    left: 0px;
+}
+
+.homeBoxLinksWrapper2{
+    position: absolute;
+    left: 40%;
+}
+
+.homeBoxLinksWrapper3{
+    position: relative;
+    left: 80%;
+}
+
 @media only screen and (min-width: 576px){
     .contain{
-        top: 150px;
+        top: 100px;
         left: 1vw;
         right: 1vw;
         width: 98vw;
+        height: 85vh;
         position: absolute;
         overflow-x: hidden;
     }
@@ -105,30 +119,47 @@
         clip-path: polygon(0 0, 90% 0%, 100% 100%, 0% 100%);
     }
     
-    .homeBoxLinks{
-        font-size: 20px;
-        font-weight: bold;
-        margin: auto 0 auto 0;
-        width: 90%;
-        height: 50px;
-        visibility: visible;
-    }
-    .homeIcons{
-        height: 45px;
-        width: 45px;
-        font-size: 30px;
-        /*font-weight: bold;*/
-    }
-    
     .homeIconsRow{
         position: relative;
         height: 60px;
-        width: 100%;
     }
     
     .homeTextBox{
         width: 90%;
         height: 50%;
         text-align: center;
+    }
+}
+
+@media only screen and (min-width: 1224px){
+    .homeBoxLinks{
+        font-size: 20px;
+        font-weight: bold;
+        margin: auto auto auto auto;
+        width: 90%;
+        height: 50px;
+        visibility: visible;
+    }
+    .homeIcons{
+        top: -2px;
+        height: 45px;
+        width: 45px;
+        font-size: 30px;
+        /*font-weight: bold;*/
+    }
+
+    .homeBoxLinksWrapper1{
+        position: absolute;
+        left: 5%;
+    }
+    
+    .homeBoxLinksWrapper2{
+        position: absolute;
+        left: 40%;
+    }
+    
+    .homeBoxLinksWrapper3{
+        position: relative;
+        left: 65%;
     }
 }
