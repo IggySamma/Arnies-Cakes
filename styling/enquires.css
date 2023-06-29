@@ -74,12 +74,12 @@
 
 .cakeFlavours{
     visibility: hidden;
-    height: 0px;
+    display: none;
 }
 
-input[type="checkbox"]:checked > .cakeFlavours{
+input[type="checkbox"]:checked ~ .cakeFlavours{
     visibility: visible;
-    height: 20px;
+    display: block;
 }
 
 @media only screen and (min-width: 800px){
