@@ -82,7 +82,7 @@ app.use(express.static(__dirname));
 app.use(express.static('/gallery/'));
 
 
-app.listen(3000, () => {
+app.listen(3060, () => {
     console.log(`Server started...`);
 });
 
