@@ -158,24 +158,35 @@ app.post('/api/submitEnquire', clientUpload.array("clientPhotos"), (req, res) =>
     let data = JSON.parse(JSON.stringify(req.body));
     let photos = req.files;
     let adjData = isNotEmptyEnquire(data);
+    //console.log(adjData);
     let textBody = '';
     for (var i = 0; i < Object.keys(adjData).length; i++){
         textBody += "<div>" + Object.keys(adjData)[i] + ": " + Object.values(adjData)[i] +"</div>";
     };
-    sendEmailToSelf('1', data, textBody, photos);
-    sendEmailAutoReply('1', data, textBody, photos);
+    //console.log(data);
+    //console.log(textBody);
+    
+    //sendEmailToSelf('1', data, textBody, photos);
+    //sendEmailAutoReply('1', data, textBody, photos);
     res.sendStatus(200);
 });
 
+/*  -------------
+----------Still working on filter -------------
+--------*/
 function isNotEmptyEnquire(data){
     let adjData = {};
-    for (var i = 3; i < Object.keys(data).length; i++) {
+    for (var i = 0; i < Object.keys(data).length; i++) {
         if (Object.values(data)[i] != "") {
-            adjData[Object.keys(data)[i].replace('Quantity','').charAt(0).toUpperCase() + Object.keys(data)[i].replace('Quantity','').slice(1).toLowerCase()] = Object.values(data)[i];
+                adjData[Object.keys(data)[i].replace('CheckBox1','').replace('Input','')/*.charAt(0).toUpperCase()*/ + Object.keys(data)[i].replace('CheckBox1','').replace('Input','')/*.slice(1).toLowerCase()*/] = Object.values(data)[i];
         }
     };
+    console.log(adjData);
     return adjData;
 };
+
+
+/*------------------Merge below functions into 1 ----------------------- */
 
 function sendEmailToSelf(enqNum, data, textBody, photos){
     const enquireToSelf = {

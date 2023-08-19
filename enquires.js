@@ -72,7 +72,27 @@ form.addEventListener("submit", submitEnquire);
 function submitEnquire(file){
     file.preventDefault();
     const files = document.getElementById("files");
+    const form = document.getElementById('form').querySelectorAll('*');
     const formData = new FormData();
+    //console.log(form);
+    console.log(form.length);
+    for(let i=2; i < form.length; i++){
+        if(form[i].id != "" && form[i].id != "files" && form[i].id != "mainHeader" && form[i].id != "subHeader"){
+            if(form[i].id.value != ""){
+                console.log(form[i].id);
+                formData.append(form[i].id, document.getElementById(form[i].id).value);
+            }
+        }
+    }
+    console.log("-------------");
+    /*
+    form.forEach(collection => {
+        console.log(collection.id);
+        /*if(collection.id !== "files" && collection.id.value !== null) {
+            formData.append(collection.id, document.getElementById(collection.id).value);
+        }
+    })*/
+    /*
     formData.append('name', document.getElementById("fullNameInput").value);
     formData.append('email', document.getElementById("emailInput").value);
     formData.append('dateNtime', document.getElementById("datetime").value);
@@ -85,20 +105,22 @@ function submitEnquire(file){
     formData.append('giftboxQuantity', document.getElementById("Gift BoxCheckBox1").value);
     formData.append('profiterolesQuantity', document.getElementById("ProfiterolesCheckBox1").value);
     formData.append('enquire', document.getElementById("enquireInput").value);
+    */
+   
     for(let i = 0; i < files.files.length; i++) {
             formData.append("clientPhotos", files.files[i]);
     }
-    /* Checking in console if forms added correctly
+    // Checking in console if forms added correctly
     for(var pair of formData.entries()) {
         console.log(pair[0]+', '+pair[1]);
-    }*/
+    }
     
     fetch('/api/submitEnquire', {
       method: 'POST',
       body: formData,
-    })
+    })/*
     .then((res) => {
       setTimeout(()=>{
         window.location.href = "/enquiresty.html";
-    }), "2000"});
+    }), "2000"});*/             
 };

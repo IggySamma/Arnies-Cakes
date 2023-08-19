@@ -3,6 +3,8 @@ Rebuild Nav in reusable JS
 Make pages not refresh but reload. (Will need to add History for forward and back directorys)
 
 --------------------------Enquires------------------------
+Add phone number
+
 Make objects for adding flavours by item
 Create loop for Enquires to take all checkboxes
 
