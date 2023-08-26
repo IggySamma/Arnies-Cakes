@@ -158,30 +158,32 @@ app.post('/api/submitEnquire', clientUpload.array("clientPhotos"), (req, res) =>
     let data = JSON.parse(JSON.stringify(req.body));
     let photos = req.files;
     let adjData = isNotEmptyEnquire(data);
-    //console.log(adjData);
-    let textBody = '';
+
+    /*----------------VVV Getting rid of this will do at email transport stage VVV------------------*/
+    /*let textBody = '';
     for (var i = 0; i < Object.keys(adjData).length; i++){
         textBody += "<div>" + Object.keys(adjData)[i] + ": " + Object.values(adjData)[i] +"</div>";
-    };
-    //console.log(data);
+    };*/
+
+    console.log(adjData)
+    /*console.log(Object.keys(adjData).length)
+    console.log(Object.keys(adjData)[5] + ': ' + Object.values(adjData)[5]);*/
     //console.log(textBody);
     
+    /*----------------------------VVV ----------- Delete textBody-----------*/
     //sendEmailToSelf('1', data, textBody, photos);
     //sendEmailAutoReply('1', data, textBody, photos);
     res.sendStatus(200);
 });
 
-/*  -------------
-----------Still working on filter -------------
---------*/
 function isNotEmptyEnquire(data){
     let adjData = {};
     for (var i = 0; i < Object.keys(data).length; i++) {
         if (Object.values(data)[i] != "") {
-                adjData[Object.keys(data)[i].replace('CheckBox1','').replace('Input','')/*.charAt(0).toUpperCase()*/ + Object.keys(data)[i].replace('CheckBox1','').replace('Input','')/*.slice(1).toLowerCase()*/] = Object.values(data)[i];
+                //adjData[Object.keys(data)[i].replace('CheckBox1','').replace('Input','')/*.charAt(0).toUpperCase()*/ + Object.keys(data)[i].replace('CheckBox1','').replace('Input','')/*.slice(1).toLowerCase()*/] = Object.values(data)[i];
+                adjData[Object.keys(data)[i].replace('CheckBox1','').replace('Input','')] = Object.values(data)[i];
         }
     };
-    console.log(adjData);
     return adjData;
 };
 

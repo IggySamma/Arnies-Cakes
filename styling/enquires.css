@@ -39,6 +39,11 @@
     font-family: 'Halimun';
 }
 
+.Flavours{
+    visibility: hidden;
+    display: none;
+}
+
 .enquiresBox{
     width: 94vw;
     left: 2vw;
@@ -72,12 +77,7 @@
     /*font-weight: bold;*/
 }
 
-.cakeFlavours{
-    visibility: hidden;
-    display: none;
-}
-
-input[type="checkbox"]:checked ~ .cakeFlavours{
+input[type="checkbox"]:checked ~ .Flavours{
     visibility: visible;
     display: block;
 }

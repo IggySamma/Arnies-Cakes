@@ -1,31 +1,62 @@
 /* Creating Dynamic headers */
 
 /* Temp before creating database for editing */
-const mainHeadings = [];
-const treatsHeadings = [];
-const flavours = [];
 
-mainHeadings.push("Cake", "Cakepops", "Cakesicles", "Cupcakes");
-treatsHeadings.push("3D Chocolate heart", "Chocolate Strawberries", "Gift Box", "Profiteroles");
-flavours.push("Vanilla", "Chocolate", "Raffaello", "Honey", "Black Forest", "Napoleon", "Lemon", "Fresh Fruit")
+const mainHeadings = {
+    Cake: {
+        Flavours: ["Vanilla", "Chocolate", "Raffaello", "Honey", "Black Forest", "Napoleon", "Lemon", "Fresh Fruit"],
+        Placeholder: "1",
+    },
+    Cakepops: {
+        Flavours: ["Vanilla", "Chocolate", "Raffaello", "Honey", "Black Forest", "Lemon", "Fresh Fruit"],
+        Placeholder: "6",
+    },
+    Cakesicles: {
+        Flavours: ["Vanilla", "Chocolate", "Raffaello", "Honey", "Black Forest", "Lemon", "Fresh Fruit"],
+        Placeholder: "6",
+    },
+    Cupcakes: {
+        Flavours: ["Vanilla", "Chocolate", "Raffaello", "Honey", "Black Forest", "Lemon", "Fresh Fruit"],
+        Placeholder: "6",
+    },
+};
+
+const treatsHeadings = {
+    "3D Chocolate heart": {
+        Placeholder: "1",
+    },
+    "Chocolate Strawberries": {
+        Placeholder: "6",
+    },
+    "Gift Box": {
+        Placeholder: "1",
+    },
+    "Profiterole bags": {
+        Placeholder: "2",
+    },
+};
+
 /*---------------------------------------------------*/
 
-mainHeadings.forEach((item) => createHeaders(item, "mainHeader"));
-treatsHeadings.forEach((item) => createHeaders(item, "subHeader"));
+Object.keys(mainHeadings).forEach((item) => createHeaders(item, "mainHeader", true));
+Object.keys(treatsHeadings).forEach((item) => createHeaders(item, "subHeader", false));
 
-function createHeaders(item, heading){
+
+function createHeaders(item, heading, includeFlavours){
     const header = document.getElementById(heading);
     const div = document.createElement('div');
     const input = document.createElement('input');
     const label = document.createElement('label');
-    const inputSecond = document.createElement('input');
 
     div.className = (item);
+    div.setAttribute("id", item)
     header.appendChild(div);
 
     input.className = ("form-check-input");
     input.setAttribute("type", "checkbox");
-    input.setAttribute("onclick", "updatePlaceholder('" + item + "CheckBox')");
+    if(includeFlavours === false){
+        input.setAttribute("onclick", "updatePlaceholder('"+ item + "CheckBox')");
+    }
     input.setAttribute("value", "");
     input.setAttribute("id", item + "CheckBox");
     div.appendChild(input);
@@ -35,26 +66,69 @@ function createHeaders(item, heading){
     label.innerHTML = item;
     div.appendChild(label);
 
+    if(includeFlavours === true){
+        Object.values(mainHeadings[item].Flavours).forEach((flavs) => flavourHeaders(item, flavs));
+        console.log(Object.values(mainHeadings[item].Placeholder));
+    } else {
+        const inputSecond = document.createElement('input');
+
+        inputSecond.className = ("form-control mt-1 p-1 incrementalNumberBoxStyle d-inline-flex");
+        inputSecond.setAttribute("type", "number");
+        inputSecond.setAttribute("id", item + "CheckBox1");
+        inputSecond.setAttribute("for", item + "CheckBox");
+        inputSecond.setAttribute("placeholder", "0");
+
+        inputSecond.setAttribute("min", Object.values(treatsHeadings[item].Placeholder));
+        inputSecond.disabled = true;
+        div.appendChild(inputSecond);
+    }
+};
+
+function flavourHeaders(item, flavs){
+    const header = document.getElementById(item);
+    const div = document.createElement('div');
+    const input = document.createElement('input');
+    const label = document.createElement('label');
+    const inputSecond = document.createElement('input');
+
+    div.className = ("Flavours " + flavs);
+    header.appendChild(div);
+
+    input.className = ("form-check-input ms-4");
+    input.setAttribute("type", "checkbox");
+    input.setAttribute("onclick", "updatePlaceholder('"+ item + flavs + "CheckBox')");
+    input.setAttribute("value", "");
+    input.setAttribute("id",item + flavs + "CheckBox");
+    div.appendChild(input);
+
+    label.className = ("form-check-label mx-1 px-1");
+    label.setAttribute("for",item + flavs + "CheckBox");
+    label.innerHTML = flavs;
+    div.appendChild(label);
+
     inputSecond.className = ("form-control mt-1 p-1 incrementalNumberBoxStyle d-inline-flex");
     inputSecond.setAttribute("type", "number");
-    inputSecond.setAttribute("id", item + "CheckBox1");
-    inputSecond.setAttribute("for", item + "CheckBox");
+    inputSecond.setAttribute("id", item + flavs + "CheckBox1");
+    inputSecond.setAttribute("for", item + flavs + "CheckBox");
     inputSecond.setAttribute("placeholder", "0");
-    inputSecond.setAttribute("min", "0");
+    inputSecond.setAttribute("min", Object.values(mainHeadings[item].Placeholder));
     inputSecond.disabled = true;
     div.appendChild(inputSecond);
-};
+}
+
+/* VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV Get placeholder to update to objects place holder */
 
 /* Disable and enable quantity */
 function updatePlaceholder(id) {
     const incrementCheckBox = document.getElementById(id + "1");
+    console.log(incrementCheckBox);
     if (document.getElementById(id).checked) {
-        incrementCheckBox.setAttribute("placeholder", "1");
-        incrementCheckBox.value = "1";
+        //incrementCheckBox.setAttribute("placeholder", "1");
+        //incrementCheckBox.value = "1";
         incrementCheckBox.disabled = false;
     } else {
-        incrementCheckBox.setAttribute("placeholder", "0");
-        incrementCheckBox.value = "0";
+        //incrementCheckBox.setAttribute("placeholder", "0");
+        //incrementCheckBox.value = "0";
         incrementCheckBox.disabled = true;
     }
 }
@@ -74,17 +148,15 @@ function submitEnquire(file){
     const files = document.getElementById("files");
     const form = document.getElementById('form').querySelectorAll('*');
     const formData = new FormData();
-    //console.log(form);
-    console.log(form.length);
     for(let i=2; i < form.length; i++){
         if(form[i].id != "" && form[i].id != "files" && form[i].id != "mainHeader" && form[i].id != "subHeader"){
             if(form[i].id.value != ""){
-                console.log(form[i].id);
+                console.log(form[i]);
                 formData.append(form[i].id, document.getElementById(form[i].id).value);
             }
         }
     }
-    console.log("-------------");
+    //console.log("-------------");
     /*
     form.forEach(collection => {
         console.log(collection.id);
@@ -92,28 +164,15 @@ function submitEnquire(file){
             formData.append(collection.id, document.getElementById(collection.id).value);
         }
     })*/
-    /*
-    formData.append('name', document.getElementById("fullNameInput").value);
-    formData.append('email', document.getElementById("emailInput").value);
-    formData.append('dateNtime', document.getElementById("datetime").value);
-    formData.append('cakeQuantity', document.getElementById("CakeCheckBox1").value);
-    formData.append('cakepopsQuantity', document.getElementById("CakepopsCheckBox1").value);
-    formData.append('cakesiclesQuantity', document.getElementById("CakesiclesCheckBox1").value);
-    formData.append('cupcakesQuantity', document.getElementById("CupcakesCheckBox1").value);
-    formData.append('tdHeartQuantity', document.getElementById("3D Chocolate heartCheckBox1").value);
-    formData.append('chocolateStrawberryQuantity', document.getElementById("Chocolate StrawberriesCheckBox1").value);
-    formData.append('giftboxQuantity', document.getElementById("Gift BoxCheckBox1").value);
-    formData.append('profiterolesQuantity', document.getElementById("ProfiterolesCheckBox1").value);
-    formData.append('enquire', document.getElementById("enquireInput").value);
-    */
    
     for(let i = 0; i < files.files.length; i++) {
             formData.append("clientPhotos", files.files[i]);
     }
     // Checking in console if forms added correctly
+    /*
     for(var pair of formData.entries()) {
         console.log(pair[0]+', '+pair[1]);
-    }
+    }*/
     
     fetch('/api/submitEnquire', {
       method: 'POST',
