@@ -1,4 +1,8 @@
-/* Creating Dynamic headers */
+/* Setting todays date +3 for datetime-local selection ----**Create dynamic adjusting dates to block them off**---- */
+const date = new Date();
+const minDate = new Date().setDate(date.getDate() + 3);
+document.getElementById("datetime").min = new Date(minDate).toISOString().slice(0, 16);
+document.getElementById("datetime").defaultValue = new Date(minDate).toISOString().slice(0, 16);
 
 /* Temp before creating database for editing */
 
@@ -22,7 +26,7 @@ const mainHeadings = {
 };
 
 const treatsHeadings = {
-    "3D Chocolate heart": {
+    "3d Chocolate Heart": {
         Placeholder: "1",
     },
     "Chocolate Strawberries": {
@@ -32,12 +36,14 @@ const treatsHeadings = {
         Placeholder: "1",
     },
     "Profiterole bags": {
-        Placeholder: "2",
+        Placeholder: "3",
     },
 };
 
 /*---------------------------------------------------*/
 
+
+/* Creating Dynamic headers */
 Object.keys(mainHeadings).forEach((item) => createHeaders(item, "mainHeader", true));
 Object.keys(treatsHeadings).forEach((item) => createHeaders(item, "subHeader", false));
 
@@ -68,7 +74,6 @@ function createHeaders(item, heading, includeFlavours){
 
     if(includeFlavours === true){
         Object.values(mainHeadings[item].Flavours).forEach((flavs) => flavourHeaders(item, flavs));
-        console.log(Object.values(mainHeadings[item].Placeholder));
     } else {
         const inputSecond = document.createElement('input');
 
@@ -116,30 +121,22 @@ function flavourHeaders(item, flavs){
     div.appendChild(inputSecond);
 }
 
-/* VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV Get placeholder to update to objects place holder */
-
 /* Disable and enable quantity */
 function updatePlaceholder(id) {
     const incrementCheckBox = document.getElementById(id + "1");
-    console.log(incrementCheckBox);
+
     if (document.getElementById(id).checked) {
-        //incrementCheckBox.setAttribute("placeholder", "1");
-        //incrementCheckBox.value = "1";
+        incrementCheckBox.setAttribute("placeholder", incrementCheckBox.min);
+        incrementCheckBox.value = incrementCheckBox.min;
         incrementCheckBox.disabled = false;
     } else {
-        //incrementCheckBox.setAttribute("placeholder", "0");
-        //incrementCheckBox.value = "0";
+        incrementCheckBox.setAttribute("placeholder", "0");
+        incrementCheckBox.value = "0";
         incrementCheckBox.disabled = true;
     }
 }
 
-/* Setting todays date +3 for datetime-local selection ----**Create dynamic adjusting dates to block them off**---- */
-const date = new Date();
-const minDate = new Date().setDate(date.getDate() + 3);
-document.getElementById("datetime").min = new Date(minDate).toISOString().slice(0, 16);
-document.getElementById("datetime").defaultValue = new Date(minDate).toISOString().slice(0, 16);
-
-/* Submitting enquire ----**Need to think of better way to append everything**---- */
+/* Submitting enquires */
 const form = document.getElementById("form");
 form.addEventListener("submit", submitEnquire);
 
@@ -149,37 +146,25 @@ function submitEnquire(file){
     const form = document.getElementById('form').querySelectorAll('*');
     const formData = new FormData();
     for(let i=2; i < form.length; i++){
-        if(form[i].id != "" && form[i].id != "files" && form[i].id != "mainHeader" && form[i].id != "subHeader"){
-            if(form[i].id.value != ""){
-                console.log(form[i]);
+        if(form[i].id != "" && form[i].id != "files" && form[i].id != "mainHeader" && form[i].id != "subHeader" && form[i].value !== "" && form[i].value !== undefined){
+                console.log(form[i].id + " " + form[i].value);
                 formData.append(form[i].id, document.getElementById(form[i].id).value);
-            }
         }
     }
-    //console.log("-------------");
-    /*
-    form.forEach(collection => {
-        console.log(collection.id);
-        /*if(collection.id !== "files" && collection.id.value !== null) {
-            formData.append(collection.id, document.getElementById(collection.id).value);
-        }
-    })*/
    
     for(let i = 0; i < files.files.length; i++) {
             formData.append("clientPhotos", files.files[i]);
     }
-    // Checking in console if forms added correctly
-    /*
-    for(var pair of formData.entries()) {
-        console.log(pair[0]+', '+pair[1]);
-    }*/
     
     fetch('/api/submitEnquire', {
       method: 'POST',
       body: formData,
-    })/*
+    })
     .then((res) => {
-      setTimeout(()=>{
-        window.location.href = "/enquiresty.html";
-    }), "2000"});*/             
+        if(res.status === 200){
+            window.location.href = "/enquiresty.html";
+        } else {
+            console.log(res);
+        }
+    });            
 };

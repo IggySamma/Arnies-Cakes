@@ -93,24 +93,17 @@
                         <form id="form" action="/api/submitEnquire" method="POST" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="fullNameInput" class="form-label">Full Name</label>
-                                <input type="text" class="form-control form-control-lg" id="fullNameInput" placeholder="Name" >
+                                <input type="text" class="form-control form-control-lg" id="fullNameInput" placeholder="Name" required>
                             </div>
                             <div class="mb-3">
                                 <label for="emailInput" class="form-label">Email Address</label>
-                                <input type="email" class="form-control form-control-lg" id="emailInput" placeholder="name@example.com" >
+                                <input type="email" class="form-control form-control-lg" id="emailInput" placeholder="name@example.com" required>
                             </div>
                             <div class="mb-3">
                                 <label for="numberInput" class="form-label">Phone Number</label>
                                 <br>
                                 <div class="d-flex">
-                                <select id="phoneStart" class="form-control-lg me-1">
-                                    <option value="083">083</option>
-                                    <option value="085">085</option>
-                                    <option value="086">086</option>
-                                    <option value="087">087</option>
-                                    <option value="089">089</option>
-                                </select>
-                                <input type="tel" class="form-control form-control-lg" id="numberInput" placeholder="0000000" pattern="[0-9]{7}" length="7" >
+                                <input type="tel" class="form-control form-control-lg" id="numberInput" placeholder="0871234567" pattern="[0-9]{10}" length="7" required>
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -126,11 +119,11 @@
                                 <div id="subHeader"></div>
                         <div class="mb-3">
                             <label for="enquireInput" class="form-label">Details</label>
-                            <textarea class="form-control form-control-lg" id="enquireInput" rows="6" placeholder="Tell us about the cake you'd like.&#10Please include as much detail as possible regarding size, flavour & design etc."></textarea>
+                            <textarea class="form-control form-control-lg" id="enquireInput" rows="6" placeholder="Tell us about the cake you'd like.&#10Please include as much detail as possible regarding size, flavour & design etc." required></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="fileUpload" class="form-label">Upload example of the cake you'd like</label>
-                            <input class="form-control" id="files" type="file" >
+                            <input class="form-control" id="files" type="file" required>
                         </div>
                         <div class="col">
                             <button type="submit" class="btn btn-primary mb-3 p-2 px-4">Submit</button>

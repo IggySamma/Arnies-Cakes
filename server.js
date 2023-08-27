@@ -159,20 +159,9 @@ app.post('/api/submitEnquire', clientUpload.array("clientPhotos"), (req, res) =>
     let photos = req.files;
     let adjData = isNotEmptyEnquire(data);
 
-    /*----------------VVV Getting rid of this will do at email transport stage VVV------------------*/
-    /*let textBody = '';
-    for (var i = 0; i < Object.keys(adjData).length; i++){
-        textBody += "<div>" + Object.keys(adjData)[i] + ": " + Object.values(adjData)[i] +"</div>";
-    };*/
-
     console.log(adjData)
-    /*console.log(Object.keys(adjData).length)
-    console.log(Object.keys(adjData)[5] + ': ' + Object.values(adjData)[5]);*/
-    //console.log(textBody);
-    
-    /*----------------------------VVV ----------- Delete textBody-----------*/
-    //sendEmailToSelf('1', data, textBody, photos);
-    //sendEmailAutoReply('1', data, textBody, photos);
+
+    sendEmails('1', data, photos);
     res.sendStatus(200);
 });
 
@@ -190,7 +179,7 @@ function isNotEmptyEnquire(data){
 
 /*------------------Merge below functions into 1 ----------------------- */
 
-function sendEmailToSelf(enqNum, data, textBody, photos){
+function sendEmails(enqNum, data, textBody, photos){
     const enquireToSelf = {
         from: "arniescakes@gmail.com",
         to: "arniescakes@gmail.com",
@@ -212,10 +201,8 @@ function sendEmailToSelf(enqNum, data, textBody, photos){
     emailTransporter.sendMail(enquireToSelf, (error, response) => {
         error ? console.log(error) : emailTransporter.close();
     });
-};
 
-function sendEmailAutoReply(enqNum, data, textBody, photos){
-    const enquireToSelf = {
+    const enquireToClient = {
         from: "arniescakes@gmail.com",
         to: data.email,
         subject: "Arnies Cakes Enquire: Number - " + enqNum,
@@ -232,7 +219,7 @@ function sendEmailAutoReply(enqNum, data, textBody, photos){
         }],
     };
 
-    emailTransporter.sendMail(enquireToSelf, (error, response) => {
+    emailTransporter.sendMail(enquireToClient, (error, response) => {
         error ? console.log(error) : emailTransporter.close();
     });
 };
