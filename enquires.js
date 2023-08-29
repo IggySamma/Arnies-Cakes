@@ -131,7 +131,7 @@ function updatePlaceholder(id) {
         incrementCheckBox.disabled = false;
     } else {
         incrementCheckBox.setAttribute("placeholder", "0");
-        incrementCheckBox.value = "0";
+        incrementCheckBox.value = "";
         incrementCheckBox.disabled = true;
     }
 }
