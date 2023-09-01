@@ -3,11 +3,6 @@ Rebuild Nav in reusable JS
 Make pages not refresh but reload. (Will need to add History for forward and back directorys)
 
 --------------------------Enquires------------------------
-Create Tables for Enquires Objects.
-
-Create API calls for the enquires objects.
-Make it retrieve and store data into memory ?
-
 Create table for Enquires data
 Create API for Retriecing Enquire number and adding enquire.
 

@@ -175,7 +175,17 @@ app.post('/api/getMainHeaders', (req, res) => {
         } else {
             var obj = JSON.parse(JSON.stringify(result));
             res.json(obj);
-            console.log(obj);
+        }
+    })
+})
+
+app.post('/api/getTreatsHeaders', (req, res) => {
+    connection.query('SELECT * FROM subHeaders;', (error, result) => {
+        if (error) { 
+            throw error; 
+        } else {
+            var obj = JSON.parse(JSON.stringify(result));
+            res.json(obj);
         }
     })
 })
