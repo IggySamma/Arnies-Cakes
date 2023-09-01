@@ -15,9 +15,13 @@ function submitForm(file) {
         method: 'POST',
         body: formData,
     })
-    setTimeout(()=>{
-        location.reload();
-    }, "1000");
+    .then((res) => {
+        if(res.status === 200){
+            location.reload();
+        } else {
+            console.log(res);
+        }
+    }); 
 }
 
 function getAdminGallery(){
@@ -88,10 +92,13 @@ function deletePicture(ID, Path){
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ID, Path}),
-    })
-    setTimeout(()=>{
-        location.reload();
-    }, "1000");
+    }).then((res) => {
+        if(res.status === 200){
+            location.reload();
+        } else {
+            console.log(res);
+        }
+    }); 
 }
 
 $(document).ready(function(){

@@ -6,45 +6,60 @@ document.getElementById("datetime").defaultValue = new Date(minDate).toISOString
 
 /* Temp before creating database for editing */
 
-const mainHeadings = {
+/*const mainHeadings = {
     Cake: {
         Flavours: ["Vanilla", "Chocolate", "Raffaello", "Honey", "Black Forest", "Napoleon", "Lemon", "Fresh Fruit"],
-        Placeholder: "1",
+        minOrder: "1",
     },
     Cakepops: {
         Flavours: ["Vanilla", "Chocolate", "Raffaello", "Honey", "Black Forest", "Lemon", "Fresh Fruit"],
-        Placeholder: "6",
+        minOrder: "6",
     },
     Cakesicles: {
         Flavours: ["Vanilla", "Chocolate", "Raffaello", "Honey", "Black Forest", "Lemon", "Fresh Fruit"],
-        Placeholder: "6",
+        minOrder: "6",
     },
     Cupcakes: {
         Flavours: ["Vanilla", "Chocolate", "Raffaello", "Honey", "Black Forest", "Lemon", "Fresh Fruit"],
-        Placeholder: "6",
+        minOrder: "6",
     },
-};
+};*/
 
 const treatsHeadings = {
     "3d Chocolate Heart": {
-        Placeholder: "1",
+        minOrder: "1",
     },
     "Chocolate Strawberries": {
-        Placeholder: "6",
+        minOrder: "6",
     },
     "Gift Box": {
-        Placeholder: "1",
+        minOrder: "1",
     },
     "Profiterole bags": {
-        Placeholder: "3",
+        minOrder: "3",
     },
 };
+
+let mainHeadings;
+
+function getMainHeaders(){
+    fetch('/api/getMainHeaders',{
+        method: 'POST',
+        //headers: {'Content-Type': 'application/json'},
+    })
+    .then(res => {
+        mainHeadings = res;
+        console.log(res)
+    })
+}
+getMainHeaders();
+console.log(mainHeadings)
 
 /*---------------------------------------------------*/
 
 
 /* Creating Dynamic headers */
-Object.keys(mainHeadings).forEach((item) => createHeaders(item, "mainHeader", true));
+//Object.keys(mainHeadings).forEach((item) => createHeaders(item, "mainHeader", true));
 Object.keys(treatsHeadings).forEach((item) => createHeaders(item, "subHeader", false));
 
 
@@ -83,7 +98,7 @@ function createHeaders(item, heading, includeFlavours){
         inputSecond.setAttribute("for", item + "CheckBox");
         inputSecond.setAttribute("placeholder", "0");
 
-        inputSecond.setAttribute("min", Object.values(treatsHeadings[item].Placeholder));
+        inputSecond.setAttribute("min", Object.values(treatsHeadings[item].minOrder));
         inputSecond.disabled = true;
         div.appendChild(inputSecond);
     }
@@ -116,7 +131,7 @@ function flavourHeaders(item, flavs){
     inputSecond.setAttribute("id", item + flavs + "CheckBox1");
     inputSecond.setAttribute("for", item + flavs + "CheckBox");
     inputSecond.setAttribute("placeholder", "0");
-    inputSecond.setAttribute("min", Object.values(mainHeadings[item].Placeholder));
+    inputSecond.setAttribute("min", Object.values(mainHeadings[item].minOrder));
     inputSecond.disabled = true;
     div.appendChild(inputSecond);
 }
