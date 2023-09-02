@@ -6,8 +6,15 @@ Make pages not refresh but reload. (Will need to add History for forward and bac
 Create table for Enquires data
 Create API for Retriecing Enquire number and adding enquire.
 
-Date for colletion: Create way to block dates dynamically.
-Date for colletion: fix so time is intervals of 15 mins.
+Create API for retrieving blocked dates
 
 --------------------------Home Page------------------------
 Make it scrollable to add reviews (whole page scrolls down on one scroll & button for scroll)
+
+--------------------------Admin Page-----------------------
+Pull Enquires API's
+Make add/remove API's for enquires
+
+--------------------------Server---------------------------
+
+Create API call to store message link from messageID

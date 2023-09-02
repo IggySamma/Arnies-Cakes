@@ -1,44 +1,28 @@
+let disabledDates = ["2023-09-10", "2023-09-15", "2023-09-20"]
+
+flatpickr(".flatpickr", { 
+    //'inline' : true,
+    altInput: true,
+    altFormat: "F j, Y, H:i",
+    defaultDate: new Date().fp_incr(3),
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    minDate: new Date().fp_incr(3),
+    maxDate: new Date().fp_incr(186),
+    disable: disabledDates,
+    minTime: "8:00",
+    maxTime: "18:00",
+    defaultHour: 12,
+    defaultMinute: 0,
+    minuteIncrement: 15,
+    disableMobile: false,
+});
+
 /* Setting todays date +3 for datetime-local selection ----**Create dynamic adjusting dates to block them off**---- */
-const date = new Date();
-const minDate = new Date().setDate(date.getDate() + 3);
-document.getElementById("datetime").min = new Date(minDate).toISOString().slice(0, 16);
-document.getElementById("datetime").defaultValue = new Date(minDate).toISOString().slice(0, 16);
-
-/* Temp before creating database for editing */
-
-/*const mainHeadings = {
-    Cake: {
-        Flavours: ["Vanilla", "Chocolate", "Raffaello", "Honey", "Black Forest", "Napoleon", "Lemon", "Fresh Fruit"],
-        minOrder: "1",
-    },
-    Cakepops: {
-        Flavours: ["Vanilla", "Chocolate", "Raffaello", "Honey", "Black Forest", "Lemon", "Fresh Fruit"],
-        minOrder: "6",
-    },
-    Cakesicles: {
-        Flavours: ["Vanilla", "Chocolate", "Raffaello", "Honey", "Black Forest", "Lemon", "Fresh Fruit"],
-        minOrder: "6",
-    },
-    Cupcakes: {
-        Flavours: ["Vanilla", "Chocolate", "Raffaello", "Honey", "Black Forest", "Lemon", "Fresh Fruit"],
-        minOrder: "6",
-    },
-};*/
-
-/*const treatsHeadings = {
-    "3d Chocolate Heart": {
-        minOrder: "1",
-    },
-    "Chocolate Strawberries": {
-        minOrder: "6",
-    },
-    "Gift Box": {
-        minOrder: "1",
-    },
-    "Profiterole bags": {
-        minOrder: "3",
-    },
-};*/
+//const date = new Date();
+//const minDate = new Date().setDate(date.getDate() + 3);
+//document.getElementById("datetime").min = new Date(minDate).toISOString().slice(0, 16);
+//document.getElementById("datetime").defaultValue = new Date(minDate).toISOString().slice(0, 16);
 
 function getMainHeaders(){
     let mainHeadings;

@@ -212,7 +212,7 @@ app.post('/api/submitEnquire', clientUpload.array("clientPhotos"), (req, res) =>
         };
     }
     /* ---------VV ------------- Create function to retrieve enquire ID and store Enquire ? -----------*/
-    sendEmails('1', adjData, textBody, photos);
+    sendEmails('2', adjData, textBody, photos);
     res.sendStatus(200);
 });
 
@@ -271,3 +271,30 @@ function sendEmails(enqNum, data, textBody, photos){
         error ? console.log(error) : emailTransporter.close();
     });
 };
+
+
+
+function getEmailID(auth, query){  
+  return new Promise((resolve, reject) => {    
+    const gmail = google.gmail({version: 'v1', auth});    
+    gmail.users.messages.list(      
+      {        
+        userId: 'me',        
+        q: query,      
+      },(err, res) => {        
+        if (err) {
+            reject(err);          
+            return;        
+        }        
+        if (!res.data.messages) {
+            resolve([]);          
+            return;        
+        }
+        resolve(res.data.messages);      
+      })})
+}
+
+let messageID = getEmailID(oauth2Client, 'label:inbox subject:Enquire: Number - 2');
+messageID.then(data => {
+    console.log("https://mail.google.com/mail?authuser=arniescakes@gmail.com#all/" + data[0].id);
+})
