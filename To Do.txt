@@ -1,20 +1,25 @@
 --------------------------General------------------------
+
 Rebuild Nav in reusable JS
 Make pages not refresh but reload. (Will need to add History for forward and back directorys)
 
+Need to block access to files like server.js
+
+--------------------------Gallery------------------------
+
+Load images in sections ?
+
 --------------------------Enquires------------------------
-Create table for Enquires data
-Create API for Retriecing Enquire number and adding enquire.
+
+Create API for Retriecing Enquire number and adding enquire from messageID.
 
 Create API for retrieving blocked dates
 
 --------------------------Home Page------------------------
+
 Make it scrollable to add reviews (whole page scrolls down on one scroll & button for scroll)
 
 --------------------------Admin Page-----------------------
 Pull Enquires API's
 Make add/remove API's for enquires
 
---------------------------Server---------------------------
-
-Create API call to store message link from messageID

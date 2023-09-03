@@ -19,6 +19,10 @@
         <link rel="stylesheet" href="./styling/shared.css">
     </head>
     <header>
+        <nav class="navbar fixed-top navbar-expand-sm navbar-dark shadow-5-strong" id="navbar">
+
+        </nav>
+        <!--
         <nav class="navbar fixed-top navbar-expand-sm navbar-dark shadow-5-strong">
             <hr class="hr-line" id="hrline">
                 <button class="navbar-toggler" type="button" id="toggling" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +50,6 @@
                             <a class="nav-link fontsize" href="./Flavours.html">Flavours</a>
                         </li>
                         <li class="nav-item active m-4 me-5 ms-5 pe-5 ps-5">
-                            <!--<img class="ribbon" src="./Index Images/Ribbon end.svg">-->
                             <img class="ribbon" src="./Index Images/ribbon.png">
                             <a class="nav-link fontsize" href="./Enquires.html">Enquires</a>
                         </li>
@@ -60,14 +63,13 @@
                         if (check1.classList.contains('show') !== true) {
                             line.style.border = '100vh solid #D3BBDD';
                             line.style.width = '100%'
-                            console.log("show1");
                         } else {
                             line.style.border = '20px solid #D3BBDD';
-                            console.log("close");
                         };
                     };
                 </script>
         </nav>
+        -->
     </header>
     <body>
         <!--[if lt IE 7]>
@@ -97,6 +99,7 @@
         </div>
 
         <div id="sideScroll"></div>
+        <script src="./shared.js" onload="navBar();"></script>
         <script src="./shared.js" onload="sideScroll();"></script>
     </body>
 </html>

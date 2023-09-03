@@ -294,7 +294,11 @@ function getEmailID(auth, query){
       })})
 }
 
-let messageID = getEmailID(oauth2Client, 'label:inbox subject:Enquire: Number - 2');
-messageID.then(data => {
+/*---------------VVV Not finished Just pulls link doesn't store------------ */
+function storeEmailLinkToDB(){
+    let messageID = getEmailID(oauth2Client, 'label:inbox subject:Enquire: Number - 2');
+    messageID.then(data => {
     console.log("https://mail.google.com/mail?authuser=arniescakes@gmail.com#all/" + data[0].id);
 })
+}
+
