@@ -1,13 +1,12 @@
 --------------------------General------------------------
 
-Rebuild Nav in reusable JS
-Make pages not refresh but reload. (Will need to add History for forward and back directorys)
+Make pages not refresh but reload. (Will need to add History for forward and back directorys)?
 
-Need to block access to files like server.js
+Need to block access to files like server.js?
 
 --------------------------Gallery------------------------
 
-Load images in sections ?
+Infinite scroll in progress <-----------------------------------------------------------------------------Working on this
 
 --------------------------Enquires------------------------
 

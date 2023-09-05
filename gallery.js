@@ -6,8 +6,6 @@ select.value = sectionName;
 let activeID = '';
 
 function getGallery(){
-  let array = [];
-  let temp = ''; 
   let data = {sectionName};
   fetch('/api/gallery', {
     method: 'POST',
@@ -20,12 +18,54 @@ function getGallery(){
         status: response.status
     }))
     .then(res => {
-      array = res.data;
+      //console.log(res.data);
+      return new Promise((resolve) =>{
+        storeGalleryData(res.data);
+      }) 
+    /*
     for (let i = res.data.length-1; i >= 0; i--){
-      temp = res.data[i];
-      showGallery(temp.ID, temp.Type, temp.Path);
-    }}))
+      //temp = res.data[i];
+      //storeGallery(res.data[i])
+      //showGallery(temp.ID, temp.Type, temp.Path);
+    }*/}))
 }
+
+async function storeGalleryData(data){
+  const temp = await data;
+  infiniteScroll(temp.length-1,temp)
+}
+
+function infiniteScroll(lastStop, data){
+  storedGallery = data;
+  if(lastStop > 15){
+    for(let i = lastStop; i >= lastStop-15; i--){
+      showGallery(data[i].ID, data[i].Type, data[i].Path);
+      lastGalleryIdx = i;
+    }
+  } else {
+    for(let i = lastStop; i >= 0; i--){
+      showGallery(data[i].ID, data[i].Type, data[i].Path);
+      lastGalleryIdx = i;
+    }
+  }
+}
+
+let storedGallery;
+let lastGalleryIdx;
+
+
+const observer = new IntersectionObserver((entries, observer) => {
+  for (const entry of entries) {
+    if (entry.isIntersecting) {
+      console.log(storedGallery);
+      console.log(lastGalleryIdx);
+      infiniteScroll(lastGalleryIdx, storedGallery);
+    }
+  }
+});
+
+const infiniteScrollDiv = document.querySelector("#Gallery");
+observer.observe(infiniteScrollDiv);
 
 $(document).ready(function(){
   $("#modalImages").on('hide.bs.modal', function(){
@@ -33,8 +73,6 @@ $(document).ready(function(){
     document.getElementById(activeID).className = ("carousel-item");
   });
 });
-
-
 
 function showGallery(ID, Type, Path){
   const domGalllery = document.getElementById('Gallery');

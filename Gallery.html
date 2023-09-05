@@ -20,54 +20,7 @@
    
     </head>
      <header>
-        <nav class="navbar fixed-top navbar-expand-sm navbar-dark shadow-5-strong">
-            <hr class="hr-line" id="hrline">
-                <button class="navbar-toggler" type="button" id="toggling" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-                    <ul class="navbar-nav ">
-                        <li class="nav-item m-4 me-5 ms-5 pe-5 ps-5">
-                            <a class="nav-link fontsize" href="./Index.html">Home</a>
-                        </li>
-                        <li class="nav-item m-4 me-5 ms-5 pe-5 ps-5 dropdown">
-                            <a class="nav-link dropdown-toggle fontsize" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Gallery
-                            </a>
-                            <div class="dropdown-menu fontsize" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="./Gallery.html?type=All">All</a>
-                                <a class="dropdown-item" href="./Gallery.html?type=Cakes">Cakes</a>
-                                <a class="dropdown-item" href="./Gallery.html?type=Cakepops">Cakepops</a>
-                                <a class="dropdown-item" href="./Gallery.html?type=Cupcakes">Cupcakes</a>
-                                <a class="dropdown-item" href="./Gallery.html?type=KidsCakes">Kids Cakes</a>
-                                <a class="dropdown-item" href="./Gallery.html?type=Treats">Treats</a>
-                            </div>
-                        </li>
-                        <li class="nav-item m-4 me-5 ms-5 pe-5 ps-5">
-                            <a class="nav-link fontsize" href="./Flavours.html">Flavours</a>
-                        </li>
-                        <li class="nav-item active m-4 me-5 ms-5 pe-5 ps-5">
-                            <!--<img class="ribbon" src="./Index Images/Ribbon end.svg">-->
-                            <img class="ribbon" src="./Index Images/ribbon.png">
-                            <a class="nav-link fontsize" href="./Enquires.html">Enquires</a>
-                        </li>
-                    </ul>
-                </div>
-                <script>
-                    document.getElementById("toggling").addEventListener("click", updateHrLine);
-                    function updateHrLine(){
-                        const check1 = document.getElementById("navbarSupportedContent");
-                        const line = document.getElementById("hrline");
-                        if (check1.classList.contains('show') !== true) {
-                            line.style.border = '100vh solid #D3BBDD';
-                            console.log("show1");
-                        } else {
-                            line.style.border = '20px solid #D3BBDD';
-                            console.log("close");
-                        };
-                    };
-                </script>
-        </nav>
+        <nav id="navbar"></nav>
     </header>
     <body>
         <!--[if lt IE 7]>
@@ -119,7 +72,8 @@
                 </div>
             </div>
         </div>
-        <script src="./gallery.js" onload="getGallery()"></script>
+        <script src="./shared.js" onload="navBar();"></script>
+        <script src="./gallery.js" onload="getGallery()" defer></script>
     </body>
     <footer>
     </footer>
