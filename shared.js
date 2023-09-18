@@ -142,9 +142,8 @@ function navBar(){
     a10.setAttribute("href", "./Enquires.html");
     a10.innerHTML = ("Enquires");
     li4.appendChild(a10);
+    document.getElementById("toggling").addEventListener("click", updateHrLine);
 }
-
-document.getElementById("toggling").addEventListener("click", updateHrLine);
 
 function updateHrLine(){
     const check1 = document.getElementById("navbarSupportedContent");

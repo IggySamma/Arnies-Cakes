@@ -2,15 +2,14 @@
 
 Make pages not refresh but reload. (Will need to add History for forward and back directorys)?
 
-Need to block access to files like server.js?
+Need to block access to files like server.js? (not sure if possible, need to double check)
 
 --------------------------Gallery------------------------
 
-Infinite scroll in progress <-----------------------------------------------------------------------------Working on this
 
 --------------------------Enquires------------------------
 
-Create API for Retriecing Enquire number and adding enquire from messageID.
+Create API for Retrieving Enquire number and adding enquire from messageID.
 
 Create API for retrieving blocked dates
 

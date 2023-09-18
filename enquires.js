@@ -18,12 +18,6 @@ flatpickr(".flatpickr", {
     disableMobile: false,
 });
 
-/* Setting todays date +3 for datetime-local selection ----**Create dynamic adjusting dates to block them off**---- */
-//const date = new Date();
-//const minDate = new Date().setDate(date.getDate() + 3);
-//document.getElementById("datetime").min = new Date(minDate).toISOString().slice(0, 16);
-//document.getElementById("datetime").defaultValue = new Date(minDate).toISOString().slice(0, 16);
-
 function getMainHeaders(){
     let mainHeadings;
     fetch('/api/getMainHeaders',{
@@ -61,12 +55,6 @@ getMainHeaders();
 getTreatsHeaders();
 
 /*-------------------------------------------------*/
-
-
-/* Creating Dynamic headers */
-//Object.keys(mainHeadings).forEach((item) => createHeaders(item, "mainHeader", true));
-//Object.keys(treatsHeadings).forEach((item) => createHeaders(item, "subHeader", false));
-
 
 function createHeaders(item, heading, flavours, includeFlavours, minOrder){
     const header = document.getElementById(heading);

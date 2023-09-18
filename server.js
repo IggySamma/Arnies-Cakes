@@ -144,14 +144,15 @@ app.post('/api/deleteGallery', (req, res) => {
     fs.unlink('./gallery/' + data.Path, (err) => {
     if (err) throw err;
     });
-    connection.query(deleteByIDFromGallery, data.ID ,(error, result) => {
+    connection.query('DELETE FROM Gallery WHERE ID= ?;', data.ID ,(error, result) => {
         if(result === undefined){
             res.json(new Error("Error rows is undefined"));
         }else{
-            var obj = JSON.parse(JSON.stringify(result));
-            res.json(obj);
+            /*var obj = JSON.parse(JSON.stringify(result));
+            res.json(obj);*/
+            res.sendStatus(200);
     }});
-    res.sendStatus(200);
+
 });
 
 app.post('/api/adminGallery', (req, res) => {  
@@ -167,6 +168,16 @@ app.post('/api/adminGallery', (req, res) => {
 
 
 /*---------------------- Enquires API's -------------------------*/
+
+app.get('/api/disabledDates', (req, res) => {
+    connection.query('SELECT * FROM disabledDates;', (error, result) => {
+        if (error) {
+            throw error;
+        } else {
+            res.json(res);
+        }
+    })
+})
 
 app.post('/api/getMainHeaders', (req, res) => {
     connection.query('SELECT * FROM mainHeaders;', (error, result) => {

@@ -40,8 +40,6 @@ async function storeGalleryData(data){
 
 async function infiniteScroll(lastStop, data){
   storedGallery = await data;
-  console.log(lastStop);
-  console.log(lastStop-6)
   if(lastStop > 6){
     for(let i = lastStop; i >= lastStop-6; i--){
       showGallery(data[i].ID, data[i].Type, data[i].Path);
@@ -72,10 +70,8 @@ let lastGalleryIdx;
 const observer = new IntersectionObserver((entries, observer) => {
   for (const entry of entries) {
     if (entry.isIntersecting) {
-      console.log("testing")
       const Element = document.getElementById('infiniteScroll');
       Element?.remove();
-      
       infiniteScroll(lastGalleryIdx-1, storedGallery);
     }
   }
