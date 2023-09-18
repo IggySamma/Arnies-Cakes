@@ -9,6 +9,7 @@
     width: 98vw;
     position: absolute;
     overflow-x: hidden;
+    overflow-y: visible;
 }
 
 .fullSize img {
@@ -52,10 +53,11 @@
 
     .fullSize {
         top: 220px;
-        left: 2vw;
+        left: 1vw;
+        right: 1vw;
         position: absolute;
         width: 98vw;
-        /*overflow-x: hidden;*/
+        overflow-x: hidden;
         overflow-y: scroll;
     }
 

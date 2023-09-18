@@ -20,7 +20,9 @@ function getGallery(){
     .then(res => {
       //console.log(res.data);
       return new Promise((resolve) =>{
-        storeGalleryData(res.data);
+        //storeGalleryData(res.data);
+        infiniteScroll(res.data.length-1, res.data).then(observerEntity());
+        
       }) 
     /*
     for (let i = res.data.length-1; i >= 0; i--){
@@ -30,22 +32,35 @@ function getGallery(){
     }*/}))
 }
 
+/*
 async function storeGalleryData(data){
   const temp = await data;
   infiniteScroll(temp.length-1,temp)
-}
+}*/
 
-function infiniteScroll(lastStop, data){
-  storedGallery = data;
-  if(lastStop > 15){
-    for(let i = lastStop; i >= lastStop-15; i--){
+async function infiniteScroll(lastStop, data){
+  storedGallery = await data;
+  console.log(lastStop);
+  console.log(lastStop-6)
+  if(lastStop > 6){
+    for(let i = lastStop; i >= lastStop-6; i--){
       showGallery(data[i].ID, data[i].Type, data[i].Path);
       lastGalleryIdx = i;
+      if(i === lastStop-6){
+        const Element = document.getElementById('infiniteScroll');
+        Element?.remove();
+        observerEntity(); 
+      }
     }
   } else {
     for(let i = lastStop; i >= 0; i--){
       showGallery(data[i].ID, data[i].Type, data[i].Path);
       lastGalleryIdx = i;
+      if(i === 0){
+        const Element = document.getElementById('infiniteScroll');
+        Element?.remove();
+        observerEntity();
+      }
     }
   }
 }
@@ -57,15 +72,25 @@ let lastGalleryIdx;
 const observer = new IntersectionObserver((entries, observer) => {
   for (const entry of entries) {
     if (entry.isIntersecting) {
-      console.log(storedGallery);
-      console.log(lastGalleryIdx);
-      infiniteScroll(lastGalleryIdx, storedGallery);
+      console.log("testing")
+      const Element = document.getElementById('infiniteScroll');
+      Element?.remove();
+      
+      infiniteScroll(lastGalleryIdx-1, storedGallery);
     }
   }
 });
 
-const infiniteScrollDiv = document.querySelector("#Gallery");
-observer.observe(infiniteScrollDiv);
+function observerEntity(){
+  const element = document.getElementById('Gallery');
+  const div = document.createElement('div');
+  div.className = ("col m-1 p-1 pe-auto");
+  div.setAttribute("id", "infiniteScroll");
+  element.appendChild(div);
+
+  const infiniteScrollDiv = document.querySelector("#infiniteScroll");
+  observer.observe(infiniteScrollDiv);
+}
 
 $(document).ready(function(){
   $("#modalImages").on('hide.bs.modal', function(){
