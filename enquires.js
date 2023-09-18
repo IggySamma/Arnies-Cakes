@@ -1,22 +1,61 @@
-let disabledDates = ["2023-09-10", "2023-09-15", "2023-09-20"]
+//let disabledDates = ["2023-09-10", "2023-09-15", "2023-09-20"]
 
-flatpickr(".flatpickr", { 
-    //'inline' : true,
-    altInput: true,
-    altFormat: "F j, Y, H:i",
-    defaultDate: new Date().fp_incr(3),
-    enableTime: true,
-    dateFormat: "Y-m-d H:i",
-    minDate: new Date().fp_incr(3),
-    maxDate: new Date().fp_incr(186),
-    disable: disabledDates,
-    minTime: "8:00",
-    maxTime: "18:00",
-    defaultHour: 12,
-    defaultMinute: 0,
-    minuteIncrement: 15,
-    disableMobile: false,
-});
+let disabledDates = [];
+
+getDates();
+function getDates(){
+    fetch('/api/disabledDates', {
+        method: 'POST'
+    })
+    .then(response => {
+        response.json().then(data =>{
+            return new Promise((resolve) =>{
+                storeDates(data);
+              }) 
+        })
+    })
+}
+
+async function storeDates(data){
+    let temp = await data;
+    for(let i = 0; i < data.length; i++){
+        disabledDates.push(temp[i].Date.slice(0, 10));
+    }
+    //console.log(disabledDates);
+
+    flatpickr(".flatpickr", { 
+        //'inline' : true,
+        altInput: true,
+        altFormat: "F j, Y, H:i",
+        defaultDate: new Date().fp_incr(3),
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        minDate: new Date().fp_incr(3),
+        maxDate: new Date().fp_incr(186),
+        disable: disabledDates,
+        minTime: "8:00",
+        maxTime: "18:00",
+        defaultHour: 12,
+        defaultMinute: 0,
+        minuteIncrement: 15,
+        disableMobile: false,
+    });
+
+    checkDates();
+}
+
+
+function checkDates(){
+    let today = new Date().toJSON().slice(0, 10);
+    for(let i = 0; i < disabledDates.length; i++){
+        if(today > disabledDates[i]){
+            fetch('/api/deleteDates',{
+                method: 'POST',
+                body: disabledDates[i],
+            });
+        }
+    }
+};
 
 function getMainHeaders(){
     let mainHeadings;

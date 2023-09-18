@@ -164,19 +164,28 @@ app.post('/api/adminGallery', (req, res) => {
             var obj = JSON.parse(JSON.stringify(result));
             res.json(obj);
     }}); 
+    res.sendStatus(200);
 });
 
 
 /*---------------------- Enquires API's -------------------------*/
 
-app.get('/api/disabledDates', (req, res) => {
+
+app.post('/api/deleteDates' , (req, res) => {
+    
+})
+
+app.post('/api/disabledDates', (req, res) => {
     connection.query('SELECT * FROM disabledDates;', (error, result) => {
         if (error) {
             throw error;
         } else {
-            res.json(res);
+            var obj = JSON.parse(JSON.stringify(result));
+            console.log(obj)
+            res.json(obj);
         }
     })
+    res.sendStatus(200);
 })
 
 app.post('/api/getMainHeaders', (req, res) => {
@@ -188,6 +197,7 @@ app.post('/api/getMainHeaders', (req, res) => {
             res.json(obj);
         }
     })
+    res.sendStatus(200);
 })
 
 app.post('/api/getTreatsHeaders', (req, res) => {
@@ -199,6 +209,7 @@ app.post('/api/getTreatsHeaders', (req, res) => {
             res.json(obj);
         }
     })
+    res.sendStatus(200);
 })
 
 app.post('/api/submitEnquire', clientUpload.array("clientPhotos"), (req, res) => {
