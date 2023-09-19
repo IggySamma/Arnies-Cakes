@@ -1,7 +1,7 @@
 {
-  "name": "arniescakesbackend",
-  "version": "1.0.0",
-  "description": "Backend for Arnies Cakes",
+  "name": "arniescakeswebsite",
+  "version": "2.0.0",
+  "description": "Website for Arnies Cakes",
   "main": "server.js",
   "bin": {
     "script1": "script.js",

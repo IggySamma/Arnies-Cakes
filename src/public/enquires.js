@@ -1,8 +1,21 @@
-//let disabledDates = ["2023-09-10", "2023-09-15", "2023-09-20"]
+/*let disabledDates = [{
+    "ID": ["1", "2", "3", "4"],
+    "Date": ["2023-09-20", "2023-09-25", "2023-09-30", {from:"2023-10-21", to:"2023-10-25"}],
+    "IsRange": []
+}]*/
 
-let disabledDates = [];
+let disabledDates = [{
+    "ID": [],
+    "Date": [],
+    "IsRange": []
+}]
+
+//console.log(disabledDates);
+//let disabledDates = [];
+
 
 getDates();
+
 function getDates(){
     fetch('/api/disabledDates', {
         method: 'POST'
@@ -11,7 +24,7 @@ function getDates(){
         response.json().then(data =>{
             return new Promise((resolve) =>{
                 storeDates(data);
-              }) 
+            }) 
         })
     })
 }
@@ -19,10 +32,23 @@ function getDates(){
 async function storeDates(data){
     let temp = await data;
     for(let i = 0; i < data.length; i++){
-        disabledDates.push(temp[i].Date.slice(0, 10));
+        if(temp[i].IsRange === "Yes"){
+            let tempObj = {
+                "from": temp[i].Date.slice(0, 10),
+                "to": temp[i].Date.slice(12, 22)
+            }
+            console.log(tempObj)
+            disabledDates[0].ID.push(temp[i].ID);
+            disabledDates[0].Date.push(tempObj);
+            disabledDates[0].IsRange.push(temp[i].IsRange);
+        } else {
+            disabledDates[0].ID.push(temp[i].ID);
+            disabledDates[0].Date.push(temp[i].Date.slice(0, 10));
+            disabledDates[0].IsRange.push(temp[i].IsRange);
+        }
     }
-    //console.log(disabledDates);
-
+    console.log(disabledDates);
+    
     flatpickr(".flatpickr", { 
         //'inline' : true,
         altInput: true,
@@ -32,7 +58,7 @@ async function storeDates(data){
         dateFormat: "Y-m-d H:i",
         minDate: new Date().fp_incr(3),
         maxDate: new Date().fp_incr(186),
-        disable: disabledDates,
+        disable: disabledDates[0].Date,
         minTime: "8:00",
         maxTime: "18:00",
         defaultHour: 12,
@@ -41,10 +67,9 @@ async function storeDates(data){
         disableMobile: false,
     });
 
-    checkDates();
+    //checkDates();
 }
-
-
+/*
 function checkDates(){
     let today = new Date().toJSON().slice(0, 10);
     for(let i = 0; i < disabledDates.length; i++){
@@ -56,7 +81,27 @@ function checkDates(){
         }
     }
 };
-
+*/
+/*
+flatpickr(".flatpickr", { 
+    //'inline' : true,
+    altInput: true,
+    altFormat: "F j, Y, H:i",
+    defaultDate: new Date().fp_incr(3),
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    minDate: new Date().fp_incr(3),
+    maxDate: new Date().fp_incr(186),
+    disable: disabledDates[0].Date,
+    minTime: "8:00",
+    maxTime: "18:00",
+    defaultHour: 12,
+    defaultMinute: 0,
+    minuteIncrement: 15,
+    disableMobile: false,
+});
+*/
+/*
 function getMainHeaders(){
     let mainHeadings;
     fetch('/api/getMainHeaders',{

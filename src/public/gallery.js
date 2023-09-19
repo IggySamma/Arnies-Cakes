@@ -24,19 +24,10 @@ function getGallery(){
         infiniteScroll(res.data.length-1, res.data).then(observerEntity());
         
       }) 
-    /*
-    for (let i = res.data.length-1; i >= 0; i--){
-      //temp = res.data[i];
-      //storeGallery(res.data[i])
-      //showGallery(temp.ID, temp.Type, temp.Path);
-    }*/}))
+    }))
 }
 
-/*
-async function storeGalleryData(data){
-  const temp = await data;
-  infiniteScroll(temp.length-1,temp)
-}*/
+
 
 async function infiniteScroll(lastStop, data){
   storedGallery = await data;
@@ -65,7 +56,6 @@ async function infiniteScroll(lastStop, data){
 
 let storedGallery;
 let lastGalleryIdx;
-
 
 const observer = new IntersectionObserver((entries, observer) => {
   for (const entry of entries) {

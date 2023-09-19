@@ -1,67 +1,21 @@
-require('dotenv').config();
+/*------------------ Server Setup-----------------*/
+const server = require('./config/config.js')
 
-/*-------------------Gmail Access setup -------------------------*/
-const nodemailer = require("nodemailer");
-const { google } = require("googleapis");
-const OAuth2 = google.auth.OAuth2;
-
-const oauth2Client = new OAuth2(
-    process.env.GMAIL_CLIENT_ID, // ClientID
-    process.env.GMAIL_CLIENT_SECRET, // Client Secret
-    "https://developers.google.com/oauthplayground/" // Redirect URL
-);
-
-oauth2Client.setCredentials({
-    refresh_token: process.env.GMAIL_REFRESH_TOKEN,
-});
-
-const accessToken = oauth2Client.getAccessToken()
-
-
-let emailTransporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-            type: "OAuth2",
-            user: process.env.GMAIL_USER, 
-            clientId: process.env.GMAIL_CLIENT_ID,
-            clientSecret: process.env.GMAIL_CLIENT_SECRET,
-            refreshToken: process.env.GMAIL_REFRESH_TOKEN,
-            accessToken: accessToken
-    },
-    tls: {
-        rejectUnauthorized: false
-    },
-});
-
-/*----------------------------- MySQL Config ---------------------*/
-let config = {
-    host: process.env.SQL_HOST,
-    user: process.env.SQL_USER,
-    password: process.env.SQL_PASSWORD,
-    database: process.env.SQL_DATABASE
-};
-
-/*------------------------------ MySQL Querys------------------*/
+/*-------------VVVV Move ------------------*/
 const mysql = require('mysql');
-const connection = mysql.createConnection(config);
-
-const insertToGallery = 'INSERT INTO Gallery(Type, Path) Values(?, ?);';
-const selectAll = 'SELECT * FROM GALLERY;'
-const selectByTypeFromGallery = "SELECT * FROM gallery WHERE Type = ?;";
-const selectByID = "SELECT * FROM Gallery WHERE ID = ?;";
-const deleteByIDFromGallery = "DELETE FROM Gallery WHERE ID= ?;";
-const updateMainHeaderFlavoursByID = "UPDATE mainHeaders SET Flavours WHERE ID = ?";
-const updateMinOrderQuantityByID = "UPDATE ? SET minOrder WHERE ID = ?";
-const insetNewMainHeader = "";
-const insertNewSubHeader = "";
-
-/*------------------- Server Config ---------------------*/
+const connection = mysql.createConnection(server.sqlConfig);
 const fs = require('fs');
-const express = require('express');
-const app = express();
-
 const multer = require("multer");
-const upload = multer({ 
+
+/*----------- Leave ? --------------*/
+
+
+const path = require('path');
+
+
+
+
+const galleryUpload = multer({ 
     dest: "./gallery",
     fileFilter(req, file, cb) {
         if (!file.originalname.match(/\.(png|jpg|jpeg)$/)){
@@ -80,20 +34,15 @@ const clientUpload = multer({
     },
 });
 
-/*------------------ Server Setup-----------------*/
-const path = require('path');
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname));
-app.use(express.static('/gallery/'));
-
-
-app.listen(3000, () => {
+server.app.listen(3000, () => {
     console.log(`Server started...`);
 });
 
-app.post('/api/gallery', (req, res) => {  
+
+/*------------------ Server API's to move-----------------*/
+
+server.app.post('/api/gallery', (req, res) => {  
     let data = req.body
     if (data.sectionName === 'All') {
         connection.query('SELECT * FROM GALLERY;',(error, result) => {
@@ -104,7 +53,7 @@ app.post('/api/gallery', (req, res) => {
                 res.json(obj);
         }}); 
     } else {
-        connection.query(selectByTypeFromGallery, data.sectionName,(error, result) => {
+        connection.query('SELECT * FROM gallery WHERE Type = ?;', data.sectionName,(error, result) => {
             if(result === undefined){
                 res.json(new Error("Error rows is undefined"));
             }else{
@@ -116,11 +65,15 @@ app.post('/api/gallery', (req, res) => {
 
 /*--------------------- Admin Page API's ---------------------*/
 
-app.get('/login', function(req, res) {
-    res.sendFile(path.join(__dirname, '/login.html'));
+server.app.get('', function(req, res) {
+    res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
-app.post('/api/upload', upload.array("myFiles"), uploadFiles);
+server.app.get('/login', function(req, res) {
+    res.sendFile(path.join(__dirname, '/admin/login.html'));
+});
+
+server.app.post('/api/upload', galleryUpload.array("myFiles"), uploadFiles);
 
 function uploadFiles(req, res) {
     for (var i = 0; i < req.files.length; i++) {
@@ -134,12 +87,12 @@ function insertNewToGallery(newType, newPath) {
         Type = newType,
         Path = newPath,
     ];
-    connection.query(insertToGallery, newImage,(error, res, fields) => {
+    connection.query('INSERT INTO Gallery(Type, Path) Values(?, ?);', newImage,(error, res, fields) => {
         if (error) throw error;
      });
 }
 
-app.post('/api/deleteGallery', (req, res) => {  
+server.app.post('/api/deleteGallery', (req, res) => {  
     let data = req.body;
     fs.unlink('./gallery/' + data.Path, (err) => {
     if (err) throw err;
@@ -155,7 +108,7 @@ app.post('/api/deleteGallery', (req, res) => {
 
 });
 
-app.post('/api/adminGallery', (req, res) => {  
+server.app.post('/api/adminGallery', (req, res) => {  
     let data = req.body
     connection.query('SELECT * FROM GALLERY;',(error, result) => {
         if(result === undefined){
@@ -170,12 +123,12 @@ app.post('/api/adminGallery', (req, res) => {
 
 /*---------------------- Enquires API's -------------------------*/
 
-
-app.post('/api/deleteDates' , (req, res) => {
+/*
+server.app.post('/api/deleteDates' , (req, res) => {
     
-})
+})*/
 
-app.post('/api/disabledDates', (req, res) => {
+server.app.post('/api/disabledDates', (req, res) => {
     connection.query('SELECT * FROM disabledDates;', (error, result) => {
         if (error) {
             throw error;
@@ -185,34 +138,33 @@ app.post('/api/disabledDates', (req, res) => {
             res.json(obj);
         }
     })
-    res.sendStatus(200);
 })
 
-app.post('/api/getMainHeaders', (req, res) => {
+server.app.post('/api/getMainHeaders', (req, res) => {
     connection.query('SELECT * FROM mainHeaders;', (error, result) => {
         if (error) { 
             throw error; 
         } else {
             var obj = JSON.parse(JSON.stringify(result));
-            res.json(obj);
+            res.sendStatus(200).json(obj);
         }
     })
-    res.sendStatus(200);
+    //res.sendStatus(200);
 })
 
-app.post('/api/getTreatsHeaders', (req, res) => {
+server.app.post('/api/getTreatsHeaders', (req, res) => {
     connection.query('SELECT * FROM subHeaders;', (error, result) => {
         if (error) { 
             throw error; 
         } else {
             var obj = JSON.parse(JSON.stringify(result));
-            res.json(obj);
+            res.sendStatus(200).json(obj);
         }
     })
-    res.sendStatus(200);
+    //res.sendStatus(200);
 })
 
-app.post('/api/submitEnquire', clientUpload.array("clientPhotos"), (req, res) => {
+server.app.post('/api/submitEnquire', clientUpload.array("clientPhotos"), (req, res) => {
     let data = JSON.parse(JSON.stringify(req.body));
     let photos = req.files;
     let adjData = isNotEmptyEnquire(data);
@@ -268,8 +220,8 @@ function sendEmails(enqNum, data, textBody, photos){
         ],
     };
 
-    emailTransporter.sendMail(enquireToSelf, (error, response) => {
-        error ? console.log(error) : emailTransporter.close();
+    server.emailTransporter.sendMail(enquireToSelf, (error, response) => {
+        error ? console.log(error) : server.emailTransporter.close();
     });
 
     const enquireToClient = {
@@ -289,8 +241,8 @@ function sendEmails(enqNum, data, textBody, photos){
         }],
     };
 
-    emailTransporter.sendMail(enquireToClient, (error, response) => {
-        error ? console.log(error) : emailTransporter.close();
+    server.emailTransporter.sendMail(enquireToClient, (error, response) => {
+        error ? console.log(error) : server.emailTransporter.close();
     });
 };
 
