@@ -19,7 +19,7 @@ function sideScroll() {
             col.className = ("col imageAnimationL my-1 py-1");
             colContain.appendChild(col);
             img.className = ("homeImage");
-            img.src = ("./Index Images/Main Cake " + i +".jpg")
+            img.src = ("./images/Main Cake " + i +".jpg")
             col.appendChild(img);
         }
         colContainTwo.className = ("col d-flex flex-column");
@@ -31,7 +31,7 @@ function sideScroll() {
             col.className = ("col imageAnimationR my-1 py-1");
             colContainTwo.appendChild(col);
             img.className = ("homeImage");
-            img.src = ("./Index Images/Main Cake " + i +".jpg")
+            img.src = ("./images/Main Cake " + i +".jpg")
             col.appendChild(img);
         }  
     } 
@@ -136,7 +136,7 @@ function navBar(){
     li4.className = ("nav-item m-4 me-5 ms-5 pe-5 ps-5");
     ul.appendChild(li4);
     imgContain.className = ("ribbon");
-    imgContain.setAttribute("src", "./Index Images/ribbon.png");
+    imgContain.setAttribute("src", "./images/ribbon.png");
     li4.appendChild(imgContain);
     a10.className = ("nav-link fontsize");
     a10.setAttribute("href", "./Enquires.html");

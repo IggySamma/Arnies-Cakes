@@ -1,5 +1,6 @@
 //require('dotenv').config();
 require('dotenv').config({path:__dirname+'/.env'})
+const path = require('path');
 
 /*-------------------Gmail Access setup -------------------------*/
 const nodemailer = require("nodemailer");
@@ -42,6 +43,9 @@ let sqlConfig = {
     database: process.env.SQL_DATABASE
 };
 
+const mysql = require('mysql');
+const connection = mysql.createConnection(sqlConfig);
+
 /*-------------------------- Server Setup ----------------------- */
 
 const express = require('express');
@@ -49,11 +53,15 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, '../public/')));
 app.use(express.static('/gallery/'));
+
+
+/*-------------------------- Config Expotrs ----------------------- */
 
 module.exports = {
     emailTransporter,
     sqlConfig,
+    connection,
     app
 }

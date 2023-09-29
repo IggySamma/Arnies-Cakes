@@ -101,7 +101,7 @@ flatpickr(".flatpickr", {
     disableMobile: false,
 });
 */
-/*
+
 function getMainHeaders(){
     let mainHeadings;
     fetch('/api/getMainHeaders',{
