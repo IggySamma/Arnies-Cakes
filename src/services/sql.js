@@ -33,18 +33,6 @@ function getAllFromGallery(req, res){
     res.sendStatus(200);
 }
 
-function getDisabledDates(req, res){
-    serverConfig.connection.query('SELECT * FROM disabledDates;', (error, result) => {
-        if (error) {
-            throw error;
-        } else {
-            var obj = JSON.parse(JSON.stringify(result));
-            console.log(obj)
-            res.json(obj);
-        }
-    })
-}
-
 function getEnquiresMainHeaders(req, res){
     serverConfig.connection.query('SELECT * FROM mainHeaders;', (error, result) => {
         if (error) { 
@@ -72,7 +60,6 @@ function getEnquiresSubHHeaders(req, res){
 module.exports = {
     getGallery,
     getAllFromGallery,
-    getDisabledDates,
     getEnquiresMainHeaders,
     getEnquiresSubHHeaders
 }

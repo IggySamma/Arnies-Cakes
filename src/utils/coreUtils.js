@@ -27,8 +27,6 @@ function deleteFromGallery(req,res){
             if(result === undefined){
                 res.json(new Error("Error rows is undefined"));
             }else{
-                /*var obj = JSON.parse(JSON.stringify(result));
-                res.json(obj);*/
                 res.sendStatus(200);
         }})
 };
@@ -106,6 +104,7 @@ function storeEmailLinkToDB(){
         console.log("https://mail.google.com/mail?authuser=arniescakes@gmail.com#all/" + data[0].id);
     })
 }
+
 
 module.exports = {
     sendEmails,

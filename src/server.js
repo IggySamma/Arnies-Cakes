@@ -3,9 +3,6 @@ const serverConfig = require('./config/config.js');
 const parsers = require('./services/parsers.js');
 const sqlQuery = require('./services/sql.js');
 const utils = require('./utils/coreUtils.js');
-
-/*----------- Leave ? --------------*/
-
 const path = require('path');
 
 
@@ -13,6 +10,7 @@ serverConfig.app.listen(3000, () => {
     console.log(`server started...`);
 });
 
+//parsers.checkDisabledDates();
 
 /*------------------ server API's to move-----------------*/
 
@@ -36,10 +34,12 @@ serverConfig.app.post('/api/adminGallery', (req, res) => { sqlQuery.getAllFromGa
 /*
 serverConfig.app.post('/api/deleteDates' , (req, res) => {  })*/
 
-serverConfig.app.post('/api/disabledDates', (req, res) => { sqlQuery.getDisabledDates(req, res) })
+//serverConfig.app.post('/api/disabledDates', (req, res) => { sqlQuery.getDisabledDates(req, res) })
+
+serverConfig.app.post('/api/disabledDates', (req, res) => { res.json(parsers.disabledDates)})
 
 serverConfig.app.post('/api/getMainHeaders', (req, res) => { sqlQuery.getEnquiresMainHeaders(req, res) })
 
 serverConfig.app.post('/api/getTreatsHeaders', (req, res) => { sqlQuery.getEnquiresSubHHeaders(req, res) })
 
-serverConfig.app.post('/api/submitEnquire', parsers.clientUpload.array("clientPhotos"), (req, res) => {parsers.enquires(req,res)});
+serverConfig.app.post('/api/submitEnquire', parsers.clientUpload.array("clientPhotos"), (req, res) => { parsers.enquires(req,res) });
