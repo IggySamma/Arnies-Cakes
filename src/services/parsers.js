@@ -1,10 +1,21 @@
 const utils = require('../utils/coreUtils.js');
+const globals = require('../globals/globals.js');
 const sqlQuery = require('./sql.js');
 const serverConfig = require('../config/config.js');
 const fs = require('fs');
 const multer = require("multer");
 
+/*------------------------------- Gallery ------------------------------------*/
 
+function getAllFromGallery(){
+    globals.gallery = new globals.galleryConstructor
+    serverConfig.connection.query('SELECT * FROM GALLERY;',(error, result) => {
+        if(result === undefined){
+            res.json(new Error("Error rows is undefined"));
+        }else{
+            globals.gallery = JSON.parse(JSON.stringify(result));
+    }}); 
+}
 
 const galleryUpload = multer({ 
     dest: "./gallery",
@@ -25,6 +36,8 @@ const clientUpload = multer({
     },
 });
 
+/*------------------------------- Enquires ------------------------------------*/
+
 function isNotEmptyEnquire(data){
     let adjData = {};
     for (var i = 0; i < Object.keys(data).length; i++) {
@@ -37,9 +50,8 @@ function isNotEmptyEnquire(data){
 };
 
 function enquires(req, res){
-    let data = JSON.parse(JSON.stringify(req.body));
     let photos = req.files;
-    let adjData = isNotEmptyEnquire(data);
+    let adjData = isNotEmptyEnquire(JSON.parse(JSON.stringify(req.body)));
     let textBody = ""; 
 
     for(let i = 0; i < Object.keys(adjData).length; i++){
@@ -62,18 +74,11 @@ function enquires(req, res){
     res.sendStatus(200);
 };
 
-let disabledDates = [{
-    "ID": [],
-    "Date": [],
-    "IsRange": []
-}];
+/*------------------------------- Enquires Callender ------------------------------------*/
+
+
 
 function getDisabledDates(){
-    disabledDates = [{
-        "ID": [],
-        "Date": [],
-        "IsRange": []
-    }];
     serverConfig.connection.query('SELECT * FROM disabledDates;', (error, result) => {
         if (error) {
             throw error;
@@ -83,23 +88,21 @@ function getDisabledDates(){
     )
 }
 
-getDisabledDates();
-
 function storeDisabledDates(data){
-    let temp = data;
+    globals.disabledDates = new globals.disabledDatesContructor
     for(let i = 0; i < data.length; i++){
-        if(temp[i].IsRange === "Yes"){
+        if(data[i].IsRange === "Yes"){
             let tempObj = {
-                "from": temp[i].Date.slice(0, 10),
-                "to": temp[i].Date.slice(12, 22)
+                "from": data[i].Date.slice(0, 10),
+                "to": data[i].Date.slice(12, 22)
             }
-            disabledDates[0].ID.push(temp[i].ID);
-            disabledDates[0].Date.push(tempObj);
-            disabledDates[0].IsRange.push(temp[i].IsRange);
+            globals.disabledDates.ID.push(data[i].ID);
+            globals.disabledDates.Date.push(tempObj);
+            globals.disabledDates.IsRange.push(data[i].IsRange);
         } else {
-            disabledDates[0].ID.push(temp[i].ID);
-            disabledDates[0].Date.push(temp[i].Date.slice(0, 10));
-            disabledDates[0].IsRange.push(temp[i].IsRange);
+            globals.disabledDates.ID.push(data[i].ID);
+            globals.disabledDates.Date.push(data[i].Date.slice(0, 10));
+            globals.disabledDates.IsRange.push(data[i].IsRange);
         }
     }
     checkDates();
@@ -107,14 +110,14 @@ function storeDisabledDates(data){
 
 function checkDates(){
     let today = new Date().toJSON().slice(0, 10);
-    for(let i = 0; i < disabledDates[0].ID.length; i++){
-        if(disabledDates[0].IsRange[i] === "Yes") {
-            if(today >= disabledDates[0].Date[i].to){
-                deleteDates(disabledDates[0].ID[i]);
+    for(let i = 0; i < globals.disabledDates.ID.length; i++){
+        if(globals.disabledDates.IsRange[i] === "Yes") {
+            if(today >= globals.disabledDates.Date[i].to){
+                deleteDates(globals.disabledDates.ID[i]);
             }
         } else {
-            if(today >= disabledDates[0].Date[i]){
-                deleteDates(disabledDates[0].ID[i]);
+            if(today >= globals.disabledDates.Date[i]){
+                deleteDates(globals.disabledDates.ID[i]);
             }
         }
     }
@@ -129,10 +132,15 @@ function deleteDates(ID){
     }})
 }
 
+/*------------------------------- Bootup ------------------------------------*/
+
+getDisabledDates();
+getAllFromGallery();
+
+
 module.exports = {
     galleryUpload,
     clientUpload,
     isNotEmptyEnquire,
-    enquires,
-    disabledDates
+    enquires
 }

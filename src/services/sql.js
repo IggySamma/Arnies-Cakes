@@ -1,37 +1,26 @@
 const serverConfig = require('../config/config.js');
 
-function getGallery(req, res){
-    let data = req.body
-    if (data.sectionName === 'All') {
-        serverConfig.connection.query('SELECT * FROM GALLERY;',(error, result) => {
-            if(result === undefined){
-                res.json(new Error("Error rows is undefined"));
-            }else{
-                var obj = JSON.parse(JSON.stringify(result));
-                res.json(obj);
-        }}); 
-    } else {
-        serverConfig.connection.query('SELECT * FROM gallery WHERE Type = ?;', data.sectionName,(error, result) => {
-            if(result === undefined){
-                res.json(new Error("Error rows is undefined"));
-            }else{
-                var obj = JSON.parse(JSON.stringify(result));
-                res.json(obj);
-        }});   
-    }
-};
+/*------------------------------- Gallery ------------------------------------*/
+function insertNewToGallery(newType, newPath) {
+    let newImage = [
+        Type = newType,
+        Path = newPath,
+    ];
+    serverConfig.connection.query('INSERT INTO Gallery(Type, Path) Values(?, ?);', newImage,(error, res, fields) => {
+        if (error) throw error;
+     });
+}
 
-function getAllFromGallery(req, res){
-    let data = req.body
-    serverConfig.connection.query('SELECT * FROM GALLERY;',(error, result) => {
+function deleteFromGalleryByID(data, res){
+    serverConfig.connection.query('DELETE FROM Gallery WHERE ID= ?;', data.ID ,(error, result) => {
         if(result === undefined){
             res.json(new Error("Error rows is undefined"));
         }else{
-            var obj = JSON.parse(JSON.stringify(result));
-            res.json(obj);
-    }}); 
-    res.sendStatus(200);
+            res.sendStatus(200);
+    }})
 }
+
+/*------------------------------- Enquires ------------------------------------*/
 
 function getEnquiresMainHeaders(req, res){
     serverConfig.connection.query('SELECT * FROM mainHeaders;', (error, result) => {
@@ -42,7 +31,6 @@ function getEnquiresMainHeaders(req, res){
             res.json(obj);
         }
     })
-    //res.sendStatus(200);
 }
 
 function getEnquiresSubHHeaders(req, res){
@@ -54,12 +42,11 @@ function getEnquiresSubHHeaders(req, res){
             res.json(obj);
         }
     })
-    //res.sendStatus(200);
 }
 
 module.exports = {
-    getGallery,
-    getAllFromGallery,
     getEnquiresMainHeaders,
-    getEnquiresSubHHeaders
+    getEnquiresSubHHeaders,
+    insertNewToGallery,
+    deleteFromGalleryByID
 }

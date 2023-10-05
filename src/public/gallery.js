@@ -86,20 +86,20 @@ $(document).ready(function(){
 });
 
 function showGallery(ID, Type, Path){
-  const domGalllery = document.getElementById('Gallery');
-  const divContainer = document.createElement('div');
-  const imgPath = document.createElement('img');
-  domGalllery.appendChild(divContainer);
-  divContainer.className = (Type + " col m-1 p-1 pe-auto");
-  divContainer.setAttribute("data-bs-toggle", "modal");
-  divContainer.setAttribute("data-bs-target", "#modalImages");
-  divContainer.setAttribute("id", ID);
-  divContainer.setAttribute("onclick", "setActive(" + ID + ")");
-  domGalllery.appendChild(divContainer);
-  imgPath.className = ("img-thumbnail");
-  imgPath.src = Path;
-  divContainer.appendChild(imgPath);
-  showCarousel("carousel" + ID, Path);
+    const domGalllery = document.getElementById('Gallery');
+    const divContainer = document.createElement('div');
+    const imgPath = document.createElement('img');
+    domGalllery.appendChild(divContainer);
+    divContainer.className = (Type + " col m-1 p-1 pe-auto");
+    divContainer.setAttribute("data-bs-toggle", "modal");
+    divContainer.setAttribute("data-bs-target", "#modalImages");
+    divContainer.setAttribute("id", ID);
+    divContainer.setAttribute("onclick", "setActive(" + ID + ")");
+    domGalllery.appendChild(divContainer);
+    imgPath.className = ("img-thumbnail");
+    imgPath.src = Path;
+    divContainer.appendChild(imgPath);
+    showCarousel("carousel" + ID, Path);
 }
 
 function showCarousel(ID, Path){

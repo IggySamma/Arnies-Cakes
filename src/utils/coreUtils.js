@@ -1,21 +1,28 @@
+const globals = require('../globals/globals.js');
 const serverConfig = require('../config/config.js');
+const sqlQuery = require('../services/sql.js');
+
+/*------------------------------- Gallery ------------------------------------*/
+
+function filterGallery(req, res){
+    if(req.body.sectionName === 'All'){
+        res.json(globals.gallery);
+    } else {
+        tempGallery = [];
+        for(let i = 0; i < globals.gallery.length; i++){
+            if(globals.gallery[i].Type === req.body.sectionName){
+                tempGallery.push(globals.gallery[i]);
+            }
+        }
+        res.json(tempGallery)
+    }
+}
 
 function uploadFiles(req, res) {
     for (var i = 0; i < req.files.length; i++) {
-        insertNewToGallery(req.body.name, "/gallery/" + req.files[i].filename);
+        sqlQuery.insertNewToGallery(req.body.name, "/gallery/" + req.files[i].filename);
     }
     res.sendStatus(200);
-}
-
-/*VVVVVVVV move Query*/
-function insertNewToGallery(newType, newPath) {
-    let newImage = [
-        Type = newType,
-        Path = newPath,
-    ];
-    serverConfig.connection.query('INSERT INTO Gallery(Type, Path) Values(?, ?);', newImage,(error, res, fields) => {
-        if (error) throw error;
-     });
 }
 
 function deleteFromGallery(req,res){
@@ -23,13 +30,12 @@ function deleteFromGallery(req,res){
     fs.unlink('./gallery/' + data.Path, (err) => {
     if (err) throw err;
     });
-        serverConfig.connection.query('DELETE FROM Gallery WHERE ID= ?;', data.ID ,(error, result) => {
-            if(result === undefined){
-                res.json(new Error("Error rows is undefined"));
-            }else{
-                res.sendStatus(200);
-        }})
+    sqlQuery.deleteFromGalleryByID(data, res)
 };
+
+
+
+/*------------------------------- Enquires ------------------------------------*/
 
 function sendEmails(enqNum, data, textBody, photos){
     const enquireToSelf = {
@@ -111,5 +117,6 @@ module.exports = {
     getEmailID,
     storeEmailLinkToDB,
     uploadFiles,
-    deleteFromGallery
+    deleteFromGallery,
+    filterGallery
 }

@@ -15,7 +15,7 @@ function loadCalender(){
                 dateFormat: "Y-m-d H:i",
                 minDate: new Date().fp_incr(3),
                 maxDate: new Date().fp_incr(186),
-                disable: data[0].Date,
+                disable: data.Date,
                 minTime: "8:00",
                 maxTime: "18:00",
                 defaultHour: 12,

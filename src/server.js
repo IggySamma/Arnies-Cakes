@@ -1,4 +1,5 @@
 /*------------------ server Setup-----------------*/
+const globals = require('./globals/globals.js');
 const serverConfig = require('./config/config.js');
 const parsers = require('./services/parsers.js');
 const sqlQuery = require('./services/sql.js');
@@ -12,9 +13,26 @@ serverConfig.app.listen(3000, () => {
 
 //parsers.checkDisabledDates();
 
-/*------------------ server API's to move-----------------*/
+/*------------------ Gallery API -----------------*/
 
-serverConfig.app.post('/api/gallery', (req, res) => { sqlQuery.getGallery(req, res) });
+//serverConfig.app.post('/api/gallery', (req, res) => { sqlQuery.getGallery(req, res) });
+//serverConfig.app.post('/api/gallery', (req, res) => { res.json( globals.gallery ) });
+serverConfig.app.post('/api/gallery', (req, res) => { utils.filterGallery( req, res) });
+
+/*---------------------- Enquires API's -------------------------*/
+
+/*
+serverConfig.app.post('/api/deleteDates' , (req, res) => {  })*/
+
+//serverConfig.app.post('/api/disabledDates', (req, res) => { sqlQuery.getDisabledDates(req, res) })
+
+serverConfig.app.post('/api/disabledDates', (req, res) => { res.json(globals.disabledDates)})
+
+serverConfig.app.post('/api/getMainHeaders', (req, res) => { sqlQuery.getEnquiresMainHeaders(req, res) })
+
+serverConfig.app.post('/api/getTreatsHeaders', (req, res) => { sqlQuery.getEnquiresSubHHeaders(req, res) })
+
+serverConfig.app.post('/api/submitEnquire', parsers.clientUpload.array("clientPhotos"), (req, res) => { parsers.enquires(req,res) });
 
 /*--------------------- Admin Page API's ---------------------*/
 
@@ -28,18 +46,3 @@ serverConfig.app.post('/api/deleteGallery', (req, res) => { utils.deleteFromGall
 
 serverConfig.app.post('/api/adminGallery', (req, res) => { sqlQuery.getAllFromGallery(req, res) });
 
-
-/*---------------------- Enquires API's -------------------------*/
-
-/*
-serverConfig.app.post('/api/deleteDates' , (req, res) => {  })*/
-
-//serverConfig.app.post('/api/disabledDates', (req, res) => { sqlQuery.getDisabledDates(req, res) })
-
-serverConfig.app.post('/api/disabledDates', (req, res) => { res.json(parsers.disabledDates)})
-
-serverConfig.app.post('/api/getMainHeaders', (req, res) => { sqlQuery.getEnquiresMainHeaders(req, res) })
-
-serverConfig.app.post('/api/getTreatsHeaders', (req, res) => { sqlQuery.getEnquiresSubHHeaders(req, res) })
-
-serverConfig.app.post('/api/submitEnquire', parsers.clientUpload.array("clientPhotos"), (req, res) => { parsers.enquires(req,res) });
