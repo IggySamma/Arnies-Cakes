@@ -52,13 +52,13 @@
                             </div>
                             <div class="mb-3">
                                 <label for="emailInput" class="form-label">Email Address</label>
-                                <input type="email" class="form-control form-control-lg" id="emailInput" placeholder="name@example.com" required>
+                                <input type="email" class="form-control form-control-lg" id="emailInput" placeholder="name@example.com" pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" required>
                             </div>
                             <div class="mb-3">
                                 <label for="numberInput" class="form-label">Phone Number</label>
                                 <br>
                                 <div class="d-flex">
-                                <input type="tel" class="form-control form-control-lg" id="numberInput" placeholder="0871234567" pattern="[0-9]{10}" length="7" required>
+                                <input type="tel" class="form-control form-control-lg" id="numberInput" placeholder="0871234567" pattern="[0-9]{10}" length="7" title="Please enter number in the format of 0871231234" required>
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -79,7 +79,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="fileUpload" class="form-label">Upload image</label>
-                            <input class="form-control" id="files" type="file" required>
+                            <input class="form-control" id="files" type="file" accept="image/png, image/jpeg, image/jpg" required>
                         </div>
                         <div class="col">
                             <button type="submit" class="btn btn-primary mb-3 p-2 px-4">Submit</button>

@@ -4,6 +4,7 @@ const sqlQuery = require('./sql.js');
 const serverConfig = require('../config/config.js');
 const fs = require('fs');
 const multer = require("multer");
+const { error } = require('console');
 
 /*------------------------------- Gallery ------------------------------------*/
 
@@ -53,7 +54,6 @@ function enquires(req, res){
     let photos = req.files;
     let adjData = isNotEmptyEnquire(JSON.parse(JSON.stringify(req.body)));
     let textBody = ""; 
-
     for(let i = 0; i < Object.keys(adjData).length; i++){
         if(Object.keys(adjData)[i] !== 'fullName' && Object.keys(adjData)[i] !== 'email' && Object.keys(adjData)[i] !== 'number' && Object.keys(adjData)[i] !== 'datetime'){
             let temp = "";                

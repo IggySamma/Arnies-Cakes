@@ -159,22 +159,39 @@ function updatePlaceholder(id) {
 const form = document.getElementById("form");
 form.addEventListener("submit", submitEnquire);
 
+function enquiresValidation(key, value){
+    let emailRegEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let numberRegEx = /^[0-9]{10}$/
+    if(key === "emailInput"){
+        if(value.match(emailRegEx) === null){
+            return alert("Not a valid email address");
+        }
+    } else {
+        if(value.match(numberRegEx) === null){
+            return alert("Not a valid phone Irish mobile number");
+        }
+    }
+}
+
 function submitEnquire(file){
     file.preventDefault();
     const files = document.getElementById("files");
-    const form = document.getElementById('form').querySelectorAll('*');
+    const formSelector = document.getElementById('form').querySelectorAll('*');
     const formData = new FormData();
-    for(let i=2; i < form.length; i++){
-        if(form[i].id != "" && form[i].id != "files" && form[i].id != "mainHeader" && form[i].id != "subHeader" && form[i].value !== "" && form[i].value !== undefined){
-                console.log(form[i].id + " " + form[i].value);
-                formData.append(form[i].id, document.getElementById(form[i].id).value);
+
+
+    for(let i=2; i < formSelector.length; i++){
+        if(formSelector[i].id != "" && formSelector[i].id != "files" && formSelector[i].id != "mainHeader" && formSelector[i].id != "subHeader" && formSelector[i].value !== "" && formSelector[i].value !== undefined){
+                //console.log(form[i].id + " " + form[i].value);
+                formData.append(formSelector[i].id, document.getElementById(formSelector[i].id).value);
         }
     }
-   
+    enquiresValidation(formSelector[5].id, document.getElementById(formSelector[5].id).value)
+    enquiresValidation(formSelector[10].id, document.getElementById(formSelector[10].id).value)
+
     for(let i = 0; i < files.files.length; i++) {
             formData.append("clientPhotos", files.files[i]);
     }
-    
     fetch('/api/submitEnquire', {
       method: 'POST',
       body: formData,
@@ -185,5 +202,5 @@ function submitEnquire(file){
         } else {
             console.log(res);
         }
-    });            
+    });       
 };

@@ -8,7 +8,7 @@ const path = require('path');
 
 
 serverConfig.app.listen(3000, () => {
-    console.log(`server started...`);
+    console.log(`Server started...`);
 });
 
 //parsers.checkDisabledDates();
