@@ -1,19 +1,31 @@
 loadCalender();
-
 function loadCalender(){
     fetch('/api/disabledDates', {
         method: 'POST'
     })
     .then(response => {
         response.json().then(data =>{
+            const dateP3 = new Date(new Date().setDate(new Date().getDate() + 3)).toISOString().split('T')[0];
+
+            console.log(dateP3)
+
+            let minimumDate = "";
+            if(data.IsRange[0] === "Yes"){
+                data.Date[0].from > new Date().fp_incr(3) ? minimumDate = data.Date[0].to + 1 :
+                data.Date[0].to > new Date().fp_incr(3) ? minimumDate = data.Date[0].to + 1 : minimumDate = new Date().fp_incr(3);
+            } else {
+                data.Date[0] > new Date().fp_incr(3) ? minimumDate = data.Date[0] + 1 : minimumDate = new Date().fp_incr(3);
+            }
+            console.log(minimumDate)
             flatpickr(".flatpickr", { 
                 //'inline' : true,
                 altInput: true,
                 altFormat: "F j, Y, H:i",
-                defaultDate: new Date().fp_incr(3),
+                allowInput: false,
+                defaultDate: minimumDate,
                 enableTime: true,
                 dateFormat: "Y-m-d H:i",
-                minDate: new Date().fp_incr(3),
+                minDate: minimumDate,
                 maxDate: new Date().fp_incr(186),
                 disable: data.Date,
                 minTime: "8:00",
@@ -46,6 +58,7 @@ function getMainHeaders(){
         })
     })
 }
+
 function getTreatsHeaders(){
     let treatsHeadings;
     fetch('/api/getTreatsHeaders',{
@@ -60,6 +73,7 @@ function getTreatsHeaders(){
         })
     })
 }
+
 getMainHeaders();
 getTreatsHeaders();
 
@@ -159,37 +173,18 @@ function updatePlaceholder(id) {
 const form = document.getElementById("form");
 form.addEventListener("submit", submitEnquire);
 
-function enquiresValidation(key, value){
-    let emailRegEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    let numberRegEx = /^[0-9]{10}$/
-    if(key === "emailInput"){
-        if(value.match(emailRegEx) === null){
-            return alert("Not a valid email address");
-        }
-    } else {
-        if(value.match(numberRegEx) === null){
-            return alert("Not a valid phone Irish mobile number");
-        }
-    }
-}
-
 function submitEnquire(file){
     file.preventDefault();
     const files = document.getElementById("files");
     const formSelector = document.getElementById('form').querySelectorAll('*');
     const formData = new FormData();
-
-
     for(let i=2; i < formSelector.length; i++){
         if(formSelector[i].id != "" && formSelector[i].id != "files" && formSelector[i].id != "mainHeader" && formSelector[i].id != "subHeader" && formSelector[i].value !== "" && formSelector[i].value !== undefined){
                 //console.log(form[i].id + " " + form[i].value);
                 formData.append(formSelector[i].id, document.getElementById(formSelector[i].id).value);
         }
     }
-    enquiresValidation(formSelector[5].id, document.getElementById(formSelector[5].id).value)
-    enquiresValidation(formSelector[10].id, document.getElementById(formSelector[10].id).value)
-
-    for(let i = 0; i < files.files.length; i++) {
+      for(let i = 0; i < files.files.length; i++) {
             formData.append("clientPhotos", files.files[i]);
     }
     fetch('/api/submitEnquire', {
@@ -197,10 +192,11 @@ function submitEnquire(file){
       body: formData,
     })
     .then((res) => {
-        if(res.status === 200){
-            window.location.href = "/enquiresty.html";
-        } else {
-            console.log(res);
-        }
+        res.status === 405 ? alert("Email provided is invalid") :
+        res.status === 406 ? alert("Mobile number is invalid") :
+        res.status === 407 ? alert("Incorrect file attached. Only .Png, .Jpg, .Jpeg allowed") :
+        res.status === 500 ? alert("Something went wrong, please check file is .Png | .Jpg | .Jpeg format. Otherwise please contact us on our social links instead") :
+        res.status === 200 ? window.location.href = "/enquiresty.html" : 
+        console.log(res);
     });       
 };
