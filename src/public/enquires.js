@@ -5,27 +5,16 @@ function loadCalender(){
     })
     .then(response => {
         response.json().then(data =>{
-            const dateP3 = new Date(new Date().setDate(new Date().getDate() + 3)).toISOString().split('T')[0];
-
-            console.log(dateP3)
-
-            let minimumDate = "";
-            if(data.IsRange[0] === "Yes"){
-                data.Date[0].from > new Date().fp_incr(3) ? minimumDate = data.Date[0].to + 1 :
-                data.Date[0].to > new Date().fp_incr(3) ? minimumDate = data.Date[0].to + 1 : minimumDate = new Date().fp_incr(3);
-            } else {
-                data.Date[0] > new Date().fp_incr(3) ? minimumDate = data.Date[0] + 1 : minimumDate = new Date().fp_incr(3);
-            }
-            console.log(minimumDate)
+            console.log(data.MinDate)
             flatpickr(".flatpickr", { 
                 //'inline' : true,
                 altInput: true,
                 altFormat: "F j, Y, H:i",
                 allowInput: false,
-                defaultDate: minimumDate,
+                defaultDate: data.MinDate,
                 enableTime: true,
                 dateFormat: "Y-m-d H:i",
-                minDate: minimumDate,
+                minDate: data.MinDate,
                 maxDate: new Date().fp_incr(186),
                 disable: data.Date,
                 minTime: "8:00",

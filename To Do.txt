@@ -1,12 +1,6 @@
 --------------------------General------------------------
 
 
-
-
-*******************RESTRUCTE WHOLE PROJECT AND REFACTOR********************************
-
-
-
 Make pages not refresh but reload. (Will need to add History for forward and back directorys)?
 
 Need to block access to files like server.js? (not sure if possible, need to double check)
@@ -15,6 +9,8 @@ Need to block access to files like server.js? (not sure if possible, need to dou
 
 
 --------------------------Enquires------------------------
+
+***Found bug in calender, if dates in disabled range, default values not showing and pushing today() + 3. started making validation need to finish and add to globals variable to pass back to client.***
 
 Create API for Retrieving Enquire number and adding enquire from messageID.
 

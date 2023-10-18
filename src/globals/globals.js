@@ -10,7 +10,8 @@ class disabledDatesContructor{
     constructor(){
         this.ID = [];
         this.Date = [];
-        this.IsRange = []
+        this.IsRange = [];
+        this.MinDate = "";
     };
 };
 
