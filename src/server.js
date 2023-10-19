@@ -1,11 +1,11 @@
 /*------------------ server Setup-----------------*/
+
 const globals = require('./globals/globals.js');
 const serverConfig = require('./config/config.js');
 const parsers = require('./services/parsers.js');
 const sqlQuery = require('./services/sql.js');
 const utils = require('./utils/coreUtils.js');
 const path = require('path');
-
 
 serverConfig.app.listen(3000, () => {
     console.log(`Server started...`);

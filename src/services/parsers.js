@@ -153,11 +153,11 @@ function deleteDates(ID){
     }})
     console.log("Deleted old disabled date ID: " + ID)
 }
-/*---------------------------- Fix to find lowest date not within dates range ---------------------------------------*/
+
 function checkMinimumDate(){
-    let checkDate = new Date(new Date().setDate(new Date().getDate() + 3 )).toISOString().split('T')[0]
+    let minDate = new Date(new Date().setDate(new Date().getDate() + 3 )).toISOString().split('T')[0]
+    let i = 0
     let usedDates = []
-    let minDate = new Date(new Date().setDate(new Date().getDate() + 32 )).toISOString().split('T')[0]
 
     for(let i = 0; i < globals.disabledDates.ID.length; i++){
         globals.disabledDates.IsRange[i] === "Yes" ? 
@@ -165,21 +165,12 @@ function checkMinimumDate(){
         usedDates.push(globals.disabledDates.Date[i]);
     }
 
-    for(let i = 3; i < 32; i++){
-        checkDate = new Date(new Date().setDate(new Date().getDate() + i )).toISOString().split('T')[0]
-        for(let j = 0; j < usedDates.length; j++){
-            console.log(usedDates[j])
-            if(usedDates[j] > checkDate){
-                if(checkDate < minDate){
-                    minDate = checkDate
-                }
-            }
-        }            
+    while(usedDates.includes(minDate) === true){
+        minDate = new Date(new Date().setDate(new Date().getDate() + 3 + i)).toISOString().split('T')[0]
+        i++
     }
     globals.disabledDates.MinDate = minDate
-    console.log(usedDates)
-    console.log(minDate)
-    console.log("Min Date for disabled dates set")
+    console.log("Min Date for disabled dates set as: " + minDate)
 }
 
 function createDateArrayFromDateRanges(fromString, toString){

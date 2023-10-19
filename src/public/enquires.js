@@ -5,24 +5,25 @@ function loadCalender(){
     })
     .then(response => {
         response.json().then(data =>{
-            console.log(data.MinDate)
+
             flatpickr(".flatpickr", { 
                 //'inline' : true,
                 altInput: true,
                 altFormat: "F j, Y, H:i",
                 allowInput: false,
-                defaultDate: data.MinDate,
+                defaultDate: data.MinDate + " 12:00",
                 enableTime: true,
                 dateFormat: "Y-m-d H:i",
                 minDate: data.MinDate,
                 maxDate: new Date().fp_incr(186),
                 disable: data.Date,
-                minTime: "8:00",
+                minTime: "10:00",
                 maxTime: "18:00",
                 defaultHour: 12,
                 defaultMinute: 0,
                 minuteIncrement: 15,
                 disableMobile: false,
+                plugins: [new confirmDatePlugin({})]
             });
         })
     })
