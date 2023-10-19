@@ -1,6 +1,6 @@
 const serverConfig = require('../config/config.js');
 
-/*------------------------------- Gallery ------------------------------------*/
+/*------------------------------- Gallery functions ----------------------------*/
 function insertNewToGallery(newType, newPath) {
     let newImage = [
         Type = newType,
@@ -21,6 +21,8 @@ function deleteFromGalleryByID(data, res){
 }
 
 /*------------------------------- Enquires ------------------------------------*/
+
+/*--------------------------- Main Page Retrieve --------------------- */
 
 function getEnquiresMainHeaders(req, res){
     serverConfig.connection.query('SELECT * FROM mainHeaders;', (error, result) => {
@@ -43,6 +45,36 @@ function getEnquiresSubHHeaders(req, res){
         }
     })
 }
+
+/*--------------------------- Calender functions --------------------- */
+
+function insertDisabledDate(req, res, Date, isRange){
+    let updateData = [
+        nDate = Date,
+        nIsRange = isRange,
+    ]
+    serverConfig.connection.query('insert into disabledDates (Date, IsRange) values (?, ?);', updateData, (error, result) => {
+        if (error) { 
+            throw error; 
+        } else {
+            var obj = JSON.parse(JSON.stringify(result));
+            res.json(obj);
+        }
+    })
+}
+
+function deleteDisabledDate(req, res, ID){
+    serverConfig.connection.query('delete from disabledDates where ID=;', ID, (error, result) => {
+        if (error) { 
+            throw error; 
+        } else {
+            var obj = JSON.parse(JSON.stringify(result));
+            res.json(obj);
+        }
+    })
+}
+
+/*--------------------------- Enquire functions --------------------- */
 
 function storeEnquireLink(newDate, newLink){
     let storeLink = [
@@ -106,5 +138,7 @@ module.exports = {
     storeEnquireLink,
     retrieveEnquiresLink,
     updateEnquiresConfirmed,
-    removeEnquire
+    removeEnquire,
+    insertDisabledDate,
+    deleteDisabledDate
 }
