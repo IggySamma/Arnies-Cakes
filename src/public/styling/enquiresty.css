@@ -1,13 +1,39 @@
-@font-face {
-    font-family: 'Belleza';
-    font-style: normal;
-    font-weight: 400;
-    src: local('Belleza-Regular'), url('./fonts/Belleza-Regular.ttf') format('truetype');
-  }
-  
-  @font-face {
-    font-family: 'Halimun';
-    font-style: normal;
-    font-weight: 400;
-    src: local('Halimun'), url('./fonts/Halimun.ttf') format('truetype');
-  }
+.image{
+  position: relative;
+  width: 100vw;  
+  max-width: 500px; 
+  max-height: 500px; 
+  object-fit: cover;
+  aspect-ratio: 1/1;
+  top: 0px
+}
+
+.img-thumbnail{
+  cursor: pointer;
+  border: 0px;
+  background-color: transparent;
+}
+
+.thankyou{
+  margin:auto; 
+  padding: 2px; 
+  text-align: center; 
+  position: relative; 
+  background-color: #D3BBDD; 
+  border-radius: 8px;
+}
+
+@media only screen and (min-width: 576px){
+  .image{
+    position: relative;
+    float: center;
+    width: 100vw;  
+    margin-left: auto;
+    margin-right: auto ;
+    max-width: 500px; 
+    max-height: 500px; 
+    object-fit: cover;
+    aspect-ratio: 1/1;
+    top: 0px
+  }  
+}

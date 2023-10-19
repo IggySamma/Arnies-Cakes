@@ -1,6 +1,7 @@
 const globals = require('../globals/globals.js');
 const serverConfig = require('../config/config.js');
 const sqlQuery = require('../services/sql.js');
+const { google } = require("googleapis");
 
 /*------------------------------- Gallery ------------------------------------*/
 
@@ -80,6 +81,8 @@ function sendEmails(enqNum, data, textBody, photos){
     serverConfig.emailTransporter.sendMail(enquireToClient, (error, response) => {
         error ? console.log(error) : serverConfig.emailTransporter.close();
     });
+
+    //storeEmailLinkToDB()
 };
 
 
@@ -105,7 +108,7 @@ function getEmailID(auth, query){
 
 /*---------------VVV Not finished Just pulls link doesn't store------------ */
 function storeEmailLinkToDB(){
-    let messageID = getEmailID(oauth2Client, 'label:inbox subject:Enquire: Number - 2');
+    let messageID = getEmailID(serverConfig.oauth2Client, 'label:inbox subject:Enquire: Number - 2');
     messageID.then(data => {
         console.log("https://mail.google.com/mail?authuser=arniescakes@gmail.com#all/" + data[0].id);
     })
