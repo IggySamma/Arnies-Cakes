@@ -1,11 +1,15 @@
 //require('dotenv').config();
 require('dotenv').config({path:__dirname + '/.env'})
-const path = require('path');
 
 /*-------------------Gmail Access setup -------------------------*/
+
+const fs = require('fs').promises;
+const path = require('path');
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
+const {authenticate} = require('@google-cloud/local-auth');
+const process = require('process');
 
 const oauth2Client = new OAuth2(
     process.env.GMAIL_CLIENT_ID, // ClientID
@@ -13,26 +17,26 @@ const oauth2Client = new OAuth2(
     "https://developers.google.com/oauthplayground/" // Redirect URL
 );
 
+
 oauth2Client.setCredentials({
     refresh_token: process.env.GMAIL_REFRESH_TOKEN,
 });
 
 const accessToken = oauth2Client.getAccessToken()
 
-
 let emailTransporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-            type: "OAuth2",
-            user: process.env.GMAIL_USER, 
-            clientId: process.env.GMAIL_CLIENT_ID,
-            clientSecret: process.env.GMAIL_CLIENT_SECRET,
-            refreshToken: process.env.GMAIL_REFRESH_TOKEN,
-            accessToken: accessToken
-    },
-    tls: {
-        rejectUnauthorized: false
-    },
+  service: "gmail",
+  auth: {
+          type: "OAuth2",
+          user: process.env.GMAIL_USER, 
+          clientId: process.env.GMAIL_CLIENT_ID,
+          clientSecret: process.env.GMAIL_CLIENT_SECRET,
+          refreshToken: process.env.GMAIL_REFRESH_TOKEN,
+          accessToken: accessToken
+  },
+  tls: {
+      rejectUnauthorized: false
+  },
 });
 
 /*----------------------------- MySQL Config ---------------------*/
@@ -63,5 +67,6 @@ module.exports = {
     emailTransporter,
     sqlConfig,
     connection,
-    app
+    app,
+    oauth2Client
 }

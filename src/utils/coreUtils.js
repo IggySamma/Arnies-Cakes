@@ -82,13 +82,12 @@ function sendEmails(enqNum, data, textBody, photos){
         error ? console.log(error) : serverConfig.emailTransporter.close();
     });
 
-    //storeEmailLinkToDB()
+    getLastEnquireID("Yes")
 };
 
-
-function getEmailID(auth, query){  
+function getEmailID(query){  
     return new Promise((resolve, reject) => {    
-      const gmail = google.gmail({version: 'v1', auth});    
+      const gmail = google.gmail({version: 'v1', auth: serverConfig.oauth2Client});    
       gmail.users.messages.list(      
         {        
           userId: 'me',        
@@ -107,18 +106,30 @@ function getEmailID(auth, query){
 }
 
 /*---------------VVV Not finished Just pulls link doesn't store------------ */
-function storeEmailLinkToDB(){
-    let messageID = getEmailID(serverConfig.oauth2Client, 'label:inbox subject:Enquire: Number - 2');
-    messageID.then(data => {
-        console.log("https://mail.google.com/mail?authuser=arniescakes@gmail.com#all/" + data[0].id);
+
+function getLastEnquireID(Gmail){
+    serverConfig.connection.query('SELECT * FROM enquires;', (error, result) => {
+        if (error) { 
+            throw error; 
+        } else {
+            let obj = JSON.parse(JSON.stringify(result))
+            if(Gmail === "Yes"){
+                getGmailLink(obj[obj.length-1].ID)
+            }
+        }
     })
 }
 
+function getGmailLink(ID){ 
+    let messageID = getEmailID('label:inbox subject:Enquire: Number - ${ID + 1}');
+    messageID.then(data => {
+        console.log(data)
+        //console.log("https://mail.google.com/mail?authuser=arniescakes@gmail.com#all/" + data[0].id);    
+    })
+}
 
 module.exports = {
     sendEmails,
-    getEmailID,
-    storeEmailLinkToDB,
     uploadFiles,
     deleteFromGallery,
     filterGallery

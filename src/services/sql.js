@@ -97,7 +97,7 @@ function retrieveEnquiresLink(req, res){
         if (error) { 
             throw error; 
         } else {
-            var obj = JSON.parse(JSON.stringify(result));
+            let obj = JSON.parse(JSON.stringify(result));
             res.json(obj);
         }
     })
