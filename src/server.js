@@ -11,20 +11,13 @@ serverConfig.app.listen(3000, () => {
     console.log(`Server started...`);
 });
 
-//parsers.checkDisabledDates();
+serverConfig.app.get('', function(req, res) { res.sendFile(path.join(__dirname, '/public/index.html'))});
 
 /*------------------ Gallery API -----------------*/
 
-//serverConfig.app.post('/api/gallery', (req, res) => { sqlQuery.getGallery(req, res) });
-//serverConfig.app.post('/api/gallery', (req, res) => { res.json( globals.gallery ) });
 serverConfig.app.post('/api/gallery', (req, res) => { utils.filterGallery( req, res) });
 
 /*---------------------- Enquires API's -------------------------*/
-
-/*
-serverConfig.app.post('/api/deleteDates' , (req, res) => {  })*/
-
-//serverConfig.app.post('/api/disabledDates', (req, res) => { sqlQuery.getDisabledDates(req, res) })
 
 serverConfig.app.post('/api/disabledDates', (req, res) => { res.json(globals.disabledDates)})
 
@@ -36,9 +29,22 @@ serverConfig.app.post('/api/submitEnquire', parsers.clientUpload.array("clientPh
 
 /*--------------------- Admin Page API's ---------------------*/
 
-serverConfig.app.get('', function(req, res) { res.sendFile(path.join(__dirname, '/public/index.html'))});
 
-serverConfig.app.get('/login', function(req, res) { res.sendFile(path.join(__dirname, '/admin/login.html')) });
+serverConfig.app.get('/login', (req, res) => { res.sendFile(path.join(__dirname, '/admin/login.html')) });
+
+serverConfig.app.get('/login/google', serverConfig.passport.authenticate('google', {
+    successRedirect: '/admin',
+    failureRedirect: '/'
+}))
+
+serverConfig.app.get('/admin', (req, res) => { 
+    if (serverConfig.checkUserLoggedIn(req)) {
+        console.log('User logged');
+        res.sendFile(path.join(__dirname, '/admin/index.html'))
+      } else {
+        console.log('error');
+      }
+})
 
 serverConfig.app.post('/api/upload', parsers.galleryUpload.array("myFiles"), utils.uploadFiles);
 

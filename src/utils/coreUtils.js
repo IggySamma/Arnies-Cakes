@@ -3,7 +3,6 @@ const serverConfig = require('../config/config.js');
 const sqlQuery = require('../services/sql.js');
 const eApi = require('../services/externalAPIs.js');
 
-
 /*------------------------------- Gallery ------------------------------------*/
 
 function filterGallery(req, res){

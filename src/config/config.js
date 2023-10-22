@@ -60,7 +60,56 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../public/')));
 app.use(express.static('/gallery/'));
 
+/*-------------------------- Admin Setup ----------------------- */
 
+var passport = require('passport');
+var GoogleStrategy = require('passport-google-oidc');
+//var db = require('../db');
+var router = express.Router();
+//var logger = require('morgan');
+var session = require('express-session');
+
+app.use(session({
+    secret: process.env.GMAIL_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    /*cookie: {
+        secure: true
+    }*/
+    //store: new SQLiteStore({ db: 'sessions.db', dir: './var/db' })
+}));
+
+passport.use(new GoogleStrategy({
+    clientID: process.env.GMAIL_CLIENT_ID,
+    clientSecret: process.env.GMAIL_CLIENT_SECRET,
+    callbackURL: '/login/google',
+    scope: [ 'profile' ]
+  }, function verify(issuer, profile, cb) {
+    if(profile.id !== process.env.GMAIL_ID){
+        cb('Incorrect credentials. IP Logged :)');
+    } else {
+        console.log(profile.id);
+        cb(null, profile)
+    }
+  }
+));
+
+passport.serializeUser(function(user, cb) {
+    process.nextTick(function() {
+      cb(null, { id: user.id, username: user.username, name: user.name });
+    });
+});
+  
+passport.deserializeUser(function(user, cb) {
+    process.nextTick(function() {
+        return cb(null, user);
+    });
+});
+
+function checkUserLoggedIn(req, res, next) {
+    console.log(req.session)
+    return req.session;
+}
 /*-------------------------- Config Expotrs ----------------------- */
 
 module.exports = {
@@ -68,5 +117,7 @@ module.exports = {
     sqlConfig,
     connection,
     app,
-    oauth2Client
+    oauth2Client,
+    passport,
+    checkUserLoggedIn
 }

@@ -87,7 +87,7 @@ function attachTextBody(adjData, photos, res){
             textBody = textBody + "<p>" + temp + ": " + Object.values(adjData)[i] + "</p>";
         };
     }
-    sqlQuery.storeNewEnquire(sqlQuery.getAllEnquires).then(ID => {
+    sqlQuery.storeNewEnquire(res, sqlQuery.getAllEnquires).then(ID => {
         utils.sendEmails(ID[ID.length -1].ID, adjData, textBody, photos, res, date);
     })
 }
