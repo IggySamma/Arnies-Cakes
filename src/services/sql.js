@@ -76,30 +76,50 @@ function deleteDisabledDate(req, res, ID){
 
 /*--------------------------- Enquire functions --------------------- */
 
-function storeEnquireLink(newDate, newLink){
-    let storeLink = [
-        date = newDate,
-        Confirmed = "No",
-        Link = newLink,
-    ]
-    serverConfig.connection.query('INSERT INTO enquires(Date, Confirmed, Link) Values(?, ?, ?)', storeLink, (error, result) => {
-        if (error) { 
-            throw error; 
-        } else {
-            var obj = JSON.parse(JSON.stringify(result));
-            res.json(obj);
-        }
+function storeNewEnquire(res, cb){
+    return new Promise((resolve, reject) => {
+        let storeLink = [
+            date = "",
+            Confirmed = "No",
+            Link = "",
+            Completed = "No",
+        ]
+        serverConfig.connection.query('INSERT INTO enquires(Date, Confirmed, Link, Completed) Values(?, ?, ?, ?);', storeLink, (error, result) => {
+            if (error) { 
+                console.log(error);
+                res.sendStatus(500); 
+            }
+            resolve(cb())
+        })
     })
 }
 
-function retrieveEnquiresLink(req, res){
-    serverConfig.connection.query('SELECT * FROM enquires;', (error, result) => {
+
+function storeEnquireLink(newDate, newLink, nID, res){
+    let storeLink = [
+        date = newDate,
+        Link = newLink,
+        ID = nID,
+    ]
+    serverConfig.connection.query('UPDATE enquires SET date = ?, Link = ? WHERE ID = ?;', storeLink, (error, result) => {
         if (error) { 
-            throw error; 
-        } else {
-            let obj = JSON.parse(JSON.stringify(result));
-            res.json(obj);
+            console.log(error);
+            res.sendStatus(500); 
         }
+        res.sendStatus(200);
+    })
+}
+
+function getAllEnquires(){
+    return new Promise((resolve, reject) => {
+        serverConfig.connection.query('SELECT * FROM enquires;', (error, result) => {
+            if (error) { 
+                reject(error)
+                return
+            } else {
+                resolve(JSON.parse(JSON.stringify(result)))
+            }
+        })
     })
 }
 
@@ -136,9 +156,10 @@ module.exports = {
     insertNewToGallery,
     deleteFromGalleryByID,
     storeEnquireLink,
-    retrieveEnquiresLink,
     updateEnquiresConfirmed,
     removeEnquire,
     insertDisabledDate,
-    deleteDisabledDate
+    deleteDisabledDate,
+    getAllEnquires,
+    storeNewEnquire
 }

@@ -4,8 +4,6 @@ const sqlQuery = require('./sql.js');
 const serverConfig = require('../config/config.js');
 const fs = require('fs');
 const multer = require("multer");
-const { error } = require('console');
-const { resourceLimits } = require('worker_threads');
 
 /*------------------------------- Gallery ------------------------------------*/
 
@@ -70,7 +68,11 @@ function enquires(req, res){
 
 function attachTextBody(adjData, photos, res){
     let textBody = ""; 
+    let date = ""
     for(let i = 0; i < Object.keys(adjData).length; i++){
+        if(Object.keys(adjData)[i] === 'datetime'){
+            date = Object.values(adjData)[i]
+        }
         if(Object.keys(adjData)[i] !== 'fullName' && Object.keys(adjData)[i] !== 'email' && Object.keys(adjData)[i] !== 'number' && Object.keys(adjData)[i] !== 'datetime'){
             let temp = "";                
             let j = 0;
@@ -85,10 +87,9 @@ function attachTextBody(adjData, photos, res){
             textBody = textBody + "<p>" + temp + ": " + Object.values(adjData)[i] + "</p>";
         };
     }
-    /* ---------VV ------------- Create function to retrieve enquire ID and store Enquire ? -----------*/
-    utils.sendEmails('2', adjData, textBody, photos);
-    res.sendStatus(200);
-
+    sqlQuery.storeNewEnquire(sqlQuery.getAllEnquires).then(ID => {
+        utils.sendEmails(ID[ID.length -1].ID, adjData, textBody, photos, res, date);
+    })
 }
 
 /*------------------------------- Enquires Callender ------------------------------------*/
