@@ -68,7 +68,13 @@ var GoogleStrategy = require('passport-google-oidc');
 var router = express.Router();
 //var logger = require('morgan');
 var session = require('express-session');
+/*
+var authr = router.get('/admin', function(req, res, next) {
+  res.render(path.join(__dirname, '../admin/index.html'));
+});
 
+app.use('/', authr)
+*/
 app.use(session({
     secret: process.env.GMAIL_SECRET,
     resave: false,

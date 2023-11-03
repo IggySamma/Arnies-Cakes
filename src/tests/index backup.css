@@ -1,0 +1,165 @@
+/* ============================================== Home Page */
+    
+.contain{
+    top: 50px;
+    left: .5vw;
+    right: 1vw;
+    width: 97vw;
+    height: 90%;
+    position: fixed;
+    overflow-x: hidden;
+}
+
+.homeLogoBox{
+    position: relative;
+    width: 92vw;
+    right: 2vw;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+}
+
+.homeLogo{
+    height: 98%;
+    aspect-ratio: 1 / 1;
+}
+
+.homeBox{
+    top: 10px;
+    background-color: #D3BBDD;
+    position: relative;
+    width: 95vw;
+    bottom: 0px;
+}
+
+.homeBoxLinks{
+    font-size: 20px;
+    font-weight: bold;
+    width: 90%;
+    height: 50px;
+    visibility: hidden;
+}
+
+
+.homeIconsRow{
+    position: relative;
+    height: 60px;
+}
+
+.homeTextBox{
+    width: 90%;
+    height: 50%;
+    text-align: center;
+}
+
+.homeTextBox h1{
+    /*font-size: 50px;*/
+    /*font-weight: bold;*/
+    text-align: center;
+}
+
+.homeTextBox h3{
+    /*font-size: 35px;*/
+    /*font-weight: bold;*/
+    text-align: center;
+}
+.homeIcons{
+    height: 45px;
+    aspect-ratio: 1 / 1;
+    position: relative;
+    font-size: 30px;
+    visibility: visible;
+    /*font-weight: bold;*/
+}
+
+.homeBoxLinksWrapper1{
+    position: absolute;
+    left: 0px;
+}
+
+.homeBoxLinksWrapper2{
+    position: absolute;
+    left: 40%;
+}
+
+.homeBoxLinksWrapper3{
+    position: relative;
+    left: 80%;
+}
+
+@media only screen and (min-width: 576px){
+    .contain{
+        top: 100px;
+        left: 1vw;
+        right: 1vw;
+        width: 98vw;
+        height: 85vh;
+        position: absolute;
+        overflow-x: hidden;
+    }
+
+    .homeLogoBox{
+        position: relative;
+        top: 10px;
+        left: 12.5vw;
+        width: 25vw;
+        aspect-ratio: 1 / 1;
+    }
+    
+    .homeLogo{
+        width: 100%;
+        height: 100%;
+    }
+    
+    .homeBox{
+        background-color: #D3BBDD;
+        position: relative;
+        left: 0px;
+        width: 60vw;
+        max-width: 100%;
+        clip-path: polygon(0 0, 90% 0%, 100% 100%, 0% 100%);
+    }
+    
+    .homeIconsRow{
+        position: relative;
+        height: 60px;
+    }
+    
+    .homeTextBox{
+        width: 90%;
+        height: 50%;
+        text-align: center;
+    }
+}
+
+@media only screen and (min-width: 1224px){
+    .homeBoxLinks{
+        font-size: 20px;
+        font-weight: bold;
+        margin: auto auto auto auto;
+        width: 90%;
+        height: 50px;
+        visibility: visible;
+    }
+    .homeIcons{
+        top: -2px;
+        height: 45px;
+        width: 45px;
+        font-size: 30px;
+        /*font-weight: bold;*/
+    }
+
+    .homeBoxLinksWrapper1{
+        position: absolute;
+        left: 5%;
+    }
+    
+    .homeBoxLinksWrapper2{
+        position: absolute;
+        left: 40%;
+    }
+    
+    .homeBoxLinksWrapper3{
+        position: relative;
+        left: 65%;
+    }
+}

@@ -12,65 +12,57 @@
   src: local('Halimun'), url('./fonts/Halimun.ttf') format('truetype');
 }
 
-body{
+body {
+  background-color: #FAF9F6;
+  padding-top: 70px;
   font-family: 'Belleza';
-  font-size: 30px;
+  width: 100vw;
+  overflow: hidden;
+  /*overflow-y: scroll;*/
 }
 
 .fontsize {
-  font-size: 35px;  
+  font-size: 29px;
+  /*font-weight: bold;*/
 }
 
-.navbar {
-  /*width: 100vw;*/
-  background-color: #ECE3F0;
+.hr-line {
+  width: 100%;
+  opacity: 100%;
+  border: 20px solid #D3BBDD;  /*15px*/
+  /*background-color: #D3BBDD;  /*15px*/
   position: absolute;
-  height: 55px;
-  top: 0px;
+  z-index: -2;
 }
 
 .ribbon {
   opacity: 90%;
   position: absolute; 
-  width: 180px;
-  height: 200px;
+  width: 150px;
+  margin-top: -35px !important;
+  height: 50%;
+  padding: 0px !important;
   margin: -25px;
   z-index: -2;
 }
 
-.navBarLogo{
-  height: 100px;
-  aspect-ratio: 1 / 1;
-}
-
-.navbar-nav{
-  align-items: center;
-}
-
-.nav-item{
-  padding: 10px;
-}
-
 .homeImage{
-  width: 38vw;
+  height: 40vh;
   aspect-ratio: 1 / 1.25;
 }
 
 .homeImageContainer{
   pointer-events: none;
   transform-origin: top left;
-  /*transform: rotate(-21.5deg);*/
-  transform: rotate(-30deg);
-  position: relative;
+  transform: rotate(-21.5deg);
+  position: fixed;
   max-width: 850px;
-  height: 150vh;
-  left: 30vw;
-  top: -55vh;
+  left: 50vw;
+  top: 0px;
   z-index: -1;
   border-radius: 10px;
   border-color: black;
   border-width: 10px;
-  overflow: hidden; 
 }
 
 a{
@@ -98,6 +90,11 @@ a:active {
   color: black;
 }
 
+a.homeBoxLinks:nth-child(2){
+  position: relative;
+  margin: 10%;
+}
+
 .imageAnimationL {
   -webkit-animation: mover 20s linear infinite;
   animation: mover 20s linear infinite;
@@ -117,44 +114,40 @@ a:active {
   100% { transform: translateY(3%); }
 }
 
-@media only screen and (min-width: 800px){  
-  .navbar{
+@media only screen and (min-width: 800px){
+ 
+  body {
+    background-color: #FAF9F6;
+    padding-top: 70px;
+    font-family: 'Belleza';
     width: 100%;
-    opacity: 100%;  
-    position: fixed;
-    height: 100px;
-    transition: top 0.3s;
+    overflow-x: hidden;
+    height: 100%;
+    /*overflow-y: scroll;*/
+ }
+  
+  .hr-line {
+    width: 100%;
+    opacity: 100%;
+    border: 20px solid #D3BBDD;
+    position: absolute;
+    z-index: -2;
   }
-
-  .nav-item:nth-child(1){
-    position: relative;
-    left: -100px;
-    padding-right: 150px;
-    padding-left: 0px;
-    margin: 0px;
-  }
-
+  
   .ribbon {
+    opacity: 90%;
+    position: absolute; 
     width: 150px;
-    height: 160px;
-    top: -25px;
-    margin: -3px;
-  }  
-
+    height: 200px;
+    margin-top: -85px !important;
+    padding: 0px !important;
+    margin: -18px;
+    z-index: -2;
+  }
+  
   .homeImage{
     width: 400px;
     height: 525px;
   }
 
-  .homeImageContainer{
-    position: relative;
-    top: -70vh; 
-    left: 45vw;
-  }
-  .imageAnimationL{
-    width: auto;
-  }
-  .imageAnimationR{
-    width: auto;
-  }
 }

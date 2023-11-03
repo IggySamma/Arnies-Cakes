@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Arnie's Cakes</title>
+        <meta name="description" content=""">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="./styling/index.css">
+        <link rel="stylesheet" href="./styling/shared.css">
+    </head>
+    <header>
+        <nav id="navbar"></nav>
+    </header>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div class="container contain m-1 p-1"> 
+            <div class="col homeLogoBox d-inline-flex m-2 p-2">
+                <img class="homeLogo" src="./images/Home logo.png">
+            </div>
+            <div class="col homeBox rounded m-1 p-1">
+                <div class="row homeTextBox d-inline-flex m-2 p-2">
+                    <h1>Welcome to our page!</h1>
+                    <h3>My name is Arnie and I'm a self-taught cake maker based in Dublin 15.<br>We offer cakes and treats for any occasion.<br>Get in touch by clicking down below or through the enquires page.</h3>
+                </div>
+                <div class="homeIconsRow m-1 p-1">
+                    <div class="homeBoxLinksWrapper1 m-1 p-1">
+                        <a class="homeBoxLinks" href="https://www.facebook.com/ArniesCakes" target="_blank"><img src="./images/facebook.svg" class="homeIcons p-1"> Dublin tortai - 'Arnies Cakes'</a>
+                    </div>
+                    <div class="homeBoxLinksWrapper2 m-1 p-1">
+                        <a class="homeBoxLinks" href="https://www.instagram.com/arnies_cakes/" target="_blank"><img src="./images/instagram.svg" class="homeIcons"> @Arnies Cakes</a>
+                    </div>
+                    <div class="homeBoxLinksWrapper3 m-1 p-1">
+                        <a class="homeBoxLinks" href="mailto:ArniesCakes@gmail.com" target="_blank"><img src="./images/gmail.svg" class="homeIcons"> ArniesCakes@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="sideScroll"></div>
+        <script src="./shared.js" onload="navBar();"></script>
+        <script src="./shared.js" onload="sideScroll();"></script>
+    </body>
+</html>

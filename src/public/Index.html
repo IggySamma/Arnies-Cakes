@@ -19,37 +19,81 @@
         <link rel="stylesheet" href="./styling/shared.css">
     </head>
     <header>
-        <nav id="navbar"></nav>
+
     </header>
     <body>
         <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+            <p class="browsehappy"> You are using an <strong>outdated</strong> browser. Please  <a href="#">upgrade your browser</a > to improve your experience.</p>
         <![endif]-->
-        <div class="container contain m-1 p-1"> 
-            <div class="col homeLogoBox d-inline-flex m-2 p-2">
-                <img class="homeLogo" src="./images/Home logo.png">
-            </div>
-            <div class="col homeBox rounded m-1 p-1">
-                <div class="row homeTextBox d-inline-flex m-2 p-2">
-                    <h1>Welcome to our page!</h1>
-                    <h3>My name is Arnie and I'm a self-taught cake maker based in Dublin 15.<br>We offer cakes and treats for any occasion.<br>Get in touch by clicking down below or through the enquires page.</h3>
+        <nav id="navbar"></nav>
+        <div class="container-fluid"> 
+            <div class="row rheight landing p-1">
+                <div class="row logoRow m-1 p-1">
+                    <img class="logo m-1 p-1" src="./images/home logo.png"> 
+                    <div class="landingWelcome"><h1>Welcome To Arnie's Cakes !</h1></div>
                 </div>
-                <div class="homeIconsRow m-1 p-1">
-                    <div class="homeBoxLinksWrapper1 m-1 p-1">
-                        <a class="homeBoxLinks" href="https://www.facebook.com/ArniesCakes" target="_blank"><img src="./images/facebook.svg" class="homeIcons p-1"> Dublin tortai - 'Arnies Cakes'</a>
-                    </div>
-                    <div class="homeBoxLinksWrapper2 m-1 p-1">
-                        <a class="homeBoxLinks" href="https://www.instagram.com/arnies_cakes/" target="_blank"><img src="./images/instagram.svg" class="homeIcons"> @Arnies Cakes</a>
-                    </div>
-                    <div class="homeBoxLinksWrapper3 m-1 p-1">
-                        <a class="homeBoxLinks" href="mailto:ArniesCakes@gmail.com" target="_blank"><img src="./images/gmail.svg" class="homeIcons"> ArniesCakes@gmail.com</a>
-                    </div>
+                <div id="sideScroll"></div>
+                <div class="landingBG">
+                    <img class="landingBGImage">
                 </div>
             </div>
+            
+            <div class="w-100 ms-1 me-1 ps-1 pe-1"></div>
+            
+            <div class="row rheight aboutMe"> 
+                <div class="row aboutMeTopRow ms-1 me-1 ps-1 pe-1">
+                    <div class="col">
+                        <p class="PAboutMe">About Me</p>
+                    </div>
+                </div>
+                <div class="row aboutMeBotRow ms-1 me-1 ps-1 pe-1">
+                    <div class="col aboutMeLeft">
+                        <div class="col AboutMePicContainer">
+                            <img class="img-thumbnail AboutMePic" src="./images/Main Cake 1.jpg">
+                        </div>
+                    </div>
+                    <div class="col aboutMeRight aboutMeParagraph"> 
+                        <p class="AboutMeText">
+                            This is a lovely paragraph about how amazing my baby girl is at cooking cakies.<br>
+                            She has an amazing talent and her is just the best.<br>
+                            I love her so much that I couldn't imagine my life without her.<br>
+                            She's the reason I get up every morning and have a good day,<br>
+                            Knowing that I'll be coming home to such an amazing woman.<br>
+                            You mean the world to me, and I couldn't live without you.<br>
+                        </p>
+                    </div> 
+                </div>
+            </div>
+            <div class="w-100 ms-1 me-1 ps-1 pe-1"></div>
+            <div class="row rheight gallery"> 
+                <div class="col m-1 p-1">
+
+                </div>
+            </div>
+            <div class="w-100 ms-1 me-1 ps-1 pe-1"></div>
+            <div class="row rheight shop">  
+                <div class="col m-1 p-1">
+
+                </div>
+            </div>
+            <div class="w-100 ms-1 me-1 ps-1 pe-1"></div>
+            <div class="row rheight testimonials"> 
+                <div class="col m-1 p-1">
+
+                </div>
+            </div>
+            <div class="w-100 ms-1 me-1 ps-1 pe-1"></div>
+            <div class="row rheight contactMe"> 
+                <div class="col m-1 p-1">
+
+                </div>
+            </div>  
         </div>
 
-        <div id="sideScroll"></div>
-        <script src="./shared.js" onload="navBar();"></script>
-        <script src="./shared.js" onload="sideScroll();"></script>
+
+
+    <script src="./shared.js" onload="navBar();"></script>
+    <script src="./shared.js" onload="sideScroll();"></script>
+
     </body>
 </html>
