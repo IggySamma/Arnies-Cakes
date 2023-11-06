@@ -1,138 +1,141 @@
+/*.container{
+    height: 100vh;
+}*/
+
 .rheight{
     height: 100vh;
-    overflow: hidden;
 }
 
-/*----------------------Landing-----------------*/
+/*---------------Landing ---------------------*/
 
-.landingBGImage{
-    object-fit: contain;
-    object-position: left bottom;
-    background-image: url("../images/bg.jpg");
-    background-repeat: repeat-x;
-    top: 0px;
-    left: 10vw;
-    opacity: 4%;
-    position: absolute;
-    z-index: -100;
-    width: 95vw;
-    height: 100vh;
-}
-
-
-.logoRow{
+.HomeLogo{
     position: relative;
-    /*width: 100vw;*/
-    top: 30vh;
-    max-width: 100vw;
+    width: 80%;
     aspect-ratio: 1 / 1;
 }
 
-.logo{
-    max-width: 30vh;
-    aspect-ratio: 1 / 1;
-    margin: auto !important;
-}
-
-.landingWelcome{
-    margin: auto;
+.LandingLogo{
+    position: relative;
+    top: 25vh;
     text-align: center;
 }
 
-/*----------------------About Me-----------------*/
+.WelcomeText{
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    font-size: 2rem;
+}
 
+.landingBGImage{
+    object-fit: contain;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    background-image: url("../images/bg.jpg");
+    background-repeat: repeat-x;
+    height: 100vh;
+    width: 100%;
+    z-index: -100;
+    opacity: 4%;
+    overflow: hidden;
+}
 
+/*---------------- About Me ---------------------*/
+
+.aboutMe{
+    text-align: center;
+}
+
+.aboutMeHeader{
+    font-size: 2rem;
+    width: 100%
+}
+
+.aboutMeContainer{
+    width: 100%;
+    display: inline-block;
+}
+
+.aboutMeImageContainer{
+    width: 100vw;
+}
+
+.aboutMeImage{
+    width: 90vw;
+}
+
+.aboutMePragraph{
+    font-size: 1.25rem;
+}
+
+.aboutMeBGImage{
+    object-fit: cover;
+    position: absolute;
+    object-position: center;
+    top: 100vh;
+    background-image: url("../images/aboutMeBGP.jpg");
+    background-size: 169% 100%;
+    background-repeat: no-repeat;
+    height: 169%;
+    width: 100vw;
+    z-index: -100;
+    margin: 0px;
+    padding: 0px;
+    left: 0px;
+    filter: blur(5px);
+}
+
+/*@media only screen and (min-width: 576px){*/
 @media only screen and (min-width: 576px){
-    .contain{
-        width: 100vw;
-    }
-        
-    .rheight{
-        height: 100vh;
-        overflow: hidden;
+
+    /*---------------Landing ---------------------*/
+
+    .LandingLogo{
+        text-align: unset;
     }
 
-    .landingBGImage{
-        width: 100vw; 
-        left: 0px;
-      }
-
-
-/*----------------------Landing-----------------*/
-    .logoRow{
-        max-height: 50vh;
-        max-width: 60vw;
-        top: 25vh;
-        left: 0px;  
+    .HomeLogo{
+        max-width: 25vw;
+        left: 10vw;
     }
 
-    .logo{
-        max-width: 50vh;
-    }
-
-    .landingWelcome{
+    .WelcomeText{
         position: relative;
-
-    }
-
-    .landingWelcome h1{
-        font-size: 80px;
-    }
-/*----------------------About Me-----------------*/
-  /*  .aboutMeTopRow{
-        height: 30vh;       
-    }
-
-    .PAboutMe{
-        position: absolute;
-        font-size: 70px;
-        font-weight: bold;
+        width:  50vw;
         text-align: center;
+        left: 0px;
+        font-size: 5rem;
+    }
+
+/*---------------- About Me ---------------------*/
+
+    .aboutMeBGImage{
+        background-size: 100vw 100%;
+        background-image: url("../images/aboutMeBG.jpg");
+        height: 100vh;
+    }
+
+    .aboutMeHeader{
+        font-size: 5rem;
+    }
+
+    .aboutMeContainer{
         width: 100%;
-        bottom: 0px;    
+        display: inline-flex;
     }
 
-    .aboutMeBotRow{
-        height: 70vh;
+    .aboutMeImageContainer{
+        width: 30vw;
     }
 
-    .AboutMePicContainer{
-        height: 60vh;
-        aspect-ratio: 4 / 5;
-        position: absolute;
-        right: 5vw;
+    .aboutMePragraph{
+        font-size: 2rem;
     }
 
-    .AboutMePic{
-        height: 100%;
-        width: 100%;
+    .aboutMeImage{
+        width: 30vw;
     }
 
-    .aboutMeParagraph{
-        position: relative;
-        vertical-align: center; 
-        
-    }
 
-    .AboutMeText{
-        top: 10vh;
-        font-size: 32px;
-        text-align: left;
-        position: absolute  ;
-        align-content: center;
-    }
-
-    .aboutMeLeft{
-        position: absolute;
-        width: 40vw;
-        height: 100%;
-    }
-
-    .aboutMeRight{
-        position: absolute;
-        width: 60vw;
-        right: 0px;
-        height: 100%;
-    }
-*/
 }

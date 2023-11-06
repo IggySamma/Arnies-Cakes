@@ -5,19 +5,32 @@ function sideScroll() {
     const colContain = document.createElement('div');
     const colContainTwo = document.createElement('div');
 
-    container.className = ("container d-inline-flex homeImageContainer");
+    const rowL = document.createElement('div');
+    const rowR = document.createElement('div');
+
+    attach.className = ("row sideScrollContainer");
+    container.className = ("col homeImageContainer");
+    attach.appendChild(container);
+    rowL.className = ("row sideScrollL m-1 d-inline-block")
+    container.appendChild(rowL);
+    rowR.className = ("row sideScrollR m-1 d-inline-block")
+    container.appendChild(rowR);
+
+
+
+    /*container.className = ("container d-inline-flex homeImageContainer");
     attach.appendChild(container);
     row.className = ("row d-inline-flex");
     container.appendChild(row);
     colContain.className = ("col d-flex flex-column");
-    row.appendChild(colContain);
+    row.appendChild(colContain);*/
     for(let j = 0; j <=1;j++){
         for (let i = 1; i <= 3; i++) {
             const col = document.createElement('div');
             const img = document.createElement('img');
 
-            col.className = ("col imageAnimationL my-1 py-1");
-            colContain.appendChild(col);
+            col.className = ("col p-0 my-1 py-1");
+            rowL.appendChild(col);
             img.className = ("homeImage");
             img.src = ("./images/Main Cake " + i +".jpg")
             col.appendChild(img);
@@ -28,8 +41,8 @@ function sideScroll() {
             const col = document.createElement('div');
             const img = document.createElement('img');
 
-            col.className = ("col imageAnimationR my-1 py-1");
-            colContainTwo.appendChild(col);
+            col.className = ("col p-0 my-1 py-1");
+            rowR.appendChild(col);
             img.className = ("homeImage");
             img.src = ("./images/Main Cake " + i +".jpg")
             col.appendChild(img);
@@ -70,7 +83,7 @@ function navBar(){
     const logoContain = document.createElement("img");
     const imgContain = document.createElement("img");
  
-    attach.className = ("navbar fixed-top navbar-expand-sm");
+    attach.className = ("navbar fixed-top navbar-expand-lg");
 
     toggleButton.className = ("navbar-toggler");
     toggleButton.setAttribute("type", "button");
@@ -188,7 +201,7 @@ function updateHrLine(){
         line.style.height = '700px';
         /*line.style.width = '100%'*/
     } else {
-        line.style.height = '50px';
+        line.style.height = '100px';
     };
 };
 
