@@ -23,7 +23,7 @@ body{
 }
 
 .navbar {
-  /*width: 100vw;*/
+  width: 100vw;
   background-color: #ECE3F0;
   position: absolute;
   height: 55px;

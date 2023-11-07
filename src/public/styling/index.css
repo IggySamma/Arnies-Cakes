@@ -55,36 +55,71 @@
 .aboutMeContainer{
     width: 100%;
     display: inline-block;
+    position: relative;
 }
 
 .aboutMeImageContainer{
-    width: 100vw;
+    width: 100%;
 }
 
 .aboutMeImage{
-    width: 90vw;
+    width: 90%;
 }
 
 .aboutMePragraph{
     font-size: 1.25rem;
+    position: relative;
 }
 
+
 .aboutMeBGImage{
-    object-fit: cover;
+    height: 100%;
+    /*width: 100%;*/
+    aspect-ratio: 4480 / 6720;
     position: absolute;
+    top: 0px;
+    object-fit: cover;
     object-position: center;
-    top: 100vh;
     background-image: url("../images/aboutMeBGP.jpg");
-    background-size: 169% 100%;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
-    height: 169%;
-    width: 100vw;
     z-index: -100;
     margin: 0px;
     padding: 0px;
     left: 0px;
     filter: blur(5px);
 }
+
+/*------------------- Gallery ------------------------*/
+
+.galleryCakesContainer{
+    position: relative;
+    height: 100vh;
+}
+
+.galleryCakes:nth-child(1){
+    aspect-ratio: 16 / 9;
+    width: 100%;
+}
+
+.galleryCakes:nth-child(2){
+    aspect-ratio: 9 / 12;
+    width: 49%;
+    height: 50%;
+}
+
+.galleryCakes:nth-child(3){
+    aspect-ratio: 9 / 12;
+    width: 49%;
+    height: 50%;
+}
+
+.galleryCakes:nth-child(4){
+    aspect-ratio: 9 / 12;
+    width: 100%;
+    height: 50%;
+}
+
 
 /*@media only screen and (min-width: 576px){*/
 @media only screen and (min-width: 576px){
@@ -111,9 +146,11 @@
 /*---------------- About Me ---------------------*/
 
     .aboutMeBGImage{
-        background-size: 100vw 100%;
+        /*background-size: 100% 100%;*/
+        min-height: 100%;
         background-image: url("../images/aboutMeBG.jpg");
-        height: 100vh;
+        aspect-ratio: 6780 / 4480;
+        min-width: 100%
     }
 
     .aboutMeHeader{
@@ -124,13 +161,20 @@
         width: 100%;
         display: inline-flex;
     }
-
+/*
     .aboutMeImageContainer{
-        width: 30vw;
+        position: relative;
     }
-
+*/
     .aboutMePragraph{
+        position: relative;
         font-size: 2rem;
+        justify-content: center;
+        align-items: center;
+        margin: auto 50px auto 50px;
+        padding: auto 50px auto 50px;
+        left: 0px;
+        display: flex;
     }
 
     .aboutMeImage{

@@ -83,7 +83,7 @@ function navBar(){
     const logoContain = document.createElement("img");
     const imgContain = document.createElement("img");
  
-    attach.className = ("navbar fixed-top navbar-expand-lg");
+    attach.className = ("navbar fixed-top navbar-expand-xl");
 
     toggleButton.className = ("navbar-toggler");
     toggleButton.setAttribute("type", "button");
