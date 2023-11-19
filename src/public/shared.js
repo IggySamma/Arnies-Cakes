@@ -102,7 +102,7 @@ function navBar(){
     ul.className = ("navbar-nav");
     mainDiv.appendChild(ul);
     //Logo
-    li5.className = ("nav-item");
+    li5.className = ("nav-item nav-logo");
     ul.appendChild(li5);
     a13.setAttribute('href', './Index.html')
     li5.appendChild(a13)

@@ -73,7 +73,7 @@ body{
   left: 30vw;
 }
 
-
+/*
 a{
   text-decoration: none;
   color: black;
@@ -97,7 +97,7 @@ a:hover {
 a:active { 
   text-decoration: none; 
   color: black;
-}
+}*/
 
 .sideScrollL {
   -webkit-animation: mover 20s linear infinite;
@@ -128,7 +128,7 @@ a:active {
     transition: top 0.3s;
   }
 
-  .nav-item:nth-child(1){
+  .nav-logo{
     position: relative;
     left: -100px;
     padding-right: 150px;

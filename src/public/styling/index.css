@@ -92,33 +92,23 @@
 
 /*------------------- Gallery ------------------------*/
 
-.galleryCakesContainer{
+.galleryHeader{
+    text-align: center;
+    font-size: 2rem;
+    width: 100%
+}
+
+.galleryContainer{
     position: relative;
     height: 100vh;
 }
+/*
+.galleryCakesContainer{
+    position: relative;
+    height: 100vh;
+}*/
 
-.galleryCakes:nth-child(1){
-    aspect-ratio: 16 / 9;
-    width: 100%;
-}
 
-.galleryCakes:nth-child(2){
-    aspect-ratio: 9 / 12;
-    width: 49%;
-    height: 50%;
-}
-
-.galleryCakes:nth-child(3){
-    aspect-ratio: 9 / 12;
-    width: 49%;
-    height: 50%;
-}
-
-.galleryCakes:nth-child(4){
-    aspect-ratio: 9 / 12;
-    width: 100%;
-    height: 50%;
-}
 
 
 /*@media only screen and (min-width: 576px){*/
@@ -181,5 +171,59 @@
         width: 30vw;
     }
 
+/*-------------Gallery------------------*/
+
+    .galleryHeader{
+        font-size: 5rem;
+    }
+
+    .galleryCakesContainer{
+        position: absolute;
+        height: 80vh;
+        /*overflow: hidden;*/
+    }
+
+    .CakesGallery{
+        position: relative;
+        height: 100%;
+    }
+    
+    .CakesGallery1{
+        height: 49%;
+        width: 100%;
+        /*aspect-ratio: 1336 / 768;*/
+    }
+    .CakesGallery2{
+        max-height: 49%;
+        width: 46%;
+    }
+    .CakesGallery3{
+        max-height: 49%;
+        width: 46%;
+    }
+    .CakesGallery4{
+        max-height: 49%;
+        width: 100%;
+    }
+    .CakesGallery5{
+        max-height: 49%;
+        width: 100%;
+    }
+    .CakesGallery6{
+        max-height: 49%;
+        width: 100%;
+    }
+    .CakesGallery7{
+        max-height: 49%;
+        width: 100%;
+    }
+    .CakesGallery8{
+        max-height: 49%;
+        width: 100%;
+    }
+    .CakesGallery9{
+        max-height: 49%;
+        width: 100%;
+    }
 
 }
