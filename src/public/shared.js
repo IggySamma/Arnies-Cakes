@@ -32,7 +32,8 @@ function sideScroll() {
             col.className = ("col p-0 my-1 py-1");
             rowL.appendChild(col);
             img.className = ("homeImage");
-            img.src = ("./images/Main Cake " + i +".jpg")
+            img.setAttribute("loading","lazy")
+            img.src = ("./images/Sidescroll/" + i +".jpg")
             col.appendChild(img);
         }
         colContainTwo.className = ("col d-flex flex-column");
@@ -44,7 +45,8 @@ function sideScroll() {
             col.className = ("col p-0 my-1 py-1");
             rowR.appendChild(col);
             img.className = ("homeImage");
-            img.src = ("./images/Main Cake " + i +".jpg")
+            img.setAttribute("loading","lazy")
+            img.src = ("./images/Sidescroll/" + i +".jpg")
             col.appendChild(img);
         }  
     } 

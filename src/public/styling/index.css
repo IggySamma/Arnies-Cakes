@@ -101,7 +101,14 @@
 .galleryContainer{
     position: relative;
     height: 100vh;
+    width: 100%;
 }
+/*
+.carouselContainer{
+    position: relative;
+    height: 100vh;
+}*/
+
 /*
 .galleryCakesContainer{
     position: relative;
@@ -109,7 +116,58 @@
 }*/
 
 
+@keyframes tostart {
+    75% {
+      left: 0;
+    }
+    95% {
+      left: -300%;
+    }
+    98% {
+      left: -300%;
+    }
+    99% {
+      left: 0;
+    }
+  }
+  
+  @keyframes snap {
+    96% {
+      scroll-snap-align: center;
+    }
+    97% {
+      scroll-snap-align: none;
+    }
+    99% {
+      scroll-snap-align: none;
+    }
+    100% {
+      scroll-snap-align: center;
+    }
+}
 
+.carouselView{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    /*overflow-x: scroll;*/
+    overflow: hidden;
+    counter-reset: item;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+}
+
+.carouselSlide{
+    position: relative;
+    flex: 0 0 100%;
+    width: 100%;
+    counter-increment: item; 
+}
+
+  
 
 /*@media only screen and (min-width: 576px){*/
 @media only screen and (min-width: 576px){
@@ -177,10 +235,15 @@
         font-size: 5rem;
     }
 
-    .galleryCakesContainer{
+    .carouselContainer{
         position: absolute;
         height: 80vh;
-        /*overflow: hidden;*/
+        width: 100%;
+    }
+
+    .Cakes{
+        /*position: absolute;*/
+        height: 80vh;
     }
 
     .CakesGallery{
@@ -189,41 +252,58 @@
     }
     
     .CakesGallery1{
-        height: 49%;
+        object-fit: cover;
+        height: 60%;
         width: 100%;
-        /*aspect-ratio: 1336 / 768;*/
+        object-position: 50% 57%;
     }
     .CakesGallery2{
-        max-height: 49%;
-        width: 46%;
+        object-fit: cover;
+        height: 40%;
+        width: 49%;
+        object-position: 50% 40%;
     }
     .CakesGallery3{
-        max-height: 49%;
-        width: 46%;
+        object-fit: cover;
+        height: 40%;
+        width: 49%;
+        object-position: 50% 35%;
     }
     .CakesGallery4{
-        max-height: 49%;
+        object-fit: cover;
+        height: 50%;
         width: 100%;
+        object-position: 50% 50%;
     }
     .CakesGallery5{
-        max-height: 49%;
+        object-fit: cover;
+        height: 50%;
         width: 100%;
+        object-position: 50% 50%;
     }
     .CakesGallery6{
-        max-height: 49%;
+        object-fit: cover;
+        height: 40%;
         width: 100%;
+        object-position: 50% 50%;
     }
     .CakesGallery7{
-        max-height: 49%;
+        object-fit: cover;
+        height: 60%;
         width: 100%;
+        object-position: 50% 20%;
     }
     .CakesGallery8{
-        max-height: 49%;
+        object-fit: cover;
+        height: 50%;
         width: 100%;
+        object-position: 50% 50%;
     }
     .CakesGallery9{
-        max-height: 49%;
+        object-fit: cover;
+        height: 50%;
         width: 100%;
+        object-position: 50% 50%;
     }
 
 }
