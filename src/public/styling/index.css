@@ -102,7 +102,35 @@
     position: relative;
     height: 100vh;
     width: 100%;
+    margin: 0px;
+    padding: 0px;
 }
+
+.carousel-list{
+    position: relative;
+    background-color: #ECE3F0;
+    width: 100%;
+    font-size: 1.5rem;
+    left: 5px
+}
+
+a{
+    color: black !important;
+}
+
+
+/*
+.nav-item {
+        background-color: #ECE3F0;
+        flex-direction: row-reverse;
+        font-size: 0.8999rem;
+        line-height: 1rem;
+        align-items: center;
+        min-width: 120px;
+        justify-content: space-between;
+        transition: all 80ms ease;
+}*/
+
 /*
 .carouselContainer{
     position: relative;
