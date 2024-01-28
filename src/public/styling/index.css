@@ -106,14 +106,6 @@
     padding: 0px;
 }
 
-.carousel-list{
-    position: relative;
-    background-color: #ECE3F0;
-    width: 100%;
-    font-size: 1.5rem;
-    left: 5px
-}
-
 a{
     color: black !important;
 }
@@ -197,7 +189,16 @@ a{
     counter-increment: item; 
 }
 
-  
+.carousel-list{
+    background-color: #D3BBDD;
+    width: 100%;
+    font-size: 1.5rem;
+}
+
+.carousel-button:hover{
+    scale: 1.3;
+    color: #ECE3F0 !important;
+}  
 
 /*@media only screen and (min-width: 576px){*/
 @media only screen and (min-width: 576px){
@@ -267,7 +268,7 @@ a{
 
     .carouselContainer{
         position: absolute;
-        height: 80vh;
+        height: 81vh;
         width: 100%;
         /*overflow: hidden;*/
     }
@@ -304,7 +305,7 @@ a{
         object-fit: cover;
         height: 50%;
         width: 100%;
-        object-position: 50% 50%;
+        object-position: 50% 100%;
     }
     .KidsCakesGallery5{
         object-fit: cover;
@@ -334,7 +335,7 @@ a{
         object-fit: cover;
         height: 50%;
         width: 100%;
-        object-position: 50% 50%;
+        object-position: 50% 100%;
     }
 /*----------Cakes--------------*/
     .CakesGallery1{
