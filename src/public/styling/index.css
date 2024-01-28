@@ -158,9 +158,11 @@
     counter-reset: item;
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
+    height: 100%;
 }
 
 .carouselSlide{
+    height: 100%;
     position: relative;
     flex: 0 0 100%;
     width: 100%;
@@ -239,6 +241,7 @@
         position: absolute;
         height: 80vh;
         width: 100%;
+        /*overflow: hidden;*/
     }
 
     .Cakes{
@@ -246,11 +249,66 @@
         height: 80vh;
     }
 
-    .CakesGallery{
+    .Gallery{
         position: relative;
         height: 100%;
     }
-    
+/*------- Kids Gallery ----------*/
+    .KidsCakesGallery1{
+        object-fit: cover;
+        height: 60%;
+        width: 100%;
+        object-position: 50% 50%;
+    }
+    .KidsCakesGallery2{
+        object-fit: cover;
+        height: 40%;
+        width: 100%;
+        object-position: 50% 50%;
+    }
+    .KidsCakesGallery3{
+        object-fit: cover;
+        height: 50%;
+        width: 100%;
+        object-position: 50% 50%;
+    }
+    .KidsCakesGallery4{
+        object-fit: cover;
+        height: 50%;
+        width: 100%;
+        object-position: 50% 50%;
+    }
+    .KidsCakesGallery5{
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+        object-position: 50% 50%;
+    }
+    .KidsCakesGallery6{
+        object-fit: cover;
+        height: 60%;
+        width: 100%;
+        object-position: 50% 50%;
+    }
+    .KidsCakesGallery7{
+        object-fit: cover;
+        height: 40%;
+        width: 100%;
+        object-position: 50% 30%;
+    }
+    .KidsCakesGallery8{
+        object-fit: cover;
+        height: 50%;
+        width: 100%;
+        object-position: 50% 50%;
+    }
+    .KidsCakesGallery9{
+        object-fit: cover;
+        height: 50%;
+        width: 100%;
+        object-position: 50% 50%;
+    }
+/*----------Cakes--------------*/
     .CakesGallery1{
         object-fit: cover;
         height: 60%;
@@ -258,16 +316,21 @@
         object-position: 50% 57%;
     }
     .CakesGallery2{
+        position: absolute;
         object-fit: cover;
         height: 40%;
-        width: 49%;
+        width: 50%;
         object-position: 50% 40%;
+        display: inline;
     }
     .CakesGallery3{
+        position: absolute;
         object-fit: cover;
         height: 40%;
-        width: 49%;
+        width: 50%;
         object-position: 50% 35%;
+        display: inline;
+        right: 0px;
     }
     .CakesGallery4{
         object-fit: cover;
@@ -305,5 +368,77 @@
         width: 100%;
         object-position: 50% 50%;
     }
-
+/*---------Cupcakes------------*/
+    .CupcakesGallery1{
+        height: 100%;
+        width: 100%;
+        object-position: 50% 80%;
+    }
+    .CupcakesGallery2{
+        object-fit: cover;
+        height: 50%;
+        width: 100%;
+        object-position: 50% 30%;
+    }
+    .CupcakesGallery3{
+        object-fit: cover;
+        height: 50%;
+        width: 100%;
+        object-position: 50% 80%;
+    }
+    .CupcakesGallery4{
+        object-fit: cover;
+        height: 40%;
+        width: 100%;
+        object-position: 50% 100%;
+    }
+    .CupcakesGallery5{
+        object-fit: cover;
+        height: 60%;
+        width: 100%;
+        object-position: 50% 50%;
+    }
+    /*--------Cakepops--------*/
+    .CakepopsGallery1{
+        object-fit: cover;
+        height: 50%;
+        width: 100%;
+        object-position: 50% 50%;
+    }
+    .CakepopsGallery2{
+        object-fit: cover;
+        height: 50%;
+        width: 100%;
+        object-position: 50% 50%;
+    }
+    .CakepopsGallery3{
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+        object-position: 0% 50%;
+    }
+    .CakepopsGallery4{
+        object-fit: cover;
+        height: 40%;
+        width: 100%;
+        object-position: 50% 40%;
+    }
+    .CakepopsGallery5{
+        object-fit: cover;
+        height: 60%;
+        width: 100%;
+        object-position: 50% 50%;
+    }
+    .CakepopsGallery6{
+        object-fit: cover;
+        height: 60%;
+        width: 100%;
+        object-position: 50% 50%;
+    }
+    .CakepopsGallery7{
+        object-fit: cover;
+        height: 40%;
+        width: 100%;
+        object-position: 50% 30%;
+    }
 }
