@@ -217,3 +217,26 @@ window.onscroll = function() {
   }
   prevScrollpos = currentScrollPos;
 }
+/*
+$(document).ready(function () { 
+    checkitem();
+});
+
+$('#myCarousel').on('slid.bs.carousel', checkitem);
+
+function checkitem() {
+    var $this = $('#myCarousel');
+    if ($('.carousel-inner .item:first').hasClass('active')) {
+        // Hide left arrow
+        $this.children('.left.carousel-control').hide();
+        // But show right arrow
+        $this.children('.right.carousel-control').show();
+    } else if ($('.carousel-inner .item:last').hasClass('active')) {
+        // Hide right arrow
+        $this.children('.right.carousel-control').hide();
+        // But show left arrow
+        $this.children('.left.carousel-control').show();
+    } else {
+        $this.children('.carousel-control').show();
+    }
+}*/

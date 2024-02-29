@@ -104,70 +104,15 @@
     width: 100%;
     margin: 0px;
     padding: 0px;
+    overflow: hidden;
 }
 
 a{
     color: black !important;
 }
 
-
-/*
-.nav-item {
-        background-color: #ECE3F0;
-        flex-direction: row-reverse;
-        font-size: 0.8999rem;
-        line-height: 1rem;
-        align-items: center;
-        min-width: 120px;
-        justify-content: space-between;
-        transition: all 80ms ease;
-}*/
-
-/*
-.carouselContainer{
-    position: relative;
-    height: 100vh;
-}*/
-
-/*
-.galleryCakesContainer{
-    position: relative;
-    height: 100vh;
-}*/
-
-
-@keyframes tostart {
-    75% {
-      left: 0;
-    }
-    95% {
-      left: -300%;
-    }
-    98% {
-      left: -300%;
-    }
-    99% {
-      left: 0;
-    }
-  }
-  
-  @keyframes snap {
-    96% {
-      scroll-snap-align: center;
-    }
-    97% {
-      scroll-snap-align: none;
-    }
-    99% {
-      scroll-snap-align: none;
-    }
-    100% {
-      scroll-snap-align: center;
-    }
-}
-
 .carouselView{
-    position: absolute;
+    /*position: absolute;*/
     top: 0;
     right: 0;
     bottom: 0;
@@ -176,8 +121,6 @@ a{
     /*overflow-x: scroll;*/
     overflow: hidden;
     counter-reset: item;
-    scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
     height: 100%;
 }
 
@@ -200,6 +143,90 @@ a{
     color: #ECE3F0 !important;
 }  
 
+.carousel-inner{
+    height: 55%;
+    position: relative;
+}
+
+.carousel-item{
+    height: 100%;
+    position: relative;
+    flex: 0 0 100%;
+    width: 100%;
+    /*display: none !important;*/
+}
+
+/*-------------------Testimonials-----------------------*/
+
+.Testimonials{
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    left: 0px;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+}
+
+.TestimonialsHeader{
+    text-align: center;
+}
+
+.TestimonialsHeader h1{
+    font-size: 4rem;
+}
+
+.TestimonialsOuter{
+    position: relative;
+    background-color: #D3BBDD;
+    height: 50%;
+    width: 100%;
+    left: 0px;
+}
+
+.TestimonialsInner{
+    position: relative;
+    margin: auto;
+    top: 25%;
+    /*align-self: center;*/
+    /*transform-origin: center;*/
+    /*transform: translateY(10%);*/
+    width: 50%;
+    height: 60%;
+    background-color: white;
+}
+
+.FooterHeader{
+    position: relative;
+    text-align: center;
+    align-items: flex-end;
+    top: 5%;
+}
+
+.FooterHeader h1{
+    font-size: 3.5rem;
+}
+
+
+.Footer{
+    position: relative;
+    height: 15%;
+    width: 100%;
+    left: 0px;
+    background-color: #ECE3F0;
+    bottom: 0px;
+    top: 5%;
+    text-align: center;
+}
+
+.footerLogo{
+    height: 200px;
+    aspect-ratio: 1 / 1;
+}
+
+/*----------------------------------------------------------*/
+/*--------------------DESKTOP-------------------------------*/
+/*----------------------------------------------------------*/
 /*@media only screen and (min-width: 576px){*/
 @media only screen and (min-width: 576px){
 
@@ -416,12 +443,17 @@ a{
         object-position: 50% 80%;
     }
     .CupcakesGallery4{
+        height: 100%;
+        width: 100%;
+        object-position: 50% 80%;
+    }
+    .CupcakesGallery5{
         object-fit: cover;
         height: 40%;
         width: 100%;
         object-position: 50% 100%;
     }
-    .CupcakesGallery5{
+    .CupcakesGallery6{
         object-fit: cover;
         height: 60%;
         width: 100%;
