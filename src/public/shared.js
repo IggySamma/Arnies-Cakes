@@ -16,14 +16,6 @@ function sideScroll() {
     rowR.className = ("row sideScrollR m-1 d-inline-block")
     container.appendChild(rowR);
 
-
-
-    /*container.className = ("container d-inline-flex homeImageContainer");
-    attach.appendChild(container);
-    row.className = ("row d-inline-flex");
-    container.appendChild(row);
-    colContain.className = ("col d-flex flex-column");
-    row.appendChild(colContain);*/
     for(let j = 0; j <=1;j++){
         for (let i = 1; i <= 3; i++) {
             const col = document.createElement('div');
@@ -195,13 +187,13 @@ function navBar(){
     document.getElementById("toggling").addEventListener("click", updateHrLine);
 }
 
+
 function updateHrLine(){
     const check1 = document.getElementById("navbarSupportedContent");
     const line = document.getElementById("navbar");
 
     if (check1.classList.contains('show') !== true) {
         line.style.height = '700px';
-        /*line.style.width = '100%'*/
     } else {
         line.style.height = '100px';
     };
@@ -217,26 +209,15 @@ window.onscroll = function() {
   }
   prevScrollpos = currentScrollPos;
 }
-/*
-$(document).ready(function () { 
-    checkitem();
-});
 
-$('#myCarousel').on('slid.bs.carousel', checkitem);
+var homeGallery = document.querySelectorAll(".carousel-button")
+var homeGalleryActive = document.querySelector(".carousel-item.active") 
 
-function checkitem() {
-    var $this = $('#myCarousel');
-    if ($('.carousel-inner .item:first').hasClass('active')) {
-        // Hide left arrow
-        $this.children('.left.carousel-control').hide();
-        // But show right arrow
-        $this.children('.right.carousel-control').show();
-    } else if ($('.carousel-inner .item:last').hasClass('active')) {
-        // Hide right arrow
-        $this.children('.right.carousel-control').hide();
-        // But show left arrow
-        $this.children('.left.carousel-control').show();
-    } else {
-        $this.children('.carousel-control').show();
-    }
-}*/
+homeGallery.forEach(button => {
+    button.addEventListener('click', function(){
+        let item = document.getElementsByClassName("carousel-item")
+        homeGalleryActive.classList.replace("active", "invisible")
+        item[button.getAttribute('data-bs-slide-to')].classList.replace("invisible", "active")
+        homeGalleryActive = document.querySelector(".carousel-item.active")
+    })
+})
