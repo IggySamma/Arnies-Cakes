@@ -126,7 +126,7 @@ a{
     /*overflow-x: scroll;*/
     overflow: hidden;
     counter-reset: item;
-    height: 90vh;
+    height: 82vh;
 }
 
 .carouselSlide{

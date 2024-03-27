@@ -209,15 +209,3 @@ window.onscroll = function() {
   }
   prevScrollpos = currentScrollPos;
 }
-
-var homeGallery = document.querySelectorAll(".carousel-button")
-var homeGalleryActive = document.querySelector(".carousel-item.active") 
-
-homeGallery.forEach(button => {
-    button.addEventListener('click', function(){
-        let item = document.getElementsByClassName("carousel-item")
-        homeGalleryActive.classList.replace("active", "invisible")
-        item[button.getAttribute('data-bs-slide-to')].classList.replace("invisible", "active")
-        homeGalleryActive = document.querySelector(".carousel-item.active")
-    })
-})
