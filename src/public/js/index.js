@@ -1,12 +1,15 @@
 const galleryCarousel = document.querySelector('#carouselContainer')
+const testimonialCarousel = document.querySelector('#testimonialsCarousel')
+
+const homeGallery = document.querySelectorAll(".carousel-button")
+let homeGalleryActive = galleryCarousel.querySelector(".carousel-item.active") 
 
 const gCarousel = new bootstrap.Carousel(galleryCarousel, {
-  /*interval: 2000,*/
+  interval: 2000,
   touch: false
 })
 
-var homeGallery = document.querySelectorAll(".carousel-button")
-var homeGalleryActive = document.querySelector(".carousel-item.active") 
+
 
 homeGallery.forEach(button => {
     button.addEventListener('click', function(){
@@ -16,14 +19,13 @@ homeGallery.forEach(button => {
         homeGalleryActive = document.querySelector(".carousel-item.active")
     })
 })
-/*
-const galCarousel = document.querySelector('#carouselContainer')
 
-const g1Carousel = new bootstrap.Carousel(galCarousel, {
-  interval: 2000,
+
+
+const tCarousel = new bootstrap.Carousel(testimonialCarousel, {
+  interval: 3000,
   touch:    true,
   pause:    "hover",
   ride:     true,
   wrap:     true
 })
-*/

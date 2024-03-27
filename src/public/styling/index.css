@@ -92,49 +92,28 @@
 
 /*------------------- Gallery ------------------------*/
 
-.galleryHeader{
-    text-align: center;
-    font-size: 2rem;
-    width: 100%
-}
-
-.galleryContainer{
-    position: relative;
-    height: 100vh;
-    width: 100%;
-    margin: 0px;
-    padding: 0px;
-    overflow: hidden;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: flex;
-}
-
 a{
     color: black !important;
 }
 
-.carouselView{
-    /*position: absolute;*/
-   /* top: 0;
+.galleryContainer{
+    position: relative;
+    /*height: 100vh;*/
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    /*overflow: hidden;
+    top: 0;
     right: 0;
     bottom: 0;
-    left: 0;
-    display: flex;*/
-    /*overflow-x: scroll;*/
-    overflow: hidden;
-    counter-reset: item;
-    height: 82vh;
+    left: 0;*/
+    /*display: flex;*/
 }
 
-.carouselSlide{
-    height: 100%;
-    position: relative;
-    flex: 0 0 100%;
-    width: 100%;
-    counter-increment: item; 
+.galleryHeader{
+    text-align: center;
+    font-size: 2rem;
+    width: 100%
 }
 
 .carousel-list{
@@ -146,7 +125,29 @@ a{
 .carousel-button:hover{
     scale: 1.3;
     color: #ECE3F0 !important;
+    cursor: pointer;
 }  
+/*
+.carouselView{
+    /*position: absolute;*/
+   /* top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;*/
+    /*overflow-x: scroll;*/
+    /*overflow: hidden;*/
+    /*counter-reset: item;
+    height: 82vh;
+}*/
+
+.carouselSlide{
+    height: 100%;
+    position: relative;
+    /*flex: 0 0 100%;*/
+    width: 100%;
+    /*counter-increment: item; */
+}
 
 .carousel-inner{
     height: 100%;
@@ -156,7 +157,8 @@ a{
 .carousel-item{
     height: 100%;
     position: relative;
-    flex: 0 0 100%;
+    /*flex: 0 0 100%;*/
+    /*flex: 0 1 auto;*/
     /*width: 100%;*/
     /*display: none !important;*/
 }
@@ -165,6 +167,66 @@ a{
     object-fit: cover;
     width: 100%;
 }
+/*
+#carousel-items{
+    display: inline-block;
+}*/
+
+ /*------- Kids Gallery ----------*/
+.KidsCakesGallery4{
+    object-position: 50% 100%;
+}
+.KidsCakesGallery7{
+    object-position: 50% 30%;
+}
+.KidsCakesGallery9{
+    object-position: 50% 100%;
+}
+/*----------Cakes--------------*/
+.CakesGallery1{
+    object-position: 50% 57%;
+}
+.CakesGallery2{
+    position: absolute;
+    object-position: 50% 40%;
+    display: inline;
+}
+.CakesGallery3{
+    position: absolute;
+    object-position: 50% 35%;
+    display: inline;
+    right: 0px;
+}
+.CakesGallery7{
+    object-position: 50% 20%;
+}
+/*---------Cupcakes------------*/
+.CupcakesGallery1{
+    object-position: 50% 80%;
+}
+.CupcakesGallery2{
+    object-position: 50% 30%;
+}
+.CupcakesGallery3{
+    object-position: 50% 80%;
+}
+.CupcakesGallery4{
+    object-position: 50% 80%;
+}
+.CupcakesGallery5{
+    object-position: 50% 100%;
+}
+/*--------Cakepops--------*/
+.CakepopsGallery3{
+    object-position: 0% 50%;
+}
+.CakepopsGallery4{
+    object-position: 50% 40%;
+}
+.CakepopsGallery7{
+    object-position: 50% 30%;
+}
+
 
 /*-------------------Testimonials-----------------------*/
 
@@ -182,7 +244,62 @@ a{
 /*--------------------DESKTOP-------------------------------*/
 /*----------------------------------------------------------*/
 /*@media only screen and (min-width: 576px){*/
-@media only screen and (min-width: 576px){
+
+@media only screen and (min-width: 992px){
+
+    /*-------------Gallery------------------*/
+
+    .galleryHeader{
+        font-size: 5rem;
+    }
+    
+
+    .Gallery{
+        position: relative;
+        height: 100%;
+        display: block !important;
+    }
+
+    .galleryContainer{
+        height: 100vh;
+        overflow: hidden;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    #carousel-items{
+        display: inline-flex !important;
+    }
+
+    .carouselView{
+        /*position: absolute;*/
+       /* top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;*/
+        /*overflow-x: scroll;*/
+        /*overflow: hidden;*/
+        /*counter-reset: item;*/
+        height: 82vh;
+    }
+
+    .CakesGallery2{
+        position: absolute;
+        object-position: 50% 40%;
+        display: inline;
+    }
+    .CakesGallery3{
+        position: absolute;
+        object-position: 50% 35%;
+        display: inline;
+        right: 0px;
+    }
+}
+
+@media only screen and (min-width: 768px){
 
     /*---------------Landing ---------------------*/
 
@@ -241,68 +358,6 @@ a{
         width: 30vw;
     }
 
-/*-------------Gallery------------------*/
 
-    .galleryHeader{
-        font-size: 5rem;
-    }
 
-    .Gallery{
-        position: relative;
-        height: 100%;
-    }
-    /*------- Kids Gallery ----------*/
-    .KidsCakesGallery4{
-        object-position: 50% 100%;
-    }
-    .KidsCakesGallery7{
-        object-position: 50% 30%;
-    }
-    .KidsCakesGallery9{
-        object-position: 50% 100%;
-    }
-/*----------Cakes--------------*/
-    .CakesGallery1{
-        object-position: 50% 57%;
-    }
-    .CakesGallery2{
-        position: absolute;
-        object-position: 50% 40%;
-        display: inline;
-    }
-    .CakesGallery3{
-        position: absolute;
-        object-position: 50% 35%;
-        display: inline;
-        right: 0px;
-    }
-    .CakesGallery7{
-        object-position: 50% 20%;
-    }
-/*---------Cupcakes------------*/
-    .CupcakesGallery1{
-        object-position: 50% 80%;
-    }
-    .CupcakesGallery2{
-        object-position: 50% 30%;
-    }
-    .CupcakesGallery3{
-        object-position: 50% 80%;
-    }
-    .CupcakesGallery4{
-        object-position: 50% 80%;
-    }
-    .CupcakesGallery5{
-        object-position: 50% 100%;
-    }
-    /*--------Cakepops--------*/
-    .CakepopsGallery3{
-        object-position: 0% 50%;
-    }
-    .CakepopsGallery4{
-        object-position: 50% 40%;
-    }
-    .CakepopsGallery7{
-        object-position: 50% 30%;
-    }
 }
