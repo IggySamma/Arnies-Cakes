@@ -187,18 +187,23 @@ a{
     object-position: 50% 57%;
 }
 .CakesGallery2{
-    position: absolute;
+    /*position: absolute;*/
     object-position: 50% 40%;
-    display: inline;
+    display: block;
 }
 .CakesGallery3{
-    position: absolute;
+    /*position: absolute;*/
     object-position: 50% 35%;
-    display: inline;
+    display: block;
     right: 0px;
+}
+
+.CakesGallery6{
+    height: 50%;
 }
 .CakesGallery7{
     object-position: 50% 20%;
+    height: 50%;
 }
 /*---------Cupcakes------------*/
 .CupcakesGallery1{
@@ -250,7 +255,7 @@ a{
     /*-------------Gallery------------------*/
 
     .galleryHeader{
-        font-size: 5rem;
+        font-size: 4rem;
     }
     
 
@@ -283,19 +288,24 @@ a{
         /*overflow-x: scroll;*/
         /*overflow: hidden;*/
         /*counter-reset: item;*/
-        height: 82vh;
+        height: 85vh;
     }
 
     .CakesGallery2{
         position: absolute;
-        object-position: 50% 40%;
         display: inline;
     }
     .CakesGallery3{
         position: absolute;
-        object-position: 50% 35%;
         display: inline;
         right: 0px;
+    }
+
+    .CakesGallery6{
+        height: 40%;
+    }
+    .CakesGallery7{
+        height: 60%;
     }
 }
 
