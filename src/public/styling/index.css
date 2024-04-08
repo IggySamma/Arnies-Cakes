@@ -163,7 +163,7 @@ a{
     /*display: none !important;*/
 }
 
-.carousel-gallery{
+.carouselGallery{
     object-fit: cover;
     width: 100%;
 }
@@ -274,7 +274,7 @@ a{
         left: 0;
     }
 
-    #carousel-items{
+    .carousel-item{
         display: inline-flex !important;
     }
 

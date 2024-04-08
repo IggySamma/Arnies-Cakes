@@ -5,8 +5,9 @@ const homeGallery = document.querySelectorAll(".carousel-button")
 let homeGalleryActive = document.querySelector('#carouselContainer').querySelector(".carousel-item.active") 
 
 const gCarousel = new bootstrap.Carousel(document.querySelector('#carouselContainer'), {
-  interval: 2000,
-  touch: false
+  /*interval: 2000,*/
+  touch: false,
+  ride: false
 })
 
 
