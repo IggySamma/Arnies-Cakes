@@ -5,7 +5,7 @@ function loadCalender(){
     })
     .then(response => {
         response.json().then(data =>{
-
+            console.log(data)
             flatpickr(".flatpickr", { 
                 //'inline' : true,
                 altInput: true,
