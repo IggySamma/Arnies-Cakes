@@ -161,7 +161,7 @@ a:active {
 
 .w100{width: 100%}
 
-@media only screen and (min-width: 960px){  
+@media only screen and (min-width: 992px){  
   .navbar{
     width: 100%;
     opacity: 100%;  

@@ -166,6 +166,7 @@ a{
 .carouselGallery{
     object-fit: cover;
     width: 100%;
+    height: 100%;
 }
 /*
 #carousel-items{
@@ -294,11 +295,13 @@ a{
     .CakesGallery2{
         position: absolute;
         display: inline;
+        padding-right: 8px !important;
     }
     .CakesGallery3{
         position: absolute;
         display: inline;
         right: 0px;
+        padding-left: 8px !important;
     }
 
     .CakesGallery6{

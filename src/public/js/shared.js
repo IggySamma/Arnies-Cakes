@@ -46,6 +46,7 @@ function sideScroll() {
 
 function navBar(){
     const attach = document.getElementById("navbar");
+    const containerFluid = document.createElement("div");
     /*const hr = document.createElement("hr");*/
     const toggleButton = document.createElement("button");
     const spanIcon = document.createElement("span")
@@ -77,21 +78,24 @@ function navBar(){
     const logoContain = document.createElement("img");
     const imgContain = document.createElement("img");
  
-    attach.className = ("navbar fixed-top navbar-expand-xl");
+    attach.className = ("navbar fixed-top navbar-expand-lg bg-body-tertiary");
+
+    containerFluid.className = ("container-fluid");
+    attach.appendChild(containerFluid)
 
     toggleButton.className = ("navbar-toggler");
     toggleButton.setAttribute("type", "button");
     toggleButton.setAttribute("id", "toggling");
-    toggleButton.setAttribute("data-toggle", "collapse");
-    toggleButton.setAttribute("data-target", "#navbarSupportedContent");
+    toggleButton.setAttribute("data-bs-toggle", "collapse");
+    toggleButton.setAttribute("data-bs-target", "#navbarSupportedContent");
     spanIcon.className = ("navbar-toggler-icon")
     toggleButton.appendChild(spanIcon);
  
-    attach.appendChild(toggleButton);
+    containerFluid.appendChild(toggleButton);
  
     mainDiv.className = ("collapse navbar-collapse justify-content-center");
     mainDiv.setAttribute("id", "navbarSupportedContent");
-    attach.appendChild(mainDiv);
+    containerFluid.appendChild(mainDiv);
  
     ul.className = ("navbar-nav");
     mainDiv.appendChild(ul);
@@ -124,7 +128,7 @@ function navBar(){
     a2.setAttribute("href", "#");
     a2.setAttribute("id", "navbarDropdown");
     a2.setAttribute("role", "button");
-    a2.setAttribute("data-toggle", "dropdown");
+    a2.setAttribute("data-bs-toggle", "dropdown");
     a2.innerHTML = ("Gallery");
     li2.appendChild(a2);
     //Gallery items
