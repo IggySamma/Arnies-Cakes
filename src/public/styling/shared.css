@@ -23,12 +23,9 @@ body{
 }
 
 .navbar {
-  width: 100vw;
   background-color: #ECE3F0;
-  position: absolute;
-  height: 55px;
-  top: 0px;
 }
+
 
 .ribbon {
   opacity: 90%;
@@ -36,7 +33,7 @@ body{
   width: 180px;
   height: 200px;
   margin: -32px;
-  z-index: -2;
+  z-index: -1;
 }
 
 .navBarLogo{
@@ -164,8 +161,6 @@ a:active {
 @media only screen and (min-width: 992px){  
   .navbar{
     width: 100%;
-    opacity: 100%;  
-    position: fixed;
     height: 100px;
     transition: top 0.3s;
   }
@@ -183,7 +178,7 @@ a:active {
     height: 160px;
     top: -25px;
     margin: -7px;
-  }  
+  }
 
   .homeImage{
     width: 400px;

@@ -113,11 +113,11 @@ function showCarousel(ID, Path){
   imgPath.setAttribute("class", "d-block carImg");
   divContainer.appendChild(imgPath);
 }
-
+/*
 function setActive(ID){
   document.getElementById("carousel" + ID).className = ("carousel-item active");
 }
-
+*/
 function refreshPage(){
   let type = document.getElementById('select-box');
   location.replace('/Gallery.html?type=' + type.value);

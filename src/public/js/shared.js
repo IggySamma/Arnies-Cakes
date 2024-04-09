@@ -78,12 +78,12 @@ function navBar(){
     const logoContain = document.createElement("img");
     const imgContain = document.createElement("img");
  
-    attach.className = ("navbar fixed-top navbar-expand-lg bg-body-tertiary");
+    attach.className = ("navbar fixed-top navbar-expand-lg");
 
-    containerFluid.className = ("container-fluid");
+    containerFluid.className = ("container-fluid m-0 p-0 navContainer");
     attach.appendChild(containerFluid)
 
-    toggleButton.className = ("navbar-toggler");
+    toggleButton.className = ("navbar-toggler collapsed");
     toggleButton.setAttribute("type", "button");
     toggleButton.setAttribute("id", "toggling");
     toggleButton.setAttribute("data-bs-toggle", "collapse");
@@ -95,6 +95,7 @@ function navBar(){
  
     mainDiv.className = ("collapse navbar-collapse justify-content-center");
     mainDiv.setAttribute("id", "navbarSupportedContent");
+    mainDiv.style.top = "0";
     containerFluid.appendChild(mainDiv);
  
     ul.className = ("navbar-nav");
@@ -110,7 +111,7 @@ function navBar(){
     //Home
     li1.className = ("nav-item");
     ul.appendChild(li1);
-    a1.className = ("nav-link fontsize");
+    a1.className = ("nav-link active fontsize");
     a1.setAttribute("href", "./Index.html");
     a1.innerHTML = ("Home");
     li1.appendChild(a1);
@@ -188,27 +189,21 @@ function navBar(){
     a10.setAttribute("href", "./Enquiries.html");
     a10.innerHTML = ("Enquiries");
     li4.appendChild(a10);
-    document.getElementById("toggling").addEventListener("click", updateHrLine);
 }
 
-
-function updateHrLine(){
-    const check1 = document.getElementById("navbarSupportedContent");
-    const line = document.getElementById("navbar");
-
-    if (check1.classList.contains('show') !== true) {
-        line.style.height = '700px';
-    } else {
-        line.style.height = '100px';
-    };
-};
-
 var prevScrollpos = window.scrollY;
+var navCollapse = new bootstrap.Collapse(document.getElementById("navbar"))
 window.onscroll = function() {
   var currentScrollPos = window.scrollY;
   if (prevScrollpos > currentScrollPos) {
+    if(window.matchMedia("(max-width: 992px)")){
+        navCollapse.show();
+    }
     document.getElementById("navbar").style.top = "0";
   } else {
+    if(window.matchMedia("(max-width: 992px)")){
+        navCollapse.hide();
+    }
     document.getElementById("navbar").style.top = "-150px";
   }
   prevScrollpos = currentScrollPos;
