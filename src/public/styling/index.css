@@ -1,12 +1,9 @@
-/*.container{
-    height: 100vh;
-}*/
+/*---------------Landing ---------------------*/
 
-.rheight{
+.LandingContainer{
     height: 100vh;
 }
 
-/*---------------Landing ---------------------*/
 
 .HomeLogo{
     position: relative;
@@ -74,7 +71,6 @@
 
 .aboutMeBGImage{
     height: 100%;
-    /*width: 100%;*/
     aspect-ratio: 4480 / 6720;
     position: absolute;
     top: 0px;
@@ -98,16 +94,9 @@ a{
 
 .galleryContainer{
     position: relative;
-    /*height: 100vh;*/
     width: 100%;
     margin: 0px;
     padding: 0px;
-    /*overflow: hidden;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;*/
-    /*display: flex;*/
 }
 
 .galleryHeader{
@@ -127,26 +116,11 @@ a{
     color: #ECE3F0 !important;
     cursor: pointer;
 }  
-/*
-.carouselView{
-    /*position: absolute;*/
-   /* top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: flex;*/
-    /*overflow-x: scroll;*/
-    /*overflow: hidden;*/
-    /*counter-reset: item;
-    height: 82vh;
-}*/
 
 .carouselSlide{
     height: 100%;
     position: relative;
-    /*flex: 0 0 100%;*/
     width: 100%;
-    /*counter-increment: item; */
 }
 
 .carousel-inner{
@@ -154,24 +128,30 @@ a{
     position: relative;
 }
 
-.carousel-item{
+.carousel-gallery{
     height: 100%;
-    position: relative;
-    /*flex: 0 0 100%;*/
-    /*flex: 0 1 auto;*/
-    /*width: 100%;*/
-    /*display: none !important;*/
+    position: relative;  
+    background-color: white;
+    width: 100%;
 }
 
 .carouselGallery{
     object-fit: cover;
     width: 100%;
-    height: 100%;
+    height: 40vh;
 }
-/*
-#carousel-items{
-    display: inline-block;
-}*/
+
+.Gallery{
+    position: relative;
+    /*height: 100%;*/
+    /*width: 100%;*/
+    display: inline-flex; 
+}
+
+.galleryDoubleInCol{
+    width: 50%;
+    display: inline-flex;
+}
 
  /*------- Kids Gallery ----------*/
 .KidsCakesGallery4{
@@ -188,15 +168,14 @@ a{
     object-position: 50% 57%;
 }
 .CakesGallery2{
-    /*position: absolute;*/
     object-position: 50% 40%;
-    display: block;
+
 }
 .CakesGallery3{
-    /*position: absolute;*/
     object-position: 50% 35%;
-    display: block;
-    right: 0px;
+    padding-right: 0px !important;
+    margin-right: 0px !important;
+    /*right: 0px;*/
 }
 
 .CakesGallery6{
@@ -233,7 +212,6 @@ a{
     object-position: 50% 30%;
 }
 
-
 /*-------------------Testimonials-----------------------*/
 
 .Testimonials{
@@ -263,7 +241,8 @@ a{
     .Gallery{
         position: relative;
         height: 100%;
-        display: block !important;
+        /*width: auto;*/
+        display: block;
     }
 
     .galleryContainer{
@@ -275,21 +254,14 @@ a{
         left: 0;
     }
 
-    .carousel-item{
-        display: inline-flex !important;
+    .carousel-gallery{
+        display: inline-flex;
+        height: 90vh;
     }
 
-    .carouselView{
-        /*position: absolute;*/
-       /* top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        display: flex;*/
-        /*overflow-x: scroll;*/
-        /*overflow: hidden;*/
-        /*counter-reset: item;*/
-        height: 85vh;
+    .galleryDoubleInCol{
+        width: 100%;
+        height: 100%;
     }
 
     .CakesGallery2{
@@ -336,7 +308,6 @@ a{
 /*---------------- About Me ---------------------*/
 
     .aboutMeBGImage{
-        /*background-size: 100% 100%;*/
         min-height: 100%;
         background-image: url("../images/aboutMeBG.jpg");
         aspect-ratio: 6780 / 4480;
@@ -351,11 +322,7 @@ a{
         width: 100%;
         display: inline-flex;
     }
-/*
-    .aboutMeImageContainer{
-        position: relative;
-    }
-*/
+
     .aboutMePragraph{
         position: relative;
         font-size: 2rem;
@@ -370,7 +337,5 @@ a{
     .aboutMeImage{
         width: 30vw;
     }
-
-
 
 }
