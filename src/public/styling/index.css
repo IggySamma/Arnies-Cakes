@@ -1,8 +1,6 @@
 /*---------------Landing ---------------------*/
 
-.LandingContainer{
-    height: 100vh;
-}
+.LandingContainer{height: 100vh;}
 
 
 .HomeLogo{
@@ -40,9 +38,7 @@
 
 /*---------------- About Me ---------------------*/
 
-.aboutMe{
-    text-align: center;
-}
+.aboutMe{text-align: center;}
 
 .aboutMeHeader{
     font-size: 2rem;
@@ -55,13 +51,9 @@
     position: relative;
 }
 
-.aboutMeImageContainer{
-    width: 100%;
-}
+.aboutMeImageContainer{width: 100%;}
 
-.aboutMeImage{
-    width: 90%;
-}
+.aboutMeImage{width: 90%;}
 
 .aboutMePragraph{
     font-size: 1.25rem;
@@ -88,9 +80,7 @@
 
 /*------------------- Gallery ------------------------*/
 
-a{
-    color: black !important;
-}
+a{color: black !important;}
 
 .galleryContainer{
     position: relative;
@@ -154,23 +144,17 @@ a{
 }
 
  /*------- Kids Gallery ----------*/
-.KidsCakesGallery4{
-    object-position: 50% 100%;
-}
-.KidsCakesGallery7{
-    object-position: 50% 30%;
-}
-.KidsCakesGallery9{
-    object-position: 50% 100%;
-}
-/*----------Cakes--------------*/
-.CakesGallery1{
-    object-position: 50% 57%;
-}
-.CakesGallery2{
-    object-position: 50% 40%;
+.KidsCakesGallery4{object-position: 50% 100%;}
 
-}
+.KidsCakesGallery7{object-position: 50% 30%;}
+
+.KidsCakesGallery9{object-position: 50% 100%;}
+
+/*----------Cakes--------------*/
+.CakesGallery1{object-position: 50% 57%;}
+
+.CakesGallery2{object-position: 50% 40%;}
+
 .CakesGallery3{
     object-position: 50% 35%;
     padding-right: 0px !important;
@@ -178,39 +162,28 @@ a{
     /*right: 0px;*/
 }
 
-.CakesGallery6{
-    height: 50%;
-}
+.CakesGallery6{height: 50%;}
+
 .CakesGallery7{
     object-position: 50% 20%;
     height: 50%;
 }
 /*---------Cupcakes------------*/
-.CupcakesGallery1{
-    object-position: 50% 80%;
-}
-.CupcakesGallery2{
-    object-position: 50% 30%;
-}
-.CupcakesGallery3{
-    object-position: 50% 80%;
-}
-.CupcakesGallery4{
-    object-position: 50% 80%;
-}
-.CupcakesGallery5{
-    object-position: 50% 100%;
-}
+.CupcakesGallery1{object-position: 50% 80%;}
+
+.CupcakesGallery2{object-position: 50% 30%;}
+
+.CupcakesGallery3{object-position: 50% 80%;}
+
+.CupcakesGallery4{object-position: 50% 80%;}
+
+.CupcakesGallery5{object-position: 50% 100%;}
 /*--------Cakepops--------*/
-.CakepopsGallery3{
-    object-position: 0% 50%;
-}
-.CakepopsGallery4{
-    object-position: 50% 40%;
-}
-.CakepopsGallery7{
-    object-position: 50% 30%;
-}
+.CakepopsGallery3{object-position: 0% 50%;}
+
+.CakepopsGallery4{object-position: 50% 40%;}
+
+.CakepopsGallery7{object-position: 50% 30%;}
 
 /*-------------------Testimonials-----------------------*/
 
@@ -224,6 +197,78 @@ a{
     overflow: hidden;
 }
 
+.testimonialContainer{
+    width: 100%;
+    height: 100%;
+    display: inline-flex;
+    position: relative; 
+}
+
+.testimonialsPhotoContainer{
+    text-align: center;
+    position: relative;
+}
+
+.testimonialsParagraph{
+    font-size: 2rem;
+    text-align: center;
+    position: relative;
+}
+
+.carousel-testimonial{
+    height: 100vh;
+    position: relative;  
+    /*background-color: black;*/
+    width: 100%;
+}
+
+.testimonialsBG{
+    aspect-ratio: 4480 / 6720;
+    min-height: 100%;
+    min-width: 100%;
+    position: absolute;
+    object-fit: cover;
+    object-position: center;
+    background-size: 100vw 250vh;
+    background-repeat: no-repeat;
+    margin: 0px;
+    padding: 0px;
+    left: 0px;
+    filter: blur(10px);
+    /*opacity: 100%;*/
+}
+
+.testimonialsPhoto{
+    object-fit: cover;
+    height: 50vh;
+    /*z-index: 1;*/
+}
+
+.rating{
+    appearance: none;
+    color: transparent;
+}
+
+.rating::before{
+    --percent: calc(var(--UpdateRating)/5*100%);
+    content: '★★★★★';
+    background: linear-gradient(90deg, gold var(--percent), rgba(0,0,0,0.2) var(--percent));
+    color: rgba(0,0,0,0.2);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.testimonialUserImageContainer{
+    height: 12vh;
+    aspect-ratio: 1/1;
+}
+
+.testimonialUserImage{
+    height: 100%;
+    width: 100%;
+}
+
 /*----------------------------------------------------------*/
 /*--------------------DESKTOP-------------------------------*/
 /*----------------------------------------------------------*/
@@ -233,15 +278,12 @@ a{
 
     /*-------------Gallery------------------*/
 
-    .galleryHeader{
-        font-size: 4rem;
-    }
+    .galleryHeader{font-size: 4rem;}
     
 
     .Gallery{
         position: relative;
         height: 100%;
-        /*width: auto;*/
         display: block;
     }
 
@@ -276,21 +318,15 @@ a{
         padding-left: 8px !important;
     }
 
-    .CakesGallery6{
-        height: 40%;
-    }
-    .CakesGallery7{
-        height: 60%;
-    }
+    .CakesGallery6{height: 40%;}
+    .CakesGallery7{height: 60%;}
 }
 
 @media only screen and (min-width: 768px){
 
     /*---------------Landing ---------------------*/
 
-    .LandingLogo{
-        text-align: unset;
-    }
+    .LandingLogo{text-align: unset;}
 
     .HomeLogo{
         max-width: 25vw;
@@ -334,8 +370,6 @@ a{
         display: flex;
     }
 
-    .aboutMeImage{
-        width: 30vw;
-    }
+    .aboutMeImage{width: 30vw;}
 
 }

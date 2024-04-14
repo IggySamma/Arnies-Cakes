@@ -1,5 +1,5 @@
 const gCarousel = new bootstrap.Carousel(document.querySelector('#carouselContainer'), {
-  touch: false,
+  touch: true,
   ride: false,
   keyboard: false,
 })
