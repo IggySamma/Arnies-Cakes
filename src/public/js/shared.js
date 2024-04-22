@@ -196,14 +196,8 @@ var navCollapse = new bootstrap.Collapse(document.getElementById("navbar"))
 window.onscroll = function() {
   var currentScrollPos = window.scrollY;
   if (prevScrollpos > currentScrollPos) {
-    if(window.matchMedia("(max-width: 992px)")){
-        navCollapse.show();
-    }
     document.getElementById("navbar").style.top = "0";
-  } else {
-    if(window.matchMedia("(max-width: 992px)")){
-        navCollapse.hide();
-    }
+  } else  if (document.getElementById("toggling").classList.contains("collapsed")) {
     document.getElementById("navbar").style.top = "-150px";
   }
   prevScrollpos = currentScrollPos;

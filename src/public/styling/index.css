@@ -11,7 +11,7 @@
 
 .LandingLogo{
     position: relative;
-    top: 25vh;
+    top: 25%;
     text-align: center;
 }
 
@@ -129,13 +129,21 @@ a{color: black !important;}
     object-fit: cover;
     width: 100%;
     height: 40vh;
+    margin-bottom: 0px !important;
 }
 
 .Gallery{
     position: relative;
     /*height: 100%;*/
-    /*width: 100%;*/
-    display: inline-flex; 
+    /*min-width: 100%;*/
+    display: inline flex;
+    flex-direction: row; 
+    padding-right: 0px !important;
+}
+
+.rightPics{
+    margin-right: 0px !important;
+    padding-right: 0px !important;
 }
 
 .galleryDoubleInCol{
@@ -153,7 +161,10 @@ a{color: black !important;}
 /*----------Cakes--------------*/
 .CakesGallery1{object-position: 50% 57%;}
 
-.CakesGallery2{object-position: 50% 40%;}
+.CakesGallery2{
+    object-position: 50% 40%;
+    max-width: 100%;
+}
 
 .CakesGallery3{
     object-position: 50% 35%;
@@ -270,10 +281,54 @@ a{color: black !important;}
 }
 
 /*----------------------------------------------------------*/
+/*--------------------Mobile Landscape----------------------*/
+/*----------------------------------------------------------*/
+@media screen and (orientation:landscape)
+and (max-width: 935px){
+    .LandingLogo{text-align: unset;}
+
+    .HomeLogo{
+        max-width: 25%;
+        left: 10%;
+    }
+
+    .WelcomeText{
+        font-size: 2rem !important;
+    }
+
+    .Gallery{
+        width: 100%;
+    }
+    .carouselGallery{
+        height: 90vh !important;
+    }
+
+    .galleryDoubleInCol{
+        width: 100%;
+    }
+}
+
+/*----------------------------------------------------------*/
+/*--------------------Ipads/Tablets-------------------------*/
+/*----------------------------------------------------------*/
+@media screen and (min-width: 545px) and (max-width: 991px){
+
+    .Gallery{min-width: 100%;}
+
+    .KidsCakesGallery8{max-width: 49%;}
+
+    .CakesGallery2{min-width: 100%;}
+
+    .CakesGallery8{max-width: 50%;}
+
+    .CakepopsGallery6{max-width: 50%;}
+}
+
+/*----------------------------------------------------------*/
 /*--------------------DESKTOP-------------------------------*/
 /*----------------------------------------------------------*/
 /*@media only screen and (min-width: 576px){*/
-
+/*992*/
 @media only screen and (min-width: 992px){
 
     /*-------------Gallery------------------*/
@@ -284,6 +339,7 @@ a{color: black !important;}
     .Gallery{
         position: relative;
         height: 100%;
+        min-width: unset;
         display: block;
     }
 
@@ -307,19 +363,28 @@ a{color: black !important;}
     }
 
     .CakesGallery2{
-        position: absolute;
+        position: relative;
         display: inline;
-        padding-right: 8px !important;
+        max-width: 120%;
+        /*padding-right: 8px !important;*/
     }
     .CakesGallery3{
-        position: absolute;
+        position: relative;
         display: inline;
-        right: 0px;
-        padding-left: 8px !important;
+        /*min-width: 101%;*/
+        /*padding-left: 8px !important;*/
     }
 
-    .CakesGallery6{height: 40%;}
+    .CakesGallery6{
+        height: 40%;
+        max-width: 100%;
+    }
+
     .CakesGallery7{height: 60%;}
+
+    .KidsCakesGallery8{max-width: unset;}
+
+    .CakesGallery8{max-width: unset;}
 }
 
 @media only screen and (min-width: 768px){
@@ -329,8 +394,8 @@ a{color: black !important;}
     .LandingLogo{text-align: unset;}
 
     .HomeLogo{
-        max-width: 25vw;
-        left: 10vw;
+        max-width: 25%;
+        left: 10%;
     }
 
     .WelcomeText{
