@@ -209,9 +209,20 @@ a{color: black !important;}
 }
 
 .testimonialContainer{
-    height: 70vh;
+    height: 68vh;
     display: inline-flex;
     position: relative; 
+}
+
+.testimonialContainer.active{
+    height: 75vh;
+    display: inline-flex;
+    position: relative; 
+}
+
+.testimonialContainer.carousel-item{
+    transition: none;
+    transform: none;
 }
 
 .card{

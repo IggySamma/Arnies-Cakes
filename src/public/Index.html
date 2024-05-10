@@ -200,66 +200,22 @@
             <div class="w-100"></div>
             <div class="row Testimonials m-0 p-0"> 
                 <div class="col m-0 p-0">
-                    <div id="testimonialsCarousel" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-indicators">
+                    <div id="testimonialsCarousel" class="carousel slide"> <!--data-bs-ride="carousel">-->
+                        <!--<div class="carousel-indicators">
+                            <button type="button" data-bs-target="#testimonialsCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                            <button type="button" data-bs-target="#testimonialsCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
                             <button type="button" data-bs-target="#testimonialsCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                             <button type="button" data-bs-target="#testimonialsCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
                             <button type="button" data-bs-target="#testimonialsCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                        </div>
+                        </div>-->
 
 
                         <div class="carousel slide"  >
                             <div class="carousel-inner">
                                 <img class="img testimonialsBG" loading="lazy" style="background-image: url('./images/Index/Cakepops/6.jpg')">
-                                <!--
-                                <div class="carousel-item active" id="carousel-items">
-                                    <div class="container-fluid carousel-testimonial m-0 p-0">     
-                                        <div class="testimonialContainer ">
-                                            <div class="card text-center rounded-5" style="width: 35rem;">
-                                                <div class="card-header">
-                                                    <h1 class="TestimonialsName my-auto py-auto mx-auto my-auto" style="font-weight:bold;">Ignas Grubliauskas</h1>
-                                                </div>
 
-                                                <div class="card-body m-0 p-0">
-                                                    <img class="card-img rounded-0 testimonialsPhoto m-0 p-0" loading="lazy" src="./images/Index/Cakepops/6.jpg">
-                                                </div>
-
-                                                <div class="card-footer">
-                                                    <meter class="rating" min="0" max="5" value="4.5" style="--UpdateRating: 4.5;"></meter>
-                                                    <p class="card-text">
-                                                        Best cakepop evvaaaaaa !!!!
-                                                        Was so good, I died and was reboarn again, Recommend.
-                                                        I will get fat but it's worth it for the yummys in my tummys.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                -->
-                                <div class="container-fluid carousel-testimonial m-0 p-0">     
-                                    <div class="testimonialContainer m-3">
-                                        <div class="card text-center rounded-5">
-                                            <div class="card-header p-3">
-                                                <h3 class="TestimonialsName my-auto py-auto mx-auto my-auto" style="font-weight:bold;">Alexandra Elena</h3>
-                                            </div>
-
-                                            <div class="card-body m-0 p-0">
-                                                <img class="card-img rounded-0 testimonialsPhoto m-0 p-0" loading="lazy" src="./images/Index/Kids Cakes/7.jpg">
-                                            </div>
-
-                                            <div class="card-footer p-3">
-                                                <meter class="rating mb-4" min="0" max="5" value="4.5" style="--UpdateRating: 4.5;"></meter>
-                                                <p class="card-text">
-                                                    Rafaello cake was absolutely delicious and it made my Easter 😍 🍰
-                                                    I would recommend it wholeheartedly - Arnie's cake was heavenly delish:D
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="testimonialContainer m-3">
+                                <div class="container-fluid carousel-inner carousel-testimonial m-0 p-0">     
+                                    <div class="carousel-item testimonialContainer order-3 active m-3" id="carousel-items">
                                         <div class="card text-center rounded-5">
                                             <div class="card-header p-3">
                                                 <h3 class="TestimonialsName my-auto py-auto mx-auto my-auto" style="font-weight:bold;">Merle Sasameyuki</h3>
@@ -272,13 +228,33 @@
                                             <div class="card-footer p-3">
                                                 <meter class="rating mb-4" min="0" max="5" value="4.5" style="--UpdateRating: 4.5;"></meter>
                                                 <p class="card-text">
+                                                    Rafaello cake was absolutely delicious and it made my Easter 😍 🍰
+                                                    I would recommend it wholeheartedly - Arnie's cake was heavenly delish:D
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="carousel-item testimonialContainer order-4 m-3" id="carousel-items">
+                                        <div class="card text-center rounded-5">
+                                            <div class="card-header p-3">
+                                                <h3 class="TestimonialsName my-auto py-auto mx-auto my-auto" style="font-weight:bold;">Alexandra Elena</h3>
+                                            </div>
+
+                                            <div class="card-body m-0 p-0">
+                                                <img class="card-img rounded-0 testimonialsPhoto m-0 p-0" loading="lazy" src="./images/Index/Kids Cakes/7.jpg">
+                                            </div>
+
+                                            <div class="card-footer p-3">
+                                                <meter class="rating mb-4" min="0" max="5" value="4.5" style="--UpdateRating: 4.5;"></meter>
+                                                <p class="card-text">
                                                     The most delicious cakes and  how you dream your cake to look  is what you'll get.. Highly recommended! 🎂
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="testimonialContainer m-3">
+                                    <div class="carousel-item testimonialContainer order-5 m-3" id="carousel-items">
                                         <div class="card text-center rounded-5" >
                                             <div class="card-header p-3">
                                                 <h3 class="TestimonialsName my-auto py-auto mx-auto my-auto" style="font-weight:bold;">Ignas Grubliauskas</h3>
@@ -297,6 +273,43 @@
                                         </div>
                                     </div>
 
+                                    <div class="carousel-item testimonialContainer order-1 m-3" id="carousel-items">
+                                        <div class="card text-center rounded-5" >
+                                            <div class="card-header p-3">
+                                                <h3 class="TestimonialsName my-auto py-auto mx-auto my-auto" style="font-weight:bold;">Arnomeda Grubliauskinie</h3>
+                                            </div>
+
+                                            <div class="card-body m-0 p-0">
+                                                <img class="card-img rounded-0 testimonialsPhoto m-0 p-0" loading="lazy" src="./images/Index/Cakes/3.jpg">
+                                            </div>
+
+                                            <div class="card-footer p-3">
+                                                <meter class="rating mb-4" min="0" max="5" value="4.5" style="--UpdateRating: 4.5;"></meter>
+                                                <p class="card-text">
+                                                    Ordered honey cake designed as a suit for my 24th birthday and was very delicious😍 second time ordering and haven't been let down.Very cheap as well compared to other home bakers. I recommend to all my friends and family as you can't get better taste for the value
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="carousel-item testimonialContainer order-2 m-3" id="carousel-items">
+                                        <div class="card text-center rounded-5" >
+                                            <div class="card-header p-3">
+                                                <h3 class="TestimonialsName my-auto py-auto mx-auto my-auto" style="font-weight:bold;">Aironas Grubliauskas</h3>
+                                            </div>
+
+                                            <div class="card-body m-0 p-0">
+                                                <img class="card-img rounded-0 testimonialsPhoto m-0 p-0" loading="lazy" src="./images/Index/Cakes/2.jpg">
+                                            </div>
+
+                                            <div class="card-footer p-3">
+                                                <meter class="rating mb-4" min="0" max="5" value="4.5" style="--UpdateRating: 4.5;"></meter>
+                                                <p class="card-text">
+                                                    Ordered honey cake designed as a suit for my 24th birthday and was very delicious😍 second time ordering and haven't been let down.Very cheap as well compared to other home bakers. I recommend to all my friends and family as you can't get better taste for the value
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                 </div>  
                             </div>

@@ -174,12 +174,12 @@ function submitEnquire(file){
                 formData.append(formSelector[i].id, document.getElementById(formSelector[i].id).value);
         }
     }
-      for(let i = 0; i < files.files.length; i++) {
+        for(let i = 0; i < files.files.length; i++) {
             formData.append("clientPhotos", files.files[i]);
     }
     fetch('/api/submitEnquire', {
-      method: 'POST',
-      body: formData,
+        method: 'POST',
+        body: formData,
     })
     .then((res) => {
         res.status === 405 ? alert("Email provided is invalid") :
