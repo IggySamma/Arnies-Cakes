@@ -21,7 +21,7 @@ const tCarousel = new bootstrap.Carousel(testimonialCaoursel, {
   pause:    "hover",
   ride:     true,//true
   wrap:     true,
-  keyboard: false,
+  keyboard: true,
 })
 
 //const tCarouselInstance = bootstrap.Carousel.getInstance(testimonialCaoursel)
@@ -32,7 +32,7 @@ const tCarousel = new bootstrap.Carousel(testimonialCaoursel, {
 
 testimonialCaoursel.addEventListener('slide.bs.carousel', event => {
   let all = document.querySelectorAll('div.testimonialContainer')
-  let animeSpeed = '5s'
+  let animeSpeed = '0.5s'
   all.forEach((container) => {
     container.addEventListener("animationend", () => {
       container.style.removeProperty("animation");
@@ -41,15 +41,11 @@ testimonialCaoursel.addEventListener('slide.bs.carousel', event => {
   })
 
   all.forEach((container) => {
-    console.log(container.height)
-  })
-
-  all.forEach((container) => {
     //Animation to shrink or grow based on position from centre
     switch(+container.className[container.className.search('order')+6]){
       case 1:
         if(event.direction == 'left'){
-          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,shrink3 " + animeSpeed + ";"
+          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,leftEdge " + animeSpeed + ";"
         } else {
           container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,grow2 " + animeSpeed + ";"
         }
@@ -58,15 +54,15 @@ testimonialCaoursel.addEventListener('slide.bs.carousel', event => {
         if(event.direction == 'left'){
           container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,shrink2 " + animeSpeed + ";"
         } else {
-          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,grow1 " + animeSpeed + ",fade-in " + animeSpeed +  ";"
+          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,grow1 " + animeSpeed + ";"
         }
         break;
       case 3:
-        container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,shrink1 " + animeSpeed + ",fade-out " + animeSpeed + ";"
+        container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,shrink1 " + animeSpeed + ";"
         break;
       case 4:
         if(event.direction == 'left'){
-          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,grow1 " + animeSpeed + ",fade-in " + animeSpeed + ";"
+          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,grow1 " + animeSpeed + ";"
         } else {
           container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,shrink2 " + animeSpeed + ";"
         }
@@ -75,37 +71,13 @@ testimonialCaoursel.addEventListener('slide.bs.carousel', event => {
         if(event.direction == 'left'){
           container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,grow2 " + animeSpeed + ";"
         } else {
-          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,shrink3 " + animeSpeed + ";"
+          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,rightEdge  " + animeSpeed + ";"
         }
         break;
     }
   })
-
+  updateBG(event.relatedTarget, animeSpeed);
 })
-
-
-
-/*
-
-  <button type="button" id="myBtn" class="btn btn-success btn-lg" id="myBtn">Previous Item</button>
-  <button type="button" id="myBtn2" class="btn btn-danger btn-lg" id="myBtn">Next Item</button><br><br>
-
-
-<script>
-$(document).ready(function(){
-
-  // Go to the previous item
-  $("#myBtn").click(function(){
-    $("#myCarousel").carousel("prev");
-  });
-
-  // Go to the next item
-  $("#myBtn2").click(function(){
-    $("#myCarousel").carousel("next");
-  });
-    
-});
-</script>*/
 
 function updateOrder(div, direction){
   if(direction == 'right'){
@@ -120,3 +92,30 @@ function updateOrder(div, direction){
     return div.className.replace(div.className[div.className.search('order')+6],+div.className[div.className.search('order')+6]-1);
   }
 }
+
+function updateBG(div, animeSpeed){
+  let bg = document.getElementsByClassName('testBGInView')
+  let bgLoad = document.getElementsByClassName('testBGLoad')
+
+  bgLoad[0].addEventListener("animationend", () => {
+    bg[0].style.removeProperty("background-image")
+    bg[0].style.removeProperty("animation")
+    bg[0].setAttribute("style", "background-image: url('" + div.children[0].children[1].children[0].src + "'); animation: fade-in ease-in-out " + animeSpeed + ";")
+    bgLoad[0].style.removeProperty("background-image")
+    bgLoad[0].style.removeProperty("animation")
+  }, { once: true })
+
+  bgLoad[0].style.removeProperty("background-image")
+  bgLoad[0].style.removeProperty("animation")
+  bgLoad[0].setAttribute("style", "background-image: url('" + div.children[0].children[1].children[0].src + "'); animation: fade-in ease-in-out " + animeSpeed + ";")
+}
+
+function loadTestBG(){
+  let bg = document.getElementsByClassName('testBGInView')
+  let div = document.querySelectorAll('div.testimonialContainer.active')
+  //console.log(div[0].children[0].children[1].children[0].src)
+  bg[0].style.removeProperty("background-image")
+  bg[0].style="background-image: url('" + div[0].children[0].children[1].children[0].src + "');"
+}
+
+loadTestBG();

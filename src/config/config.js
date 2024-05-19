@@ -25,18 +25,18 @@ oauth2Client.setCredentials({
 const accessToken = oauth2Client.getAccessToken()
 
 let emailTransporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-          type: "OAuth2",
-          user: process.env.GMAIL_USER, 
-          clientId: process.env.GMAIL_CLIENT_ID,
-          clientSecret: process.env.GMAIL_CLIENT_SECRET,
-          refreshToken: process.env.GMAIL_REFRESH_TOKEN,
-          accessToken: accessToken
-  },
-  tls: {
-      rejectUnauthorized: false
-  },
+    service: "gmail",
+    auth: {
+        type: "OAuth2",
+        user: process.env.GMAIL_USER, 
+        clientId: process.env.GMAIL_CLIENT_ID,
+        clientSecret: process.env.GMAIL_CLIENT_SECRET,
+        refreshToken: process.env.GMAIL_REFRESH_TOKEN,
+        accessToken: accessToken
+    },
+    tls: {
+        rejectUnauthorized: false
+    },
 });
 
 /*----------------------------- MySQL Config ---------------------*/
@@ -59,6 +59,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../public/')));
 app.use(express.static('/gallery/'));
+app.use(express.static(path.join(__dirname, '../admin/')));
 
 /*-------------------------- Admin Setup ----------------------- */
 
@@ -70,7 +71,7 @@ var router = express.Router();
 var session = require('express-session');
 /*
 var authr = router.get('/admin', function(req, res, next) {
-  res.render(path.join(__dirname, '../admin/index.html'));
+    res.render(path.join(__dirname, '../admin/index.html'));
 });
 
 app.use('/', authr)
@@ -90,22 +91,21 @@ passport.use(new GoogleStrategy({
     clientSecret: process.env.GMAIL_CLIENT_SECRET,
     callbackURL: '/login/google',
     scope: [ 'profile' ]
-  }, function verify(issuer, profile, cb) {
+    }, function verify(issuer, profile, cb) {
     if(profile.id !== process.env.GMAIL_ID){
         cb('Incorrect credentials. IP Logged :)');
     } else {
         console.log(profile.id);
         cb(null, profile)
-    }
-  }
+    }}
 ));
 
 passport.serializeUser(function(user, cb) {
     process.nextTick(function() {
-      cb(null, { id: user.id, username: user.username, name: user.name });
+        cb(null, { id: user.id, username: user.username, name: user.name });
     });
 });
-  
+
 passport.deserializeUser(function(user, cb) {
     process.nextTick(function() {
         return cb(null, user);
@@ -125,5 +125,6 @@ module.exports = {
     app,
     oauth2Client,
     passport,
-    checkUserLoggedIn
+    checkUserLoggedIn,
+    express
 }

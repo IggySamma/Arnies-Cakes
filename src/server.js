@@ -50,5 +50,6 @@ serverConfig.app.post('/api/upload', parsers.galleryUpload.array("myFiles"), uti
 
 serverConfig.app.post('/api/deleteGallery', (req, res) => { utils.deleteFromGallery(req, res) });
 
-serverConfig.app.post('/api/adminGallery', (req, res) => { sqlQuery.getAllFromGallery(req, res) });
+//serverConfig.app.post('/api/adminGallery', (req, res) => { sqlQuery.getAllFromGallery(req, res) });
+serverConfig.app.post('/api/adminGallery', (req, res) => { utils.filterGallery( req, res)  });
 
