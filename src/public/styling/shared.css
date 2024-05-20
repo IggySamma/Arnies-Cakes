@@ -22,7 +22,6 @@ body{
   background-color: #ECE3F0;
 }
 
-
 .ribbon {
   opacity: 90%;
   position: absolute; 
@@ -64,6 +63,15 @@ body{
   transform-origin: top left;
   transform: rotate(-30deg);
   left: 30vw;
+}
+
+.Footer{
+  background-color: #ECE3F0;
+  position: relative;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  text-align: center;
 }
 
 /*
@@ -310,4 +318,11 @@ a:active {
   
   .d-vpw100{width: 100vw !important;}
 
+  .footer-list{
+    font-size: 1.5rem;
+    flex-basis: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
