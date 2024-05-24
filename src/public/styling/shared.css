@@ -65,13 +65,36 @@ body{
   left: 30vw;
 }
 
-.Footer{
+.footer{
   background-color: #ECE3F0;
   position: relative;
   bottom: 0px;
   left: 0px;
+  right: 0px;
   width: 100%;
   text-align: center;
+}
+
+.footerList{
+  display: inline-flex;
+}
+.footerLogo{
+  height: 80px;
+  aspect-ratio: 1 / 1;
+}
+
+.footerImages{
+  height: 40px;
+  aspect-ratio: 1/1;
+}
+
+.footerLinks{
+  display: none;
+}
+
+.footerEnquires{
+  background-color: #D3BBDD;
+  font-size: 1.3rem;
 }
 
 /*
@@ -206,6 +229,12 @@ a:active {
   overflow: visible !important;
 }
 
+@media only screen and (min-width: 1175px){
+  .footerLinks{
+    display: inline-block;
+  }
+}
+
 @media only screen and (min-width: 992px){  
   .navbar{
     width: 100%;
@@ -215,10 +244,7 @@ a:active {
 
   .nav-logo{
     position: relative;
-    left: -100px;
-    padding-right: 150px;
-    padding-left: 0px;
-    margin: 0px;
+    left: -50px;
   }
 
   .ribbon {
@@ -318,7 +344,7 @@ a:active {
   
   .d-vpw100{width: 100vw !important;}
 
-  .footer-list{
+  .footerList{
     font-size: 1.5rem;
     flex-basis: 100%;
     display: flex;

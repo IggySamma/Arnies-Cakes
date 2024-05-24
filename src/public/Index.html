@@ -30,7 +30,7 @@
             <div id="sideScroll"></div>
 
             <div class="row LandingContainer m-0 p-0">
-                <div class="col m-1 p-1">
+                <div class="col m-0 p-0">
                     <div class="LandingLogo">
                         <img class="HomeLogo m-1 p-1" src="./images/home logo.png">
                         <h1 class="WelcomeText">Welcome To Arnie's Cakes !</h1>
@@ -326,31 +326,12 @@
             </div>
 
             <div class="w-100 m-0 p-0"></div>
-            <footer class="Footer container-fluid m-0 p-0">
-                <ul class="nav border-top m-0 p-0 footer-list">
-                    <li class="nav-item nav-logo">
-                        <a href="./Index.html">
-                            <img class="navBarLogo" src="./images/home logo.png">
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="https://www.instagram.com/arnies_cakes/" target="_blank">@arnies_cakes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="https://www.facebook.com/ArniesCakes" target="_blank">Dublin Tortai - 'Arnie's Cakes'</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="mailto:arniescakes@gmail.com">arniescakes@gmail.com</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="./Enquiries.html">Enquires</a>
-                    </li>
-                </ul>
-            </footer>
+            <footer id="footer"></footer>
         </div>
 
-        <script src="./js/shared.js" onload="navBar();"></script>
-        <script src="./js/shared.js" onload="sideScroll();"></script>
+        <script src="./js/shared.js" onload="buildNavBar();"></script>
+        <script src="./js/shared.js" onload="buildSideScroll();"></script>
+        <script src="./js/shared.js" onload="buildFooter();"></script>
         <script src="./js/index.js"></script>
     </body>
 </html>

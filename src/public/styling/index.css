@@ -27,7 +27,7 @@
     position: absolute;
     bottom: 0px;
     left: 0px;
-    background-image: url("../images/bg.jpg");
+    background-image: url("../images/Index/bg.jpg");
     background-repeat: repeat-x;
     height: 100vh;
     width: 100%;
@@ -72,7 +72,7 @@ overflow: hidden;}
     top: 0px;
     object-fit: cover;
     object-position: center;
-    background-image: url("../images/aboutMeBGP.jpg");
+    background-image: url("../images/Index/aboutMeBGP.jpg");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     z-index: -100;
@@ -209,7 +209,7 @@ a{color: black !important;}
 
 .Testimonials{
     position: relative;
-    height: 90vh;
+    height: 95vh;
     /*width: 100vw;*/
     left: 0px;
     margin: 0px;
@@ -496,21 +496,14 @@ and (max-width: 935px){
     .WelcomeText{font-size: 2rem !important;}
 
     .Gallery{width: 100%;}
-    .carouselGallery{
-        height: 90vh !important;
-    }
+
+    .carouselGallery{height: 90vh !important;}
 
     .galleryDoubleInCol{width: 100%;}
 
     .Testimonials{
-        height: 100vh;
-        width: 100%;
-    }
-
-
-    .Testimonials{
-        position: absolute;
-        height: 100vh;
+        position: relative;
+        height: 95vh;
         width: 100%;
         left: 0px;
         margin: 0px;
@@ -698,7 +691,7 @@ and (max-width: 935px){
 
     .aboutMeBGImage{
         min-height: 100%;
-        background-image: url("../images/aboutMeBG.jpg");
+        background-image: url("../images/Index/aboutMeBG.jpg");
         aspect-ratio: 6780 / 4480;
         width: 100%
     }
