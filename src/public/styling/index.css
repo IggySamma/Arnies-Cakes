@@ -481,6 +481,119 @@ a{color: black !important;}
     }
 }
 
+@-webkit-keyframes right{
+    0%{
+        transform: translateX(0%);
+    }
+    100%{
+        transform: translateX(92.5%);
+    }
+}
+
+@-webkit-keyframes left{
+    0%{
+        transform: translateX(0%);
+    }
+    100%{
+        transform: translateX(-92.5%);
+    }
+}
+
+@-webkit-keyframes leftEdge{
+    0%{
+        transform: translateX(0%);
+        opacity: 50%;
+    }
+    50%{
+        transform: translateX(-60%);
+        opacity: 0%;
+    }
+    50.01%{
+        transform: translateX(450%);
+        opacity: 0%;
+    }
+    100%{
+        transform: translateX(378%);
+        opacity: 50%;
+    }
+}
+
+@-webkit-keyframes rightEdge{
+    0%{
+        transform: translateX(0%);
+        opacity: 50%;
+    }
+    50%{
+        transform: translateX(60%);
+        opacity: 0%;
+    }
+    50.01%{
+        transform: translateX(-450%);
+        opacity: 0%;
+    }
+    100%{
+        transform: translateX(-378%);
+        opacity: 50%;
+    }
+}
+
+@-webkit-keyframes grow1{
+    0%{
+        height: 75vh;
+        opacity: 60%;
+        z-index: -1;
+    }
+    100%{
+        height: 80vh;
+        opacity: 100%;
+        z-index: 1;
+    }
+}
+
+@-webkit-keyframes grow2{
+    0%{
+        height: 70vh;
+        opacity: 50%;
+    }
+    100%{
+        height: 75vh;
+        opacity: 60%;
+    }
+}
+
+@-webkit-keyframes shrink1{
+    0%{
+        height: 80vh;
+        opacity: 100%;
+    }
+    100%{
+        height: 75vh;
+        opacity: 60%;
+    } 
+}
+
+@-webkit-keyframes shrink2{
+    0%{
+        height: 75vh;
+        opacity: 60%;
+    }
+    100%{
+        height: 70vh;
+        opacity: 50%;
+    } 
+}
+
+@-webkit-keyframes fade-in{
+    0%{
+        z-index: -11;
+        opacity: 0%;
+    }
+    100%{
+        z-index: -10;
+        opacity: 100%;
+    }
+}
+
 /*----------------------------------------------------------*/
 /*--------------------Mobile Landscape----------------------*/
 /*----------------------------------------------------------*/
@@ -563,6 +676,52 @@ and (max-width: 935px){
     }
     
     @keyframes shrink2{
+        0%{
+            height: 85vh;
+            opacity: 60%;
+        }
+        100%{
+            height: 80vh;
+            opacity: 50%;
+        } 
+    }
+
+    @-webkit-keyframes grow1{
+        0%{
+            height: 85vh;
+            opacity: 60%;
+            z-index: -1;
+        }
+        100%{
+            height: 90vh;
+            opacity: 100%;
+            z-index: 1;
+        }
+    }
+
+    @-webkit-keyframes grow2{
+        0%{
+            height: 80vh;
+            opacity: 50%;
+        }
+        100%{
+            height: 85vh;
+            opacity: 60%;
+        }
+    }
+
+    @-webkit-keyframes shrink1{
+        0%{
+            height: 90vh;
+            opacity: 100%;
+        }
+        100%{
+            height: 85vh;
+            opacity: 60%;
+        } 
+    }
+
+    @-webkit-keyframes shrink2{
         0%{
             height: 85vh;
             opacity: 60%;

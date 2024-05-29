@@ -1,0 +1,136 @@
+.userForm {
+    position: relative;
+    width: 98vw;
+    left: 0px;
+}
+
+.enquiresContainer{
+    top: 60px;
+    left: 1vw;
+    right: 1vw;
+    width: 98vw;
+    position: absolute;
+}
+
+.enquiresContent{
+    width: 100vw;
+    position: relative;
+    float: left;
+    clear: left;
+}
+
+.enquiresWrapper{
+    width: 100%;
+}
+
+.behindBoxEnquires {
+    text-align: center;
+    width: 94vw;
+    left: 2vw;
+    right: 2vw;
+    background-color: #ECE3F0;
+}
+
+.behindBoxEnquires h1{
+    font-family: 'Halimun';
+}
+
+.Flavours{
+    visibility: hidden;
+    display: none;
+}
+
+.enquiresBox{
+    width: 94vw;
+    left: 2vw;
+    right: 2vw;
+    margin-right: 1vw; 
+    margin-left: 1vw;
+    padding-right: 1vw; 
+    padding-left: 1vw;
+    background-color: #D3BBDD;
+
+    /*overflow-y: scroll;*/
+}
+
+.incrementalNumberBoxStyle{
+    width: 50px;
+    height: 28px;
+    /*right: -100px;
+    position: relative;*/
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.fontsizeEnquires {
+    font-size: 22px;
+    /*font-weight: bold;*/
+}
+
+input[type="checkbox"]:checked ~ .Flavours{
+    visibility: visible;
+    display: block;
+}
+
+@media only screen and (min-width: 800px){
+    .userForm {
+        position: relative;
+        left: 0px;
+    }
+        
+    .enquiresContainer{
+        top: 90px;
+        left: 1vw;
+        right: 1vw;
+        width: 98vw;
+        position: absolute;
+    }
+      
+    .enquiresContent{
+        width: 100vw;
+        position: relative;
+        float: left;
+        clear: left;
+        overflow: hidden;
+    }
+    
+    .enquiresWrapper{
+        width: 100%;
+    }
+    
+    .behindBoxEnquires {
+        text-align: center;
+        width: 22.5vw;
+        left: 2vw;
+        right: 2vw;
+        background-color: #ECE3F0;
+    }
+    
+    .behindBoxEnquires h1{
+        font-family: 'Halimun';
+    }
+    
+    .enquiresBox{
+        width: 40vw;
+        left: 6vw;
+        margin-right: 1vw; 
+        margin-left: 1vw;
+        padding-right: 1vw; 
+        padding-left: 1vw;
+        background-color: #D3BBDD;
+        position: relative;
+        /*overflow-y: scroll;*/
+    }
+    
+    .datetime {
+        border: 0px;
+        font-size: 20px;
+    }
+    
+    .fontsizeEnquires {
+        font-size: 22px;
+        /*font-weight: bold;*/
+    }
+
+}

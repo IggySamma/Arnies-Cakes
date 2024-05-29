@@ -36,6 +36,7 @@ testimonialCaoursel.addEventListener('slide.bs.carousel', event => {
   all.forEach((container) => {
     container.addEventListener("animationend", () => {
       container.style.removeProperty("animation");
+      container.style.removeProperty("-webkit-animation");
       container.className = updateOrder(container, event.direction)
     }, { once: true })
   })
@@ -45,33 +46,33 @@ testimonialCaoursel.addEventListener('slide.bs.carousel', event => {
     switch(+container.className[container.className.search('order')+6]){
       case 1:
         if(event.direction == 'left'){
-          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,leftEdge " + animeSpeed + ";"
+          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,leftEdge " + animeSpeed + ";" + "-webkit-animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,leftEdge " + animeSpeed + ";"
         } else {
-          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,grow2 " + animeSpeed + ";"
+          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,grow2 " + animeSpeed + ";" + "-webkit-animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,grow2 " + animeSpeed + ";"
         }
         break;
       case 2:
         if(event.direction == 'left'){
-          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,shrink2 " + animeSpeed + ";"
+          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,shrink2 " + animeSpeed + ";" + "-webkit-animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,shrink2 " + animeSpeed + ";"
         } else {
-          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,grow1 " + animeSpeed + ";"
+          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,grow1 " + animeSpeed + ";" + "-webkit-animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,grow1 " + animeSpeed + ";"
         }
         break;
       case 3:
-        container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,shrink1 " + animeSpeed + ";"
+        container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,shrink1 " + animeSpeed + ";" + "-webkit-animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,shrink1 " + animeSpeed + ";"
         break;
       case 4:
         if(event.direction == 'left'){
-          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,grow1 " + animeSpeed + ";"
+          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,grow1 " + animeSpeed + ";" + "-webkit-animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,grow1 " + animeSpeed + ";"
         } else {
-          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,shrink2 " + animeSpeed + ";"
+          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,shrink2 " + animeSpeed + ";" + "-webkit-animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,shrink2 " + animeSpeed + ";"
         }
         break;
       case 5:
         if(event.direction == 'left'){
-          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,grow2 " + animeSpeed + ";"
+          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,grow2 " + animeSpeed + ";" + "-webkit-animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,grow2 " + animeSpeed + ";"
         } else {
-          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,rightEdge  " + animeSpeed + ";"
+          container.style="animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,rightEdge  " + animeSpeed + ";" + "-webkit-animation: "+ event.direction + " ease-in-out " + animeSpeed + " ,rightEdge  " + animeSpeed + ";"
         }
         break;
     }

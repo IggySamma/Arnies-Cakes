@@ -1,79 +1,46 @@
-body{
-    overflow: hidden;
-}
-
-.userForm {
-    position: relative;
-    width: 98vw;
-    left: 0px;
-}
-
 .enquiresContainer{
-    top: 60px;
-    left: 1vw;
-    right: 1vw;
-    width: 98vw;
-    position: absolute;
-    overflow-x: hidden;
-}
-  
-.enquiresContent{
-    width: 100vw;
     position: relative;
-    float: left;
-    clear: left;
-    overflow: hidden;
 }
 
-.enquiresWrapper{
-    width: 100%;
-    overflow: hidden;
-    overflow-x: hidden;
+.ennquiresWrapper{
+    position: relative;
 }
 
-.behindBoxEnquires {
-    text-align: center;
-    width: 94vw;
-    left: 2vw;
-    right: 2vw;
+.policyContainer{
+    top: 50px;
+    position: relative;
+    height: 100%;
+}
+
+.formContainer{
+    position: relative;
+    height: 100%;
+}
+
+#mainHeader{
+    position: relative;
+}
+
+#subHeader{
+    position: relative;
+}
+
+.sideScrollContainer{
+    z-index: -1;
+    /*height: 200% !important;*/
+}
+
+.policy{
     background-color: #ECE3F0;
+    text-align: center;
 }
 
-.behindBoxEnquires h1{
+.policy h1{
     font-family: 'Halimun';
 }
 
-.Flavours{
-    visibility: hidden;
-    display: none;
-}
-
-.enquiresBox{
-    width: 94vw;
-    left: 2vw;
-    right: 2vw;
-    margin-right: 1vw; 
-    margin-left: 1vw;
-    padding-right: 1vw; 
-    padding-left: 1vw;
+.userForm{
     background-color: #D3BBDD;
-
-    /*overflow-y: scroll;*/
-}
-
-.datetime {
-    border: 0px;
-    font-size: 20px;
-}
-
-.incrementalNumberBoxStyle{
-    width: 50px;
-    height: 28px;
-    right: 1vw;
-    position: absolute;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
 }
 
 .fontsizeEnquires {
@@ -81,82 +48,53 @@ body{
     /*font-weight: bold;*/
 }
 
-input[type="checkbox"]:checked ~ .Flavours{
+.datetime {
+    border: 0px;
+    font-size: 20px;
+}
+
+.Flavours{
+    visibility: hidden;
+    display: none;
+}
+
+input[type="checkbox"]:checked ~ .Flavours {
     visibility: visible;
     display: block;
 }
 
-@media only screen and (min-width: 800px){
-    .userForm {
-        position: relative;
-        left: 0px;
-    }
-        
-    .enquiresContainer{
-        top: 90px;
-        left: 1vw;
-        right: 1vw;
-        width: 98vw;
-        position: absolute;
-        overflow-x: hidden;
-    }
-      
-    .enquiresContent{
-        width: 100vw;
-        position: relative;
-        float: left;
-        clear: left;
-        overflow: hidden;
-    }
-    
-    .enquiresWrapper{
+.incrementalNumberBoxStyle{
+    width: 50px;
+    height: 28px;
+    right: 0px;
+    position: absolute;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    align-self: left;
+}
+
+@media only screen and (min-width: 992px){  
+    .ennquiresWrapper{
+        display: flex;
         width: 100%;
-        overflow: hidden;
-        overflow-x: hidden;
-    }
-    
-    .behindBoxEnquires {
-        text-align: center;
-        width: 22.5vw;
-        left: 2vw;
-        right: 2vw;
-        background-color: #ECE3F0;
-    }
-    
-    .behindBoxEnquires h1{
-        font-family: 'Halimun';
-    }
-    
-    .enquiresBox{
-        width: 40vw;
-        left: 6vw;
-        margin-right: 1vw; 
-        margin-left: 1vw;
-        padding-right: 1vw; 
-        padding-left: 1vw;
-        background-color: #D3BBDD;
-        position: relative;
-        /*overflow-y: scroll;*/
-    }
-    
-    .datetime {
-        border: 0px;
-        font-size: 20px;
-    }
-    
-    .incrementalNumberBoxStyle{
-        width: 50px;
-        height: 28px;
-        right: 1vw;
-        position: absolute;
-        font-size: 16px;
-        font-weight: bold;
-        text-align: center;
-    }
-    
-    .fontsizeEnquires {
-        font-size: 22px;
-        /*font-weight: bold;*/
+        /*align-items: center;
+        justify-content: center;*/
     }
 
+    .policyContainer{
+        top: 150px;  
+        /*width: 30%;*/
+        flex: 1 1 0;
+    }
+
+    .formContainer{
+        top: 100px;
+        width: 50%;
+        flex: 2 1 0;
+    }
+
+    .enquiresSpacing{
+        flex: 1 1 0;
+    }
 }

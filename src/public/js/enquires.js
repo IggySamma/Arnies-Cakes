@@ -75,7 +75,7 @@ function createHeaders(item, heading, flavours, includeFlavours, minOrder){
     const input = document.createElement('input');
     const label = document.createElement('label');
 
-    div.className = (item);
+    div.className = (item + " itemWrapper");
     div.setAttribute("id", item)
     header.appendChild(div);
 
@@ -100,7 +100,7 @@ function createHeaders(item, heading, flavours, includeFlavours, minOrder){
     } else {
         const inputSecond = document.createElement('input');
 
-        inputSecond.className = ("form-control mt-1 p-1 incrementalNumberBoxStyle d-inline-flex");
+        inputSecond.className = ("form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex");
         inputSecond.setAttribute("type", "number");
         inputSecond.setAttribute("id", item + "CheckBox1");
         inputSecond.setAttribute("for", item + "CheckBox");
