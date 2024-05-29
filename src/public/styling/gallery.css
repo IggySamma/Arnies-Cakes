@@ -1,101 +1,19 @@
-.sort{
-    left: 2vw;
-    width: 94vw;
-    right: 2vw;
-}
-
-.fullSize {
-    top: 140px;
-    width: 98vw;
-    position: absolute;
-    overflow-x: hidden;
-    overflow-y: visible;
-}
-
-.fullSize img {
-    min-width: 30vw;
-    max-height: 40vh;
-    object-fit: cover;
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    -webkit-transition: .3s ease-in-out;
-    transition: .3s ease-in-out;
-    aspect-ratio: 5/7;
-}
-
-.modalFontSize {
-    font-size: 20px;
-}
-
-.carImg {
+.viewWrapper{
+    position: relative;
+    background-color: #ECE3F0;
+    width: 100%;
     height: 100%;
-    max-height: 70vh;
-    margin-left: auto;
-    margin-right: auto;
-    aspect-ratio: inherit;
-    max-width: 90vw;
+    top: 100px;
 }
 
-.img-thumbnail{
-    cursor: pointer;
+.galleryWrapper{
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
-
-@media only screen and (min-width: 576px){
-    .sort { 
-        top: 85px;
-        /*left: 78vw;*/
-        position: relative;
-        float: right;
-        width: 20vw;
-        left: -30px;
-    }
-
-    .fullSize {
-        top: 220px;
-        left: 1vw;
-        right: 1vw;
-        position: absolute;
-        width: 98vw;
-        overflow-x: hidden;
-        overflow-y: scroll;
-    }
-
-    .fullSize img {
-        max-width: 350px;
-        min-width: 250px;
-        /*max-height: 40vh;*/
-        object-fit: cover;
-        -webkit-transform: scale(1);
-        transform: scale(1);
-        -webkit-transition: .3s ease-in-out;
-        transition: .3s ease-in-out;
-        aspect-ratio: 5/7;
-    }
-
-    .fullSize img:hover {
-        max-width: 15vw;
-        min-width: 250px;
-        object-fit: cover;
-        z-index: 10;
-        -webkit-transform: scale(1.1);
-        transform: scale(1.1);
-        aspect-ratio: 5/7;
-    }
-
-    .modalFontSize {
-        font-size: 20px;
-    }
-
-    .carImg {
-        height: 70vh;
-        max-height: 83vh;
-        margin-left: auto;
-        margin-right: auto;
-        aspect-ratio: inherit;
-    }
-
-    .img-thumbnail{
-        cursor: pointer;
-    }
+.containerWrapper{
+    position: relative;
+    width: 100%;
+    height: 100%; 
 }

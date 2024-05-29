@@ -30,12 +30,9 @@ body{
   background-color: #ECE3F0;
 }
 
-
 .dropdown-item:hover{
   background-color: #D3BBDD;
 }
-
-
 
 .ribbon {
   opacity: 90%;
@@ -112,7 +109,6 @@ body{
   font-size: 1.3rem;
 }
 
-/*
 a{
   text-decoration: none;
   color: black;
@@ -136,7 +132,7 @@ a:hover {
 a:active { 
   text-decoration: none; 
   color: black;
-}*/
+}
 
 .sideScrollL {
   -webkit-animation: mover 20s linear infinite;

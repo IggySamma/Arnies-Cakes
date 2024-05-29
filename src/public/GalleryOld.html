@@ -12,10 +12,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="./js/bootstrap.js"></script>
         <link rel="stylesheet" href="./styling/bootstrap.css">
-        <link rel="stylesheet" href="./styling/gallery.css">
+        <link rel="stylesheet" href="./styling/galleryOld.css">
         <link rel="stylesheet" href="./styling/shared.css">
-
-        <link rel="stylesheet" href="./styling/index.css">
     </head>
     <header>
         <nav id="navbar"></nav>
@@ -25,8 +23,8 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <div class="container-fluid">
-            <div class="row containerWrapper m-2 p-2">
-                <div class="col viewWrapper rounded m-3 p-3">
+            <div class="row">
+                <div class="col">
                     <select id="select-box" class="form-select mt-3 form-select-lg z-1 sort " onchange="refreshPage()" aria-label="Filter by type of cake">
                         <option value="All">All</option>
                         <option value="Cakes">Cakes</option>
@@ -35,36 +33,6 @@
                         <option value="KidsCakes">Kids Cakes</option>
                         <option value="Treats">Treats</option>
                     </select>
-
-
-                    <div class="row galleryWrapper">
-                        <div class="col-6 col-lg-2 Gallery m-0 p-1">
-                            <img class="KidsCakesGallery1 carouselGallery d-h60 m-1 p-0" loading="lazy" src="./images/Index/Kids Cakes/1.jpg">
-                            <img class="KidsCakesGallery2 carouselGallery rightPics d-h40 m-1 p-0" loading="lazy" src="./images/Index/Kids Cakes/2.jpg">
-                        </div>
-
-                        <div class="col-6 col-lg-2 Gallery m-0 p-1">
-                            <img class="KidsCakesGallery3 carouselGallery d-h50 m-1 p-0" loading="lazy" src="./images/Index/Kids Cakes/3.jpg">
-                            <img class="KidsCakesGallery4 carouselGallery rightPics d-h50 m-1 p-0" loading="lazy" src="./images/Index/Kids Cakes/4.jpg">
-                        </div>
-                        
-                        <div class="col-12 col-lg-3 Gallery m-0 p-1">
-                            <img class="KidsCakesGallery5 carouselGallery rightPics d-h100 vph70 m-1 p-0" loading="lazy" src="./images/Index/Kids Cakes/5.jpg">
-                        </div>
-
-                        <div class="col-6 col-lg-3 Gallery m-0 p-1">
-                            <img class="KidsCakesGallery6 carouselGallery d-h60 m-1 p-0" loading="lazy" src="./images/Index/Kids Cakes/6.jpg">
-                            <img class="KidsCakesGallery7 carouselGallery rightPics d-h40 m-1 p-0" loading="lazy" src="./images/Index/Kids Cakes/7.jpg">
-                        </div>
-                        
-                        <div class="col-6 col-lg-2 Gallery m-0 p-1">
-                            <img class="KidsCakesGallery8 carouselGallery d-h50 m-1 p-0" loading="lazy" src="./images/Index/Kids Cakes/8.jpg">
-                            <img class="KidsCakesGallery9 carouselGallery rightPics d-h50 m-1 p-0" loading="lazy" src="./images/Index/Kids Cakes/9.jpg">
-                        </div>
-                    </div>
-
-
-                    <!--
                     <div class="row fullSize m-3 p-1 bottom-0" id="Gallery"></div>
                 
                     <div class="modal modal-xl" id="modalImages" aria-hidden="true" tab-index="-1">
@@ -89,9 +57,9 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer mx-auto p-2">
-                                    <div class="mb-3 m-2 p-2">
+                                    <!--<div class="mb-3 m-2 p-2">
                                         <label class="form-label mb-3 modalFontSize" for="orderSimilar">Like what you see ?</label>
-                                    </div>
+                                    </div>-->
                                     <div class="m-3 m-2 p-2">
                                         <a href="./Enquires.html" class="btn btn-primary mb-3 p-2 px-4 modalFontSize" tabindex="-1" role="button">Enquire now</a>
                                     </div>
@@ -99,11 +67,8 @@
                             </div>
                         </div>
                     </div>
-                -->
                 </div>
             </div>
-            <!--<div class="w-100 m-0 p-0"></div>
-            <footer id="footer"></footer>-->
         </div>
         <script src="./js/shared.js" onload="buildNavBar();"></script>
         <script src="./js/shared.js" onload="buildFooter();"></script>
