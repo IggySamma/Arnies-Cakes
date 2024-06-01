@@ -18,9 +18,9 @@ function createImageColumn(src) {
     const img = createElement('img', { src, loading: "lazy" }, "homeImage");
     col.appendChild(img);
     return col;
-    }
+}
 
-    function buildSideScroll() {
+function buildSideScroll() {
     const attach = document.getElementById("sideScroll");
     attach.className = "row sideScrollContainer m-0 p-0";
 

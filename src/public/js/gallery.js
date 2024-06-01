@@ -1,9 +1,6 @@
-var urlParams = new URLSearchParams(window.location.search);
-var sectionName = urlParams.get('type');
-const select = document.getElementById('select-box');
-select.value = sectionName;
-
-let activeID = '';
+let urlParams = new URLSearchParams(window.location.search);
+let sectionName = urlParams.get('type');
+let container = document.getElementById("galleryContainer");
 
 function getGallery(){
   let data = {sectionName};
@@ -18,107 +15,134 @@ function getGallery(){
         status: response.status
     }))
     .then(res => {
-      //console.log(res.data);
       return new Promise((resolve) =>{
-        //storeGalleryData(res.data);
-        infiniteScroll(res.data.length-1, res.data).then(observerEntity());
-        
+        //console.log(res.data)
       }) 
     }))
 }
 
-
-
-async function infiniteScroll(lastStop, data){
-  storedGallery = await data;
-  if(lastStop > 6){
-    for(let i = lastStop; i >= lastStop-6; i--){
-      showGallery(data[i].ID, data[i].Type, data[i].Path);
-      lastGalleryIdx = i;
-      if(i === lastStop-6){
-        const Element = document.getElementById('infiniteScroll');
-        Element?.remove();
-        observerEntity(); 
-      }
-    }
-  } else {
-    for(let i = lastStop; i >= 0; i--){
-      showGallery(data[i].ID, data[i].Type, data[i].Path);
-      lastGalleryIdx = i;
-      if(i === 0){
-        const Element = document.getElementById('infiniteScroll');
-        Element?.remove();
-        observerEntity();
-      }
-    }
+function createGalleryElement(type, attributes = {}, classes = "") {
+  const element = document.createElement(type);
+  if (classes) element.className = classes;
+  for (let key in attributes) {
+      element.setAttribute(key, attributes[key]);
   }
+  return element;
 }
 
-let storedGallery;
-let lastGalleryIdx;
+//Bootstraps col logic
+let widths = [
+  8.333333333333333,
+  16.66666666666667,
+  25,
+  33.33333333333333,
+  41.66666666666667,
+  50,
+  58.33333333333333,
+  66.66666666666667,
+  75,
+  83.33333333333333,
+  91.66666666666667,
+  100
+]
 
-const observer = new IntersectionObserver((entries, observer) => {
-  for (const entry of entries) {
-    if (entry.isIntersecting) {
-      const Element = document.getElementById('infiniteScroll');
-      Element?.remove();
-      infiniteScroll(lastGalleryIdx-1, storedGallery);
-    }
-  }
-});
+function w(idx){ return widths[idx-1] }
 
-function observerEntity(){
-  const element = document.getElementById('Gallery');
-  const div = document.createElement('div');
-  div.className = ("col m-1 p-1 pe-auto");
-  div.setAttribute("id", "infiniteScroll");
-  element.appendChild(div);
-
-  const infiniteScrollDiv = document.querySelector("#infiniteScroll");
-  observer.observe(infiniteScrollDiv);
-}
-
-$(document).ready(function(){
-  $("#modalImages").on('hide.bs.modal', function(){
-    activeID = document.getElementsByClassName('carousel-item active')[0].id
-    document.getElementById(activeID).className = ("carousel-item");
-  });
-});
-
-function showGallery(ID, Type, Path){
-    const domGalllery = document.getElementById('Gallery');
-    const divContainer = document.createElement('div');
-    const imgPath = document.createElement('img');
-    domGalllery.appendChild(divContainer);
-    divContainer.className = (Type + " col m-1 p-1 pe-auto");
-    divContainer.setAttribute("data-bs-toggle", "modal");
-    divContainer.setAttribute("data-bs-target", "#modalImages");
-    divContainer.setAttribute("id", ID);
-    divContainer.setAttribute("onclick", "setActive(" + ID + ")");
-    domGalllery.appendChild(divContainer);
-    imgPath.className = ("img-thumbnail");
-    imgPath.src = Path;
-    divContainer.appendChild(imgPath);
-    showCarousel("carousel" + ID, Path);
-}
-
-function showCarousel(ID, Path){
-  const domCarousel = document.getElementById('carousel');
-  const divContainer = document.createElement('div');
-  const imgPath = document.createElement('img');
-  divContainer.className = ("carousel-item");
-  divContainer.setAttribute("id", ID);
-  domCarousel.appendChild(divContainer);
-  imgPath.src = Path
-  imgPath.setAttribute("class", "d-block carImg");
-  divContainer.appendChild(imgPath);
-}
-/*
-function setActive(ID){
-  document.getElementById("carousel" + ID).className = ("carousel-item active");
-}
+/* 
+0 <-> 1 <-> 2 <-> 3
 */
-function refreshPage(){
-  let type = document.getElementById('select-box');
-  location.replace('/Gallery.html?type=' + type.value);
+let widthCollection = {
+    0:[w(3),w(3),w(3),w(3)],
+    1:[w(6),w(3),w(3)],
+    2:[w(6),w(2),w(2),w(2)],
+    3:[w(3),w(3),w(2),w(2),w(2)]
 }
+
+function randomSelect(max){
+  return Math.floor(Math.random() * max);
+}
+
+console.log(Object.keys(widthCollection[2]).length)
+console.log(widthCollection[2][randomSelect(4)])
+
+function randomWidth(collection){
+  let array = Object.values
+  for (let i = 0; i < array.length; i++){
+    return
+  }
+}
+
+/* Logic
+
+  Images are position: absolute to not use grid 
+
+  Width Collections can go into the following pattern with each other
+  0 <-> 1 <-> 2 <-> 3 (random selection between 2 nums or 100 and floored % operator for 0 or 1 for moving )
+
+  if collection = 1 or 2 imgaes above and below need to be either 3, 3 or 2, 2, 2 to = 6 
+
+  6 width min-height: 40 max 60% (all images above and below must be level?)
+
+  other image min-height: 40 max 100% (Not to have same height per row)
+
+  Array to hold previous widths and heights and what collection of last "Row" to select next collection and order of display
+  
+
+*/
+
+
+
+
+
+
+
+
+
+
+const temp = createGalleryElement('div',{},"col-lg-3 imageWrapper m-0 p-1")
+container.appendChild(temp)
+
+const temp2 = createGalleryElement('img',{src:"/gallery/0484592647d0441112d7b1529b6d3905"},"img-thumbnail")
+temp.appendChild(temp2)
+
+const temp3 = createGalleryElement('div',{},"col-lg-3 imageWrapper m-0 p-1")
+container.appendChild(temp3)
+
+const temp4 = createGalleryElement('img',{src:"/gallery/0484592647d0441112d7b1529b6d3905"},"img-thumbnail")
+temp3.appendChild(temp4)
+
+const temp5 = createGalleryElement('div',{},"col-lg-3 imageWrapper m-0 p-1")
+container.appendChild(temp5)
+
+const temp6 = createGalleryElement('img',{src:"/gallery/0484592647d0441112d7b1529b6d3905"},"img-thumbnail")
+temp5.appendChild(temp6)
+
+const temp7 = createGalleryElement('div',{},"col-lg-3 imageWrapper m-0 p-1")
+container.appendChild(temp7)
+
+const temp8 = createGalleryElement('img',{src:"/gallery/0484592647d0441112d7b1529b6d3905"},"img-thumbnail")
+temp7.appendChild(temp8)
+
+const temp1 = createGalleryElement('div',{},"col-lg-3 imageWrapper m-0 p-1")
+container.appendChild(temp1)
+
+const temp12 = createGalleryElement('img',{src:"/gallery/0484592647d0441112d7b1529b6d3905"},"img-thumbnail")
+temp1.appendChild(temp12)
+
+const temp13 = createGalleryElement('div',{},"col-lg-3 imageWrapper m-0 p-1")
+container.appendChild(temp13)
+
+const temp14 = createGalleryElement('img',{src:"/gallery/0484592647d0441112d7b1529b6d3905"},"img-thumbnail")
+temp13.appendChild(temp14)
+
+const temp15 = createGalleryElement('div',{},"col-lg-3 imageWrapper m-0 p-1")
+container.appendChild(temp15)
+
+const temp16 = createGalleryElement('img',{src:"/gallery/0484592647d0441112d7b1529b6d3905"},"img-thumbnail")
+temp15.appendChild(temp16)
+
+const temp17 = createGalleryElement('div',{},"col-lg-3 imageWrapper m-0 p-1")
+container.appendChild(temp17)
+
+const temp18 = createGalleryElement('img',{src:"/gallery/0484592647d0441112d7b1529b6d3905"},"img-thumbnail")
+temp17.appendChild(temp18)

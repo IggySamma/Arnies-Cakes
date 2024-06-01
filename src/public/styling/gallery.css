@@ -1,19 +1,37 @@
+.containerWrapper{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
 .viewWrapper{
     position: relative;
     background-color: #ECE3F0;
     width: 100%;
-    height: 100%;
+    height: 85vh;
     top: 100px;
 }
 
-.galleryWrapper{
+.galleryContainers{
     position: relative;
+    height: 90%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.galleryWrapper{
+    position: absolute;
     width: 100%;
     height: 100%;
 }
 
-.containerWrapper{
-    position: relative;
+.imageWrapper{
+    height: 100%;
+    max-width: 100%;
+    position: absolute;
+}
+
+.img-thumbnail{
+    height: inherit;
     width: 100%;
-    height: 100%; 
 }
