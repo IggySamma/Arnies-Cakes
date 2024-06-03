@@ -53,25 +53,62 @@ let widths = [
   100
 ]
 
+let heights = [
+  5,    //1
+  10,   //2
+  15,   //3
+  20,   //4
+  25,   //5
+  30,   //6
+  35,   //7
+  40,   //8
+  45,   //9
+  50,   //10
+  55,   //11
+  60,   //12
+  65,   //13
+  70,   //14
+  75,   //15
+  80,   //16
+  85,   //17
+  90,   //18
+  95,   //19
+  100   //20
+]
+
 function w(idx){ return widths[idx-1] }
+function h(idx){ return heights[idx-1] }
 
 /* 
 0 <-> 1 <-> 2 <-> 3
 */
-let widthCollection = {
+let widthsCollection = {
     0:[w(3),w(3),w(3),w(3)],
     1:[w(6),w(3),w(3)],
-    2:[w(6),w(2),w(2),w(2)],
-    3:[w(3),w(3),w(2),w(2),w(2)]
+    2:[w(2),w(2),w(2),w(3),w(3)],
+    3:[w(2),w(2),w(2),w(6)],
+    4:[w(4),w(2),w(3),w(3)],
+    5:[w(4),w(5),w(3)],
 }
 
-//console.log("width length " + (Object.keys(widthCollection).length - 1))
+let heightsCollection = {
+  0:[h(8),h(8),h(10),h(6)],
+  1:[h(10),h(6),h(10)],
+  2:[h(8),h(8),h(8),h(8),h(8)],
+  3:[h(8),h(8),h(8),h(8)],
+  4:[h(8),h(8),h(8),h(8)],
+  5:[h(8),h(8),h(8)],
+}
+
+console.log()
+
+//console.log("width length " + (Object.keys(widthsCollection).length - 1))
 
 function randomSelect(min, max){
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-//console.log(Object.keys(widthCollection[2]).length)
+//console.log(Object.keys(widthsCollection[2]).length)
 
 //collectionMemory mutates and reduces as used
 let collectionMemory = {
@@ -79,13 +116,14 @@ let collectionMemory = {
   count: 0,
   previous: null,
   current: null,
-  containers: [],
+  widths: [],
+  heights: [],
   gallery: null
 }
 
 //collectionMemory[0] = randomSelect(1, 4)
 
-//console.log(widthCollection[0].length)
+//console.log(widthsCollection[0].length)
 //console.log(randomSelect(1, 3))
 
 function collectionCheck(){
@@ -104,8 +142,9 @@ function collectionIncrease(bool){
     //console.log("Before Collection Increase + : " + collectionMemory.current)
     collectionMemory.current += 1
     //console.log("Collection Increase + : " + collectionMemory.current)
-    collectionMemory.count += widthCollection[collectionMemory.current].length
-    collectionMemory.containers.push(widthCollection[collectionMemory.current])
+    collectionMemory.count += widthsCollection[collectionMemory.current].length
+    collectionMemory.widths.push(widthsCollection[collectionMemory.current])
+    collectionMemory.heights.push(heightsCollection[collectionMemory.current])
     return
 
   } else {
@@ -113,22 +152,32 @@ function collectionIncrease(bool){
     //console.log("Before Collection Increase - : " + collectionMemory.current)
     collectionMemory.current -= 1
     //console.log("Collection Increase - : " + collectionMemory.current)
-    collectionMemory.count += widthCollection[collectionMemory.current].length
-    collectionMemory.containers.push(widthCollection[collectionMemory.current])
+    collectionMemory.count += widthsCollection[collectionMemory.current].length
+    collectionMemory.widths.push(widthsCollection[collectionMemory.current])
+    collectionMemory.heights.push(heightsCollection[collectionMemory.current])
     return
   }
 }
 
 function buildCollection(data){
+  
   if(collectionCheck() === true){
-    collectionMemory = {
-      containers: collectionMemory.containers,
-      gallery: data
-    }
-    console.log(collectionMemory)
+
+    widthsCollection = undefined
+    delete widthsCollection
+    widths = undefined
+    delete widths
+    heightsCollection = undefined
+    delete heightsCollection
+    heights = undefined
+    delete heights
+
+
+    cleanCollection()
     insertImages()
     return
   }
+
   if(collectionMemory.required === null){
     if(data.length !== 0){
       collectionMemory.required = data.length
@@ -141,9 +190,10 @@ function buildCollection(data){
   }
 
   if(collectionMemory.previous === null){
-    collectionMemory.previous = randomSelect(0,4)
-    collectionMemory.count += widthCollection[collectionMemory.previous].length
-    collectionMemory.containers.push(widthCollection[collectionMemory.previous])
+    collectionMemory.previous = randomSelect(0, (Object.keys(widthsCollection).length - 1))
+    collectionMemory.count += widthsCollection[collectionMemory.previous].length
+    collectionMemory.widths.push(widthsCollection[collectionMemory.previous])
+    collectionMemory.heights.push(heightsCollection[collectionMemory.previous])
     //console.log("Previous initial: " + collectionMemory.previous)
     return buildCollection(collectionMemory.gallery)
   }
@@ -151,14 +201,16 @@ function buildCollection(data){
   if(collectionMemory.current === null){
     if(collectionMemory.previous === 0){
       collectionMemory.current = 1
-      collectionMemory.containers.push(widthCollection[collectionMemory.current])
+      collectionMemory.widths.push(widthsCollection[collectionMemory.current])
+      collectionMemory.heights.push(heightsCollection[collectionMemory.current])
       //console.log("Current initial: " + collectionMemory.current)
       return buildCollection(collectionMemory.gallery)
     }
   
-    else if(collectionMemory.previous === (Object.keys(widthCollection).length - 1)){
-      collectionMemory.current = (Object.keys(widthCollection).length - 2)
-      collectionMemory.containers.push(widthCollection[collectionMemory.current]) 
+    else if(collectionMemory.previous === (Object.keys(widthsCollection).length - 1)){
+      collectionMemory.current = (Object.keys(widthsCollection).length - 2)
+      collectionMemory.widths.push(widthsCollection[collectionMemory.current]) 
+      collectionMemory.heights.push(heightsCollection[collectionMemory.current])
       //console.log("Current initial: " + collectionMemory.current)
       return buildCollection(collectionMemory.gallery)
     }
@@ -166,12 +218,14 @@ function buildCollection(data){
     else {
       if(randomSelect(0,1) === 1){
         collectionMemory.current = (collectionMemory.previous + 1)
-        collectionMemory.containers.push(widthCollection[collectionMemory.current]) 
+        collectionMemory.widths.push(widthsCollection[collectionMemory.current]) 
+        collectionMemory.heights.push(heightsCollection[collectionMemory.current])
         //console.log("Current initial from random +: " + collectionMemory.current)
         return buildCollection(collectionMemory.gallery)
       } else {
         collectionMemory.current = (collectionMemory.previous - 1)
-        collectionMemory.containers.push(widthCollection[collectionMemory.current]) 
+        collectionMemory.widths.push(widthsCollection[collectionMemory.current]) 
+        collectionMemory.heights.push(heightsCollection[collectionMemory.current])
         //console.log("Current initial from random -: " + collectionMemory.current)
         return buildCollection(collectionMemory.gallery)
       }
@@ -184,7 +238,7 @@ function buildCollection(data){
     return buildCollection(collectionMemory.gallery)
   }
 
-  if(collectionMemory.current === (Object.keys(widthCollection).length - 1)){
+  if(collectionMemory.current === (Object.keys(widthsCollection).length - 1)){
     //console.log(" = end")
     collectionIncrease(false)
     return buildCollection(collectionMemory.gallery)
@@ -207,33 +261,65 @@ function buildCollection(data){
   return 504
 }
 
+function cleanCollection(){
+  console.log(collectionMemory)
+
+  let tempWidths = []
+  let tempHeights = []
+
+  for(let i = 0; i < collectionMemory.widths.length; i++){
+    for(let j = 0; j < collectionMemory.widths[i].length; j++){
+      tempWidths.push(collectionMemory.widths[i][j])
+      tempHeights.push(collectionMemory.heights[i][j])
+    }
+  }
+
+  collectionMemory.widths = tempWidths
+  collectionMemory.heights = tempHeights
+  tempWidths = undefined
+  tempHeights = undefined
+  delete tempWidths
+  delete tempHeights
+
+  let tempGallery = []
+
+  for(let i = collectionMemory.gallery.length -1; i > 0; i--){
+    tempGallery.push(collectionMemory.gallery[i])
+  }
+
+  collectionMemory.gallery = tempGallery
+  tempGallery = undefined
+  delete tempGallery
+
+  collectionMemory = {
+    widths: collectionMemory.widths,
+    heights: collectionMemory.heights,
+    gallery: collectionMemory.gallery
+  }
+
+  console.log(collectionMemory)
+  return
+}
+
+
+/* to do
+  Setup heights in all alternating but still flat when I need for w(6)
+  make everything absolute (track heights from last ?)
+  infinity scroll loading
+*/
+
+
 function insertImages(){
   //console.log(collectionMemory.gallery[0].Path)
-  for(let i = collectionMemory.gallery.length -1; i > 0; i--){
-    const imageContainer = createGalleryElement('div',{style: "width: 30%"},"imageWrapper m-0 p-1")
+
+  for(let i = 0; i < collectionMemory.gallery.length; i++){
+    const imageContainer = createGalleryElement('div',{loading: "lazy", style: "width: " + collectionMemory.widths[i] + "%; height: " + collectionMemory.heights[i] + "vh;"},"imageWrapper m-0 p-1 mb-1")
     domContainer.appendChild(imageContainer)
     const image = createGalleryElement('img',{src:collectionMemory.gallery[i].Path},"img-thumbnail")
     imageContainer.appendChild(image)
   }
 }
 
-/* Logic
-
-  Images are position: absolute to not use grid 
-
-  Width Collections can go into the following pattern with each other
-  0 <-> 1 <-> 2 <-> 3 (random selection between 2 nums or 100 and floored % operator for 0 or 1 for moving )
-
-  if collection = 1 or 2 imgaes above and below need to be either 3, 3 or 2, 2, 2 to = 6 
-
-  6 width min-height: 40 max 60% (all images above and below must be level?)
-
-  other image min-height: 40 max 100% (Not to have same height per row)
-
-  Array to hold previous widths and heights and what collection of last "Row" to select next collection and order of display
-  
-
-*/
 
 
 
