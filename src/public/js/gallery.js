@@ -16,13 +16,7 @@ function getGallery(){
     }))
     .then(res => {
       return new Promise((resolve) =>{
-        //console.log(res.data)
-        //console.log(res.data.length)
-        //console.log("required: " + res.data.length)
         buildCollection(res.data)
-        //console.log("required: " + res.data.length)
-        //console.log("built: " + collectionMemory.count)
-        //console.log("collection: " + {collectionMemory})
       }) 
     }))
 }
@@ -37,7 +31,6 @@ function createGalleryElement(type, attributes = {}, classes = "") {
   return element;
 }
 
-//Bootstraps col logic
 let widths = [
   8.333333333333333,
   16.66666666666667,
@@ -79,9 +72,7 @@ let heights = [
 function w(idx){ return widths[idx-1] }
 function h(idx){ return heights[idx-1] }
 
-/* 
-0 <-> 1 <-> 2 <-> 3
-*/
+
 let widthsCollection = {
     0:[w(3),w(3),w(3),w(3)],
     1:[w(6),w(3),w(3)],
@@ -100,17 +91,20 @@ let heightsCollection = {
   5:[h(8),h(8),h(8)],
 }
 
-console.log()
-
-//console.log("width length " + (Object.keys(widthsCollection).length - 1))
-
 function randomSelect(min, max){
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-//console.log(Object.keys(widthsCollection[2]).length)
-
 //collectionMemory mutates and reduces as used
+
+/*final form should be
+  collectionMemory = {
+    widths: [],
+    heights: [],
+    gallery: []
+  }
+*/
+
 let collectionMemory = {
   required: null,
   count: 0,
@@ -120,11 +114,6 @@ let collectionMemory = {
   heights: [],
   gallery: null
 }
-
-//collectionMemory[0] = randomSelect(1, 4)
-
-//console.log(widthsCollection[0].length)
-//console.log(randomSelect(1, 3))
 
 function collectionCheck(){
   if(collectionMemory.count === collectionMemory.required){
@@ -139,9 +128,7 @@ function collectionCheck(){
 function collectionIncrease(bool){
   if(bool === true){
     collectionMemory.previous = collectionMemory.current
-    //console.log("Before Collection Increase + : " + collectionMemory.current)
     collectionMemory.current += 1
-    //console.log("Collection Increase + : " + collectionMemory.current)
     collectionMemory.count += widthsCollection[collectionMemory.current].length
     collectionMemory.widths.push(widthsCollection[collectionMemory.current])
     collectionMemory.heights.push(heightsCollection[collectionMemory.current])
@@ -149,9 +136,7 @@ function collectionIncrease(bool){
 
   } else {
     collectionMemory.previous = collectionMemory.current
-    //console.log("Before Collection Increase - : " + collectionMemory.current)
     collectionMemory.current -= 1
-    //console.log("Collection Increase - : " + collectionMemory.current)
     collectionMemory.count += widthsCollection[collectionMemory.current].length
     collectionMemory.widths.push(widthsCollection[collectionMemory.current])
     collectionMemory.heights.push(heightsCollection[collectionMemory.current])
@@ -184,7 +169,7 @@ function buildCollection(data){
       collectionMemory.gallery = data
       return buildCollection(collectionMemory.gallery)
     } else {
-      //console.log("Api fetch error, no data")
+      console.log("Api fetch error, no data")
       return 504
     }
   }
@@ -194,7 +179,6 @@ function buildCollection(data){
     collectionMemory.count += widthsCollection[collectionMemory.previous].length
     collectionMemory.widths.push(widthsCollection[collectionMemory.previous])
     collectionMemory.heights.push(heightsCollection[collectionMemory.previous])
-    //console.log("Previous initial: " + collectionMemory.previous)
     return buildCollection(collectionMemory.gallery)
   }
 
@@ -203,7 +187,6 @@ function buildCollection(data){
       collectionMemory.current = 1
       collectionMemory.widths.push(widthsCollection[collectionMemory.current])
       collectionMemory.heights.push(heightsCollection[collectionMemory.current])
-      //console.log("Current initial: " + collectionMemory.current)
       return buildCollection(collectionMemory.gallery)
     }
   
@@ -211,7 +194,6 @@ function buildCollection(data){
       collectionMemory.current = (Object.keys(widthsCollection).length - 2)
       collectionMemory.widths.push(widthsCollection[collectionMemory.current]) 
       collectionMemory.heights.push(heightsCollection[collectionMemory.current])
-      //console.log("Current initial: " + collectionMemory.current)
       return buildCollection(collectionMemory.gallery)
     }
 
@@ -220,38 +202,32 @@ function buildCollection(data){
         collectionMemory.current = (collectionMemory.previous + 1)
         collectionMemory.widths.push(widthsCollection[collectionMemory.current]) 
         collectionMemory.heights.push(heightsCollection[collectionMemory.current])
-        //console.log("Current initial from random +: " + collectionMemory.current)
         return buildCollection(collectionMemory.gallery)
       } else {
         collectionMemory.current = (collectionMemory.previous - 1)
         collectionMemory.widths.push(widthsCollection[collectionMemory.current]) 
         collectionMemory.heights.push(heightsCollection[collectionMemory.current])
-        //console.log("Current initial from random -: " + collectionMemory.current)
         return buildCollection(collectionMemory.gallery)
       }
     }
   }
 
   if(collectionMemory.current === 0){
-    //console.log(" = 0")
     collectionIncrease(true)
     return buildCollection(collectionMemory.gallery)
   }
 
   if(collectionMemory.current === (Object.keys(widthsCollection).length - 1)){
-    //console.log(" = end")
     collectionIncrease(false)
     return buildCollection(collectionMemory.gallery)
   }
 
   if(collectionMemory.current > collectionMemory.previous){
-    //console.log(" current " + collectionMemory.current + " > previous " + collectionMemory.previous)
     collectionIncrease(true)
     return buildCollection(collectionMemory.gallery)
   }
 
   if(collectionMemory.current < collectionMemory.previous){
-    //console.log(" current " + collectionMemory.current + " < previous " + collectionMemory.previous)
     collectionIncrease(false)
     return buildCollection(collectionMemory.gallery)
   }
@@ -310,8 +286,6 @@ function cleanCollection(){
 
 
 function insertImages(){
-  //console.log(collectionMemory.gallery[0].Path)
-
   for(let i = 0; i < collectionMemory.gallery.length; i++){
     const imageContainer = createGalleryElement('div',{loading: "lazy", style: "width: " + collectionMemory.widths[i] + "%; height: " + collectionMemory.heights[i] + "vh;"},"imageWrapper m-0 p-1 mb-1")
     domContainer.appendChild(imageContainer)
@@ -319,63 +293,3 @@ function insertImages(){
     imageContainer.appendChild(image)
   }
 }
-
-
-
-
-
-
-
-
-
-
-/*temp checks of creation will be remade for just dropping in object and data from fetch */
-/*
-const temp = createGalleryElement('div',{},"col-lg-3 imageWrapper m-0 p-1")
-container.appendChild(temp)
-
-const temp2 = createGalleryElement('img',{src:"/gallery/0484592647d0441112d7b1529b6d3905"},"img-thumbnail")
-temp.appendChild(temp2)
-
-const temp3 = createGalleryElement('div',{},"col-lg-3 imageWrapper m-0 p-1")
-container.appendChild(temp3)
-
-const temp4 = createGalleryElement('img',{src:"/gallery/0484592647d0441112d7b1529b6d3905"},"img-thumbnail")
-temp3.appendChild(temp4)
-
-const temp5 = createGalleryElement('div',{},"col-lg-3 imageWrapper m-0 p-1")
-container.appendChild(temp5)
-
-const temp6 = createGalleryElement('img',{src:"/gallery/0484592647d0441112d7b1529b6d3905"},"img-thumbnail")
-temp5.appendChild(temp6)
-
-const temp7 = createGalleryElement('div',{},"col-lg-3 imageWrapper m-0 p-1")
-container.appendChild(temp7)
-
-const temp8 = createGalleryElement('img',{src:"/gallery/0484592647d0441112d7b1529b6d3905"},"img-thumbnail")
-temp7.appendChild(temp8)
-
-const temp1 = createGalleryElement('div',{},"col-lg-3 imageWrapper m-0 p-1")
-container.appendChild(temp1)
-
-const temp12 = createGalleryElement('img',{src:"/gallery/0484592647d0441112d7b1529b6d3905"},"img-thumbnail")
-temp1.appendChild(temp12)
-
-const temp13 = createGalleryElement('div',{},"col-lg-3 imageWrapper m-0 p-1")
-container.appendChild(temp13)
-
-const temp14 = createGalleryElement('img',{src:"/gallery/0484592647d0441112d7b1529b6d3905"},"img-thumbnail")
-temp13.appendChild(temp14)
-
-const temp15 = createGalleryElement('div',{},"col-lg-3 imageWrapper m-0 p-1")
-container.appendChild(temp15)
-
-const temp16 = createGalleryElement('img',{src:"/gallery/0484592647d0441112d7b1529b6d3905"},"img-thumbnail")
-temp15.appendChild(temp16)
-
-const temp17 = createGalleryElement('div',{},"col-lg-3 imageWrapper m-0 p-1")
-container.appendChild(temp17)
-
-const temp18 = createGalleryElement('img',{src:"/gallery/0484592647d0441112d7b1529b6d3905"},"img-thumbnail")
-temp17.appendChild(temp18)
-*/
