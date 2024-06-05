@@ -216,6 +216,25 @@ a:active {
 
 .vph100{height: 100vh;}
 
+.vph15{height: 15vh;}
+
+.vph25{height: 25vh;}
+
+.vph35{height: 35vh;}
+
+.vph45{height: 45vh;}
+
+.vph55{height: 55vh;}
+
+.vph65{height: 65vh;}
+
+.vph75{height: 75vh;}
+
+.vph85{height: 85vh;}
+
+.vph95{height: 95vh;}
+
+
 .vpw10{width: 10vw;}
 
 .vpw20{width: 20vw;}
@@ -240,25 +259,6 @@ a:active {
   overflow: visible !important;
 }
 
-@media only screen and (min-width: 1175px){
-  .footerLinks{
-    display: inline-block;
-  }
-
-  .nav-logo{
-    position: relative;
-    display:block;
-    left: -9.5vw;
-  }
-
-  .nav-logo-footer{
-    position: relative;
-    display:block;
-    left: -7vw;
-  }
-
-}
-
 @media only screen and (min-width: 992px){  
   .navbar{
     width: 100%;
@@ -281,6 +281,25 @@ a:active {
   .homeImageContainer{
     left: 50vw;
   }
+}
+
+@media only screen and (min-width: 1175px){
+  .footerLinks{
+    display: inline-block;
+  }
+
+  .nav-logo{
+    position: relative;
+    display:block;
+    left: -9.5vw;
+  }
+
+  .nav-logo-footer{
+    position: relative;
+    display:block;
+    left: -7vw;
+  }
+
 
   /*desktop height and width only*/
   .d-h10{height: 10% !important;}
@@ -341,6 +360,24 @@ a:active {
   
   .d-vph90{height: 90vh !important;}
   
+  .d-vph15{height: 15vh !important;}
+
+  .d-vph25{height: 25vh !important;}
+  
+  .d-vph35{height: 35vh !important;}
+  
+  .d-vph45{height: 45vh !important;}
+  
+  .d-vph55{height: 55vh !important;}
+  
+  .d-vph65{height: 65vh !important;}
+  
+  .d-vph75{height: 75vh !important;}
+  
+  .d-vph85{height: 85vh !important;}
+  
+  .d-vph95{height: 95vh !important;}
+
   .d-vph100{height: 100vh !important;}
   
   .d-vpw10{width: 10vw !important;}

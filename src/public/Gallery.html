@@ -14,8 +14,9 @@
         <link rel="stylesheet" href="./styling/bootstrap.css">
         <link rel="stylesheet" href="./styling/gallery.css">
         <link rel="stylesheet" href="./styling/shared.css">
-
         <link rel="stylesheet" href="./styling/index.css">
+        <script src="./js/imageLoaded.js"></script>
+        <script src="./js/masonry.js"></script> 
     </head>
     <header>
         <nav id="navbar"></nav>
@@ -24,9 +25,9 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div class="container-fluid">
-            <div class="row containerWrapper m-2 p-2">
-                <div class="col viewWrapper rounded m-3 p-3">
+        <div class="container-fluid m-0 p-1">
+            <div class="row containerWrapper m-0 p-0">
+                <div class="col viewWrapper rounded m-2 p-2">
                     <!--
                     <select id="select-box" class="form-select mt-3 form-select-lg z-1 sort " onchange="refreshPage()" aria-label="Filter by type of cake">
                         <option value="All">All</option>
@@ -37,7 +38,7 @@
                         <option value="Treats">Treats</option>
                     </select>
                 -->
-                    <div class="selector m-0 p-0 ms-1 ps-1">
+                    <div class="selector m-0 p-1">
                         <nav class="nav justify-content-center carousel-list">
                             <span class="nav-item m-0 p-0">
                                 <a data-bs-target="#carouselContainer" data-bs-slide-to="0" class="carousel-button nav-link active" href="#KidsCakes">All</a>
@@ -57,10 +58,9 @@
                         </nav>
                     </div>
 
-                    <div class="galleryContainers mt-3">
-                        <div class="galleryWrapper m-auto p-auto" id="galleryContainer">
-
-
+                    <div class="galleryContainers mt-2">
+                        <div class="galleryWrapper m-0 p-0" id="galleryContainer"> 
+                            <div class="widthHelper"></div>
 
 
                         </div>

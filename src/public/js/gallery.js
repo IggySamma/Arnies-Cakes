@@ -4,6 +4,7 @@ let domContainer = document.getElementById("galleryContainer");
 
 function getGallery(){
   let data = {sectionName};
+  console.log(data)
   fetch('/api/gallery', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -16,7 +17,7 @@ function getGallery(){
     }))
     .then(res => {
       return new Promise((resolve) =>{
-        buildCollection(res.data)
+        buildCollection(res.data.reverse())
       }) 
     }))
 }
@@ -30,7 +31,7 @@ function createGalleryElement(type, attributes = {}, classes = "") {
   }
   return element;
 }
-
+/*
 let widths = [
   8.333333333333333,
   16.66666666666667,
@@ -43,6 +44,19 @@ let widths = [
   75,
   83.33333333333333,
   91.66666666666667,
+  100
+]*/
+
+let widths = [
+  10,
+  20,
+  30,
+  40,
+  50,
+  60,
+  70,
+  80,
+  90,
   100
 ]
 
@@ -74,36 +88,23 @@ function h(idx){ return heights[idx-1] }
 
 
 let widthsCollection = {
-    0:[w(3),w(3),w(3),w(3)],
-    1:[w(6),w(3),w(3)],
-    2:[w(2),w(2),w(2),w(3),w(3)],
-    3:[w(2),w(2),w(2),w(6)],
-    4:[w(4),w(2),w(3),w(3)],
-    5:[w(4),w(5),w(3)],
+    0:[w(2),w(2),w(2),w(2),w(2)],
+    1:[w(2),w(4),w(2),w(2)],
+    2:[w(2),w(2),w(2),w(2),w(2)],
+    3:[w(2),w(2),w(4),w(2)],
 }
 
 let heightsCollection = {
-  0:[h(8),h(8),h(10),h(6)],
-  1:[h(10),h(6),h(10)],
-  2:[h(8),h(8),h(8),h(8),h(8)],
-  3:[h(8),h(8),h(8),h(8)],
-  4:[h(8),h(8),h(8),h(8)],
-  5:[h(8),h(8),h(8)],
+  0:[h(10),h(11),h(9),h(10),h(11)],
+  1:[h(10),h(16),h(11),h(9)],
+  2:[h(11),h(9),h(10),h(9),h(11)],
+  3:[h(10),h(9),h(16),h(11)],
 }
+
 
 function randomSelect(min, max){
   return Math.floor(Math.random() * (max - min) + min);
 }
-
-//collectionMemory mutates and reduces as used
-
-/*final form should be
-  collectionMemory = {
-    widths: [],
-    heights: [],
-    gallery: []
-  }
-*/
 
 let collectionMemory = {
   required: null,
@@ -123,6 +124,15 @@ function collectionCheck(){
   } else {
     return false
   }
+}
+
+function createMasonry(){
+  return masonry = new Masonry( '.galleryWrapper', {
+          columnWidth: '.widthHelper', 
+          itemSelector: '.imageWrapper',
+          percentPosition: true,
+          gutter: 0,  
+        })
 }
 
 function collectionIncrease(bool){
@@ -147,19 +157,10 @@ function collectionIncrease(bool){
 function buildCollection(data){
   
   if(collectionCheck() === true){
-
-    widthsCollection = undefined
-    delete widthsCollection
-    widths = undefined
-    delete widths
-    heightsCollection = undefined
-    delete heightsCollection
-    heights = undefined
-    delete heights
-
-
     cleanCollection()
-    insertImages()
+
+    imagesLoaded(document.querySelectorAll('.imageWrapper'),createMasonry())
+
     return
   }
 
@@ -176,6 +177,7 @@ function buildCollection(data){
 
   if(collectionMemory.previous === null){
     collectionMemory.previous = randomSelect(0, (Object.keys(widthsCollection).length - 1))
+    //collectionMemory.previous = 0 // Temp testing
     collectionMemory.count += widthsCollection[collectionMemory.previous].length
     collectionMemory.widths.push(widthsCollection[collectionMemory.previous])
     collectionMemory.heights.push(heightsCollection[collectionMemory.previous])
@@ -238,58 +240,33 @@ function buildCollection(data){
 }
 
 function cleanCollection(){
-  console.log(collectionMemory)
-
-  let tempWidths = []
-  let tempHeights = []
-
+  let count = 0
+  
   for(let i = 0; i < collectionMemory.widths.length; i++){
     for(let j = 0; j < collectionMemory.widths[i].length; j++){
-      tempWidths.push(collectionMemory.widths[i][j])
-      tempHeights.push(collectionMemory.heights[i][j])
+      if(count !== collectionMemory.gallery.length){
+        insertImages(collectionMemory.widths[i][j], collectionMemory.heights[i][j], collectionMemory.gallery[count])
+        count = count + 1  
+      }
     }
   }
-
-  collectionMemory.widths = tempWidths
-  collectionMemory.heights = tempHeights
-  tempWidths = undefined
-  tempHeights = undefined
-  delete tempWidths
-  delete tempHeights
-
-  let tempGallery = []
-
-  for(let i = collectionMemory.gallery.length -1; i > 0; i--){
-    tempGallery.push(collectionMemory.gallery[i])
-  }
-
-  collectionMemory.gallery = tempGallery
-  tempGallery = undefined
-  delete tempGallery
-
-  collectionMemory = {
-    widths: collectionMemory.widths,
-    heights: collectionMemory.heights,
-    gallery: collectionMemory.gallery
-  }
-
-  console.log(collectionMemory)
   return
 }
 
-
-/* to do
-  Setup heights in all alternating but still flat when I need for w(6)
-  make everything absolute (track heights from last ?)
-  infinity scroll loading
-*/
-
-
-function insertImages(){
-  for(let i = 0; i < collectionMemory.gallery.length; i++){
-    const imageContainer = createGalleryElement('div',{loading: "lazy", style: "width: " + collectionMemory.widths[i] + "%; height: " + collectionMemory.heights[i] + "vh;"},"imageWrapper m-0 p-1 mb-1")
+function insertImages(widths, heights, gallery){
+    const imageContainer = createGalleryElement(
+      'div', {loading: "lazy"}
+      ,"imageWrapper Type:" + gallery.Type + " ID:" + gallery.ID + " w" + mobileWidths(widths) + " d-w" + widths + " vph" + (heights-10) + " d-vph" + heights + " m-0 p-1 mb-1")
     domContainer.appendChild(imageContainer)
-    const image = createGalleryElement('img',{src:collectionMemory.gallery[i].Path},"img-thumbnail")
+    const image = createGalleryElement('img',{src:gallery.Path},"img-thumbnail")
     imageContainer.appendChild(image)
+    console.log(gallery)
+}
+
+function mobileWidths(widths){
+  if(widths <= 20){
+    return 50
+  } else {
+    return 100
   }
 }

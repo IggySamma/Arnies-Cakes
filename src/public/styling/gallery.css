@@ -2,39 +2,92 @@
     position: relative;
     width: 100%;
     height: 100%;
+    top: 50px;
 }
 
 .viewWrapper{
     position: relative;
     background-color: #ECE3F0;
     width: 100%;
-    height: 85vh;
-    top: 100px;
+    height: 90vh;
+/*    top: 50px;*/
+    overflow: hidden;
 }
 
 .galleryContainers{
     position: relative;
-    height: 90%;
+    height: 85vh;
     overflow-y: scroll;
     overflow-x: hidden;
 }
 
 .galleryWrapper{
     position: relative; /*will be absolute*/
-    display: inline-block;
+    /*display: inline-block;*/
     width: 100%;
-    flex: 1 0 0%;
+/*    flex: 1 0 0%;*/
+    margin-bottom: 10px;
 }
 
 .imageWrapper{
-    /*height: 100%;*/
+    height: 100%;/*
     display: inline-block;
     height: 40vh;
     max-width: 100%;
-    position: relative; /*will be absolute*/
+    position: relative; /*will be absolute*//*
+    top: 0%;*/
 }
 
 .img-thumbnail{
-    height: inherit;
+    height: 100%;
     width: 100%;
+}
+
+.widthHelper{
+    position: relative;
+    width: 50%;
+}
+
+@media only screen and (min-width: 1175px){
+    .containerWrapper{
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .viewWrapper{
+        position: relative;
+        background-color: #ECE3F0;
+        width: 100%;
+        height: 85vh;
+        top: 100px;
+    }
+
+    .galleryContainers{
+        position: relative;
+        height: 90%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
+    .galleryWrapper{
+        position: relative; /*will be absolute*/
+        /*display: inline-block;*/
+        width: 100%;
+    /*    flex: 1 0 0%;*/
+        margin-bottom: 10px;
+    }
+
+    .imageWrapper{
+        height: 100%;/*
+        display: inline-block;
+        height: 40vh;
+        max-width: 100%;
+        position: relative; /*will be absolute*//*
+        top: 0%;*/
+    }
+    .widthHelper{
+        position: relative;
+        width: 20%;
+    }
 }
