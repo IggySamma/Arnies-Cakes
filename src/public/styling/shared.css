@@ -400,6 +400,9 @@ a:active {
   
   .d-vpw100{width: 100vw !important;}
 
+  .d-w16{
+    width: 16.66666666666667%;
+  }
   .footerList{
     font-size: 1.5rem;
     flex-basis: 100%;

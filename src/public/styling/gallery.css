@@ -7,7 +7,7 @@
 
 .viewWrapper{
     position: relative;
-    background-color: #ECE3F0;
+    /*ackground-color: #ECE3F0;*/   
     width: 100%;
     height: 90vh;
 /*    top: 50px;*/
@@ -17,6 +17,7 @@
 .galleryContainers{
     position: relative;
     height: 85vh;
+    display: flex;
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -30,23 +31,18 @@
 }
 
 .imageWrapper{
-    height: 100%;/*
-    display: inline-block;
-    height: 40vh;
-    max-width: 100%;
-    position: relative; /*will be absolute*//*
-    top: 0%;*/
+    height: 100%;
+    display: inline-flex;
+    height: 45vh;
+    width: 50%;
+    position: relative; 
 }
 
-.img-thumbnail{
+.img{
     height: 100%;
     width: 100%;
 }
 
-.widthHelper{
-    position: relative;
-    width: 50%;
-}
 
 @media only screen and (min-width: 1175px){
     .containerWrapper{
@@ -57,10 +53,10 @@
 
     .viewWrapper{
         position: relative;
-        background-color: #ECE3F0;
+        /*background-color: #ECE3F0;*/
         width: 100%;
         height: 85vh;
-        top: 100px;
+        top: 70px;
     }
 
     .galleryContainers{
@@ -68,26 +64,39 @@
         height: 90%;
         overflow-y: scroll;
         overflow-x: hidden;
+        display: inline-flex;  
     }
 
     .galleryWrapper{
         position: relative; /*will be absolute*/
-        /*display: inline-block;*/
-        width: 100%;
+        display: grid;
+        width: 16.66666666666667%;
     /*    flex: 1 0 0%;*/
-        margin-bottom: 10px;
+        margin-bottom: 5px;
     }
 
     .imageWrapper{
-        height: 100%;/*
-        display: inline-block;
-        height: 40vh;
-        max-width: 100%;
-        position: relative; /*will be absolute*//*
-        top: 0%;*/
+        width: 100%;
+        padding: 2px;
     }
-    .widthHelper{
-        position: relative;
-        width: 20%;
+
+    .h0{
+        height: 55vh
     }
+    .h1{
+        height: 43vh
+    }
+    .h2{
+        height: 50vh
+    }
+    .h3{
+        height: 35vh
+    }
+    .h4{
+        height: 47vh
+    }
+    .h5{
+        height: 40vh
+    }
+
 }

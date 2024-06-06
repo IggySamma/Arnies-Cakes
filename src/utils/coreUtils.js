@@ -15,6 +15,9 @@ function filterGallery(req, res){
                 tempGallery.push(globals.gallery[i]);
             }
         }
+        if(tempGallery.length === 0){
+            return res.json(globals.gallery);
+        }
         res.json(tempGallery)
     }
 }
