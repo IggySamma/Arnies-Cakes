@@ -24,23 +24,26 @@
 
 .galleryWrapper{
     position: relative; /*will be absolute*/
+    height: 100%;
     /*display: inline-block;*/
-    width: 100%;
+    /*width: 100%;*/
 /*    flex: 1 0 0%;*/
-    margin-bottom: 10px;
+  /*  margin-bottom: 10px;*/
 }
-
+/*
 .imageWrapper{
     height: 100%;
     display: inline-flex;
-    height: 45vh;
-    width: 50%;
+    /*height: 45vh;*/
+  /*  width: 100%;
     position: relative; 
-}
+}*/
 
 .img{
     height: 100%;
     width: 100%;
+    object-fit: cover;
+    padding: 2px;
 }
 
 
@@ -64,39 +67,113 @@
         height: 90%;
         overflow-y: scroll;
         overflow-x: hidden;
-        display: inline-flex;  
+        display: inline-flex;
+        animation: load ease-in 3s ;
+        -webkit-animation: load ease-in 3s;
+    }
+
+    @keyframes load{
+        0%{
+            opacity: 0%;
+        }
+        100%{
+            opacity: 100%;
+        } 
+    }
+
+    @-webkit-keyframes load{
+        0%{
+            opacity: 0%;
+        }
+        100%{
+            opacity: 100%;
+        }
     }
 
     .galleryWrapper{
         position: relative; /*will be absolute*/
-        display: grid;
-        width: 16.66666666666667%;
-    /*    flex: 1 0 0%;*/
-        margin-bottom: 5px;
+        /*display: inline-flex;*/
+        /*flex-direction: column;*/
+        /*width: 16.66666666666667%;*/
+        /*flex: 1 0 0%;*/
+        /*margin-bottom: 5px;*/
+    }
+/*
+    .imageWrapper{
+        position: relative;
+        display: inline-flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 2px;
+
+    }*/
+
+    .h0{
+        height: 55vh;
+    }
+    .h1{
+        height: 50vh;
+    }
+    .h2{
+        height: 40vh;
+    }
+    .h3{
+        height: 45vh;
+    }
+    .h4{
+        height: 42vh;
+    }
+    .hh0{
+        height: 27.6vh;
+    }
+    .hh1{
+        max-height: 25vh;
+    }
+    .hh2{
+        max-height: 20vh;
+    }
+    .hh3{
+        max-height: 22.5vh;
+    }
+    .hh4{
+        max-height: 21vh;
     }
 
     .imageWrapper{
+        position: relative;
+        width: 50%;
+        display: inline-flex;
+        flex-direction: column;
+        padding: 0px;
+        margin: 0px;
+        top: -3px;
+    }
+
+    .w51{
+        position: relative;
+        width: 50%;
+        display: inline-flex;/*
+        flex-direction: row;
+        */
+    }
+
+    .w52{
+        position: relative;
         width: 100%;
-        padding: 2px;
+        /*display: inline-flex;
+        flex-direction: column;
+        padding: 0px;
+        margin: 0px;
+        /*padding-bottom: 1px;*/
     }
-
-    .h0{
-        height: 55vh
+    
+    .w53{
+        position: relative;
+        width: 100%;
+        /*display: inline-flex;
+        flex-direction: column;
+        /*padding: 0px;*/
+        /*padding-top: 1px;*/
+        /*padding-bottom: 2px;*/
     }
-    .h1{
-        height: 43vh
-    }
-    .h2{
-        height: 50vh
-    }
-    .h3{
-        height: 35vh
-    }
-    .h4{
-        height: 47vh
-    }
-    .h5{
-        height: 40vh
-    }
-
 }
