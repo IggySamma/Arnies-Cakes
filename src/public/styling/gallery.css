@@ -44,6 +44,8 @@
     width: 100%;
     object-fit: cover;
     padding: 2px;
+    animation: load ease-in 3s ;
+    -webkit-animation: load ease-in 3s;
 }
 
 
@@ -68,8 +70,6 @@
         overflow-y: scroll;
         overflow-x: hidden;
         display: inline-flex;
-        animation: load ease-in 3s ;
-        -webkit-animation: load ease-in 3s;
     }
 
     @keyframes load{
@@ -107,7 +107,7 @@
         padding: 2px;
 
     }*/
-
+/*
     .h0{
         height: 55vh;
     }
@@ -138,7 +138,8 @@
     .hh4{
         max-height: 21vh;
     }
-
+*/
+/*
     .imageWrapper{
         position: relative;
         width: 50%;
@@ -154,9 +155,25 @@
         width: 50%;
         display: inline-flex;/*
         flex-direction: row;
-        */
+        *//*
+    }*/
+
+    .w50{
+        position: relative;
+        width: 50%;
+        display: inline-flex;
+        flex-direction: row;
     }
 
+    .w51{
+        position: relative;
+        width: 50%;
+        display: inline-flex;
+        flex-direction: row;
+    }
+
+
+/*
     .w52{
         position: relative;
         width: 100%;
@@ -164,7 +181,7 @@
         flex-direction: column;
         padding: 0px;
         margin: 0px;
-        /*padding-bottom: 1px;*/
+        /*padding-bottom: 1px;*//*
     }
     
     .w53{
@@ -174,6 +191,6 @@
         flex-direction: column;
         /*padding: 0px;*/
         /*padding-top: 1px;*/
-        /*padding-bottom: 2px;*/
-    }
+        /*padding-bottom: 2px;*//*
+    }*/
 }
