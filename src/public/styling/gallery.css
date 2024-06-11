@@ -7,10 +7,8 @@
 
 .viewWrapper{
     position: relative;
-    /*ackground-color: #ECE3F0;*/   
     width: 100%;
     height: 90vh;
-/*    top: 50px;*/
     overflow: hidden;
 }
 
@@ -23,29 +21,18 @@
 }
 
 .galleryWrapper{
-    position: relative; /*will be absolute*/
+    position: relative;
     height: 100%;
-    /*display: inline-block;*/
-    /*width: 100%;*/
-/*    flex: 1 0 0%;*/
-  /*  margin-bottom: 10px;*/
 }
-/*
-.imageWrapper{
-    height: 100%;
-    display: inline-flex;
-    /*height: 45vh;*/
-  /*  width: 100%;
-    position: relative; 
-}*/
+
 
 .img{
     height: 100%;
     width: 100%;
     object-fit: cover;
     padding: 2px;
-    animation: load ease-in 3s ;
-    -webkit-animation: load ease-in 3s;
+    /*animation: load ease-in 3s ;
+    -webkit-animation: load ease-in 3s;*/
 }
 
 
@@ -58,7 +45,6 @@
 
     .viewWrapper{
         position: relative;
-        /*background-color: #ECE3F0;*/
         width: 100%;
         height: 85vh;
         top: 70px;
@@ -91,72 +77,9 @@
     }
 
     .galleryWrapper{
-        position: relative; /*will be absolute*/
-        /*display: inline-flex;*/
-        /*flex-direction: column;*/
-        /*width: 16.66666666666667%;*/
-        /*flex: 1 0 0%;*/
-        /*margin-bottom: 5px;*/
-    }
-/*
-    .imageWrapper{
-        position: relative;
-        display: inline-flex;
-        flex-direction: column;
-        width: 100%;
-        padding: 2px;
-
-    }*/
-/*
-    .h0{
-        height: 55vh;
-    }
-    .h1{
-        height: 50vh;
-    }
-    .h2{
-        height: 40vh;
-    }
-    .h3{
-        height: 45vh;
-    }
-    .h4{
-        height: 42vh;
-    }
-    .hh0{
-        height: 27.6vh;
-    }
-    .hh1{
-        max-height: 25vh;
-    }
-    .hh2{
-        max-height: 20vh;
-    }
-    .hh3{
-        max-height: 22.5vh;
-    }
-    .hh4{
-        max-height: 21vh;
-    }
-*/
-/*
-    .imageWrapper{
-        position: relative;
-        width: 50%;
-        display: inline-flex;
-        flex-direction: column;
-        padding: 0px;
-        margin: 0px;
-        top: -3px;
+        position: relative; 
     }
 
-    .w51{
-        position: relative;
-        width: 50%;
-        display: inline-flex;/*
-        flex-direction: row;
-        *//*
-    }*/
 
     .w50{
         position: relative;
@@ -172,25 +95,4 @@
         flex-direction: row;
     }
 
-
-/*
-    .w52{
-        position: relative;
-        width: 100%;
-        /*display: inline-flex;
-        flex-direction: column;
-        padding: 0px;
-        margin: 0px;
-        /*padding-bottom: 1px;*//*
-    }
-    
-    .w53{
-        position: relative;
-        width: 100%;
-        /*display: inline-flex;
-        flex-direction: column;
-        /*padding: 0px;*/
-        /*padding-top: 1px;*/
-        /*padding-bottom: 2px;*//*
-    }*/
 }

@@ -22,8 +22,9 @@ function getGallery(){
     }))
     .then(res => {
       return new Promise((resolve) =>{
-        insertImages(res.data.reverse())
-        //infiniteScroll(res.data.length-1, res.data.reverse()).then(observerEntity());
+        //insertImages(res.data.reverse())
+        //insertImages(0, res.data.reverse(),colLg)
+        infiniteScroll(0, res.data.reverse(), colLg).then(observerEntity());
       }) 
     }))
 }
@@ -37,52 +38,51 @@ function createGalleryElement(type, attributes = {}, classes = "") {
   return element;
 }
 
-async function infiniteScroll(startFrom, data){
+async function infiniteScroll(startFrom, data, colSet, remove){
   storedGallery = await data;
-  if(startfrom + 12 < data.length){
-    for(let i = startfrom; i <= startfrom + 12; i++){
-      insertImage(data[i].ID, data[i].Type, data[i].Path);
-      lastGalleryIdx++;
-    }
-  } else {
-    for(let i = startFrom; i < data.length; i++){
-      insertImage(data[i].ID, data[i].Type, data[i].Path);
-      lastGalleryIdx++;
-    }
-  }
-  document.getElementById('infiniteScroll')?.forEach((element) =>
-    element.remove()
-  )
+  
+  insertImages(startFrom, data, colSet);
+  document.getElementById('infiniteScroll')?.remove()
+
   observerEntity()
 }
 
 const observer = new IntersectionObserver((entries, observer) => {
   for (const entry of entries) {
-    if (entry.isIntersecting) {
-      const Element = document.getElementById('infiniteScroll');
+    const Element = document.getElementById('infiniteScroll');
+    if(lastGalleryIdx >= storedGallery.length-1){
       Element?.remove();
-      infiniteScroll(lastGalleryIdx-1, storedGallery);
+      return
+    }
+    if (entry.isIntersecting) {
+      Element?.remove();
+      infiniteScroll(lastGalleryIdx, storedGallery, colLg);
     }
   }
 });
 
 function observerEntity(){
-  galleryContainer? 
-  galleryContainer.forEach((container) => {
-    const element = createGalleryElement('div', {id: 'infiniteScroll', invisble}, "m-0 p-0");
-    container.appendChild(element);
-  })
-  :
-  (document.getElementsByClassName("galleryContainers").appendChild(
-    createGalleryElement('div', {id: 'infiniteScroll', invisble}, "m-0 p-0"))
-  )
+  if(galleryContainer){
+    galleryContainer[1].appendChild(
+      createGalleryElement('div', {id: 'infiniteScroll'}, "m-0 p-0")
+    );
+  } else {
+    document.getElementsByClassName("galleryContainers").appendChild(
+      createGalleryElement('div', {id: 'infiniteScroll'}, "m-0 p-0"))
+  }
 
   const infiniteScrollDiv = document.querySelector("#infiniteScroll");
   observer.observe(infiniteScrollDiv);
 }
 
 function insertImages(lastStop, data, colSet){
-  for(let i = lastStop; i < data.length; i++){
+  let stopAt = 0;
+  data.length < lastStop + 16? stopAt = data.length:stopAt = lastStop + 16;
+  if(lastStop >= stopAt){
+    return 
+  }
+
+  for(let i = lastStop; i < stopAt; i++){
     if(colSet[colLength].includes("w50")){
 
       let imageContainer = createGalleryElement(
@@ -121,12 +121,13 @@ function insertImages(lastStop, data, colSet){
       colLength++ ;
     }
     
-    lastStop++
   }
   /*if adjacent half image in column !exist expand*/
   if(document.getElementsByClassName("w50").length > document.getElementsByClassName("w51").length){
     document.getElementsByClassName("w50")[document.getElementsByClassName("w50").length-1].style.width = "100%";
   }
+
+  lastGalleryIdx = stopAt;
 }
 
 let colLg = [
@@ -137,50 +138,3 @@ let colLg = [
   "vph525", "vph30", "vph65", "vph475", "vph30 w50", "vph30 w51",
   "vph325", "vph475", "vph30", "vph275", "vph65" 
 ]
-
-
-/*
-function insertImages(data){
-  let colCounter = 0;
-
-  for(let i = 0; i < data.length; i++){
-    if(colLg[colLength].includes("w50")){
-      let imageContainer = createGalleryElement(
-        'div', {}
-        ,"imageWrapper " + colLg[colLength].replace("w50", "") + " m-0 p-0");
-      galleryContainer[colCounter].appendChild(imageContainer);
-      const image = createGalleryElement('img',{src:data[i].Path, loading: "lazy"},
-        "img" + " Type:" + data[i].Type + " ID:" + data[i].ID  + " " + colLg[colLength] + " m-0 p-1");
-      imageContainer.appendChild(image);
-      colCounter = colCounter-1
-    } else if(colLg[colLength].includes("w51")){
-      let imageContainer = document.getElementsByClassName("imageWrapper")
-      console.log(imageContainer[imageContainer.length-1])
-      const image = createGalleryElement('img',{src:data[i].Path, loading: "lazy"},
-        "img" + " Type:" + data[i].Type + " ID:" + data[i].ID  + " " + colLg[colLength] + " m-0 p-1");
-      imageContainer[imageContainer.length-1].appendChild(image);
-    } else {
-      const image = createGalleryElement('img',{src:data[i].Path, loading: "lazy"},
-        "img" + " Type:" + data[i].Type + " ID:" + data[i].ID  + " " + colLg[colLength] + " m-0 p-1");
-      galleryContainer[colCounter].appendChild(image);
-    }
-
-    if(colCounter === galleryContainer.length - 1){
-      colCounter = 0;
-    } else {
-      colCounter++;
-    }
-
-    if(colLength === colLg.length - 1){
-      colLength = 0;
-    } else {
-      colLength++ ;
-    }
-  }
-  let widthCheck = document.getElementsByClassName("w50");
-  let wrapperCheck = document.getElementsByClassName("imageWrapper");
-  if(widthCheck.length > wrapperCheck.length){
-    widthCheck[widthCheck.length-1].style.width = "100%";
-  }
-}
-*/
