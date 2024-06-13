@@ -1,15 +1,46 @@
 let sectionName = new URLSearchParams(window.location.search).get('type');
 
-let galleryContainer = document.getElementsByClassName("galleryWrapper")
+let galleryWrapper;
+let galleryContainer = document.getElementById("mainGalleryContainer");
 let colCounter = 0;
 let colLength = 0;
+let columnsSetAs;
 
 let storedGallery;
 let lastGalleryIdx = 0;
 
+let colSM = [
+  "col-6",
+  "col-6"
+]
+
+let colSMImages = [
+  "vph40", "vph325", "vph45", "vph725", "vph425",
+  "vph325", "vph35", "vph50", "vph375"
+]
+
+let colLG = [
+  "col-lg-2-25",
+  "col-lg-2",
+  "col-lg-2-75",
+  "col-lg-1-75",
+  "col-lg-3-25"
+]
+
+let colLgImages = [
+  "vph40", "vph325", "vph45", "vph725", "vph425",
+  "vph325", "vph35", "vph50", "vph375", "vph425 w50", "vph425 w51",
+  "vph575", "vph425", "vph275", "vph525", "vph325",
+  "vph425", "vph30", "vph55", "vph40", "vph525",
+  "vph525", "vph30", "vph65", "vph475", "vph30 w50", "vph30 w51",
+  "vph325", "vph475", "vph30", "vph275", "vph65" 
+]
+
+let vw = window.innerWidth;
+window.addEventListener('resize', setColumns);
+
 function getGallery(){
   let data = {sectionName};
-  console.log(data)
   fetch('/api/gallery', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -23,10 +54,68 @@ function getGallery(){
     .then(res => {
       return new Promise((resolve) =>{
         //insertImages(res.data.reverse())
-        //insertImages(0, res.data.reverse(),colLg)
-        infiniteScroll(0, res.data.reverse(), colLg).then(observerEntity());
+        //insertImages(0, res.data.reverse(),colLgImages)
+        setColumns();
+        //infiniteScroll(0, res.data.reverse(), colLgImages)//.then(observerEntity());
+        storeGallery(0, res.data.reverse(), colLgImages)//.then(observerEntity());
       }) 
     }))
+}
+
+function setColumns(){
+  console.log("set columns: width: " + window.innerWidth)
+  console.log(document.getElementsByClassName("galleryWrapper").length)
+  if(window.innerWidth >= 1175){
+    if(vw >= 1175){
+      console.log("vw > 1175")
+      if(document.getElementsByClassName("galleryWrapperLG").length > 0){
+        vw = window.innerWidth;
+        galleryWrapper = document.getElementsByClassName("galleryWrapperLG")
+        return;
+      } else {
+        colLG.forEach((element) => {
+          galleryContainer.appendChild(
+            createGalleryElement('div', {id: "galleryContainer"}, "galleryWrapperLG " + element + " m-0 p-0")
+          )
+        });
+        vw = window.innerWidth;
+        columnsSetAs = "LG";
+        galleryWrapper = document.getElementsByClassName("galleryWrapperLG")
+      }
+    } else if(vw < 1175){
+      console.log("vw < 1175 from LG")
+      if(document.getElementsByClassName("galleryWrapper").length > 0){
+        console.log(document.getElementsByClassName("galleryWrapper").length)
+        document.getElementsByClassName("galleryWrapper").remove();
+      } 
+      colLG.forEach((element) => {
+        galleryContainer.appendChild(
+          createGalleryElement('div', {id: "galleryContainer"}, "galleryWrapperLG " + element + " m-0 p-0")
+        )
+      });
+      vw = window.innerWidth;
+      columnsSetAs = "LG";
+      galleryWrapper = document.getElementsByClassName("galleryWrapperLG")
+    }
+  } else {
+    if(vw < 1175){
+      console.log("vw < 1175 from SM")
+      if(document.getElementsByClassName("galleryWrapper").length > 0){
+        vw = window.innerWidth;
+        galleryWrapper = document.getElementsByClassName("galleryWrapper")
+        return;
+      } else {
+        colSM.forEach((element) => {
+            galleryContainer.appendChild(
+            createGalleryElement('div', {id: "galleryContainer"}, "galleryWrapper " + element + " m-0 p-0")
+          )
+        });
+        vw = window.innerWidth;
+        columnsSetAs = "SM";
+        galleryWrapper = document.getElementsByClassName("galleryWrapper")
+      }
+    }
+  }
 }
 
 function createGalleryElement(type, attributes = {}, classes = "") {
@@ -38,9 +127,12 @@ function createGalleryElement(type, attributes = {}, classes = "") {
   return element;
 }
 
-async function infiniteScroll(startFrom, data, colSet, remove){
+async function storeGallery(startFrom, data, colSet){
   storedGallery = await data;
-  
+  infiniteScroll(startFrom, data, colSet)
+}
+
+function infiniteScroll(startFrom, data, colSet){
   insertImages(startFrom, data, colSet);
   document.getElementById('infiniteScroll')?.remove()
 
@@ -56,18 +148,18 @@ const observer = new IntersectionObserver((entries, observer) => {
     }
     if (entry.isIntersecting) {
       Element?.remove();
-      infiniteScroll(lastGalleryIdx, storedGallery, colLg);
+      infiniteScroll(lastGalleryIdx, storedGallery, colLgImages);
     }
   }
 });
 
 function observerEntity(){
-  if(galleryContainer){
-    galleryContainer[1].appendChild(
+  if(document.getElementsByClassName("galleryWrapperLG").length > 0){
+    document.getElementsByClassName("galleryWrapperLG")[1].appendChild(
       createGalleryElement('div', {id: 'infiniteScroll'}, "m-0 p-0")
     );
   } else {
-    document.getElementsByClassName("galleryContainers").appendChild(
+    document.getElementsByClassName("galleryWrapper")[1].appendChild(
       createGalleryElement('div', {id: 'infiniteScroll'}, "m-0 p-0"))
   }
 
@@ -77,10 +169,16 @@ function observerEntity(){
 
 function insertImages(lastStop, data, colSet){
   let stopAt = 0;
-  data.length < lastStop + 16? stopAt = data.length:stopAt = lastStop + 16;
+  if(columnsSetAs === "LG"){
+    data.length < lastStop + 16? stopAt = data.length:stopAt = lastStop + 16;
+  } else {
+    stopAt = 4;
+  }
+
   if(lastStop >= stopAt){
     return 
   }
+  console.log(galleryWrapper)
 
   for(let i = lastStop; i < stopAt; i++){
     if(colSet[colLength].includes("w50")){
@@ -88,7 +186,7 @@ function insertImages(lastStop, data, colSet){
       let imageContainer = createGalleryElement(
         'div', {}
         ,"imageWrapper " + colSet[colLength].replace("w50", "") + " m-0 p-0");
-      galleryContainer[colCounter].appendChild(imageContainer);
+      galleryWrapper[colCounter].appendChild(imageContainer);
 
       imageContainer.appendChild(createGalleryElement('img',{src:data[i].Path, loading: "lazy"},
         "img" + " Type:" + data[i].Type + " ID:" + data[i].ID  + " " + colSet[colLength] + " m-0 p-1"));
@@ -105,11 +203,11 @@ function insertImages(lastStop, data, colSet){
         createGalleryElement('img',{src:data[i].Path, loading: "lazy"},
         "img" + " Type:" + data[i].Type + " ID:" + data[i].ID  + " " + colSet[colLength] + " m-0 p-1"));
     } else {
-      galleryContainer[colCounter].appendChild(createGalleryElement('img',{src:data[i].Path, loading: "lazy"},
+      galleryWrapper[colCounter].appendChild(createGalleryElement('img',{src:data[i].Path, loading: "lazy"},
         "img" + " Type:" + data[i].Type + " ID:" + data[i].ID  + " " + colSet[colLength] + " m-0 p-1"));
     } 
 
-    if(colCounter === galleryContainer.length - 1){
+    if(colCounter === checkColumnsSet()){
       colCounter = 0;
     } else {
       colCounter++;
@@ -130,11 +228,10 @@ function insertImages(lastStop, data, colSet){
   lastGalleryIdx = stopAt;
 }
 
-let colLg = [
-  "vph40", "vph325", "vph45", "vph725", "vph425",
-  "vph325", "vph35", "vph50", "vph375", "vph425 w50", "vph425 w51",
-  "vph575", "vph425", "vph275", "vph525", "vph325",
-  "vph425", "vph30", "vph55", "vph40", "vph525",
-  "vph525", "vph30", "vph65", "vph475", "vph30 w50", "vph30 w51",
-  "vph325", "vph475", "vph30", "vph275", "vph65" 
-]
+function checkColumnsSet(){
+  if(columnsSetAs === "LG"){
+    return colLG.length -1;
+  } else {
+    return colSM.length -1;
+  }
+}
