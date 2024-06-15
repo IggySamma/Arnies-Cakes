@@ -16,7 +16,9 @@ let colSM = [
 ]
 
 let colSMImages = [
-  "vph425", "vph30", "vph55", "vph40", "vph525", "vph65" 
+  "vph45", "vph40", 
+  "vph375", "vph475", 
+  "vph425", "vph475" 
 ]
 
 let colLG = [
@@ -28,13 +30,24 @@ let colLG = [
 ]
 
 let colLgImages = [
+  "vph40", "vph325", "vph45", "vph675", "vph425",
+  "vph325", "vph425", "vph50", "vph375", "vph425 w50", "vph425 w51",
+  "vph575", "vph45", "vph275", "vph525", "vph325",
+  "vph425", "vph475", "vph55", "vph40", "vph525",
+  "vph525", "vph425", "vph65", "vph425", "vph30 w50", "vph30 w51",
+  "vph325", "vph45", "vph30", "vph275", "vph65" 
+]
+
+/*
+let colLgImages = [
   "vph40", "vph325", "vph45", "vph725", "vph425",
-  "vph325", "vph35", "vph50", "vph375", "vph425 w50", "vph425 w51",
+  "vph325", "vph45", "vph50", "vph375", "vph425 w50", "vph425 w51",
   "vph575", "vph425", "vph275", "vph525", "vph325",
-  "vph425", "vph30", "vph55", "vph40", "vph525",
-  "vph525", "vph30", "vph65", "vph475", "vph30 w50", "vph30 w51",
+  "vph425", "vph40", "vph55", "vph40", "vph525",
+  "vph525", "vph40", "vph65", "vph475", "vph30 w50", "vph30 w51",
   "vph325", "vph475", "vph30", "vph275", "vph65" 
 ]
+*/
 
 let vw = window.innerWidth;
 window.addEventListener('resize', setColumns);
@@ -53,10 +66,7 @@ function getGallery(){
     }))
     .then(res => {
       return new Promise((resolve) =>{
-        //insertImages(res.data.reverse())
-        //insertImages(0, res.data.reverse(),colLgImages)
         setColumns();
-        //infiniteScroll(0, res.data.reverse(), colLgImages)//.then(observerEntity());
         storeGallery(0, res.data.reverse(), col)
       }) 
     }))
@@ -178,15 +188,10 @@ const observer = new IntersectionObserver((entries, observer) => {
 });
 
 function observerEntity(){
-  if(document.getElementsByClassName("galleryWrapperLG").length > 0){
-    document.getElementsByClassName("galleryWrapperLG")[1].appendChild(
-      createGalleryElement('div', {id: 'infiniteScroll'}, "m-0 p-0")
-    );
-  } else {
-    document.getElementsByClassName("galleryWrapper")[1].appendChild(
-      createGalleryElement('div', {id: 'infiniteScroll'}, "m-0 p-0")
-    );
-  }
+    document.getElementsByClassName("img")[document.getElementsByClassName("img").length-1].parentNode.insertBefore(
+      createGalleryElement('div', {id: 'infiniteScroll'}, "m-0 p-0"),
+      document.getElementsByClassName("img")[document.getElementsByClassName("img").length-1]
+    )
 
   const infiniteScrollDiv = document.querySelector("#infiniteScroll");
   observer.observe(infiniteScrollDiv);
@@ -194,6 +199,7 @@ function observerEntity(){
 
 function insertImages(lastStop, data, colSet){
   let stopAt = 0;
+
   if(columnsSetAs === "LG"){
     if(data.length < lastStop + 16){
       stopAt = data.length;
@@ -201,10 +207,10 @@ function insertImages(lastStop, data, colSet){
       stopAt = lastStop + 16;
     }
   } else {
-    if(data.length < lastStop + 4){
+    if(data.length < lastStop + 2){
       stopAt = data.length;
     } else {
-      stopAt = lastStop + 4;
+      stopAt = lastStop + 2;
     }
   }
 
