@@ -5,6 +5,7 @@ let galleryContainer = document.getElementById("mainGalleryContainer");
 let colCounter = 0;
 let colLength = 0;
 let columnsSetAs;
+let col;
 
 let storedGallery;
 let lastGalleryIdx = 0;
@@ -15,8 +16,7 @@ let colSM = [
 ]
 
 let colSMImages = [
-  "vph40", "vph325", "vph45", "vph725", "vph425",
-  "vph325", "vph35", "vph50", "vph375"
+  "vph425", "vph30", "vph55", "vph40", "vph525", "vph65" 
 ]
 
 let colLG = [
@@ -57,17 +57,14 @@ function getGallery(){
         //insertImages(0, res.data.reverse(),colLgImages)
         setColumns();
         //infiniteScroll(0, res.data.reverse(), colLgImages)//.then(observerEntity());
-        storeGallery(0, res.data.reverse(), colLgImages)//.then(observerEntity());
+        storeGallery(0, res.data.reverse(), col)
       }) 
     }))
 }
 
 function setColumns(){
-  console.log("set columns: width: " + window.innerWidth)
-  console.log(document.getElementsByClassName("galleryWrapper").length)
   if(window.innerWidth >= 1175){
     if(vw >= 1175){
-      console.log("vw > 1175")
       if(document.getElementsByClassName("galleryWrapperLG").length > 0){
         vw = window.innerWidth;
         galleryWrapper = document.getElementsByClassName("galleryWrapperLG")
@@ -75,35 +72,51 @@ function setColumns(){
       } else {
         colLG.forEach((element) => {
           galleryContainer.appendChild(
-            createGalleryElement('div', {id: "galleryContainer"}, "galleryWrapperLG " + element + " m-0 p-0")
+            createGalleryElement('div', {id: "galleryContainerLG"}, "galleryWrapperLG " + element + " m-0 p-0")
           )
         });
         vw = window.innerWidth;
         columnsSetAs = "LG";
         galleryWrapper = document.getElementsByClassName("galleryWrapperLG")
+        getColumns();
       }
     } else if(vw < 1175){
-      console.log("vw < 1175 from LG")
       if(document.getElementsByClassName("galleryWrapper").length > 0){
-        console.log(document.getElementsByClassName("galleryWrapper").length)
-        document.getElementsByClassName("galleryWrapper").remove();
+        let element = document.getElementsByClassName("galleryWrapper")
+        for(let i = element.length-1; i >= 0; i--){
+          element[i].remove()
+        }
       } 
       colLG.forEach((element) => {
         galleryContainer.appendChild(
-          createGalleryElement('div', {id: "galleryContainer"}, "galleryWrapperLG " + element + " m-0 p-0")
+          createGalleryElement('div', {id: "galleryContainerLG"}, "galleryWrapperLG " + element + " m-0 p-0")
         )
       });
       vw = window.innerWidth;
       columnsSetAs = "LG";
       galleryWrapper = document.getElementsByClassName("galleryWrapperLG")
+      getColumns();
+      infiniteScroll(0, storedGallery, col);
     }
   } else {
-    if(vw < 1175){
-      console.log("vw < 1175 from SM")
-      if(document.getElementsByClassName("galleryWrapper").length > 0){
+    if(window.innerWidth < 1175){
+      if(document.getElementsByClassName("galleryWrapperLG").length > 0){
+        if(document.getElementsByClassName("galleryWrapperLG").length > 0){
+          let element = document.getElementsByClassName("galleryWrapperLG")
+          for(let i = element.length-1; i >= 0; i--){
+            element[i].remove()
+          }
+        }
+        colSM.forEach((element) => {
+          galleryContainer.appendChild(
+            createGalleryElement('div', {id: "galleryContainer"}, "galleryWrapper " + element + " m-0 p-0")
+          )
+        }); 
         vw = window.innerWidth;
         galleryWrapper = document.getElementsByClassName("galleryWrapper")
-        return;
+        columnsSetAs = "SM";
+        getColumns()
+        infiniteScroll(0, storedGallery, col);
       } else {
         colSM.forEach((element) => {
             galleryContainer.appendChild(
@@ -115,6 +128,17 @@ function setColumns(){
         galleryWrapper = document.getElementsByClassName("galleryWrapper")
       }
     }
+  }
+  getColumns();
+}
+
+function getColumns(){
+  colCounter = 0;
+  colLength = 0;
+  if(columnsSetAs === "LG"){
+    col = colLgImages;
+  } else {
+    col = colSMImages
   }
 }
 
@@ -142,13 +166,13 @@ function infiniteScroll(startFrom, data, colSet){
 const observer = new IntersectionObserver((entries, observer) => {
   for (const entry of entries) {
     const Element = document.getElementById('infiniteScroll');
-    if(lastGalleryIdx >= storedGallery.length-1){
+    if(lastGalleryIdx >= storedGallery.length){
       Element?.remove();
       return
     }
     if (entry.isIntersecting) {
       Element?.remove();
-      infiniteScroll(lastGalleryIdx, storedGallery, colLgImages);
+      infiniteScroll(lastGalleryIdx, storedGallery, col);
     }
   }
 });
@@ -160,7 +184,8 @@ function observerEntity(){
     );
   } else {
     document.getElementsByClassName("galleryWrapper")[1].appendChild(
-      createGalleryElement('div', {id: 'infiniteScroll'}, "m-0 p-0"))
+      createGalleryElement('div', {id: 'infiniteScroll'}, "m-0 p-0")
+    );
   }
 
   const infiniteScrollDiv = document.querySelector("#infiniteScroll");
@@ -170,15 +195,22 @@ function observerEntity(){
 function insertImages(lastStop, data, colSet){
   let stopAt = 0;
   if(columnsSetAs === "LG"){
-    data.length < lastStop + 16? stopAt = data.length:stopAt = lastStop + 16;
+    if(data.length < lastStop + 16){
+      stopAt = data.length;
+    } else {
+      stopAt = lastStop + 16;
+    }
   } else {
-    stopAt = 4;
+    if(data.length < lastStop + 4){
+      stopAt = data.length;
+    } else {
+      stopAt = lastStop + 4;
+    }
   }
 
   if(lastStop >= stopAt){
     return 
   }
-  console.log(galleryWrapper)
 
   for(let i = lastStop; i < stopAt; i++){
     if(colSet[colLength].includes("w50")){
