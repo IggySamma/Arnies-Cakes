@@ -6,12 +6,12 @@ const eApi = require('../services/externalAPIs.js');
 /*------------------------------- Gallery ------------------------------------*/
 
 function filterGallery(req, res){
-    if(req.body.sectionName === 'All'){
+    if(req.body.params === 'All'){
         res.json(globals.gallery);
     } else {
         tempGallery = [];
         for(let i = 0; i < globals.gallery.length; i++){
-            if(globals.gallery[i].Type === req.body.sectionName){
+            if(globals.gallery[i].Type === req.body.params){
                 tempGallery.push(globals.gallery[i]);
             }
         }

@@ -1,4 +1,4 @@
-let sectionName = new URLSearchParams(window.location.search).get('type');
+let sectionNames = new URLSearchParams(window.location.search).get('type');
 
 let galleryWrapper;
 let galleryContainer = document.getElementById("mainGalleryContainer");
@@ -8,6 +8,7 @@ let columnsSetAs;
 let col;
 
 let storedGallery;
+let fullGallery;
 let lastGalleryIdx = 0;
 
 let colSM = [
@@ -52,8 +53,41 @@ let colLgImages = [
 let vw = window.innerWidth;
 window.addEventListener('resize', setColumns);
 
-function getGallery(){
-  let data = {sectionName};
+function getGallery(param = sectionNames){
+  if(fullGallery === undefined){
+    sectionNames = param;
+    fetchGallery(param);
+  } else {
+    sectionNames = param;
+    console.log(sectionNames)
+
+    if(sectionNames === "All")
+    {
+      storedGallery = fullGallery;
+      infiniteScroll(0, fullGallery, col)
+      return 
+    }
+
+    if(fullGallery !== undefined){
+      storedGallery = [];
+      for(let i = 0; i < fullGallery.length; i++){
+        if(fullGallery[i].Type === param){
+          console.log(fullGallery[i])
+          storedGallery.push(fullGallery[i]);
+        }
+      }
+    }
+
+    if(storedGallery.length === 0){
+      storedGallery = fullGallery;
+    }
+
+    infiniteScroll(0, storedGallery, col)
+  }
+}
+
+function fetchGallery(params = sectionNames){
+  let data = {params};
   fetch('/api/gallery', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -67,7 +101,9 @@ function getGallery(){
     .then(res => {
       return new Promise((resolve) =>{
         setColumns();
-        storeGallery(0, res.data.reverse(), col)
+        storeGallery(res.data.reverse()).then(() =>{
+          infiniteScroll(0, storedGallery, col)
+        })       
       }) 
     }))
 }
@@ -161,9 +197,23 @@ function createGalleryElement(type, attributes = {}, classes = "") {
   return element;
 }
 
-async function storeGallery(startFrom, data, colSet){
-  storedGallery = await data;
-  infiniteScroll(startFrom, data, colSet)
+async function storeGallery(data){
+  if(storedGallery === undefined){
+    storedGallery = await data;
+      if(sectionNames === 'All'){
+      fullGallery = storedGallery
+      }
+  } else {
+    if(sectionNames === 'All'){
+      if(fullGallery === undefined){
+        storedGallery = await data;
+      }
+      fullGallery = storedGallery;
+    } else {
+      storedGallery = await data;
+      sectionNames = new URLSearchParams(window.location.search).get('type')
+    }
+  }
 }
 
 function infiniteScroll(startFrom, data, colSet){
@@ -272,4 +322,9 @@ function checkColumnsSet(){
   } else {
     return colSM.length -1;
   }
+}
+
+function setNewParam(element){
+  window.history.replaceState({},"", (window.location.pathname + '?type=' + element.innerHTML.replace(' ','')).toString())
+  getGallery(new URLSearchParams(window.location.search).get('type'));
 }
