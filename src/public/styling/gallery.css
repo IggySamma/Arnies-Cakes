@@ -23,9 +23,15 @@
     position: relative;
     height: 100%;
     width: 100%;
-    display: flex;
+    /*display: flex;*/
     overflow-y: scroll;
     overflow-x: hidden;
+}
+
+.carItemContainer{
+    position: relative;
+    display: flex !important;
+    background-color: white;
 }
 
 .galleryWrapper{
@@ -82,21 +88,13 @@
         height: 100%;
     }
 
-
-
     .galleryContainers{
         position: relative;
         height: 100%;
         overflow-y: scroll;
         overflow-x: hidden;
-        display: inline-flex;
+        /*display: inline-flex;*/
     }
-
-
-    .galleryWrapper{
-        position: relative; 
-    }
-
 
     .w50{
         position: relative;

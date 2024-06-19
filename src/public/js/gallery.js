@@ -1,7 +1,9 @@
 let sectionNames = new URLSearchParams(window.location.search).get('type');
+let galleryContainer = document.getElementById(sectionNames);
+galleryContainer.parentNode.classList.add("active")
 
 let galleryWrapper;
-let galleryContainer = document.getElementById("mainGalleryContainer");
+//let galleryContainer;
 let colCounter = 0;
 let colLength = 0;
 let columnsSetAs;
@@ -10,6 +12,8 @@ let col;
 let storedGallery;
 let fullGallery;
 let lastGalleryIdx = 0;
+
+let carouselContainer = document.getElementById('mainGalleryContainer');
 
 let colSM = [
   "col-6",
@@ -53,14 +57,17 @@ let colLgImages = [
 let vw = window.innerWidth;
 window.addEventListener('resize', setColumns);
 
+const Carousel = new bootstrap.Carousel(carouselContainer, {
+  touch: true,
+  ride: false,
+  keyboard: false,
+})
+
 function getGallery(param = sectionNames){
+  sectionNames = param;
   if(fullGallery === undefined){
-    sectionNames = param;
     fetchGallery(param);
   } else {
-    sectionNames = param;
-    console.log(sectionNames)
-
     if(sectionNames === "All")
     {
       storedGallery = fullGallery;
@@ -72,7 +79,6 @@ function getGallery(param = sectionNames){
       storedGallery = [];
       for(let i = 0; i < fullGallery.length; i++){
         if(fullGallery[i].Type === param){
-          console.log(fullGallery[i])
           storedGallery.push(fullGallery[i]);
         }
       }
@@ -109,13 +115,22 @@ function fetchGallery(params = sectionNames){
 }
 
 function setColumns(){
+  /*let container = */
+  let wrapperLG = document.getElementsByClassName("galleryWrapperLG");
+  let wrapper = document.getElementsByClassName("galleryWrapper");
+
+  //console.log(1)
   if(window.innerWidth >= 1175){
+    //console.log(2)
     if(vw >= 1175){
-      if(document.getElementsByClassName("galleryWrapperLG").length > 0){
+      //console.log(3)
+      if(wrapperLG.length > 0 && wrapperLG[0].parentNode.id === galleryContainer){
+        //console.log(4)
         vw = window.innerWidth;
-        galleryWrapper = document.getElementsByClassName("galleryWrapperLG")
+        galleryWrapper = wrapperLG;
         return;
       } else {
+        //console.log(5)
         colLG.forEach((element) => {
           galleryContainer.appendChild(
             createGalleryElement('div', {id: "galleryContainerLG"}, "galleryWrapperLG " + element + " m-0 p-0")
@@ -123,12 +138,12 @@ function setColumns(){
         });
         vw = window.innerWidth;
         columnsSetAs = "LG";
-        galleryWrapper = document.getElementsByClassName("galleryWrapperLG")
+        galleryWrapper = wrapperLG;
         getColumns();
       }
     } else if(vw < 1175){
-      if(document.getElementsByClassName("galleryWrapper").length > 0){
-        let element = document.getElementsByClassName("galleryWrapper")
+      if(wrapper.length > 0){
+        let element = wrapper
         for(let i = element.length-1; i >= 0; i--){
           element[i].remove()
         }
@@ -140,26 +155,25 @@ function setColumns(){
       });
       vw = window.innerWidth;
       columnsSetAs = "LG";
-      galleryWrapper = document.getElementsByClassName("galleryWrapperLG")
+      galleryWrapper = wrapperLG
       getColumns();
       infiniteScroll(0, storedGallery, col);
     }
   } else {
     if(window.innerWidth < 1175){
-      if(document.getElementsByClassName("galleryWrapperLG").length > 0){
-        if(document.getElementsByClassName("galleryWrapperLG").length > 0){
-          let element = document.getElementsByClassName("galleryWrapperLG")
-          for(let i = element.length-1; i >= 0; i--){
-            element[i].remove()
-          }
+      if(wrapperLG.length > 0 /*&& wrapperLG.parentNode.id === galleryContainer*/){
+        let element = wrapperLG;
+        for(let i = element.length-1; i >= 0; i--){
+          element[i].remove()
         }
+
         colSM.forEach((element) => {
           galleryContainer.appendChild(
             createGalleryElement('div', {id: "galleryContainer"}, "galleryWrapper " + element + " m-0 p-0")
           )
         }); 
         vw = window.innerWidth;
-        galleryWrapper = document.getElementsByClassName("galleryWrapper")
+        galleryWrapper = wrapper
         columnsSetAs = "SM";
         getColumns()
         infiniteScroll(0, storedGallery, col);
@@ -171,7 +185,7 @@ function setColumns(){
         });
         vw = window.innerWidth;
         columnsSetAs = "SM";
-        galleryWrapper = document.getElementsByClassName("galleryWrapper")
+        galleryWrapper = wrapper
       }
     }
   }
@@ -216,7 +230,7 @@ async function storeGallery(data){
   }
 }
 
-function infiniteScroll(startFrom, data, colSet){
+function infiniteScroll(startFrom, data, colSet, carousel){
   insertImages(startFrom, data, colSet);
   document.getElementById('infiniteScroll')?.remove()
 
@@ -238,11 +252,10 @@ const observer = new IntersectionObserver((entries, observer) => {
 });
 
 function observerEntity(){
-    document.getElementsByClassName("img")[document.getElementsByClassName("img").length-1].parentNode.insertBefore(
-      createGalleryElement('div', {id: 'infiniteScroll'}, "m-0 p-0"),
-      document.getElementsByClassName("img")[document.getElementsByClassName("img").length-1]
-    )
-
+  document.getElementsByClassName("img")[document.getElementsByClassName("img").length-1].parentNode.insertBefore(
+    createGalleryElement('div', {id: 'infiniteScroll'}, "m-0 p-0"),
+    document.getElementsByClassName("img")[document.getElementsByClassName("img").length-1]
+  )
   const infiniteScrollDiv = document.querySelector("#infiniteScroll");
   observer.observe(infiniteScrollDiv);
 }
@@ -326,5 +339,23 @@ function checkColumnsSet(){
 
 function setNewParam(element){
   window.history.replaceState({},"", (window.location.pathname + '?type=' + element.innerHTML.replace(' ','')).toString())
-  getGallery(new URLSearchParams(window.location.search).get('type'));
+  console.log(new URLSearchParams(window.location.search).get('type'))
+  //getGallery(new URLSearchParams(window.location.search).get('type'));
 }
+/*
+function setGalleryContainer(){
+  galleryContainer = document.getElementById(sectionNames);
+  galleryContainer.classList.add("active")
+}*/
+
+carouselContainer.addEventListener('slide.bs.carousel', event => {
+  window.history.replaceState({},"", (window.location.pathname + '?type=' + document.querySelector("[data-bs-slide-to='" + event.to + "']").innerHTML.replace(' ','')).toString())
+  sectionNames = new URLSearchParams(window.location.search).get('type');
+  galleryContainer = document.getElementById(sectionNames);
+})
+
+carouselContainer.addEventListener('slid.bs.carousel', event => {
+  getGallery(sectionNames)
+})
+
+//setGalleryContainer();

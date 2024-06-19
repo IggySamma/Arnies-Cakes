@@ -25,31 +25,50 @@
         <![endif]-->
         <div class="container-fluid contain m-0 p-0">
             <div class="row containerWrapper m-0 p-0">
-                <div class="col viewWrapper rounded m-2 p-2">
+                <div class="col carousel slide viewWrapper rounded m-2 p-2" id="mainGalleryContainer">
                     <div class="selector m-0 p-1">
                         <nav class="nav justify-content-center carousel-list">
                             <span class="nav-item m-0 p-0">
-                                <a class="carousel-button nav-link" href="javascript:;" onclick="setNewParam(this);">All</a>
+                                <a data-bs-target="#mainGalleryContainer" data-bs-slide-to="0" class="carousel-button nav-link" href="javascript:;">All</a>
                             </span>
                             <span class="nav-item m-0 p-0">
-                                <a class="carousel-button nav-link" href="javascript:;" onclick="setNewParam(this);">Kids Cakes</a>
+                                <a data-bs-target="#mainGalleryContainer" data-bs-slide-to="1" class="carousel-button nav-link" href="javascript:;">Kids Cakes</a>
                             </span>
                             <span class="nav-item m-0 p-0">
-                                <a class="carousel-button nav-link" href="javascript:;" onclick="setNewParam(this);">Cakes</a>
+                                <a data-bs-target="#mainGalleryContainer" data-bs-slide-to="2" class="carousel-button nav-link" href="javascript:;">Cakes</a>
                             </span>
                             <span class="nav-item m-0 p-0">
-                                <a class="carousel-button nav-link" href="javascript:;" onclick="setNewParam(this);">Cupcakes</a>
+                                <a data-bs-target="#mainGalleryContainer" data-bs-slide-to="3" class="carousel-button nav-link" href="javascript:;">Cupcakes</a>
                             </span>
                             <span class="nav-item m-0 p-0">
-                                <a class="carousel-button nav-link" href="javascript:;" onclick="setNewParam(this);">Cakepops</a>
+                                <a data-bs-target="#mainGalleryContainer" data-bs-slide-to="4" class="carousel-button nav-link" href="javascript:;">Cakepops</a>
                             </span>
                             <span class="nav-item m-0 p-0">
-                                <a class="carousel-button nav-link" href="javascript:;" onclick="setNewParam(this);">Treats</a>
+                                <a data-bs-target="#mainGalleryContainer" data-bs-slide-to="5" class="carousel-button nav-link" href="javascript:;">Treats</a>
                             </span>
                         </nav>
                     </div>
 
-                    <div class="galleryContainers" id="mainGalleryContainer"></div>
+                    <div class="galleryContainers carousel-inner" data-bs-target="mainGalleryContainer">
+                        <div class="carousel-item All" >
+                            <div class="container-fluid carItemContainer m-0 p-0" id="All"></div>
+                        </div>
+                        <div class="carousel-item KidsCakes">
+                            <div class="container-fluid carItemContainer m-0 p-0" id="KidsCakes"></div>
+                        </div>
+                        <div class="carousel-item Cakes">
+                            <div class="container-fluid carItemContainer m-0 p-0" id="Cakes"></div>
+                        </div>
+                        <div class="carousel-item Cupcakes">
+                            <div class="container-fluid carItemContainer m-0 p-0" id="Cupcakes"></div>
+                        </div>
+                        <div class="carousel-item Cakepops">
+                            <div class="container-fluid carItemContainer m-0 p-0" id="Cakepops"></div>
+                        </div>
+                        <div class="carousel-item Treats">
+                            <div class="container-fluid carItemContainer m-0 p-0" id="Treats"></div>
+                        </div>
+                    </div>
 
                 </div>
             </div>

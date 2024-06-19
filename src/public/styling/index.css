@@ -40,7 +40,8 @@
 
 .aboutMe{
     text-align: center;
-overflow: hidden;}
+    overflow: hidden;
+}
 
 .aboutMeHeader{
     font-size: 2rem;
