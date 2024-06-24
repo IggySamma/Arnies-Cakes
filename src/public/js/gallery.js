@@ -2,6 +2,8 @@ let sectionNames = new URLSearchParams(window.location.search).get('type');
 let galleryContainer = document.getElementById(sectionNames);
 galleryContainer.parentNode.classList.add("active")
 
+let vwMax = 1175;
+let vw = window.innerWidth;
 let galleryWrapper;
 //let galleryContainer;
 let colCounter = 0;
@@ -14,6 +16,12 @@ let fullGallery;
 let lastGalleryIdx = 0;
 
 let carouselContainer = document.getElementById('mainGalleryContainer');
+
+if(vw >= vwMax){
+  columnsSetAs = "LG"
+} else {
+  columnsSetAs = "SM"
+}
 
 let colSM = [
   "col-6",
@@ -43,8 +51,7 @@ let colLgImages = [
   "vph325", "vph45", "vph30", "vph275", "vph65" 
 ]
 
-/*
-let colLgImages = [
+/*let colLgImages = [
   "vph40", "vph325", "vph45", "vph725", "vph425",
   "vph325", "vph45", "vph50", "vph375", "vph425 w50", "vph425 w51",
   "vph575", "vph425", "vph275", "vph525", "vph325",
@@ -54,7 +61,7 @@ let colLgImages = [
 ]
 */
 
-let vw = window.innerWidth;
+
 window.addEventListener('resize', setColumns);
 
 const Carousel = new bootstrap.Carousel(carouselContainer, {
@@ -65,17 +72,20 @@ const Carousel = new bootstrap.Carousel(carouselContainer, {
 
 function getGallery(param = sectionNames){
   sectionNames = param;
+  console.log("Get: " + 1);
   if(fullGallery === undefined){
-    fetchGallery(param);
+    console.log("Get: " + 2);
+    fetchGallery(sectionNames);
   } else {
-    if(sectionNames === "All")
-    {
+    if(sectionNames === "All"){
+      console.log("Get: " + 3);
       storedGallery = fullGallery;
       infiniteScroll(0, fullGallery, col)
       return 
     }
 
     if(fullGallery !== undefined){
+      console.log("Get: " + 5);
       storedGallery = [];
       for(let i = 0; i < fullGallery.length; i++){
         if(fullGallery[i].Type === param){
@@ -83,11 +93,12 @@ function getGallery(param = sectionNames){
         }
       }
     }
-
+    console.log("Get: " + 6);
     if(storedGallery.length === 0){
+      console.log("Get: " + 7);
       storedGallery = fullGallery;
     }
-
+    console.log("Get: " + 8);
     infiniteScroll(0, storedGallery, col)
   }
 }
@@ -106,31 +117,33 @@ function fetchGallery(params = sectionNames){
     }))
     .then(res => {
       return new Promise((resolve) =>{
-        setColumns();
+        //setColumns();
         storeGallery(res.data.reverse()).then(() =>{
-          infiniteScroll(0, storedGallery, col)
+          /*infiniteScroll(0, storedGallery, col)*/
+          setColumns();
         })       
       }) 
     }))
 }
 
-function setColumns(){
-  /*let container = */
+/*function setColumns(){
   let wrapperLG = document.getElementsByClassName("galleryWrapperLG");
   let wrapper = document.getElementsByClassName("galleryWrapper");
 
-  //console.log(1)
+  console.log("Set: " + 1);
   if(window.innerWidth >= 1175){
-    //console.log(2)
+    console.log("Set: " + 2);
     if(vw >= 1175){
-      //console.log(3)
+      console.log("Set: " + 3);
+      console.log("parent: " + wrapperLG[0].parentNode.id)
+      console.log("galleryContainer: " + galleryContainer)
       if(wrapperLG.length > 0 && wrapperLG[0].parentNode.id === galleryContainer){
-        //console.log(4)
+        console.log("Set: " + 4);
         vw = window.innerWidth;
         galleryWrapper = wrapperLG;
         return;
       } else {
-        //console.log(5)
+        console.log("Set: " + 5);
         colLG.forEach((element) => {
           galleryContainer.appendChild(
             createGalleryElement('div', {id: "galleryContainerLG"}, "galleryWrapperLG " + element + " m-0 p-0")
@@ -139,15 +152,18 @@ function setColumns(){
         vw = window.innerWidth;
         columnsSetAs = "LG";
         galleryWrapper = wrapperLG;
+        console.log("Set: " + 6);
         getColumns();
       }
     } else if(vw < 1175){
       if(wrapper.length > 0){
+        console.log("Set: " + 7);
         let element = wrapper
         for(let i = element.length-1; i >= 0; i--){
           element[i].remove()
         }
       } 
+      console.log("Set: " + 8);
       colLG.forEach((element) => {
         galleryContainer.appendChild(
           createGalleryElement('div', {id: "galleryContainerLG"}, "galleryWrapperLG " + element + " m-0 p-0")
@@ -156,12 +172,15 @@ function setColumns(){
       vw = window.innerWidth;
       columnsSetAs = "LG";
       galleryWrapper = wrapperLG
+      console.log("Set: " + 9);
       getColumns();
       infiniteScroll(0, storedGallery, col);
     }
   } else {
     if(window.innerWidth < 1175){
-      if(wrapperLG.length > 0 /*&& wrapperLG.parentNode.id === galleryContainer*/){
+      console.log("Set: " + 10);
+      if(wrapperLG.length > 0 && wrapperLG.parentNode.id === galleryContainer){
+        console.log("Set: " + 11);
         let element = wrapperLG;
         for(let i = element.length-1; i >= 0; i--){
           element[i].remove()
@@ -171,13 +190,15 @@ function setColumns(){
           galleryContainer.appendChild(
             createGalleryElement('div', {id: "galleryContainer"}, "galleryWrapper " + element + " m-0 p-0")
           )
-        }); 
+        });
+        console.log("Set: " + 12); 
         vw = window.innerWidth;
         galleryWrapper = wrapper
         columnsSetAs = "SM";
         getColumns()
         infiniteScroll(0, storedGallery, col);
       } else {
+        console.log("Set: " + 13);
         colSM.forEach((element) => {
             galleryContainer.appendChild(
             createGalleryElement('div', {id: "galleryContainer"}, "galleryWrapper " + element + " m-0 p-0")
@@ -189,16 +210,98 @@ function setColumns(){
       }
     }
   }
+  console.log("Set: " + 14);
   getColumns();
+}*/
+
+function setColumns(){
+  let children = galleryContainer.childNodes;
+  if(window.innerWidth >= vwMax && vw >= vwMax){
+    columnsSetAs = "LG"
+
+    if(children.length === 0 || children.length === undefined){
+      createColumns("LG");
+      return
+    }
+
+    if(children.length < colLG.length){
+      destroyChildren(children);
+      createColumns("LG");
+      return;
+    }
+    return;
+  }
+
+  if(window.innerWidth < vwMax && vw < vwMax){
+    columnsSetAs = "SM"
+
+    if(children.length === 0 || children.length === undefined){
+      createColumns("SM");
+      return
+    }
+
+    if(children.length > colSM.length){
+      destroyChildren(children);
+      createColumns("SM");
+      return
+    }
+    return;
+  }
+  
+  if(window.innerWidth >= vwMax && vw < vwMax){
+    columnsSetAs = "LG"
+    if(children.length === 0 || children.length === undefined){
+      createColumns("LG");
+      return;
+    } else {
+      destroyChildren(children);
+      createColumns("LG");
+      return;
+    }
+  } else {
+    columnsSetAs = "SM"
+    if(children.length === 0 || children.length === undefined){
+      createColumns("SM");
+      return;
+    } else {
+      destroyChildren(children);
+      createColumns("SM");
+      return;
+    }
+  }
 }
 
-function getColumns(){
+function destroyChildren(children){
+  for(let i = children.length -1; i >= 0; i--){
+    children[i].remove()
+  }
+}
+
+function createColumns(size = "LG"){
+  vw = window.innerWidth;
   colCounter = 0;
   colLength = 0;
-  if(columnsSetAs === "LG"){
-    col = colLgImages;
+
+  if(size === "LG"){
+    col = colLgImages
+    colLG.forEach((element) => {
+      galleryContainer.appendChild(
+        createGalleryElement('div', {id: "galleryContainerLG"}, "galleryWrapperLG " + element + " m-0 p-0")
+      )
+    });
   } else {
     col = colSMImages
+    colSM.forEach((element) => {
+      galleryContainer.appendChild(
+        createGalleryElement('div', {id: "galleryContainer"}, "galleryWrapper " + element + " m-0 p-0")
+      )
+    });
+  }
+
+  galleryWrapper = galleryContainer.childNodes;
+
+  if(storedGallery !== undefined){
+    infiniteScroll(0, storedGallery, col);
   }
 }
 
@@ -230,7 +333,7 @@ async function storeGallery(data){
   }
 }
 
-function infiniteScroll(startFrom, data, colSet, carousel){
+function infiniteScroll(startFrom, data, colSet){
   insertImages(startFrom, data, colSet);
   document.getElementById('infiniteScroll')?.remove()
 
@@ -252,17 +355,18 @@ const observer = new IntersectionObserver((entries, observer) => {
 });
 
 function observerEntity(){
-  document.getElementsByClassName("img")[document.getElementsByClassName("img").length-1].parentNode.insertBefore(
+  galleryWrapper[0].insertBefore(
     createGalleryElement('div', {id: 'infiniteScroll'}, "m-0 p-0"),
-    document.getElementsByClassName("img")[document.getElementsByClassName("img").length-1]
+    galleryWrapper[0].childNodes[galleryWrapper[0].querySelectorAll('img').length-1]
   )
-  const infiniteScrollDiv = document.querySelector("#infiniteScroll");
+  //const infiniteScrollDiv = document.querySelector("#infiniteScroll");
+  const infiniteScrollDiv = galleryWrapper[0].querySelectorAll('div')[0]
   observer.observe(infiniteScrollDiv);
 }
 
 function insertImages(lastStop, data, colSet){
   let stopAt = 0;
-
+  //console.log(data);
   if(columnsSetAs === "LG"){
     if(data.length < lastStop + 16){
       stopAt = data.length;
@@ -282,6 +386,7 @@ function insertImages(lastStop, data, colSet){
   }
 
   for(let i = lastStop; i < stopAt; i++){
+    console.log(galleryWrapper);
     if(colSet[colLength].includes("w50")){
 
       let imageContainer = createGalleryElement(
@@ -352,9 +457,7 @@ carouselContainer.addEventListener('slide.bs.carousel', event => {
   window.history.replaceState({},"", (window.location.pathname + '?type=' + document.querySelector("[data-bs-slide-to='" + event.to + "']").innerHTML.replace(' ','')).toString())
   sectionNames = new URLSearchParams(window.location.search).get('type');
   galleryContainer = document.getElementById(sectionNames);
-})
-
-carouselContainer.addEventListener('slid.bs.carousel', event => {
+  console.log(galleryContainer)
   getGallery(sectionNames)
 })
 
