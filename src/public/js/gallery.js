@@ -72,20 +72,21 @@ const Carousel = new bootstrap.Carousel(carouselContainer, {
 
 function getGallery(param = sectionNames){
   sectionNames = param;
-  console.log("Get: " + 1);
+  galleryWrapper = galleryContainer.childNodes;
+  
   if(fullGallery === undefined){
-    console.log("Get: " + 2);
+    
     fetchGallery(sectionNames);
   } else {
     if(sectionNames === "All"){
-      console.log("Get: " + 3);
+      
       storedGallery = fullGallery;
-      infiniteScroll(0, fullGallery, col)
+      setColumns();
       return 
     }
 
     if(fullGallery !== undefined){
-      console.log("Get: " + 5);
+      
       storedGallery = [];
       for(let i = 0; i < fullGallery.length; i++){
         if(fullGallery[i].Type === param){
@@ -93,13 +94,13 @@ function getGallery(param = sectionNames){
         }
       }
     }
-    console.log("Get: " + 6);
+    
     if(storedGallery.length === 0){
-      console.log("Get: " + 7);
+      
       storedGallery = fullGallery;
     }
-    console.log("Get: " + 8);
-    infiniteScroll(0, storedGallery, col)
+    
+    setColumns();
   }
 }
 
@@ -117,102 +118,12 @@ function fetchGallery(params = sectionNames){
     }))
     .then(res => {
       return new Promise((resolve) =>{
-        //setColumns();
         storeGallery(res.data.reverse()).then(() =>{
-          /*infiniteScroll(0, storedGallery, col)*/
           setColumns();
         })       
       }) 
     }))
 }
-
-/*function setColumns(){
-  let wrapperLG = document.getElementsByClassName("galleryWrapperLG");
-  let wrapper = document.getElementsByClassName("galleryWrapper");
-
-  console.log("Set: " + 1);
-  if(window.innerWidth >= 1175){
-    console.log("Set: " + 2);
-    if(vw >= 1175){
-      console.log("Set: " + 3);
-      console.log("parent: " + wrapperLG[0].parentNode.id)
-      console.log("galleryContainer: " + galleryContainer)
-      if(wrapperLG.length > 0 && wrapperLG[0].parentNode.id === galleryContainer){
-        console.log("Set: " + 4);
-        vw = window.innerWidth;
-        galleryWrapper = wrapperLG;
-        return;
-      } else {
-        console.log("Set: " + 5);
-        colLG.forEach((element) => {
-          galleryContainer.appendChild(
-            createGalleryElement('div', {id: "galleryContainerLG"}, "galleryWrapperLG " + element + " m-0 p-0")
-          )
-        });
-        vw = window.innerWidth;
-        columnsSetAs = "LG";
-        galleryWrapper = wrapperLG;
-        console.log("Set: " + 6);
-        getColumns();
-      }
-    } else if(vw < 1175){
-      if(wrapper.length > 0){
-        console.log("Set: " + 7);
-        let element = wrapper
-        for(let i = element.length-1; i >= 0; i--){
-          element[i].remove()
-        }
-      } 
-      console.log("Set: " + 8);
-      colLG.forEach((element) => {
-        galleryContainer.appendChild(
-          createGalleryElement('div', {id: "galleryContainerLG"}, "galleryWrapperLG " + element + " m-0 p-0")
-        )
-      });
-      vw = window.innerWidth;
-      columnsSetAs = "LG";
-      galleryWrapper = wrapperLG
-      console.log("Set: " + 9);
-      getColumns();
-      infiniteScroll(0, storedGallery, col);
-    }
-  } else {
-    if(window.innerWidth < 1175){
-      console.log("Set: " + 10);
-      if(wrapperLG.length > 0 && wrapperLG.parentNode.id === galleryContainer){
-        console.log("Set: " + 11);
-        let element = wrapperLG;
-        for(let i = element.length-1; i >= 0; i--){
-          element[i].remove()
-        }
-
-        colSM.forEach((element) => {
-          galleryContainer.appendChild(
-            createGalleryElement('div', {id: "galleryContainer"}, "galleryWrapper " + element + " m-0 p-0")
-          )
-        });
-        console.log("Set: " + 12); 
-        vw = window.innerWidth;
-        galleryWrapper = wrapper
-        columnsSetAs = "SM";
-        getColumns()
-        infiniteScroll(0, storedGallery, col);
-      } else {
-        console.log("Set: " + 13);
-        colSM.forEach((element) => {
-            galleryContainer.appendChild(
-            createGalleryElement('div', {id: "galleryContainer"}, "galleryWrapper " + element + " m-0 p-0")
-          )
-        });
-        vw = window.innerWidth;
-        columnsSetAs = "SM";
-        galleryWrapper = wrapper
-      }
-    }
-  }
-  console.log("Set: " + 14);
-  getColumns();
-}*/
 
 function setColumns(){
   let children = galleryContainer.childNodes;
@@ -299,7 +210,6 @@ function createColumns(size = "LG"){
   }
 
   galleryWrapper = galleryContainer.childNodes;
-
   if(storedGallery !== undefined){
     infiniteScroll(0, storedGallery, col);
   }
@@ -335,14 +245,16 @@ async function storeGallery(data){
 
 function infiniteScroll(startFrom, data, colSet){
   insertImages(startFrom, data, colSet);
-  document.getElementById('infiniteScroll')?.remove()
-
+  //document.getElementById('infiniteScroll')?.remove()
+  galleryWrapper[0].querySelectorAll('div.infiniteScroll')[0]?.remove();
+  
   observerEntity()
 }
 
 const observer = new IntersectionObserver((entries, observer) => {
   for (const entry of entries) {
-    const Element = document.getElementById('infiniteScroll');
+    const Element = galleryWrapper[0].querySelectorAll('div.infiniteScroll')[0]
+    
     if(lastGalleryIdx >= storedGallery.length){
       Element?.remove();
       return
@@ -356,7 +268,7 @@ const observer = new IntersectionObserver((entries, observer) => {
 
 function observerEntity(){
   galleryWrapper[0].insertBefore(
-    createGalleryElement('div', {id: 'infiniteScroll'}, "m-0 p-0"),
+    createGalleryElement('div', {id: 'infiniteScroll'}, "infiniteScroll m-0 p-0"),
     galleryWrapper[0].childNodes[galleryWrapper[0].querySelectorAll('img').length-1]
   )
   //const infiniteScrollDiv = document.querySelector("#infiniteScroll");
@@ -366,7 +278,6 @@ function observerEntity(){
 
 function insertImages(lastStop, data, colSet){
   let stopAt = 0;
-  //console.log(data);
   if(columnsSetAs === "LG"){
     if(data.length < lastStop + 16){
       stopAt = data.length;
@@ -385,8 +296,8 @@ function insertImages(lastStop, data, colSet){
     return 
   }
 
+
   for(let i = lastStop; i < stopAt; i++){
-    console.log(galleryWrapper);
     if(colSet[colLength].includes("w50")){
 
       let imageContainer = createGalleryElement(
@@ -400,19 +311,17 @@ function insertImages(lastStop, data, colSet){
       colCounter = colCounter-1
     } else if(colSet[colLength].includes("w51")){
         /*if adjacent half image in column exist shrink*/
-      if(document.getElementsByClassName("w50")[document.getElementsByClassName("w50").length-1].style.width === "100%"){
-        document.getElementsByClassName("w50")[document.getElementsByClassName("w50").length-1].style.width = "50%"
-      }
-        
-      let imageContainer = document.getElementsByClassName("imageWrapper")
-      imageContainer[imageContainer.length-1].appendChild(
+      if(galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50")[galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50").length-1].style.width === "100%"){
+        galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50")[galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50").length-1].style.width = "50%"
+      }  
+      let imageContainer = galleryWrapper[colCounter].getElementsByClassName("imageWrapper")[galleryWrapper[colCounter].getElementsByClassName("imageWrapper").length-1]
+      imageContainer.appendChild(
         createGalleryElement('img',{src:data[i].Path, loading: "lazy"},
         "img" + " Type:" + data[i].Type + " ID:" + data[i].ID  + " " + colSet[colLength] + " m-0 p-1"));
     } else {
       galleryWrapper[colCounter].appendChild(createGalleryElement('img',{src:data[i].Path, loading: "lazy"},
         "img" + " Type:" + data[i].Type + " ID:" + data[i].ID  + " " + colSet[colLength] + " m-0 p-1"));
     } 
-
     if(colCounter === checkColumnsSet()){
       colCounter = 0;
     } else {
@@ -427,8 +336,8 @@ function insertImages(lastStop, data, colSet){
     
   }
   /*if adjacent half image in column !exist expand*/
-  if(document.getElementsByClassName("w50").length > document.getElementsByClassName("w51").length){
-    document.getElementsByClassName("w50")[document.getElementsByClassName("w50").length-1].style.width = "100%";
+  if(galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50").length > galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w51").length){
+    galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50")[galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50").length-1].style.width = "100%";
   }
 
   lastGalleryIdx = stopAt;
@@ -444,21 +353,12 @@ function checkColumnsSet(){
 
 function setNewParam(element){
   window.history.replaceState({},"", (window.location.pathname + '?type=' + element.innerHTML.replace(' ','')).toString())
-  console.log(new URLSearchParams(window.location.search).get('type'))
   //getGallery(new URLSearchParams(window.location.search).get('type'));
 }
-/*
-function setGalleryContainer(){
-  galleryContainer = document.getElementById(sectionNames);
-  galleryContainer.classList.add("active")
-}*/
 
 carouselContainer.addEventListener('slide.bs.carousel', event => {
   window.history.replaceState({},"", (window.location.pathname + '?type=' + document.querySelector("[data-bs-slide-to='" + event.to + "']").innerHTML.replace(' ','')).toString())
   sectionNames = new URLSearchParams(window.location.search).get('type');
   galleryContainer = document.getElementById(sectionNames);
-  console.log(galleryContainer)
   getGallery(sectionNames)
 })
-
-//setGalleryContainer();
