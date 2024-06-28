@@ -1,5 +1,6 @@
 .enquiresContainer{
     position: relative;
+    height: 100%;
 }
 
 .ennquiresWrapper{
@@ -79,29 +80,34 @@ input[type="checkbox"]:checked ~ .Flavours {
 
 @media only screen and (min-width: 992px){  
     .ennquiresWrapper{
+        top: 100px;
         display: flex;
         width: 100%;
-        height: 100%;   
+        height: auto;   
         /*align-items: center;
         justify-content: center;*/
     }
 
     .policyContainer{
-        top: 150px;  
+        /*top: 150px;  */
         /*width: 30%;*/
         flex: 1 1 0;
         left: 1rem;
     }
 
     .formContainer{
-        top: 100px;
+        /*top: 100px;*/
         width: 50%;
         flex: 2 1 0;
         left: 2rem;
+        height: 100%;
     }
 
     .enquiresSpacing{
         flex: 1 1 0;
-        height: 150vh;
+    }
+
+    .footer{
+        bottom: -100px !important;
     }
 }

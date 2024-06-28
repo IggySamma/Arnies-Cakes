@@ -17,6 +17,11 @@ let lastGalleryIdx = 0;
 
 let carouselContainer = document.getElementById('mainGalleryContainer');
 
+let modalCarousel = document.getElementById('lightBoxContent')
+let modal = new bootstrap.Carousel(modalCarousel)
+let modalView = document.getElementById('lightBox')
+let imageId;
+
 if(vw >= vwMax){
   columnsSetAs = "LG"
 } else {
@@ -75,7 +80,6 @@ function getGallery(param = sectionNames){
   galleryWrapper = galleryContainer.childNodes;
   
   if(fullGallery === undefined){
-    
     fetchGallery(sectionNames);
   } else {
     if(sectionNames === "All"){
@@ -241,6 +245,8 @@ async function storeGallery(data){
       sectionNames = new URLSearchParams(window.location.search).get('type')
     }
   }
+  destoryModal();
+  buildModal(storedGallery);
 }
 
 function infiniteScroll(startFrom, data, colSet){
@@ -305,7 +311,7 @@ function insertImages(lastStop, data, colSet){
         ,"imageWrapper " + colSet[colLength].replace("w50", "") + " m-0 p-0");
       galleryWrapper[colCounter].appendChild(imageContainer);
 
-      imageContainer.appendChild(createGalleryElement('img',{src:data[i].Path, loading: "lazy"},
+      imageContainer.appendChild(createGalleryElement('img',{src:data[i].Path, loading: "lazy", "data-bs-toggle": "modal", "data-bs-target": "#lightBox", "onclick": "activeId('" + data[i].ID + "')"},
         "img" + " Type:" + data[i].Type + " ID:" + data[i].ID  + " " + colSet[colLength] + " m-0 p-1"));
 
       colCounter = colCounter-1
@@ -316,10 +322,10 @@ function insertImages(lastStop, data, colSet){
       }  
       let imageContainer = galleryWrapper[colCounter].getElementsByClassName("imageWrapper")[galleryWrapper[colCounter].getElementsByClassName("imageWrapper").length-1]
       imageContainer.appendChild(
-        createGalleryElement('img',{src:data[i].Path, loading: "lazy"},
+        createGalleryElement('img',{src:data[i].Path, loading: "lazy", "data-bs-toggle": "modal", "data-bs-target": "#lightBox", "onclick": "activeId('" + data[i].ID  + "')"},
         "img" + " Type:" + data[i].Type + " ID:" + data[i].ID  + " " + colSet[colLength] + " m-0 p-1"));
     } else {
-      galleryWrapper[colCounter].appendChild(createGalleryElement('img',{src:data[i].Path, loading: "lazy"},
+      galleryWrapper[colCounter].appendChild(createGalleryElement('img',{src:data[i].Path, loading: "lazy", "data-bs-toggle": "modal", "data-bs-target": "#lightBox", "onclick": "activeId('" + data[i].ID + "')"},
         "img" + " Type:" + data[i].Type + " ID:" + data[i].ID  + " " + colSet[colLength] + " m-0 p-1"));
     } 
     if(colCounter === checkColumnsSet()){
@@ -360,5 +366,54 @@ carouselContainer.addEventListener('slide.bs.carousel', event => {
   window.history.replaceState({},"", (window.location.pathname + '?type=' + document.querySelector("[data-bs-slide-to='" + event.to + "']").innerHTML.replace(' ','')).toString())
   sectionNames = new URLSearchParams(window.location.search).get('type');
   galleryContainer = document.getElementById(sectionNames);
+  if(document.getElementById(imageId) !== null && document.getElementById(imageId).className.includes("active")){
+    document.getElementById(imageId).classList.remove("active")
+  }
+  //console.log("should hide")
+  /*modalCarousel.hide;*/
   getGallery(sectionNames)
 })
+/*
+carouselContainer.addEventListener('slid.bs.carousel', () =>{
+  console.log("should hide 2")
+  modalCarousel.hide;
+})*/
+
+function activeId(id){
+  imageId = id;
+  if(document.getElementById(id) !== null && document.getElementById(id) !== undefined){
+    document.getElementById(id).classList.add("active")
+  }
+}
+
+function buildModal(gallery){
+  let container = document.getElementById("modal-carousel")
+  for(let i = 0; i < gallery.length; i++){
+    let wrapper = createGalleryElement('div', {"id": gallery[i].ID}, "carousel-item modalWrapper")
+    wrapper.appendChild(createGalleryElement('img', {src:gallery[i].Path, loading: "lazy"}, "modalImages"))
+    container.appendChild(wrapper)
+  }
+}
+
+/*bug somewhere when gallery is sliding and modal tried to re-open*/
+
+function destoryModal(){
+  console.log("destroyed")
+  console.log("destroyed1")
+  //modalCarousel.hide;
+  let container = document.getElementById("modal-carousel").childNodes
+  for(let i = container.length - 1; i >= 0; i--){
+    container[i].remove()
+  }
+}
+
+modalCarousel.addEventListener('slid.bs.carousel', event => { 
+  imageId = document.getElementsByClassName("modalWrapper")[event.to].id 
+});
+
+
+modalView.addEventListener('hide.bs.modal', () => {
+  if(document.getElementById(imageId) !== null && document.getElementById(imageId) !== undefined){
+    document.getElementById(imageId).classList.remove("active")
+  }
+});

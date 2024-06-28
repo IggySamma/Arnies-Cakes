@@ -53,6 +53,12 @@
     -webkit-animation: load ease-in 1s;
 }
 
+.modalWrapper .modalImages{
+    height: 700px;
+    width: 500px;   
+    z-index: -10;
+}
+
 @keyframes load{
     0%{
         opacity: 0%;
