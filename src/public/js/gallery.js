@@ -86,7 +86,6 @@ function getGallery(param = sectionNames){
       
       storedGallery = fullGallery;
       setColumns();
-      return 
     }
 
     if(fullGallery !== undefined){
@@ -245,8 +244,6 @@ async function storeGallery(data){
       sectionNames = new URLSearchParams(window.location.search).get('type')
     }
   }
-  destoryModal();
-  buildModal(storedGallery);
 }
 
 function infiniteScroll(startFrom, data, colSet){
@@ -277,7 +274,6 @@ function observerEntity(){
     createGalleryElement('div', {id: 'infiniteScroll'}, "infiniteScroll m-0 p-0"),
     galleryWrapper[0].childNodes[galleryWrapper[0].querySelectorAll('img').length-1]
   )
-  //const infiniteScrollDiv = document.querySelector("#infiniteScroll");
   const infiniteScrollDiv = galleryWrapper[0].querySelectorAll('div')[0]
   observer.observe(infiniteScrollDiv);
 }
@@ -359,25 +355,14 @@ function checkColumnsSet(){
 
 function setNewParam(element){
   window.history.replaceState({},"", (window.location.pathname + '?type=' + element.innerHTML.replace(' ','')).toString())
-  //getGallery(new URLSearchParams(window.location.search).get('type'));
 }
 
 carouselContainer.addEventListener('slide.bs.carousel', event => {
   window.history.replaceState({},"", (window.location.pathname + '?type=' + document.querySelector("[data-bs-slide-to='" + event.to + "']").innerHTML.replace(' ','')).toString())
   sectionNames = new URLSearchParams(window.location.search).get('type');
   galleryContainer = document.getElementById(sectionNames);
-  if(document.getElementById(imageId) !== null && document.getElementById(imageId).className.includes("active")){
-    document.getElementById(imageId).classList.remove("active")
-  }
-  //console.log("should hide")
-  /*modalCarousel.hide;*/
   getGallery(sectionNames)
 })
-/*
-carouselContainer.addEventListener('slid.bs.carousel', () =>{
-  console.log("should hide 2")
-  modalCarousel.hide;
-})*/
 
 function activeId(id){
   imageId = id;
@@ -395,12 +380,10 @@ function buildModal(gallery){
   }
 }
 
-/*bug somewhere when gallery is sliding and modal tried to re-open*/
-
 function destoryModal(){
-  console.log("destroyed")
-  console.log("destroyed1")
-  //modalCarousel.hide;
+  if(document.getElementById(imageId) !== null && document.getElementById(imageId).className.includes("active")){
+    document.getElementById(imageId).classList.remove("active")
+  }
   let container = document.getElementById("modal-carousel").childNodes
   for(let i = container.length - 1; i >= 0; i--){
     container[i].remove()
@@ -415,5 +398,10 @@ modalCarousel.addEventListener('slid.bs.carousel', event => {
 modalView.addEventListener('hide.bs.modal', () => {
   if(document.getElementById(imageId) !== null && document.getElementById(imageId) !== undefined){
     document.getElementById(imageId).classList.remove("active")
+    destoryModal()
   }
+});
+
+modalView.addEventListener('show.bs.modal', () => {
+  buildModal(storedGallery)
 });

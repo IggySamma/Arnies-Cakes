@@ -1,4 +1,3 @@
-loadCalender();
 function loadCalender(){
     fetch('/api/disabledDates', {
         method: 'POST'
@@ -64,6 +63,7 @@ function getTreatsHeaders(){
     })
 }
 
+loadCalender();
 getMainHeaders();
 getTreatsHeaders();
 

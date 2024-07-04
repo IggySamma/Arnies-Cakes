@@ -53,11 +53,22 @@
     -webkit-animation: load ease-in 1s;
 }
 
-.modalWrapper .modalImages{
-    height: 700px;
-    width: 500px;   
-    z-index: -10;
+.modal-content{
+    height: 90vh;
+    width: 100%;
 }
+/*
+.modalWrapper{
+    height: 90vh;
+    /*width: 90vw;*/
+    /*max-width: 90vw;
+    min-width: 100%;*//*}*/
+/*
+.modalImages{
+    height: 100%;
+    max-width: 90vw;
+    z-index: -10;
+}*/
 
 @keyframes load{
     0%{
