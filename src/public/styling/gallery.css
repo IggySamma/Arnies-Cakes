@@ -45,6 +45,7 @@
 }
 
 .img{
+    position: relative;
     height: 100%;
     width: 100%;
     object-fit: cover;
@@ -55,20 +56,28 @@
 
 .modal-content{
     height: 90vh;
-    width: 100%;
+    max-width: 95vw;
+    width: auto;
 }
-/*
-.modalWrapper{
-    height: 90vh;
-    /*width: 90vw;*/
-    /*max-width: 90vw;
-    min-width: 100%;*//*}*/
-/*
+
+.carousel-inner{
+    height: inherit;
+    width: inherit;
+    border-radius: inherit;
+}
+
+.carousel-item{
+    height: inherit;
+    width: inherit;
+    border-radius: inherit;
+}
+
 .modalImages{
-    height: 100%;
-    max-width: 90vw;
-    z-index: -10;
-}*/
+    height: inherit;
+    width: inherit;
+    object-fit: cover;
+    border-radius: inherit;
+}
 
 @keyframes load{
     0%{

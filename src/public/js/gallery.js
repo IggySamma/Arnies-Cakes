@@ -369,6 +369,7 @@ function activeId(id){
   if(document.getElementById(id) !== null && document.getElementById(id) !== undefined){
     document.getElementById(id).classList.add("active")
   }
+  modalWidths()
 }
 
 function buildModal(gallery){
@@ -388,12 +389,19 @@ function destoryModal(){
   for(let i = container.length - 1; i >= 0; i--){
     container[i].remove()
   }
+  let modalContent = document.getElementById("lightBoxContent")
+  modalContent.style.aspectRatio = 0.75/1;
 }
 
 modalCarousel.addEventListener('slid.bs.carousel', event => { 
-  imageId = document.getElementsByClassName("modalWrapper")[event.to].id 
+  //imageId = document.getElementsByClassName("modalWrapper")[event.to].id 
+  //modalWidths()
 });
 
+modalCarousel.addEventListener('slide.bs.carousel', event => { 
+  imageId = document.getElementsByClassName("modalWrapper")[event.to].id 
+  modalWidths()
+});
 
 modalView.addEventListener('hide.bs.modal', () => {
   if(document.getElementById(imageId) !== null && document.getElementById(imageId) !== undefined){
@@ -405,3 +413,17 @@ modalView.addEventListener('hide.bs.modal', () => {
 modalView.addEventListener('show.bs.modal', () => {
   buildModal(storedGallery)
 });
+
+function modalWidths(){
+  let imageContainer = document.getElementById(imageId).childNodes[0]
+  let modalContent = document.getElementById("lightBoxContent")
+  modalContent.style.removeProperty("animation");
+  modalContent.style.removeProperty("-webkit-animation");
+  let keyframes = document.createElement("style");
+  keyframes.type = "text/css";
+  keyframes.innerHTML = "@keyframes grow{0%{aspect-ratio: " + modalContent.style.aspectRatio + ";}100%{aspect-ratio: " + imageContainer.width/imageContainer.height + ";}}@-webkit-keyframes grow{0%{aspect-ratio: " + modalContent.style.aspectRatio + ";}100%{aspect-ratio: " + imageContainer.width/imageContainer.height + ";}}"
+  modalContent.appendChild(keyframes);
+  modalContent.style="animation: .5s grow linear; -webkit-animation: .5s grow linear"
+  modalContent.style.aspectRatio = imageContainer.width/imageContainer.height
+}
+
