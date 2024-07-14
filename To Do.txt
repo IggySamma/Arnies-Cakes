@@ -1,26 +1,71 @@
---------------------------General------------------------
-
+-------------------------General------------------------
 
 Make pages not refresh but reload. (Will need to add History for forward and back directorys)?
-
-Need to block access to files like server.js? (not sure if possible, need to double check)
 
 --------------------------Gallery------------------------
 
 
 --------------------------Enquires------------------------
 
-***Found bug in calender, if dates in disabled range, default values not showing and pushing today() + 3. started making validation need to finish and add to globals variable to pass back to client.***
-
-Create API for Retrieving Enquire number and adding enquire from messageID.
-
-Create API for retrieving blocked dates
 
 --------------------------Home Page------------------------
 
-Make it scrollable to add reviews (whole page scrolls down on one scroll & button for scroll)
+Make it scrollable to add reviews (whole page scrolls down on one scroll or button for scroll)
 
 --------------------------Admin Page-----------------------
+
+at midnight variables to refresh
+
+oAuth2 authentication and login
+
 Pull Enquires API's
 Make add/remove API's for enquires
+
+
+-------------------Sugestions---------------
+
+Etnicity background for website
+Loads of buttons every where
+TOO MUCH WIHTE
+Some gold in background
+auto biography ?
+
+-----------Navbar---------
+Scroll down, opacity goes down.
+Logo on left.
+
+------------Homepage--------
+Center text on logo
+rss feed of instagram
+Home to have mix of navbar but in order of importance
+Make navbar ticker & writting smaller ?
+
+------------Gallery-----------
+Personal touch of words on top
+
+------------Flavours------------
+Flavours to be categories when clicked to have flavours of category
+Different colours per row.
+
+------------Enquires------------
+
+Policy to have different font or aditional spacing and underline
+Bold on important parts.
+underline, bold or italicies the past paragraph about the deposit
+specify short notice to explain
+Details to be Tell us about the cake you'd like
+
+
+
+
+
+
+
+Out Ideas:
+Gallery from this one:
+https://demo.templatemonster.com/demo/298888.html
+
+Menu from this for homepage:
+https://demo.templatemonster.com/demo/271102.html
+
 
