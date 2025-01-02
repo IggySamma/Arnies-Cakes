@@ -71,9 +71,12 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade " id="lightBox">
+            <div class="modal fade" id="lightBox" data-bs-theme="dark">
                 <div class="modal-dialog modal-dialog-centered justify-content-center">
                     <div class="modal-content carousel slide" id="lightBoxContent" style="aspect-ratio: 0.75 / 1;">
+                        <div class="close-button align-self-center">
+                            <button type="button" class="btn-close" aria-label="Close"></button>
+                        </div>
                         <div class="carousel-inner" id="modal-carousel"></div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#lightBoxContent" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -83,6 +86,9 @@
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
                         </button>
+                        <div class="close-button-mobile align-self-center">
+                            <button type="button" class="btn-close" aria-label="Close" data-bs-target="#lightBox"></button>
+                        </div>
                     </div>
                 </div>
             </div>

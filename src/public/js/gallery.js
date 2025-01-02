@@ -375,7 +375,7 @@ function activeId(id){
 function buildModal(gallery){
   let container = document.getElementById("modal-carousel")
   for(let i = 0; i < gallery.length; i++){
-    let wrapper = createGalleryElement('div', {"id": gallery[i].ID}, "carousel-item modalWrapper")
+    let wrapper = createGalleryElement('div', {"id": gallery[i].ID}, "carousel-item modalWrapper carousel-fade")
     wrapper.appendChild(createGalleryElement('img', {src:gallery[i].Path, loading: "lazy"}, "modalImages"))
     container.appendChild(wrapper)
   }
@@ -392,12 +392,12 @@ function destoryModal(){
   let modalContent = document.getElementById("lightBoxContent")
   modalContent.style.aspectRatio = 0.75/1;
 }
-
+/*
 modalCarousel.addEventListener('slid.bs.carousel', event => { 
   //imageId = document.getElementsByClassName("modalWrapper")[event.to].id 
   //modalWidths()
 });
-
+*/
 modalCarousel.addEventListener('slide.bs.carousel', event => { 
   imageId = document.getElementsByClassName("modalWrapper")[event.to].id 
   modalWidths()
@@ -413,7 +413,7 @@ modalView.addEventListener('hide.bs.modal', () => {
 modalView.addEventListener('show.bs.modal', () => {
   buildModal(storedGallery)
 });
-
+/*
 function modalWidths(){
   let imageContainer = document.getElementById(imageId).childNodes[0]
   let modalContent = document.getElementById("lightBoxContent")
@@ -427,3 +427,4 @@ function modalWidths(){
   modalContent.style.aspectRatio = imageContainer.width/imageContainer.height
 }
 
+*/

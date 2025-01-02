@@ -58,6 +58,7 @@
     height: 90vh;
     max-width: 95vw;
     width: auto;
+    background-color: #ECE3F0;
 }
 
 .carousel-inner{
@@ -72,11 +73,33 @@
     border-radius: inherit;
 }
 
+
 .modalImages{
-    height: inherit;
-    width: inherit;
-    object-fit: cover;
+    height: 100%;
+    width: 95vw;
+    object-fit: scale-down;
     border-radius: inherit;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    opacity: 1;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    color: black;
+}
+
+.btn-close{
+    color: black;
+    filter: none !important;
+    opacity: 1;
+    font-size: 1.2rem;
+}
+
+.close-button{
+    display: none;
 }
 
 @keyframes load{
@@ -104,6 +127,24 @@
         /*height: 85vh;*/
         height: 87vh;
         top: 100px;
+    }
+    /*.carousel-control-next, .carousel-control-next:hover {
+        background: linear-gradient(90deg, 70%, #D3BBDD);
+    }
+    
+    .carousel-control-prev, .carousel-control-prev:hover  {
+        background: linear-gradient(90deg, #D3BBDD,#ECE3F0 );
+    }*/
+    
+    .carousel-control-prev,
+    .carousel-control-next {
+        opacity: 0.5;
+    }
+    .close-button{
+        display: block;
+    }
+    .close-button-mobile{
+        display: none;
     }
 }
 

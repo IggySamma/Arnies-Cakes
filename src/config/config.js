@@ -48,7 +48,9 @@ let sqlConfig = {
 };
 
 const mysql = require('mysql');
-const connection = mysql.createConnection(sqlConfig);
+//const mysql = require('mysql2/promise');
+const connection =  mysql.createConnection(sqlConfig);
+
 
 /*-------------------------- Server Setup ----------------------- */
 
