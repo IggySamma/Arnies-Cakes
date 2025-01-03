@@ -361,53 +361,6 @@ a{color: black !important;}
     top: 0px;
 }
 
-/*
-.rating {
-    appearance: none; /* Remove default styling *//*
-    -webkit-appearance: none; /* Safari-specific *//*
-    -moz-appearance: none; /* Firefox-specific *//*
-    width: 100%;
-    flex-basis: 5%;
-    border: none; /* Remove any border *//*
-    background: none; /* No background *//*
-    outline: none; /* Remove focus outline *//*
-    padding: 0;
-    margin: 0;
-    height: 0; /* Prevent any visible height of the progress bar *//*
-    overflow: hidden; /* Ensure no content spills *//*
-}
-
-.rating::-webkit-progress-bar {
-    display: none; /* Hide the progress bar in Webkit-based browsers *//*
-    background: none;
-}
-
-.rating::-moz-progress-bar {
-    display: none; /* Hide the progress bar in Firefox *//*
-    background: none;
-}
-
-.rating::-ms-fill {
-    display: none; /* Hide the progress bar in older Edge/IE *//*
-    background: none;
-}
-
-.rating::before {
-    --percent: calc(var(--UpdateRating) / 5 * 100%);
-    content: "★★★★★"; /* Star content *//*
-    background: linear-gradient(90deg, gold var(--percent), rgba(0, 0, 0, 0.2) var(--percent));
-    color: rgba(0, 0, 0, 0.2); /* Dimmed star color *//*
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 1.5rem;
-    display: flex;
-    align-items: center; 
-    justify-content: center;
-}
-
-*/
-
 .testimonialUserImageContainer{
     height: 12vh;
     aspect-ratio: 1/1;
