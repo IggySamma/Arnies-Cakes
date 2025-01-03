@@ -55,15 +55,17 @@
 }
 
 .modal-content{
-    height: 90vh;
+    /*height: 90vh;*/
+    height: 75vh;
     max-width: 95vw;
     width: auto;
     background-color: #ECE3F0;
+    position: relative;
 }
 
 .carousel-inner{
-    height: inherit;
-    width: inherit;
+    height: 100%;
+    width: 100%;
     border-radius: inherit;
 }
 
@@ -76,9 +78,17 @@
 
 .modalImages{
     height: 100%;
-    width: 95vw;
+    width: 95%;
     object-fit: scale-down;
-    border-radius: inherit;
+    /*border-radius: inherit;*/
+    display: block;
+    margin: auto;
+
+}
+
+.modalWrapper{
+    width: 100%;
+    position: relative;
 }
 
 .carousel-control-prev,
@@ -146,6 +156,15 @@
     .close-button-mobile{
         display: none;
     }
+
+    .carousel-inner{
+        width: 95vw;
+    }
+
+    .modal-content{
+        height: 95vh;
+    }
+    
 }
 
 @media only screen and (min-width: 1175px){
