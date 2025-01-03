@@ -271,7 +271,6 @@ a{color: black !important;}
 
 .card-img{max-height:30vh;}
 
-.card-footer{height: 50;}
 
 .card-footer{
     height: 100%;
@@ -283,7 +282,7 @@ a{color: black !important;}
 }
 
 .card-text{
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     flex-basis: 90%;
     display: flex;
     justify-content: center;
@@ -337,16 +336,19 @@ a{color: black !important;}
     width: 100%;
     /*z-index: 1;*/
 }
+
 .rating{
     appearance: none;
     color: transparent;
     width: 100%;
-    flex-basis: 5%;
+    flex-basis: 10%;
+    overflow: hidden;
+    top: 0px;
 }
 
 .rating::before{
     --percent: calc(var(--UpdateRating)/5*100%);
-    content: '★★★★★';
+    content:"\2605\2605\2605\2605\2605";
     background: linear-gradient(90deg, gold var(--percent), rgba(0,0,0,0.2) var(--percent));
     color: rgba(0,0,0,0.2);
     background-clip: text;
@@ -358,6 +360,53 @@ a{color: black !important;}
     justify-content: center;
     top: 0px;
 }
+
+/*
+.rating {
+    appearance: none; /* Remove default styling *//*
+    -webkit-appearance: none; /* Safari-specific *//*
+    -moz-appearance: none; /* Firefox-specific *//*
+    width: 100%;
+    flex-basis: 5%;
+    border: none; /* Remove any border *//*
+    background: none; /* No background *//*
+    outline: none; /* Remove focus outline *//*
+    padding: 0;
+    margin: 0;
+    height: 0; /* Prevent any visible height of the progress bar *//*
+    overflow: hidden; /* Ensure no content spills *//*
+}
+
+.rating::-webkit-progress-bar {
+    display: none; /* Hide the progress bar in Webkit-based browsers *//*
+    background: none;
+}
+
+.rating::-moz-progress-bar {
+    display: none; /* Hide the progress bar in Firefox *//*
+    background: none;
+}
+
+.rating::-ms-fill {
+    display: none; /* Hide the progress bar in older Edge/IE *//*
+    background: none;
+}
+
+.rating::before {
+    --percent: calc(var(--UpdateRating) / 5 * 100%);
+    content: "★★★★★"; /* Star content *//*
+    background: linear-gradient(90deg, gold var(--percent), rgba(0, 0, 0, 0.2) var(--percent));
+    color: rgba(0, 0, 0, 0.2); /* Dimmed star color *//*
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}
+
+*/
 
 .testimonialUserImageContainer{
     height: 12vh;
