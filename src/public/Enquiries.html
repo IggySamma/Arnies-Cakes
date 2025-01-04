@@ -30,13 +30,14 @@
                     <div class="col policy m-0 p-3 ms-3 rounded">
                         <p>
                         <h1>Policy:</h1><h4><br>
-                            We kindly request that all orders be placed at least two weeks in advance.<br>
+                            Hello! I'm looking forward to potentially working together.<br><br>
+                            <b>Keep in mind that in no way does filling out this form puts you on my calendar, reserves a spot or places your order.</b><br><br>
+                            I kindly request that all orders be placed <b>at least two weeks in advance.</b><br>
                             If an order is placed with short notice, a short-notice fee may apply.<br><br>
-                            We offer delivery services to most surrounding areas, subject to an additional fee.<br><br>
-                            Please specify the desired collection date when submitting your enquire.<br><br>
-                            To secure your selected date, a deposit of 50% is required upon booking.<br>
-                            Should you need to cancel your order, we kindly ask that you provide us with sufficient notice, failure to comply will result in a non-refundable deposit.<br><br>
-                            We will try to respond as soon as possible.<br>
+                            I offer delivery services to most surrounding areas, subject to an additional fee.<br><br>
+                            To secure you selected date <b> a deposit is required upon booking.</b><br>
+                            Should you need to cancel your order, I kindly ask that you provide us with sufficient notice, failure to comply will result in a non-refundable deposit.<br><br>
+                            I will try to respond as soon as possible.<br>
                             Thank you.
                         </h4>
                         </p>
@@ -46,39 +47,60 @@
                     <div class="col userForm fontsizeEnquires m-0 p-3 rounded">
                         <form id="form" action="/api/submitEnquire" method="POST" enctype="multipart/form-data">
                             <div class="mb-3">
-                                <label for="fullNameInput" class="form-label">Full Name</label>
+                                <label for="fullNameInput" class="form-label">Full Name:</label>
                                 <input type="text" class="form-control form-control-lg" id="fullNameInput" placeholder="Name" required>
                             </div>
                             <div class="mb-3">
-                                <label for="emailInput" class="form-label">Email Address</label>
+                                <label for="emailInput" class="form-label">Email:</label>
                                 <input type="email" class="form-control form-control-lg" id="emailInput" placeholder="name@example.com" pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" required>
                             </div>
                             <div class="mb-3">
-                                <label for="numberInput" class="form-label">Phone Number</label>
+                                <label for="numberInput" class="form-label">Phone Number:</label>
                                 <br>
                                 <div class="d-flex">
                                 <input type="tel" class="form-control form-control-lg" id="numberInput" placeholder="0871234567" pattern="[0-9]{10}" length="7" title="Please enter number in the format of 0871231234" required>
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Date for collection</label>
+                                <label class="form-label">Date of Event:</label>
                                 <br>
-                                <input class="flatpickr form-control form-control-lg" id="datetime" >
+                                <input class="flatpickrDate form-control form-control-lg" id="datetimeDate" >
                                 <!--<input type="datetime-local" class="datetime rounded" id="datetime" step="900"/>-->
                             </div>
-                            <div class="">
-                                    <label class="form-label">What item are you looking for ?</label><br>
+                            <div class="mb-3">
+                                <input class="form-check-input mx-1 px-1" type="checkbox" id="Collection">
+                                <label class="form-label">Collection</label>
+                                <input class="form-check-input mx-1 px-1" type="checkbox" id="Delivery">
+                                <label class="form-label">Delivery</label>
+                                <br>
+                                <div class="datetimeEvent">
+                                    <label class="form-label">Collection/Delivery of Order:</label>
+                                    <br>
+                                    <input class="flatpickrEvent form-control form-control-lg" id="datetimeEvent" >
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                    <label class="form-label">What items would you like?</label><br>
                                     
                                     <div id="mainHeader"></div>
-                                    <label class="form-label" id="">Treats</label><br>
+                                    <!--<label class="form-label" id="">Treats</label><br>-->
                                     <div id="subHeader"></div>
                             </div>
                             <div class="mb-3">
-                                <label for="enquireInput" class="form-label">Details</label>
-                                <textarea class="form-control form-control-lg" id="EnquireInput" rows="6" placeholder="Tell us about the cake you'd like.&#10Please include as much detail as possible regarding size, flavour & design etc." required></textarea>
+                                <label for="enquireInput" class="form-label">Tell me more about the event the cake is for - Cake theme, colours, characters etc.</label>
+                                <textarea class="form-control form-control-lg" id="EnquireInput" rows="6" placeholder="My daughter loves Disney princesses, especially Cinderella and Ariel! She loves the colour pink, tiaras and sprinkles." required></textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="fileUpload" class="form-label">Upload image</label>
+                                <label for="allergy" class="form-label">Are there any allergies I should be aware of?</label>
+                                <br>
+                                <input class="form-check-input mx-1 px-1" type="checkbox" id="AllergyYes">
+                                <label class="form-label">Yes</label>
+                                <input class="form-check-input mx-1 px-1" type="checkbox" id="AllergyNo">
+                                <label class="form-label">No</label>
+                                <textarea class="form-control form-control-lg" id="AllergyInput" rows="1" placeholder="If Yes, please explain here." ></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="fileUpload" class="form-label">Images for inspiration:</label>
                                 <input class="form-control" id="files" type="file" accept="image/png, image/jpeg, image/jpg" required>
                             </div>
                             <div class="col">

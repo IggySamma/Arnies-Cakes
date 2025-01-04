@@ -70,7 +70,6 @@ function buildNavBar() {
         { class: "nav-item", linkClass: "nav-link active fontsize", href: "./Index.html", text: "Home" },
         { class: "nav-item", linkClass: "nav-link fontsize", href: "./About.html", text: "About Me" },
         { class: "nav-item dropdown", linkClass: "nav-link dropdown-toggle fontsize", href: "#", id: "navbarDropdown", role: "button", "data-bs-toggle": "dropdown", text: "Gallery" },
-        { class: "nav-item", linkClass: "nav-link fontsize", href: "./Contact.html", text: "Contact Me" },
         { class: "nav-item", linkClass: "nav-link fontsize", href: "./Flavours.html", text: "Flavours" },
         { class: "nav-item", linkClass: "nav-link fontsize", href: "./Enquiries.html", text: "Enquiries", extra: createElement("img", { src: "./images/ribbon.png" }, "ribbon") }
     ];
@@ -148,7 +147,7 @@ const footerItems = [
     },
     {
         class: "nav-item footerEnquires my-auto rounded-5",
-        link: { href: "./Enquiries.html", text: "Enquires" }
+        link: { href: "./Enquiries.html", text: "Enquiries" }
     }
 ];
 

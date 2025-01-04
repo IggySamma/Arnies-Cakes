@@ -5,7 +5,61 @@ function loadCalender(){
     .then(response => {
         response.json().then(data =>{
             console.log(data)
-            flatpickr(".flatpickr", { 
+            var flatpickrDate = document.getElementById("datetimeDate");
+            var flatpickrEvent = document.getElementById("datetimeEvent");
+            var flatpickrEvents = document.getElementsByClassName("flatpickrEvent")
+
+            flatpickrDate.flatpickr(/*".flatpickrDate", */{ 
+                //'inline' : true,
+                altInput: true,
+                altFormat: "F j, Y",
+                allowInput: false,
+                defaultDate: data.MinDate,
+                enableTime: false,
+                dateFormat: "Y-m-d",
+                minDate: data.MinDate,
+                maxDate: new Date().fp_incr(186),
+                disable: data.Date,
+                disableMobile: false,
+                plugins: [new confirmDatePlugin({})],
+                onChange: function(selectedDate, dateStr, instance){
+                    const formattedDate = new Date(selectedDate).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      });
+                    console.log("selectDate: " + selectedDate+ " Date: " + new Date(dateStr.split(' ', 1)).fp_incr(1))
+
+                    flatpickrEvent.flatpickr(/*".flatpickrEvent", */{ 
+                        //'inline' : true,
+                        altInput: true,
+                        altFormat: "F j, Y, H:i",
+                        //altFormat: "Y-m-d, H:i",
+                        allowInput: false,
+                        defaultDate: new Date(dateStr.split(' ', 1)) + ", 12:00",
+                        enableTime: true,
+                        dateFormat: "Y-m-d, H:i",
+                        minDate: new Date(dateStr.split(' ', 1)).fp_incr(-2),
+                        maxDate: new Date(dateStr.split(' ', 1)).fp_incr(1),
+                        /*disable: new Date(dateStr.split(' ', 1)).fp_incr(1),*/
+                        enable: [new Date(dateStr.split(' ', 1)).fp_incr(-2), new Date(dateStr.split(' ', 1)).fp_incr(-1), new Date(dateStr.split(' ', 1))],
+                        minTime: "10:00",
+                        maxTime: "20:00",
+                        defaultHour: 12,
+                        defaultMinute: 0,
+                        minuteIncrement: 15,
+                        disableMobile: false,
+                        plugins: [new confirmDatePlugin({})]
+                    });
+
+                    flatpickrEvents[0].value = dateStr.split(' ', 1) + ", 12:00";
+                    /*flatpickrEvents[1].max = dateStr.split(' ', 1);*/
+                    flatpickrEvents[1].value =formattedDate + ", 12:00";
+                    //flatpickrEvents[2].value = formattedDate + ", 12:00";
+
+                }
+            });
+            flatpickrEvent.flatpickr(/*".flatpickrEvent", */{ 
                 //'inline' : true,
                 altInput: true,
                 altFormat: "F j, Y, H:i",
@@ -143,6 +197,7 @@ function flavourHeaders(item, flavs, minOrder){
     inputSecond.disabled = true;
     div.appendChild(inputSecond);
 }
+
 
 /* Disable and enable quantity */
 function updatePlaceholder(id) {

@@ -78,6 +78,51 @@ input[type="checkbox"]:checked ~ .Flavours {
     align-self: left;
 }
 
+
+
+
+input[id="Collection"]:checked ~ #Delivery {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+input[id="Collection"]:checked ~ .datetimeEvent {
+    visibility: visible;
+    display: block;
+}
+
+input[id="Delivery"]:checked ~ #Collection {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+input[id="Delivery"]:checked ~ .datetimeEvent {
+    visibility: visible;
+    display: block;
+}
+
+.datetimeEvent{
+    visibility: hidden;
+    display: none;
+}
+
+
+
+input[id="AllergyYes"]:checked ~ #AllergyInput {
+    visibility: visible;
+    display: block;
+}
+
+input[id="AllergyYes"]:checked ~ #AllergyNo {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+#AllergyInput{
+    visibility: hidden;
+    display: none;
+}
+
 @media only screen and (min-width: 992px){  
     .ennquiresWrapper{
         top: 100px;
