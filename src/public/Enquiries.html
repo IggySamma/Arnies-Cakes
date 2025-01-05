@@ -31,11 +31,11 @@
                         <p>
                         <h1>Policy:</h1><h4><br>
                             Hello! I'm looking forward to potentially working together.<br><br>
-                            <b>Keep in mind that in no way does filling out this form puts you on my calendar, reserves a spot or places your order.</b><br><br>
+                            <b>Keep in mind that in no way does filling out this form put you on my calendar, reserves a spot or places your order.</b><br><br>
                             I kindly request that all orders be placed <b>at least two weeks in advance.</b><br>
                             If an order is placed with short notice, a short-notice fee may apply.<br><br>
                             I offer delivery services to most surrounding areas, subject to an additional fee.<br><br>
-                            To secure you selected date <b> a deposit is required upon booking.</b><br>
+                            To secure your selected date <b> a deposit is required upon booking.</b><br>
                             Should you need to cancel your order, I kindly ask that you provide us with sufficient notice, failure to comply will result in a non-refundable deposit.<br><br>
                             I will try to respond as soon as possible.<br>
                             Thank you.
@@ -45,46 +45,52 @@
                 </div>
                 <div class="row formContainer m-0 p-3 ms-3">
                     <div class="col userForm fontsizeEnquires m-0 p-3 rounded">
-                        <form id="form" action="/api/submitEnquire" method="POST" enctype="multipart/form-data">
+                        <form id="form" action="/api/submitEnquire" method="POST" enctype="multipart/form-data" novalidate>
                             <div class="mb-3">
                                 <label for="fullNameInput" class="form-label">Full Name:</label>
                                 <input type="text" class="form-control form-control-lg" id="fullNameInput" placeholder="Name" required>
+                                <div class="invalid-feedback">Please enter your name.</div>
                             </div>
                             <div class="mb-3">
                                 <label for="emailInput" class="form-label">Email:</label>
                                 <input type="email" class="form-control form-control-lg" id="emailInput" placeholder="name@example.com" pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" required>
+                                <div class="invalid-feedback">Please make sure email is entered correctly</div>
                             </div>
                             <div class="mb-3">
                                 <label for="numberInput" class="form-label">Phone Number:</label>
                                 <br>
                                 <div class="d-flex">
-                                <input type="tel" class="form-control form-control-lg" id="numberInput" placeholder="0871234567" pattern="[0-9]{10}" length="7" title="Please enter number in the format of 0871231234" required>
+                                <input type="tel" class="form-control form-control-lg" id="numberInput" placeholder="0871234567 or +353871234567" pattern="^(08\d{7}|\+3538\d{7})$"  length="13" title="Please enter number in the format of 0871231234 or +353871231234" required>
+                                <br>
+                                <div class="invalid-feedback">Please make sure your number is starting with 08 or +353</div>
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Date of Event:</label>
                                 <br>
-                                <input class="flatpickrDate form-control form-control-lg" id="datetimeDate" >
+                                <input class="flatpickrDate form-control form-control-lg" id="datetimeDate" placeholder="Select Date..." required>
                                 <!--<input type="datetime-local" class="datetime rounded" id="datetime" step="900"/>-->
+                                <div class="invalid-feedback">Please select date of the event.</div>
                             </div>
                             <div class="mb-3">
-                                <input class="form-check-input mx-1 px-1" type="checkbox" id="Collection">
+                                <input class="form-check-input mx-1 px-1" type="checkbox" id="Collection" onclick="enableDisable('Delivery')" required disabled>
                                 <label class="form-label">Collection</label>
-                                <input class="form-check-input mx-1 px-1" type="checkbox" id="Delivery">
+                                <input class="form-check-input mx-1 px-1" type="checkbox" id="Delivery" onclick="enableDisable('Collection')" required disabled>
                                 <label class="form-label">Delivery</label>
+                                <div class="invalid-feedback">Please select date of the event to enable these fields.</div>
                                 <br>
                                 <div class="datetimeEvent">
-                                    <label class="form-label">Collection/Delivery of Order:</label>
+                                    <label class="form-label" id="colDel">? of Order:</label>
                                     <br>
-                                    <input class="flatpickrEvent form-control form-control-lg" id="datetimeEvent" >
+                                    <input class="flatpickrEvent form-control form-control-lg" id="datetimeEvent" required>
                                 </div>
                             </div>
                             <div class="mb-3">
                                     <label class="form-label">What items would you like?</label><br>
-                                    
                                     <div id="mainHeader"></div>
                                     <!--<label class="form-label" id="">Treats</label><br>-->
                                     <div id="subHeader"></div>
+
                             </div>
                             <div class="mb-3">
                                 <label for="enquireInput" class="form-label">Tell me more about the event the cake is for - Cake theme, colours, characters etc.</label>
@@ -93,18 +99,20 @@
                             <div class="mb-3">
                                 <label for="allergy" class="form-label">Are there any allergies I should be aware of?</label>
                                 <br>
-                                <input class="form-check-input mx-1 px-1" type="checkbox" id="AllergyYes">
+                                <input class="form-check-input mx-1 px-1" type="checkbox" id="AllergyYes" onclick="enableDisable('AllergyNo')" required>
                                 <label class="form-label">Yes</label>
-                                <input class="form-check-input mx-1 px-1" type="checkbox" id="AllergyNo">
+                                <input class="form-check-input mx-1 px-1" type="checkbox" id="AllergyNo" onclick="enableDisable('AllergyYes')" required>
                                 <label class="form-label">No</label>
                                 <textarea class="form-control form-control-lg" id="AllergyInput" rows="1" placeholder="If Yes, please explain here." ></textarea>
+                                <div class="invalid-feedback">Please let me know of any allergies.</div>
                             </div>
                             <div class="mb-3">
                                 <label for="fileUpload" class="form-label">Images for inspiration:</label>
                                 <input class="form-control" id="files" type="file" accept="image/png, image/jpeg, image/jpg" required>
+                                <div class="invalid-feedback">Photo's of examples are required to give me idea's of what kind of designs you'd like.</div>
                             </div>
                             <div class="col">
-                                <button type="submit" class="btn btn-primary mb-3 p-2 px-4">Submit</button>
+                                <button type="submit" class="btn btn-primary mb-3 p-2 px-4" id="submit">Submit</button>
                             </div> 
                         </form>
                     </div>

@@ -60,6 +60,8 @@
 .Flavours{
     visibility: hidden;
     display: none;
+    width: 100%;
+    position: relative;
 }
 
 input[type="checkbox"]:checked ~ .Flavours {
@@ -69,8 +71,9 @@ input[type="checkbox"]:checked ~ .Flavours {
 
 .incrementalNumberBoxStyle{
     width: 50px;
-    height: 28px;
+    height: 30px;
     right: 0px;
+    top: 0px;
     position: absolute;
     font-size: 16px;
     font-weight: bold;
@@ -78,25 +81,7 @@ input[type="checkbox"]:checked ~ .Flavours {
     align-self: left;
 }
 
-
-
-
-input[id="Collection"]:checked ~ #Delivery {
-    pointer-events: none;
-    opacity: 0.4;
-}
-
-input[id="Collection"]:checked ~ .datetimeEvent {
-    visibility: visible;
-    display: block;
-}
-
-input[id="Delivery"]:checked ~ #Collection {
-    pointer-events: none;
-    opacity: 0.4;
-}
-
-input[id="Delivery"]:checked ~ .datetimeEvent {
+input[id="Collection"]:checked ~ .datetimeEvent, input[id="Delivery"]:checked ~ .datetimeEvent  {
     visibility: visible;
     display: block;
 }
@@ -107,20 +92,31 @@ input[id="Delivery"]:checked ~ .datetimeEvent {
 }
 
 
-
 input[id="AllergyYes"]:checked ~ #AllergyInput {
     visibility: visible;
     display: block;
 }
 
-input[id="AllergyYes"]:checked ~ #AllergyNo {
-    pointer-events: none;
-    opacity: 0.4;
-}
-
 #AllergyInput{
     visibility: hidden;
     display: none;
+}
+
+.itemWrapper{
+    width: 100%;
+    position: relative;
+}
+
+.form-check-label{
+    text-wrap: pretty;
+    width: 75%;
+}
+
+@media only screen and (min-width: 640px) {
+    .form-check-label{
+        width: auto;
+        min-width: 0;
+    }
 }
 
 @media only screen and (min-width: 992px){  

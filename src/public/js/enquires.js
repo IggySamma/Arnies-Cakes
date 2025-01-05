@@ -1,10 +1,24 @@
+(function () {
+    "use strict";
+    var form = document.getElementById("form");
+
+    form.addEventListener("submit", function (event) {
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      form.classList.add("was-validated");
+    });
+  })();
+
 function loadCalender(){
     fetch('/api/disabledDates', {
         method: 'POST'
     })
     .then(response => {
         response.json().then(data =>{
-            console.log(data)
+            /*console.log(data)*/
             var flatpickrDate = document.getElementById("datetimeDate");
             var flatpickrEvent = document.getElementById("datetimeEvent");
             var flatpickrEvents = document.getElementsByClassName("flatpickrEvent")
@@ -28,7 +42,13 @@ function loadCalender(){
                         month: 'long',
                         day: 'numeric'
                       });
-                    console.log("selectDate: " + selectedDate+ " Date: " + new Date(dateStr.split(' ', 1)).fp_incr(1))
+                    //console.log("selectDate: " + selectedDate+ " Date: " + new Date(dateStr.split(' ', 1)).fp_incr(1))
+
+                    const col = document.getElementById("Collection")
+                    const del = document.getElementById("Delivery")
+                    
+                    col.removeAttribute("disabled")
+                    del.removeAttribute("disabled")
 
                     flatpickrEvent.flatpickr(/*".flatpickrEvent", */{ 
                         //'inline' : true,
@@ -123,96 +143,180 @@ getTreatsHeaders();
 
 /*-------------------------------------------------*/
 
-function createHeaders(item, heading, flavours, includeFlavours, minOrder){
+function createHeaders(item, heading, flavours, includeFlavours, minOrder) {
     const header = document.getElementById(heading);
-    const div = document.createElement('div');
-    const input = document.createElement('input');
-    const label = document.createElement('label');
 
-    div.className = (item + " itemWrapper");
-    div.setAttribute("id", item)
+    const div = createElement("div", { id: item }, `${item} itemWrapper`);
     header.appendChild(div);
 
-    input.className = ("form-check-input");
-    input.setAttribute("type", "checkbox");
-    if(includeFlavours === false){
-        input.setAttribute("onclick", "updatePlaceholder('"+ item + "CheckBox')");
-    }
-    input.setAttribute("value", "");
-    input.setAttribute("id", item + "CheckBox");
+    const input = createElement("input", {
+        type: "checkbox",
+        id: `${item}CheckBox`,
+        value: "",
+        onclick: includeFlavours ? `updatePlaceholder('')` : `updatePlaceholder('${item}')`,
+        required: ""
+    }, "form-check-input CheckBox");
     div.appendChild(input);
 
-    label.className = ("form-check-label mx-1 px-1");
-    label.setAttribute("for", item + "CheckBox");
-    label.innerHTML = item;
+    const label = createElement("label", {
+        for: `${item}CheckBox`
+    }, "form-check-label mx-1 px-1", item);
     div.appendChild(label);
 
-    if(includeFlavours === true){
-        for(let i = 0; i < flavours.length; i++){
-            flavourHeaders(item, flavours[i], minOrder);
-        }
+    if (includeFlavours) {
+        flavours.forEach(flavour => flavourHeaders(item, flavour, minOrder));
     } else {
-        const inputSecond = document.createElement('input');
-
-        inputSecond.className = ("form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex");
-        inputSecond.setAttribute("type", "number");
-        inputSecond.setAttribute("id", item + "CheckBox1");
-        inputSecond.setAttribute("for", item + "CheckBox");
-        inputSecond.setAttribute("placeholder", "0");
-
-        inputSecond.setAttribute("min", minOrder);
-        inputSecond.disabled = true;
+        const inputSecond = createElement("input", {
+            type: "number",
+            id: `${item}CheckBox1`,
+            for: `${item}CheckBox`,
+            placeholder: "0",
+            min: minOrder,
+            disabled: true
+        }, "form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex");
         div.appendChild(inputSecond);
     }
-};
+}
 
-function flavourHeaders(item, flavs, minOrder){
+function flavourHeaders(item, flavs, minOrder) {
     const header = document.getElementById(item);
-    const div = document.createElement('div');
-    const input = document.createElement('input');
-    const label = document.createElement('label');
-    const inputSecond = document.createElement('input');
 
-    div.className = ("Flavours " + flavs);
+    const div = createElement("div", {}, `Flavours ${flavs}`);
     header.appendChild(div);
 
-    input.className = ("form-check-input ms-4");
-    input.setAttribute("type", "checkbox");
-    input.setAttribute("onclick", "updatePlaceholder('"+ item + flavs + "CheckBox')");
-    input.setAttribute("value", "");
-    input.setAttribute("id",item + flavs + "CheckBox");
+
+    const input = createElement("input", {
+        type: "checkbox",
+        id: `${item}${flavs}CheckBox`,
+        value: "",
+        onclick: `updatePlaceholder('${item}${flavs}')`,
+        required: ""
+    }, "form-check-input ms-4");
     div.appendChild(input);
 
-    label.className = ("form-check-label mx-1 px-1");
-    label.setAttribute("for",item + flavs + "CheckBox");
-    label.innerHTML = flavs;
+    const label = createElement("label", {
+        for: `${item}${flavs}CheckBox`
+    }, "form-check-label mx-1 px-1", flavs);
     div.appendChild(label);
 
-    inputSecond.className = ("form-control mt-1 p-1 incrementalNumberBoxStyle d-inline-flex");
-    inputSecond.setAttribute("type", "number");
-    inputSecond.setAttribute("id", item + flavs + "CheckBox1");
-    inputSecond.setAttribute("for", item + flavs + "CheckBox");
-    inputSecond.setAttribute("placeholder", "0");
-    inputSecond.setAttribute("min", minOrder);
-    inputSecond.disabled = true;
+    const inputSecond = createElement("input", {
+        type: "number",
+        id: `${item}${flavs}CheckBox1`,
+        for: `${item}${flavs}CheckBox`,
+        placeholder: "0",
+        min: minOrder,
+        disabled: true
+    }, "form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex");
+
+    if (item == "Cake") {
+        const nDiv = createElement("div", {}, `btn-group cakeSizes`);
+        div.appendChild(nDiv);
+    
+        const select = createElement("select", {"id": `${item}${flavs}CakeSize`, "disabled": "", "required":"", "style":"display: none;"}, `form-select cakeSizes m-1 p-1 pb-1 ms-4`);
+        nDiv.appendChild(select);
+    
+        const sizes = [
+            {value: "4", text: "4 inch (Round cake) - Feeds 4-6 People"},
+            {value: "6", text: "6 inch (Round cake) - Feeds 14 People"},
+            {value: "8", text: "8 inch (Round cake) - Feeds 24 People - Standard Size"},
+            {value: "10", text: "10 inch (Square cake) - Feeds 50 People"},
+        ]
+    
+        defaultSelect = createElement("option", {"value": "1", "selected":"", "disabled":""}, "", "Please select cake size");
+        select.appendChild(defaultSelect);
+    
+        sizes.forEach(size => {
+            const a = createElement("option", {"value": size.value}, "", size.text);
+            select.appendChild(a);
+        })
+    } 
+
     div.appendChild(inputSecond);
 }
 
+function enableDisable(id){
+    const box = document.getElementById(id);
+    if (box.disabled == false) {
+        box.disabled = true; 
+        box.removeAttribute("required")
+    } else {
+        box.disabled = false;
+        box.setAttribute("required","")
+    }
+
+    id == "AllergyNo" ? document.getElementById("AllergyInput").setAttribute("required", ""):document.getElementById("AllergyInput").removeAttribute("required")
+
+    if (id == "Collection") {
+        if (box.disabled == true){
+            document.getElementById("colDel").innerHTML = 'Delivery of order date & time:';
+        } else {
+            document.getElementById("colDel").innerHTML = '';
+        }
+    } else if (id == "Delivery") {
+        if (box.disabled == true){
+            document.getElementById("colDel").innerHTML = 'Collection of order date & time:';
+        } else {
+            document.getElementById("colDel").innerHTML = '';
+        }
+    }
+}
 
 /* Disable and enable quantity */
 function updatePlaceholder(id) {
-    const incrementCheckBox = document.getElementById(id + "1");
+    const incrementCheckBox = document.getElementById(id + "CheckBox1");
+    const cakeSize = document.getElementById(id+"CakeSize");
+    const check = document.querySelectorAll("[id$='CheckBox']");
+    const flavours = document.querySelectorAll("[class^='Flavours']");
 
-    if (document.getElementById(id).checked) {
-        incrementCheckBox.setAttribute("placeholder", incrementCheckBox.min);
-        incrementCheckBox.value = incrementCheckBox.min;
-        incrementCheckBox.disabled = false;
+    //console.log(check)
+    if (id != '') {
+        //console.log(cakeSize)
+        if (document.getElementById(id + "CheckBox").checked) {
+            incrementCheckBox.setAttribute("placeholder", incrementCheckBox.min);
+            incrementCheckBox.value = incrementCheckBox.min;
+            incrementCheckBox.disabled = false;
+            if (cakeSize != null){
+                cakeSize.disabled = false;
+                cakeSize.style.display = "block";
+            }
+        } else {
+            incrementCheckBox.setAttribute("placeholder", "0");
+            incrementCheckBox.value = "";
+            incrementCheckBox.disabled = true;
+            if (cakeSize != null){
+                cakeSize.value = "1";
+                cakeSize.disabled = true;
+                cakeSize.style.display = "none";
+            }
+
+        }
     } else {
-        incrementCheckBox.setAttribute("placeholder", "0");
-        incrementCheckBox.value = "";
-        incrementCheckBox.disabled = true;
+        flavours.forEach( item => {
+            if(item.firstElementChild.checked == true && item.parentElement.firstElementChild.checked == false){
+                item.firstElementChild.checked = false;
+                updatePlaceholder(item.firstElementChild.id.replace("CheckBox",""));
+            }
+        })
+    }
+
+    var counter = 0;
+
+
+    check.forEach(item => {
+        if (item.parentElement.parentElement.id != "mainHeader" ){
+            item.checked? counter++ : "";
+        }
+    })
+
+    if (counter > 0) {
+        check.forEach(item => { item.removeAttribute("required") })
+    } else {
+        check.forEach(item => { item.setAttribute("required","") })
     }
 }
+
+
+
 
 /* Submitting enquires */
 const form = document.getElementById("form");
@@ -220,6 +324,10 @@ form.addEventListener("submit", submitEnquire);
 
 function submitEnquire(file){
     file.preventDefault();
+    validation();
+
+    /*
+    document.getElementById("submit").disabled = true;
     const files = document.getElementById("files");
     const formSelector = document.getElementById('form').querySelectorAll('*');
     const formData = new FormData();
@@ -232,7 +340,7 @@ function submitEnquire(file){
         for(let i = 0; i < files.files.length; i++) {
             formData.append("clientPhotos", files.files[i]);
     }
-    fetch('/api/submitEnquire', {
+    /*fetch('/api/submitEnquire', {
         method: 'POST',
         body: formData,
     })
@@ -243,5 +351,59 @@ function submitEnquire(file){
         res.status === 500 ? alert("Something went wrong, please check file is .Png | .Jpg | .Jpeg format. Otherwise please contact us on our social links instead") :
         res.status === 200 ? window.location.href = "/enquiresty.html" : 
         console.log(res);
-    });       
+        document.getElementById("submit").disabled = false;
+    });       */
+    document.getElementById("submit").disabled = false; //debugging
 };
+
+function validation(){
+    const name = document.getElementById("fullNameInput");
+    const email = document.getElementById("emailInput");
+    const number = document.getElementById("numberInput");
+    const date = document.getElementById("datetimeDate");
+    const collection = document.getElementById("Collection");
+    const delivery = document.getElementById("Delivery");
+    const event = document.getElementById("datetimeEvent");
+    const order = document.querySelectorAll("[id$='CheckBox']");
+    const message = document.getElementById("EnquireInput");
+    const allergyYes = document.getElementById("AllergyYes");
+    const allergyNo = document.getElementById("AllergyNo");
+    const allergyMessage = document.getElementById("AllergyInput");
+    const photo = document.getElementById("files");
+
+    const emailRegEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const phoneRegEx = /^(?:08\d{7}|\+3538\d{7})$/;
+
+    console.log("name: " + name.value);
+    console.log("email: " + email.value);
+    console.log("number: " + number.value);
+    console.log("date: " + date.value);
+    console.log("collection: " + collection.checked);
+    console.log("delivery: " + delivery.checked);
+    console.log("event: " + event.value);
+    console.log("order: " + order.value);
+    console.log("message: " + message.value);
+    console.log("allergyYes: " + allergyYes.checked);
+    console.log("allergyNo: " + allergyNo.checked);
+    console.log("allergyMessage: " + allergyMessage.value);
+
+    if (name.value == ""){
+        throw new Error("Name field is empty, please enter your name.")
+    }
+
+    if (email.value == "") {
+        throw new Error("Email field is empty, please enter your email.")
+    } else if (email.value.match(emailRegEx) == false) {
+        throw new Error("Email seems to be entered incorrect, please check again.")
+    }
+
+    if (number.value == "") {
+        throw new Error("Number field is empty, please enter your phone numbers.")
+    } else if (number.value.match(phoneRegEx) == false) {
+        throw new Error("Phone number seems to be incorrect, please check again.")
+    }
+
+    
+
+
+}
