@@ -25,7 +25,10 @@ serverConfig.app.post('/api/getMainHeaders', (req, res) => { sqlQuery.getEnquire
 
 serverConfig.app.post('/api/getTreatsHeaders', (req, res) => { sqlQuery.getEnquiresSubHHeaders(req, res) })
 
-serverConfig.app.post('/api/submitEnquire', parsers.clientUpload.array("clientPhotos"), (req, res) => { parsers.enquires(req, res) });
+serverConfig.app.post('/api/submitEnquire', parsers.clientUpload.array("clientPhotos"), (req, res) => { 
+  console.log(req.body)
+  parsers.enquires(req, res)
+ });
 
 /*--------------------- Admin Page API's ---------------------*/
 

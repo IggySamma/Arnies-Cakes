@@ -40,18 +40,40 @@ const clientUpload = multer({
 
 function isNotEmptyEnquire(data){
     let adjData = {};
+    //console.log("Data: ", data)
     for (var i = 0; i < Object.keys(data).length; i++) {
+        /*if(Object.keys(data)[i] == "Order"){
+
+            const orderList = Object.values(data)[i]
+
+            orderList.forEach(order => {
+                const orderObj = JSON.parse(order)
+                for (const [key, value] of Object.entries(orderObj)){
+                    console.log(key, value)
+                    //adjData.push(key:value)
+                }
+            })
+
+
+
+
+            //console.log(JSON.parse(Object.values(data)[i]))  
+        }*/
         if (Object.values(data)[i] != "" && Object.values(data)[i] != "0") {
-                //adjData[Object.keys(data)[i].replace('CheckBox1','').replace('Input','')/*.charAt(0).toUpperCase()*/ + Object.keys(data)[i].replace('CheckBox1','').replace('Input','')/*.slice(1).toLowerCase()*/] = Object.values(data)[i];
-                adjData[Object.keys(data)[i].replace('CheckBox1','').replace('Input','')] = Object.values(data)[i];
+                //adjData[Object.keys(data)[i].replace('CheckBox1','').replace('Input','')/*.charAt(0).toUpperCase()*//* + Object.keys(data)[i].replace('CheckBox1','').replace('Input','')/*.slice(1).toLowerCase()*//*] = Object.values(data)[i];
+                //adjData[Object.keys(data)[i].replace('CheckBox1','').replace('Input','')] = Object.values(data)[i];
+                adjData[Object.keys(data)[i]] = Object.values(data)[i];
+                //adjData.push(Object.keys(data)[i]:Object.values(data)[i])
         }
+       //console.log("Key: ", Object.keys(data)[i], " Value: ", Object.values(data)[i])
+        
     };
     return adjData;
 };
 
 function enquiresValidation(value1, value2){
-    let emailRegEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    let numberRegEx = /^[0-9]{10}$/
+    let emailRegEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    let numberRegEx = /^(?:08\d{8}|\+3538\d{8})$/;
 
     return  value1.match(emailRegEx) === null ? "email" :
             value2.match(numberRegEx) === null ? "number" : "";
@@ -59,17 +81,30 @@ function enquiresValidation(value1, value2){
 
 function enquires(req, res){
     let photos = req.files;
+    
+    //console.log("Raw: ", JSON.parse(JSON.stringify(req.body)));
+
     let adjData = isNotEmptyEnquire(JSON.parse(JSON.stringify(req.body)));
 
-    return enquiresValidation(adjData.email, adjData.number) === "email" ? res.sendStatus(405) : 
-            enquiresValidation(adjData.email, adjData.number) === "number" ? res.sendStatus(406) : 
-            photos === undefined ? res.sendStatus(407) : attachTextBody(adjData, photos, res)
+    //console.log(adjData);
+
+    //return res.sendStatus(500);
+
+    return enquiresValidation(adjData.Email, adjData.Number) === "email" ? res.sendStatus(405) : 
+            enquiresValidation(adjData.Email, adjData.Number) === "number" ? res.sendStatus(406) : 
+            photos === undefined ? res.sendStatus(407) : attachTextBody(adjData, photos, res);
 };
 
 function attachTextBody(adjData, photos, res){
     let textBody = ""; 
     let date = ""
-    for(let i = 0; i < Object.keys(adjData).length; i++){
+
+    if("Date of Collection" in adjData){
+        date = adjData["Date of Collection"]
+    } else if("Date of Delivery" in adjData){
+        date = adjData["Date of Delivery"]
+    }
+    /*for(let i = 0; i < Object.keys(adjData).length; i++){
         if(Object.keys(adjData)[i] === 'datetime'){
             date = Object.values(adjData)[i]
         }
@@ -86,7 +121,26 @@ function attachTextBody(adjData, photos, res){
             } while (j < Object.keys(adjData)[i].length);
             textBody = textBody + "<p>" + temp + ": " + Object.values(adjData)[i] + "</p>";
         };
+    }*/
+
+    for (let i = 0; i < Object.keys(adjData).length; i++) {
+        if(Object.keys(adjData)[i] == "Order"){
+
+            const orderList = Object.values(adjData)[i]
+
+            orderList.forEach(order => {
+                const orderObj = JSON.parse(order)
+                for (const [key, value] of Object.entries(orderObj)){
+                    //console.log(key, value)
+                    //adjData.push(key:value)
+                    textBody = textBody + "<p>" + key + ": " + value + "</p>";
+                }
+            }) 
+        } else {
+            textBody = textBody + "<p>" + Object.keys(adjData)[i] + ": " + Object.values(adjData)[i] + "</p>";
+        }
     }
+
     sqlQuery.storeNewEnquire(res, sqlQuery.getAllEnquires).then(ID => {
         utils.sendEmails(ID[ID.length -1].ID, adjData, textBody, photos, res, date);
     })

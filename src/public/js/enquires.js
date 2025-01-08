@@ -222,7 +222,7 @@ function flavourHeaders(item, flavs, minOrder) {
             {value: "10", text: "10 inch (Square cake) - Feeds 50 People"},
         ]
     
-        defaultSelect = createElement("option", {"value": "1", "selected":"", "disabled":""}, "", "Please select cake size");
+        defaultSelect = createElement("option", {"value": "", "selected":"", "disabled":"", "min":"4", "max":"10"}, "", "Please select cake size");
         select.appendChild(defaultSelect);
     
         sizes.forEach(size => {
@@ -284,7 +284,7 @@ function updatePlaceholder(id) {
             incrementCheckBox.value = "";
             incrementCheckBox.disabled = true;
             if (cakeSize != null){
-                cakeSize.value = "1";
+                cakeSize.value = "";
                 cakeSize.disabled = true;
                 cakeSize.style.display = "none";
             }
@@ -322,13 +322,25 @@ function updatePlaceholder(id) {
 const form = document.getElementById("form");
 form.addEventListener("submit", submitEnquire);
 
+
 function submitEnquire(file){
     file.preventDefault();
-    validation();
-
-    /*
     document.getElementById("submit").disabled = true;
-    const files = document.getElementById("files");
+    
+    const formData = new FormData();
+
+    try {
+        validation(formData);
+    } catch (error) {
+        alert(error)
+    } finally {
+        document.getElementById("submit").disabled = false;
+    }
+
+
+
+    
+    /*const files = document.getElementById("files");
     const formSelector = document.getElementById('form').querySelectorAll('*');
     const formData = new FormData();
     for(let i=2; i < formSelector.length; i++){
@@ -339,8 +351,14 @@ function submitEnquire(file){
     }
         for(let i = 0; i < files.files.length; i++) {
             formData.append("clientPhotos", files.files[i]);
+    }*/
+
+
+    for (var pair of formData.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
     }
-    /*fetch('/api/submitEnquire', {
+    //console.log(formData)
+    fetch('/api/submitEnquire', {
         method: 'POST',
         body: formData,
     })
@@ -352,11 +370,11 @@ function submitEnquire(file){
         res.status === 200 ? window.location.href = "/enquiresty.html" : 
         console.log(res);
         document.getElementById("submit").disabled = false;
-    });       */
-    document.getElementById("submit").disabled = false; //debugging
+    });    
+    //document.getElementById("submit").disabled = false; //debugging
 };
 
-function validation(){
+function validation(formData){
     const name = document.getElementById("fullNameInput");
     const email = document.getElementById("emailInput");
     const number = document.getElementById("numberInput");
@@ -365,6 +383,7 @@ function validation(){
     const delivery = document.getElementById("Delivery");
     const event = document.getElementById("datetimeEvent");
     const order = document.querySelectorAll("[id$='CheckBox']");
+    const cakeSize = document.querySelectorAll("[id$='CakeSize']");
     const message = document.getElementById("EnquireInput");
     const allergyYes = document.getElementById("AllergyYes");
     const allergyNo = document.getElementById("AllergyNo");
@@ -372,38 +391,133 @@ function validation(){
     const photo = document.getElementById("files");
 
     const emailRegEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const phoneRegEx = /^(?:08\d{7}|\+3538\d{7})$/;
-
-    console.log("name: " + name.value);
-    console.log("email: " + email.value);
-    console.log("number: " + number.value);
-    console.log("date: " + date.value);
-    console.log("collection: " + collection.checked);
-    console.log("delivery: " + delivery.checked);
-    console.log("event: " + event.value);
-    console.log("order: " + order.value);
-    console.log("message: " + message.value);
-    console.log("allergyYes: " + allergyYes.checked);
-    console.log("allergyNo: " + allergyNo.checked);
-    console.log("allergyMessage: " + allergyMessage.value);
+    const phoneRegEx = /^(?:08\d{8}|\+3538\d{8})$/;
 
     if (name.value == ""){
-        throw new Error("Name field is empty, please enter your name.")
+        throw new Error("Name field is empty, please enter your name.");
+    } else {
+        formData.append("Name", name.value);
     }
 
     if (email.value == "") {
-        throw new Error("Email field is empty, please enter your email.")
+        throw new Error("Email field is empty, please enter your email.");
     } else if (email.value.match(emailRegEx) == false) {
-        throw new Error("Email seems to be entered incorrect, please check again.")
+        throw new Error("Email seems to be entered incorrect, please check again.");
+    } else {
+        formData.append("Email", email.value);
     }
 
     if (number.value == "") {
-        throw new Error("Number field is empty, please enter your phone numbers.")
+        throw new Error("Number field is empty, please enter your phone numbers.");
     } else if (number.value.match(phoneRegEx) == false) {
-        throw new Error("Phone number seems to be incorrect, please check again.")
+        throw new Error("Phone number seems to be incorrect, please check again.");
+    } else {
+        formData.append("Number", number.value);
     }
 
+    if (collection.checked == false && delivery.checked == false && date.value == flatpickrDate.date) {
+        throw new Error("Please select a date and select either collection or delivery as an option");
+    } else if (collection.checked == true){
+        formData.append("Date of Event", date.value);
+        formData.append("Collection", "Yes");
+        formData.append("Date of collection", event.value);
+    } else if (delivery.checked == true) {
+        formData.append("Date of Event", date.value);
+        formData.append("Delivery", "Yes");
+        formData.append("Date of delivery", event.value);
+    }
+
+    cakeSize.forEach(item => {
+        if(item.disabled == false && item.value == ""){
+            throw new Error("Please select a cake szie.");
+        } else if (item.disabled == false && item.value != ""){
+            /*formData.append("Item", "Cake")
+            formData.append("Flavour", item.parentElement.previousElementSibling.innerHTML);
+            formData.append("Cake Size", item.value);
+            formData.append("Quantity", item.parentElement.lastElementChild.value);*/
+            //formData.append("", "");
+            var obj = {
+                "Item": "Cake",
+                "Flavour": item.parentElement.previousElementSibling.innerHTML,
+                "Cake Size": item.value,
+                "Quantity": item.parentElement.lastElementChild.value
+            }
+            formData.append("Order", JSON.stringify(obj))
+        }
+    })
+   
+    var counter = 0;
+
+    order.forEach(item => {
+        if (item.parentElement.parentElement.id != "mainHeader"  && !(item.id.startsWith("Cake")) && item.parentElement.className.startsWith("Flavours") && item.checked == true){
+            counter++;
+            /*formData.append("Item", item.parentElement.parentElement.id);
+            formData.append("Flavour", item.nextElementSibling.innerHTML);
+            formData.append("Quantity", document.getElementById(item.id+1).value);*/
+            //formData.append("", "");
+            var obj = {
+                "Item": item.parentElement.parentElement.id,
+                "Flavour": item.nextElementSibling.innerHTML,
+                "Quantity": document.getElementById(item.id+1).value
+            }
+            formData.append("Order", JSON.stringify(obj))
+
+        } else if (item.parentElement.parentElement.id != "mainHeader" && !(item.id.startsWith("Cake")) && item.checked == true) {
+            counter++;
+            /*formData.append("Item", item.nextElementSibling.innerHTML);
+            formData.append("Quantity", document.getElementById(item.id+1).value);*/
+            //formData.append("","");
+
+            var obj = {
+                "Item": item.nextElementSibling.innerHTML,
+                "Quantity": document.getElementById(item.id+1).value
+            }
+            formData.append("Order", JSON.stringify(obj))
+        }
+    })
+
+
+    if (counter == 0) {
+        throw new Error("Please select the type of item you'd like to enquire about.");
+    }
+
+    if (message.value == "") {
+        throw new Error("Please give me some details about the items you'd like to order.");
+    } else {
+        formData.append("Message", message.value);
+    }
+
+    if (allergyNo.checked == false && allergyYes.checked == false) {
+        throw new Error("Please let me know if there's any allergies I should be aware of.");
+    }
+
+    if (allergyYes.checked == true && allergyMessage == "") {
+        throw new Error("Please let me know of what allergies I should be aware of.");
+    } else if (allergyNo.checked == true){
+        formData.append("Allergies", "No");
+    } else {
+        formData.append("Allergies", "Yes!");
+        formData.append("Allergies Information", allergyMessage.value);
+    }
+
+    if (photo.value == ""){
+        throw new Error("Please attach example of designs you'd like for your order.");
+    } /*else if (!(photo.value.endsWith(".png") || photo.value.endsWith(".jpg") || photo.value.endsWith(".jpeg"))){
+        throw new Error("Please upload file with either .png .jpg or .jpeg extension.");
+    } else {
+        //formData.append("clientPhotos", file.files);
+        /*for(let i = 0; i < photo.files.length; i++) {
+            formData.append("clientPhotos", photo.files[i]);
+        }*/
+
+        for (let i = 0; i < photo.files.length; i++) {
+            const file = photo.files[i];
+            const validTypes = ["image/png", "image/jpeg", "image/jpg"];
+            if (!validTypes.includes(file.type)) {
+                throw new Error("Please upload a file with .png, .jpg, or .jpeg format.");
+            }
+            formData.append("clientPhotos", file);
+        }
+    //}
     
-
-
 }

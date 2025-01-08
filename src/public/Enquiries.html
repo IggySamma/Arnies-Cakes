@@ -60,7 +60,7 @@
                                 <label for="numberInput" class="form-label">Phone Number:</label>
                                 <br>
                                 <div class="d-flex">
-                                <input type="tel" class="form-control form-control-lg" id="numberInput" placeholder="0871234567 or +353871234567" pattern="^(08\d{7}|\+3538\d{7})$"  length="13" title="Please enter number in the format of 0871231234 or +353871231234" required>
+                                <input type="tel" class="form-control form-control-lg" id="numberInput" placeholder="0871234567 or +353871234567" pattern="^(08\d{8}|\+3538\d{8})$"  length="13" title="Please enter number in the format of 0871231234 or +353871231234" required>
                                 <br>
                                 <div class="invalid-feedback">Please make sure your number is starting with 08 or +353</div>
                                 </div>
@@ -108,7 +108,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="fileUpload" class="form-label">Images for inspiration:</label>
-                                <input class="form-control" id="files" type="file" accept="image/png, image/jpeg, image/jpg" required>
+                                <input class="form-control" id="files" type="file" accept="image/png, image/jpeg, image/jpg" multiple="multiple" required>
                                 <div class="invalid-feedback">Photo's of examples are required to give me idea's of what kind of designs you'd like.</div>
                             </div>
                             <div class="col">
