@@ -82,13 +82,7 @@ function enquiresValidation(value1, value2){
 function enquires(req, res){
     let photos = req.files;
     
-    //console.log("Raw: ", JSON.parse(JSON.stringify(req.body)));
-
     let adjData = isNotEmptyEnquire(JSON.parse(JSON.stringify(req.body)));
-
-    //console.log(adjData);
-
-    //return res.sendStatus(500);
 
     return enquiresValidation(adjData.Email, adjData.Number) === "email" ? res.sendStatus(405) : 
             enquiresValidation(adjData.Email, adjData.Number) === "number" ? res.sendStatus(406) : 
@@ -104,38 +98,18 @@ function attachTextBody(adjData, photos, res){
     } else if("Date of Delivery" in adjData){
         date = adjData["Date of Delivery"]
     }
-    /*for(let i = 0; i < Object.keys(adjData).length; i++){
-        if(Object.keys(adjData)[i] === 'datetime'){
-            date = Object.values(adjData)[i]
-        }
-        if(Object.keys(adjData)[i] !== 'fullName' && Object.keys(adjData)[i] !== 'email' && Object.keys(adjData)[i] !== 'number' && Object.keys(adjData)[i] !== 'datetime'){
-            let temp = "";                
-            let j = 0;
-            do {
-                if(Object.keys(adjData)[i][j].toUpperCase() === Object.keys(adjData)[i][j]){
-                    temp = temp + ' ' + Object.keys(adjData)[i][j];
-                } else {
-                    temp = temp + Object.keys(adjData)[i][j];
-                }
-                j++;
-            } while (j < Object.keys(adjData)[i].length);
-            textBody = textBody + "<p>" + temp + ": " + Object.values(adjData)[i] + "</p>";
-        };
-    }*/
 
     for (let i = 0; i < Object.keys(adjData).length; i++) {
         if(Object.keys(adjData)[i] == "Order"){
 
             const orderList = Object.values(adjData)[i]
-
-            orderList.forEach(order => {
+            
+            Object.keys(orderList).forEach(order => {
                 const orderObj = JSON.parse(order)
                 for (const [key, value] of Object.entries(orderObj)){
-                    //console.log(key, value)
-                    //adjData.push(key:value)
                     textBody = textBody + "<p>" + key + ": " + value + "</p>";
                 }
-            }) 
+            })
         } else {
             textBody = textBody + "<p>" + Object.keys(adjData)[i] + ": " + Object.values(adjData)[i] + "</p>";
         }

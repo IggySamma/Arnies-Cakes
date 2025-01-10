@@ -1,3 +1,6 @@
+let fpDate = false;
+let fpEvent = false;
+
 (function () {
     "use strict";
     var form = document.getElementById("form");
@@ -36,6 +39,7 @@ function loadCalender(){
                 disable: data.Date,
                 disableMobile: false,
                 plugins: [new confirmDatePlugin({})],
+                onClose: ()=> {fpDate = true},
                 onChange: function(selectedDate, dateStr, instance){
                     const formattedDate = new Date(selectedDate).toLocaleDateString('en-US', {
                         year: 'numeric',
@@ -69,7 +73,8 @@ function loadCalender(){
                         defaultMinute: 0,
                         minuteIncrement: 15,
                         disableMobile: false,
-                        plugins: [new confirmDatePlugin({})]
+                        plugins: [new confirmDatePlugin({})],
+                        onClose: ()=> {fpEvent = true},
                     });
 
                     flatpickrEvents[0].value = dateStr.split(' ', 1) + ", 12:00";
@@ -303,7 +308,10 @@ function updatePlaceholder(id) {
 
 
     check.forEach(item => {
-        if (item.parentElement.parentElement.id != "mainHeader" ){
+        //Need to add additional logic if additional item with flavours is checked
+        /*if (item.parentElement.className.startsWith("Flavours") && item.parentElement.parentElement.firstElementChild.checked == true){
+            item.checked? counter++ : counter--;
+        } else*/ if (item.parentElement.parentElement.id != "mainHeader" ){
             item.checked? counter++ : "";
         }
     })
@@ -328,49 +336,42 @@ function submitEnquire(file){
     document.getElementById("submit").disabled = true;
     
     const formData = new FormData();
+    let errors = false;
 
     try {
         validation(formData);
     } catch (error) {
-        alert(error)
+        errors = true;
+        if (error.focus == "datetimeDate" || error.focus == "datetimeEvent") {
+            document.getElementById(error.focus).nextElementSibling.focus();  
+        } else {
+            document.getElementById(error.focus).focus();
+        }
+        alert(error);
     } finally {
         document.getElementById("submit").disabled = false;
     }
-
-
-
-    
-    /*const files = document.getElementById("files");
-    const formSelector = document.getElementById('form').querySelectorAll('*');
-    const formData = new FormData();
-    for(let i=2; i < formSelector.length; i++){
-        if(formSelector[i].id != "" && formSelector[i].id != "files" && formSelector[i].id != "mainHeader" && formSelector[i].id != "subHeader" && formSelector[i].value !== "" && formSelector[i].value !== undefined){
-                //console.log(form[i].id + " " + form[i].value);
-                formData.append(formSelector[i].id, document.getElementById(formSelector[i].id).value);
+   
+    if (!errors) {
+/*
+        for (var pair of formData.entries()) {
+            console.log(pair[0]+ ', ' + pair[1]); 
         }
+*/
+        fetch('/api/submitEnquire', {
+            method: 'POST',
+            body: formData,
+        })
+        .then((res) => {
+            res.status === 405 ? alert("Email provided is invalid") :
+            res.status === 406 ? alert("Mobile number is invalid") :
+            res.status === 407 ? alert("Incorrect file attached. Only .Png, .Jpg, .Jpeg allowed") :
+            res.status === 500 ? alert("Something went wrong, please check file is .Png | .Jpg | .Jpeg format. Otherwise please contact us on our social links instead") :
+            res.status === 200 ? window.location.href = "/enquiresty.html" : 
+            document.getElementById("submit").disabled = false;
+        });
     }
-        for(let i = 0; i < files.files.length; i++) {
-            formData.append("clientPhotos", files.files[i]);
-    }*/
 
-
-    for (var pair of formData.entries()) {
-        console.log(pair[0]+ ', ' + pair[1]); 
-    }
-    //console.log(formData)
-    fetch('/api/submitEnquire', {
-        method: 'POST',
-        body: formData,
-    })
-    .then((res) => {
-        res.status === 405 ? alert("Email provided is invalid") :
-        res.status === 406 ? alert("Mobile number is invalid") :
-        res.status === 407 ? alert("Incorrect file attached. Only .Png, .Jpg, .Jpeg allowed") :
-        res.status === 500 ? alert("Something went wrong, please check file is .Png | .Jpg | .Jpeg format. Otherwise please contact us on our social links instead") :
-        res.status === 200 ? window.location.href = "/enquiresty.html" : 
-        console.log(res);
-        document.getElementById("submit").disabled = false;
-    });    
     //document.getElementById("submit").disabled = false; //debugging
 };
 
@@ -394,29 +395,47 @@ function validation(formData){
     const phoneRegEx = /^(?:08\d{8}|\+3538\d{8})$/;
 
     if (name.value == ""){
-        throw new Error("Name field is empty, please enter your name.");
+        const error = new Error("Name field is empty, please enter your name.");
+        error.focus = "fullNameInput";
+        throw error;
     } else {
         formData.append("Name", name.value);
     }
 
     if (email.value == "") {
-        throw new Error("Email field is empty, please enter your email.");
+        const error = new Error("Email field is empty, please enter your email.");
+        error.focus = "emailInput";
+        throw error;
     } else if (email.value.match(emailRegEx) == false) {
-        throw new Error("Email seems to be entered incorrect, please check again.");
+        const error = new Error("Email seems to be entered incorrect, please check again.");
+        error.focus = "email";
+        throw error;
     } else {
         formData.append("Email", email.value);
     }
 
     if (number.value == "") {
-        throw new Error("Number field is empty, please enter your phone numbers.");
+        const error = new Error("Number field is empty, please enter your phone numbers.");
+        error.focus = "numberInput";
+        throw error;
     } else if (number.value.match(phoneRegEx) == false) {
-        throw new Error("Phone number seems to be incorrect, please check again.");
+        const error = new Error("Phone number seems to be incorrect, please check again.");
+        error.focus = "number";
+        throw error;
     } else {
         formData.append("Number", number.value);
     }
 
-    if (collection.checked == false && delivery.checked == false && date.value == flatpickrDate.date) {
-        throw new Error("Please select a date and select either collection or delivery as an option");
+    if (fpDate == false) {
+        const error = new Error("Please select date for your event.");
+        error.focus = "datetimeDate";
+        throw error;
+    }
+
+    if (collection.checked == false && delivery.checked == false) {
+        const error = new Error("Please select either collection or delivery as an option");
+        error.focus = "Collection";
+        throw error;
     } else if (collection.checked == true){
         formData.append("Date of Event", date.value);
         formData.append("Collection", "Yes");
@@ -426,16 +445,27 @@ function validation(formData){
         formData.append("Delivery", "Yes");
         formData.append("Date of delivery", event.value);
     }
+    
+    if (collection.checked == true && fpEvent == false) {
+        const error = new Error("Please select the collection date.")
+        error.focus = "datetimeEvent";
+        throw error;
+    } else if (delivery.checked == true && fpEvent == false) {
+        const error = new Error("Please select the delivery date.")
+        error.focus = "datetimeEvent";
+        throw error;
+    }
+
+    var counter = 0;
 
     cakeSize.forEach(item => {
         if(item.disabled == false && item.value == ""){
-            throw new Error("Please select a cake szie.");
+            const error = new Error("Please select a cake szie.");        
+            error.focus = item.id;
+            throw error;
+            
         } else if (item.disabled == false && item.value != ""){
-            /*formData.append("Item", "Cake")
-            formData.append("Flavour", item.parentElement.previousElementSibling.innerHTML);
-            formData.append("Cake Size", item.value);
-            formData.append("Quantity", item.parentElement.lastElementChild.value);*/
-            //formData.append("", "");
+            counter++;
             var obj = {
                 "Item": "Cake",
                 "Flavour": item.parentElement.previousElementSibling.innerHTML,
@@ -445,16 +475,11 @@ function validation(formData){
             formData.append("Order", JSON.stringify(obj))
         }
     })
-   
-    var counter = 0;
 
     order.forEach(item => {
         if (item.parentElement.parentElement.id != "mainHeader"  && !(item.id.startsWith("Cake")) && item.parentElement.className.startsWith("Flavours") && item.checked == true){
             counter++;
-            /*formData.append("Item", item.parentElement.parentElement.id);
-            formData.append("Flavour", item.nextElementSibling.innerHTML);
-            formData.append("Quantity", document.getElementById(item.id+1).value);*/
-            //formData.append("", "");
+            console.log("test")
             var obj = {
                 "Item": item.parentElement.parentElement.id,
                 "Flavour": item.nextElementSibling.innerHTML,
@@ -464,10 +489,6 @@ function validation(formData){
 
         } else if (item.parentElement.parentElement.id != "mainHeader" && !(item.id.startsWith("Cake")) && item.checked == true) {
             counter++;
-            /*formData.append("Item", item.nextElementSibling.innerHTML);
-            formData.append("Quantity", document.getElementById(item.id+1).value);*/
-            //formData.append("","");
-
             var obj = {
                 "Item": item.nextElementSibling.innerHTML,
                 "Quantity": document.getElementById(item.id+1).value
@@ -478,21 +499,29 @@ function validation(formData){
 
 
     if (counter == 0) {
-        throw new Error("Please select the type of item you'd like to enquire about.");
+        const error = new Error("Please select the type of item you'd like to enquire about.");
+        error.focus = "CakeCheckBox";
+        throw error;
     }
 
     if (message.value == "") {
-        throw new Error("Please give me some details about the items you'd like to order.");
+        const error = new Error("Please give me some details about the items you'd like to order.");
+        error.focus = "EnquireInput";
+        throw error;
     } else {
         formData.append("Message", message.value);
     }
 
     if (allergyNo.checked == false && allergyYes.checked == false) {
-        throw new Error("Please let me know if there's any allergies I should be aware of.");
+        const error = new Error("Please let me know if there's any allergies I should be aware of.");
+        error.focus = "AllergyNo";
+        throw error;
     }
 
     if (allergyYes.checked == true && allergyMessage == "") {
-        throw new Error("Please let me know of what allergies I should be aware of.");
+        const error = new Error("Please let me know of what allergies I should be aware of.");
+        error.focus = "AllergyYes";
+        throw error;
     } else if (allergyNo.checked == true){
         formData.append("Allergies", "No");
     } else {
@@ -501,15 +530,10 @@ function validation(formData){
     }
 
     if (photo.value == ""){
-        throw new Error("Please attach example of designs you'd like for your order.");
-    } /*else if (!(photo.value.endsWith(".png") || photo.value.endsWith(".jpg") || photo.value.endsWith(".jpeg"))){
-        throw new Error("Please upload file with either .png .jpg or .jpeg extension.");
+        const error = new Error("Please attach example of designs you'd like for your order.");
+        error.focus = "files";
+        throw error;
     } else {
-        //formData.append("clientPhotos", file.files);
-        /*for(let i = 0; i < photo.files.length; i++) {
-            formData.append("clientPhotos", photo.files[i]);
-        }*/
-
         for (let i = 0; i < photo.files.length; i++) {
             const file = photo.files[i];
             const validTypes = ["image/png", "image/jpeg", "image/jpg"];
@@ -518,6 +542,5 @@ function validation(formData){
             }
             formData.append("clientPhotos", file);
         }
-    //}
-    
+    }
 }
