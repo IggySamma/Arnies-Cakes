@@ -23,7 +23,6 @@
     text-wrap: wrap;
     word-break:break-all;
     background-color: #ECE3F0;
-    display: flex;
     flex-direction: column;
     flex: 20 0 0;
     height: 100%;
@@ -65,29 +64,11 @@
     height: 100vh;
 }
 
-
-
-.CakeFlavours{
-    display: flex;
-    flex-direction: row;
-    height: 45%;
-}
-
 .flavours1{
     width: 100%;
-    height: 50%;
+    height: 25%;
     object-fit: cover;
     padding: 0px;
-}
-
-.sideImages{
-    flex-direction: column;
-    flex: 1 1 0;
-}
-
-.flavours{
-    flex-direction: column;
-    flex: 1 1 0;
 }
 
 .flavoursSpacing{
@@ -163,45 +144,4 @@
         100% { transform: translateY(0%); }
     }
  */ 
-
-
- .CakeFlavours{
-    display: flex;
-    flex-direction: row;
-    height: 52%;
-    flex: 1 1 0;
-}
-
-.flavours1{
-    height: 100%;
-    width: 50%;
-}
-
-.flavours{
-    display:flex;
-    /*justify-content: center;*/
-    flex-direction: row;
-    flex: 1 1 0; 
-}
-
-.sideImages{
-    display:flex;
-    /*justify-content: center;*/
-    flex-direction: row;
-    flex: 1 1 0;
-}
-
-.text-row{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: center;
-}
-
-.s2{
-    display:flex;
-    justify-content: center;
-}
-
-
 }

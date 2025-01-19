@@ -10,100 +10,160 @@
         <title>Arnie's Cakes</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="./js/bootstrap.js"></script>
+        <script src="./js/bootstrap.js">
+</script>
         <link rel="stylesheet" href="./styling/bootstrap.css">
         <link rel="stylesheet" href="./styling/flavours.css">
         <link rel="stylesheet" href="./styling/shared.css">
     </head>
     <header>
-        <nav id="navbar"></nav>
+        <nav id="navbar">
+</nav>
     </header>
     <body>
-        <div class="container-fluid flavoursContainer"> 
-            <div class="row flavoursContent">
-                <div class="col flavoursWrapper ">
-                    <div class="row rounded ms-5 me-5 ps-5 pe-5">
-                        <div class="col d-flex m-5 p-3 flavoursBox rounded">
-                            <div class="col flavoursText">
-                                <img class="img-thumbnail m-2 p-1 flavoursImgs " src="./images/Main Cake 2.jpg"> 
-                                <h1>Vanilla</h1>
-                                <p>Vanilla sponge soaked in simple syrup with mascarpone filling.</p>
-                            </div>                 
+        <div class="flavContainer container-fluid m-0 p-0">
+            <!--<div class="row flavoursSpacing m-0 p-0"></div>-->
+            <div class="row flavoursContainer m-0 p-0">
+                <div class="col flavoursHeading m-0 p-0">
+                    <span>
+                        <h1>Flavours:</h1>
+                    </span>
+                </div>
+                <div class="col flavoursContent m-0 p-0" id="flavoursContent">
+                    <div class="aFlavours m-2 p-2" id="Cake">
+                        <div class="heading">
+                            <span>
+                            <h2>Cake:</h2>
+                            </span>
                         </div>
+                        <div class="flavours">
 
-                        <div class="col d-flex m-5 p-3 flavoursBox rounded">
-                            <div class="col flavoursText">
-                                <img class="img-thumbnail m-2 p-1 flavoursImgs " src="./images/Main Cake 2.jpg"> 
-                                <h1>Vanilla</h1>
-                                <p>Vanilla sponge soaked in simple syrup with mascarpone filling and layers of strawberries, raspberries and blueberries.</p>
-                            </div>                 
-                        </div>
+                            <div class="sideImages">
+                                <img class="img flavours1 p-1" loading="lazy" src="./images/Index/Cakes/7.jpg">
+                                <img class="img flavours1 p-1" loading="lazy" src="./images/Index/Cakes/6.jpg">
+                            </div>
+                            <div class="flavours ps-5">
+                                <span>
+                                    <div class="text-row">
+                                        <div class="s1">
+                                            <h4 class="ms-3 p-1">Vanilla:</h4>
+                                        </div>
+                                        <div class="s2">
+                                            <h4 class="ms-3 p-1">Price starting from: </h4>
+                                        </div>                                        
+                                        <div class="s3">
+                                            <h4 class="ms-3 p-1 ">E50</h4>
+                                        </div>
 
-                        <div class="col d-flex m-5 p-3 flavoursBox rounded">
-                            <div class="col flavoursText">
-                                <img class="img-thumbnail m-2 p-1 flavoursImgs " src="./images/Main Cake 2.jpg"> 
-                                <h1>Vanilla</h1>
-                                <p>3D Chocolate Heart (Contains 1 big chocolate heart with chocolate covered strawberries inside. Small cakepop hearts and/or sweets of your choice)</p>
-                            </div>                 
-                        </div>
-                    </div>
+                                    </div>
 
-                    <div class="row rounded ms-5 me-5 ps-5 pe-5">
-                        <div class="col d-flex m-5 p-3 flavoursBox rounded">
-                            <div class="col flavoursText">
-                                <img class="img-thumbnail m-2 p-1 flavoursImgs " src="./images/Main Cake 2.jpg"> 
-                                <h1>Vanilla</h1>
-                                <p>Vanilla sponge soaked in simple syrup with mascarpone filling.</p>
-                            </div>                 
-                        </div>
-
-                        <div class="col d-flex m-5 p-3 flavoursBox rounded">
-                            <div class="col flavoursText">
-                                <img class="img-thumbnail m-2 p-1 flavoursImgs " src="./images/Main Cake 2.jpg"> 
-                                <h1>Vanilla</h1>
-                                <p>Vanilla sponge soaked in simple syrup with mascarpone filling and layers of strawberries, raspberries and blueberries.</p>
-                            </div>                 
-                        </div>
-
-                        <div class="col d-flex m-5 p-3 flavoursBox rounded">
-                            <div class="col flavoursText">
-                                <img class="img-thumbnail m-2 p-1 flavoursImgs " src="./images/Main Cake 2.jpg"> 
-                                <h1>Vanilla</h1>
-                                <p>3D Chocolate Heart (Contains 1 big chocolate heart with chocolate covered strawberries inside. Small cakepop hearts and/or sweets of your choice)</p>
-                            </div>                 
+                                <h4 class="ms-3 p-1">Chocolate</h4>
+                                <h4 class="ms-3 p-1">Raffaello</h4>
+                                <h4 class="ms-3 p-1">Honey
+                                <h4 class="ms-3 p-1">Black Forest</h4>
+                                <h4 class="ms-3 p-1">Napoleon</h4>
+                                <h4 class="ms-3 p-1">Lemon</h4>
+                                <h4 class="ms-3 p-1">Fresh Fruit</h4>
+                            </span>
                         </div>
                     </div>
-
-                    <div class="row rounded ms-5 me-5 ps-5 pe-5">
-                        <div class="col d-flex m-5 p-3 flavoursBox rounded">
-                            <div class="col flavoursText">
-                                <img class="img-thumbnail m-2 p-1 flavoursImgs " src="./images/Main Cake 2.jpg"> 
-                                <h1>Vanilla</h1>
-                                <p>Vanilla sponge soaked in simple syrup with mascarpone filling.</p>
-                            </div>                 
+                    <div class="CakeFlavours m-2 p-2" id="Cakepops">
+                        <div class="sideImages">
+                            <img class="img flavours1 p-1" loading="lazy" src="./images/Index/Cakepops/7.jpg">
+                            <img class="img flavours1 p-1" loading="lazy" src="./images/Index/Cakepops/4.jpg">
                         </div>
-
-                        <div class="col d-flex m-5 p-3 flavoursBox rounded">
-                            <div class="col flavoursText">
-                                <img class="img-thumbnail m-2 p-1 flavoursImgs " src="./images/Main Cake 2.jpg"> 
-                                <h1>Vanilla</h1>
-                                <p>Vanilla sponge soaked in simple syrup with mascarpone filling and layers of strawberries, raspberries and blueberries.</p>
-                            </div>                 
-                        </div>
-
-                        <div class="col d-flex m-5 p-3 flavoursBox rounded">
-                            <div class="col flavoursText">
-                                <img class="img-thumbnail m-2 p-1 flavoursImgs " src="./images/Main Cake 2.jpg"> 
-                                <h1>Vanilla</h1>
-                                <p>3D Chocolate Heart (Contains 1 big chocolate heart with chocolate covered strawberries inside. Small cakepop hearts and/or sweets of your choice)</p>
-                            </div>                 
+                        <div class="flavours">
+                        <span>
+                            <h2>Cakepops:</h2>
+                            <h4 class="ms-3 p-1">Vanilla<br>
+                            </h4>
+                            <h4 class="ms-3 p-1">Chocolate<br>
+                            </h4>
+                            <h4 class="ms-3 p-1">Honey<br>
+                            </h4>
+                            <h4 class="ms-3 p-1">Lemon<br>
+                            </h4>
+                            <h4 class="ms-3 p-1">Fresh Fruit<br>
+                            </h4>
+                        </span>
                         </div>
                     </div>
-
+                    <div class="CakesiclesFlavours m-2 p-2" id="Cakesicles">
+                        <span>
+                            <h2>Cakesicles:</h2>
+                            <h4 class="ms-3 p-1">Vanilla<br>
+                            </h4>
+                            <h4 class="ms-3 p-1">Chocolate<br>
+                            </h4>
+                            <h4 class="ms-3 p-1">Honey<br>
+                            </h4>
+                            <h4 class="ms-3 p-1">Lemon<br>
+                            </h4>
+                            <h4 class="ms-3 p-1">Fresh Fruit<br>
+                            </h4>
+                        </span>
+                    </div>
+                    <div class="CupcakesFlavours m-2 p-2" id="Cupcakes">
+                        <span>
+                            <h2>Cupcakes:</h2>
+                            <h4 class="ms-3 p-1">Vanilla<br>
+                            </h4>
+                            <h4 class="ms-3 p-1">Chocolate<br>
+                            </h4>
+                            <h4 class="ms-3 p-1">Raffaello<br>
+                            </h4>
+                            <h4 class="ms-3 p-1">Honey<br>
+                            </h4>
+                            <h4 class="ms-3 p-1">Lemon<br>
+                            </h4>
+                            <h4 class="ms-3 p-1">Fresh Fruit<br>
+                            </h4>
+                        </span>
+                    </div>
+                    <div class="m-2 p-2" id="additionalItems">
+                        <span id="spanItems">
+                            <h2>Addition items</h2>
+                            <h4 class="ms-3 p-1">3d Chocolate Heart<br>
+                            </h4>
+                            <h4 class="ms-3 p-1">Chocolate Strawberries<br>
+                            </h4>
+                            <h4 class="ms-3 p-1">Gift Box<br>
+                            </h4>
+                            <h4 class="ms-3 p-1">Profiterole bags - Plikyti Sausainukai<br>
+                            </h4>
+                            <h4 class="ms-3 p-1">Gingerbread Mushrooms (KG) - Grybukai<br>
+                            </h4>
+                        </span>
+                    </div>
                 </div>
             </div>
+
+            <!--
+            <div class="row scrollingSide m-0 p-0">
+                <img class="img flavours1 " loading="lazy" src="./images/Index/Cakes/7.jpg">
+                <img class="img flavours1 " loading="lazy" src="./images/Index/Cakes/6.jpg">
+                <img class="img flavours1 " loading="lazy" src="./images/Index/Cakes/5.jpg">
+                <img class="img flavours1 " loading="lazy" src="./images/Index/Cakes/4.jpg">
+                <img class="img flavours1 " loading="lazy" src="./images/Index/Cakes/7.jpg">
+                <img class="img flavours1 " loading="lazy" src="./images/Index/Cakes/6.jpg">
+                <img class="img flavours1 " loading="lazy" src="./images/Index/Cakes/5.jpg">
+                <img class="img flavours1 " loading="lazy" src="./images/Index/Cakes/4.jpg">
+            </div>
+        --><!--
+            <div class="row flavoursSpacing m-0 p-0">
+            -->
+</div>
+
         </div>
+        <div class="w-100 m-0 p-0">
+</div>
+        <footer id="footer">
+</footer>
     </body>
-    <script src="./js/shared.js" onload="buildNavBar();"></script>
-    <script src="./js/shared.js" onload="buildFooter();"></script>
+    <script src="./js/shared.js" onload="buildNavBar();">
+</script>
+    <script src="./js/shared.js" onload="buildFooter();">
+</script>
+    <script src="./js/flavours.js">
+</script>
 </html>
