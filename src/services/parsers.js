@@ -9,7 +9,7 @@ const multer = require("multer");
 
 function getAllFromGallery(){
     globals.gallery = new globals.galleryConstructor
-    serverConfig.connection.query('SELECT * FROM GALLERY;',(error, result) => {
+    serverConfig.connection.query('SELECT * FROM GALLERY ORDER BY ID ASC;',(error, result) => {
         if(result === undefined){
             res.json(new Error("Error rows is undefined"));
         }else{
@@ -18,7 +18,7 @@ function getAllFromGallery(){
 }
 
 const galleryUpload = multer({ 
-    dest: "./gallery",
+    dest: "./public/gallery",
     fileFilter(req, file, cb) {
         if (!file.originalname.match(/\.(png|jpg|jpeg)$/)){
             cb(new Error('Please upload an image.'));
@@ -152,7 +152,6 @@ function storeDisabledDates(data){
         }
     }
     checkDates();
-    console.log("Disabled dates checked")
     console.log("Disabled dates stored")
     checkMinimumDate()
 }

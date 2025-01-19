@@ -121,6 +121,7 @@ function fetchGallery(params = sectionNames){
     }))
     .then(res => {
       return new Promise((resolve) =>{
+        console.log(res.data)
         storeGallery(res.data.reverse()).then(() =>{
           setColumns();
         })       

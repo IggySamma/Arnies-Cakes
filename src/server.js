@@ -38,12 +38,13 @@ serverConfig.app.get('/login/google', serverConfig.passport.authenticate('google
 }))
 
 serverConfig.app.get('/admin', (req, res) => { 
-    if (serverConfig.checkUserLoggedIn(req)) {
+  res.sendFile(path.join(__dirname, '/admin/index.html'))
+    /*if (serverConfig.checkUserLoggedIn(req)) {
         console.log('User logged');
         res.sendFile(path.join(__dirname, '/admin/index.html'))
       } else {
         console.log('error');
-      }
+      }*/
 })
 
 serverConfig.app.post('/api/upload', parsers.galleryUpload.array("myFiles"), utils.uploadFiles);

@@ -1,207 +1,136 @@
-.flavContainer{
-    position: relative;
-    /*height: 100%;*/
-    height: 95vh;
-    flex-direction: row-reverse;
-    overflow: hidden;
-    display: flex;
-    text-wrap: wrap;
-    /*padding: 0 0 200px 0  !important;*/
-    top: 55px;
-    /*height: 90vh;*/
-}
-
-.flavoursHeading{
-    background-image: linear-gradient(90deg,#ECE3F0, #D3BBDD, #ECE3F0);
-    /*flex: 1 1 0;*/
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.flavoursContent{
-    text-wrap: wrap;
-    word-break:break-all;
-    background-color: #ECE3F0;
-    display: flex;
-    flex-direction: column;
-    flex: 20 0 0;
-    height: 100%;
-    /*width: 100%;*/
-    overflow-y: scroll;
-    /*display: flex;*/
-    /*align-items: center;*/
-    /*justify-content: center;*/
-}
-
-.flavoursContent h1{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: linear-gradient(90deg,#ECE3F0, #D3BBDD, #ECE3F0);
-}
-
-.flavoursContent h2{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: linear-gradient(90deg,#ECE3F0, #D3BBDD, #ECE3F0);
-}
-
 .flavoursContainer{
-    text-wrap: wrap;
-    flex: 2 1;
-    flex-direction: column;
-    /*left: 3rem;*/
+    position: relative;
+    top: 55px;
+    width: 100vw;
+    overflow: hidden;
 }
 
-.scrollingSide{
-    flex: 1 0;
-    /*left: 1rem;*/
-    height: 100vh;
+.blankHeading{
+    display: none;
+    visibility: hidden;
 }
 
-.scrollingSide{
-    height: 100vh;
-}
-
-
-
-.CakeFlavours{
+.pageHeading{
     display: flex;
-    flex-direction: row;
-    height: 45%;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(90deg,#ECE3F0, #D3BBDD, #ECE3F0);
 }
 
-.flavours1{
-    width: 100%;
-    height: 50%;
-    object-fit: cover;
-    padding: 0px;
-}
-
-.sideImages{
-    flex-direction: column;
-    flex: 1 1 0;
+.heading{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(90deg,#ECE3F0, #D3BBDD, #ECE3F0);
 }
 
 .flavours{
-    flex-direction: column;
-    flex: 1 1 0;
+    text-wrap: wrap;
+    word-break:break-all;
+    background-color: #ECE3F0;
 }
 
-.flavoursSpacing{
-    flex: 1 1 1;
+.sideImagesContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    height: 30vh;
+}
+
+.sideImages{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.sideImage{
+    display:block;
+    width: 100%;
+    height: 100%; 
+    object-fit:cover;
+    position: absolute;
+    top: 0;
+    left: 0
+}
+
+.items{
+    height: 100%;
+    flex-direction: column;
+}
+
+.itemFlavours{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.textAlign{
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    align-content: center;
+    width: 100%;
+    flex: 0 0 0;
+}
+
+.textAlign>h4{
+    /*line-height: 45px;*/
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    margin: 0;
 }
 
 .footer{
     bottom: -55px !important;
 }
-/*
-.scrollingSide {
-    -webkit-animation: move 15s linear infinite;
-    animation: move 15s linear infinite;
-}
- 
-@-webkit-keyframes move {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(0%); }
-}
-
-@keyframes move {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(0%); }
-}*/
 
 @media only screen and (min-width: 992px){ 
-    .flavContainer{
-        top: 100px;
-        display: flex;
-        height: 90vh;
-        /*position: relative;
-        flex-direction: row-reverse;
-        overflow: hidden;*/
-    }
-
     .flavoursContainer{
-        text-wrap: wrap;
-        flex: 5 1;
-        /*left: 3rem;*/
+        top: 100px;
     }
 
-    .scrollingSide{
-        flex: 2 0;
-        /*left: 1rem;*/
+    .blankHeading{
+        display: unset;
+        visibility: unset;
+    }
+
+    .items{
         height: 100%;
+        flex-direction: row;
     }
 
-    .flavoursSpacing{
-        flex: 2 0;
+    .itemFlavours{
+        display: flex;
+        flex-direction: column;
+        width: 50%;
     }
 
-    .flavours1{
-        height: 40%;
+    .sideImagesContainer{
+        width: 50%;
+        display: flex;
+        flex-direction: row;
+        /*flex: 1; */
+        height: unset;
+    }
+
+    .sideImages{
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .sideImage{
+        display:block;
+        width: 100%;
+        height: 100%; 
+        object-fit:cover;
+        position: absolute;
+        top: 0;
+        left: 0
     }
 
     .footer{
         bottom: -100px !important;
     }
-/*
-    .scrollingSide {
-        -webkit-animation: move 20s linear infinite;
-        animation: move 20s linear infinite;
-    }
-     
-
-    @-webkit-keyframes move {
-        0% { transform: translateY(-160%); }
-        100% { transform: translateY(0%); }
-    }
-    
-    @keyframes move {
-        0% { transform: translateY(-160%); }
-        100% { transform: translateY(0%); }
-    }
- */ 
-
-
- .CakeFlavours{
-    display: flex;
-    flex-direction: row;
-    height: 52%;
-    flex: 1 1 0;
-}
-
-.flavours1{
-    height: 100%;
-    width: 50%;
-}
-
-.flavours{
-    display:flex;
-    /*justify-content: center;*/
-    flex-direction: row;
-    flex: 1 1 0; 
-}
-
-.sideImages{
-    display:flex;
-    /*justify-content: center;*/
-    flex-direction: row;
-    flex: 1 1 0;
-}
-
-.text-row{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: center;
-}
-
-.s2{
-    display:flex;
-    justify-content: center;
-}
-
-
 }
