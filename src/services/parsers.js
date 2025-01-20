@@ -119,6 +119,31 @@ function attachTextBody(adjData, photos, res){
         utils.sendEmails(ID[ID.length -1].ID, adjData, textBody, photos, res, date);
     })
 }
+/*------------------------------- Flavours ------------------------------------*/
+
+function getFlavours(){
+    serverConfig.connection.query('SELECT * FROM flavours;', (error, result) => {
+        if (error) {
+            throw error;
+        } else {
+            storeFlavours(JSON.parse(JSON.stringify(result)));
+        }
+    })
+}
+
+function storeFlavours(data){
+    globals.flavours = new globals.flavoursConstructor;
+
+    for(let i = 0; i < data.length; i++){
+        globals.flavours.ID.push(data[i].ID);
+        globals.flavours.Heading.push(data[i].Heading);
+        globals.flavours.Type.push(data[i].Type);
+        globals.flavours.Text.push(data[i].Text);
+        globals.flavours.Flavours.push(data[i].Flavours);
+    }
+
+    console.log("Flavours stored");
+}
 
 /*------------------------------- Enquires Callender ------------------------------------*/
 
@@ -128,10 +153,10 @@ function getDisabledDates(){
     serverConfig.connection.query('SELECT * FROM disabledDates;', (error, result) => {
         if (error) {
             throw error;
-        } else {}
+        } else {
             storeDisabledDates(JSON.parse(JSON.stringify(result)));
         }
-    )
+    });
 }
 
 function storeDisabledDates(data){
@@ -218,7 +243,7 @@ function createDateArrayFromDateRanges(fromString, toString){
 
 getDisabledDates();
 getAllFromGallery();
-
+getFlavours();
 
 module.exports = {
     galleryUpload,

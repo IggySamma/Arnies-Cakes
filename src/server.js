@@ -17,6 +17,10 @@ serverConfig.app.get('', function(req, res) { res.sendFile(path.join(__dirname, 
 
 serverConfig.app.post('/api/gallery', (req, res) => { utils.filterGallery( req, res) });
 
+/*------------------ Flavours -----------------*/
+
+serverConfig.app.get('/api/flavours', (req, res) => { res.json(globals.flavours) });
+
 /*---------------------- Enquires API's -------------------------*/
 
 serverConfig.app.post('/api/disabledDates', (req, res) => { res.json(globals.disabledDates)})

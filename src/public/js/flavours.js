@@ -1,81 +1,68 @@
-function getMainHeaders(){
-    let mainHeadings;
-    fetch('/api/getMainHeaders',{
-        method: 'POST',
+function getFlavours(){
+    fetch('/api/flavours',{
+        method: 'GET',
     })
     .then(response => {
         response.json().then(data =>{
-            mainHeadings = data
-			console.log(mainHeadings)
-            for(let i = 0; i < mainHeadings.length; i++){
-                tempFlavs = mainHeadings[i].Flavours.split(",")
-                let flavours = [];
-                for(let j = 0; j < tempFlavs.length; j++){
-                    flavours.push(tempFlavs[j].replace("[","").replace("]","").replace('"',"").replace('"',"").replace(" ",""))
-                }
-				console.log(mainHeadings[i])
-                createHeaders(mainHeadings[i].Type, "flavoursContent", flavours, true);
-            }
+            console.log(data.ID[0]);
+			for(let i = 0; i < data.ID.length; i++) {
+				createFlavours(data.Heading[i], data.Type[i], data.Text[i], data.Flavours[i])
+			}
         })
-		getTreatsHeaders();
+
     })
 }
 
-function getTreatsHeaders(){
-    let treatsHeadings;
-    fetch('/api/getTreatsHeaders',{
-        method: 'POST',
-    })
-    .then(response => {
-        response.json().then(data =>{
-            treatsHeadings = data
-            for(let i = 0; i < treatsHeadings.length; i++){
-                createHeaders(treatsHeadings[i].Type, "flavoursContent", "", false);
-            }
-        })
-    })
-}
+function createFlavours(heading, type, text, flavours){
+	const container = document.getElementById("flavours");
 
-function createHeaders(item, heading, flavours, includeFlavours) {
-    const header = document.getElementById(heading);
+	const items = createElement("div", {}, `row items m-0 p-0`);
+	container.appendChild(items);
 
-	if (includeFlavours){
-		const div = createElement("div", { id: item }, `${item}Flavours m-2 p-2`);
-		header.appendChild(div);
+	const imageCon = createElement("div", {}, `col-6 sideImagesContainer m-0 p-0`);
+	items.appendChild(imageCon);
 
-		const span = createElement("span", {},``);
-		div.appendChild(span)
+	for(let i = 1; i <=2; i++){
+		const imageWrapper = createElement("div", {}, `sideImages m-0 p-0`);
+		imageCon.appendChild(imageWrapper);
 
-		const h1 = createElement("h2", {}, ``);
-		h1.innerHTML = item + ":";
-		span.appendChild(h1);
+		let image;
 
-		for(let i=0; i < flavours.length; i++){
-			const h4 = createElement("h4", {}, `ms-3 p-1`);
-			h4.innerHTML = flavours[i] + `<br>`
-			span.appendChild(h4);
+		if (heading === "Main") {
+			image = createElement("img", {"loading":"lazy", "src":`./images/flavours/${type}/${i}.jpg`}, `img sideImage m-0 p-0`)
+		} else if (heading === "Sub") {
+			/*const check = document.getElementById()*/
+			image = createElement("img", {"loading":"lazy", "src":`./images/flavours/Treats/${i}.jpg`}, `img sideImage m-0 p-0`)
 		}
-	} else {
-		let newHeader = document.getElementById("additionalItems");
 
-		if(newHeader === null){
-			newHeader = createElement("div", {id: "additionalItems"},`m-2 p-2`);
-			header.appendChild(newHeader);
+		imageWrapper.appendChild(image);
+	}
 
-			const span = createElement("span", {id: "spanItems"},``);
-			newHeader.appendChild(span)
-	
-			const h1 = createElement("h2", {}, ``);
-			h1.innerHTML = "Addition items";
-			span.appendChild(h1);
+	const itemWrapper = createElement("div", {}, `col-6 itemFlavours m-0 p-0`);
+	items.appendChild(itemWrapper);
+
+	if (heading === "Main") {
+		const headingCon = createElement("div", {}, `col heading`);
+		itemWrapper.appendChild(headingCon);
+
+		const h2 = createElement("h2",{},``);
+		h2.InnerHTML = heading;
+		headingCon.appendChild(h2);
+
+		for(let i = 0; i < text.length; i++){
+			const text = createElement("div", {}, `row textAlign m-0 p-0`);
+			itemWrapper.appendChild(text);
+
+			const h4 = createElement("h4", {}, ``);
+			h4.InnerHTML = text[i];
+			text.appendChild(h4);
 		}
-		
-		const span = document.getElementById("spanItems");
 
-		const h4 = createElement("h4", {}, `ms-3 p-1`);
-		h4.innerHTML = item + `<br>`
-		span.appendChild(h4);
+
+	} else if (heading === "Sub") {
+		console.log("Treats here");
 	}
 }
 
-//getMainHeaders();
+
+getFlavours();

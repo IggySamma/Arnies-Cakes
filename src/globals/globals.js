@@ -15,13 +15,26 @@ class disabledDatesContructor{
     };
 };
 
+class flavoursConstructor{
+    constructor(){
+        this.ID = [];
+        this.Heading = [];
+        this.Type = [];
+        this.Text = [];
+        this.Flavours = [];
+    }
+}
+
 let gallery = new galleryConstructor;
-let disabledDates = new disabledDatesContructor
+let disabledDates = new disabledDatesContructor;
+let flavours = new flavoursConstructor;
 
 
 module.exports = {
     galleryConstructor,
     disabledDatesContructor,
+    flavoursConstructor,
+    flavours,
     gallery,
     disabledDates
 }
