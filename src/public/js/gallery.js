@@ -309,7 +309,7 @@ function insertImages(lastStop, data, colSet){
       galleryWrapper[colCounter].appendChild(imageContainer);
 
       imageContainer.appendChild(createGalleryElement('img',{src:data[i].Path, loading: "lazy", "data-bs-toggle": "modal", "data-bs-target": "#lightBox", "onclick": "activeId('" + data[i].ID + "')"},
-        "img" + " Type:" + data[i].Type + " ID:" + data[i].ID  + " " + colSet[colLength] + " rounded-3 m-0 p-1"));
+        "img" + " Type:" + data[i].Type + " ID:" + data[i].ID  + " " + colSet[colLength] + " m-0 p-1"));
 
       colCounter = colCounter-1
     } else if(colSet[colLength].includes("w51")){
@@ -320,10 +320,10 @@ function insertImages(lastStop, data, colSet){
       let imageContainer = galleryWrapper[colCounter].getElementsByClassName("imageWrapper")[galleryWrapper[colCounter].getElementsByClassName("imageWrapper").length-1]
       imageContainer.appendChild(
         createGalleryElement('img',{src:data[i].Path, loading: "lazy", "data-bs-toggle": "modal", "data-bs-target": "#lightBox", "onclick": "activeId('" + data[i].ID  + "')"},
-        "img" + " Type:" + data[i].Type + " ID:" + data[i].ID  + " " + colSet[colLength] + " rounded-3 m-0 p-1"));
+        "img" + " Type:" + data[i].Type + " ID:" + data[i].ID  + " " + colSet[colLength] + " m-0 p-1"));
     } else {
       galleryWrapper[colCounter].appendChild(createGalleryElement('img',{src:data[i].Path, loading: "lazy", "data-bs-toggle": "modal", "data-bs-target": "#lightBox", "onclick": "activeId('" + data[i].ID + "')"},
-        "img" + " Type:" + data[i].Type + " ID:" + data[i].ID  + " " + colSet[colLength] + " rounded-3 m-0 p-1"));
+        "img" + " Type:" + data[i].Type + " ID:" + data[i].ID  + " " + colSet[colLength] + " m-0 p-1"));
     } 
     if(colCounter === checkColumnsSet()){
       colCounter = 0;

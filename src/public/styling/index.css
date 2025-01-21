@@ -818,6 +818,12 @@ and (max-width: 935px){
         max-width: 100%;
     }
 
+    .KidsCakesGallery2{object-position: 50% 0%; object-fit: cover;}
+
+    .KidsCakesGallery4{object-position: 50% 0%; object-fit: contain;}
+
+    .KidsCakesGallery9{object-position: 50% 0%; object-fit: contain;}
+
     .CakesGallery7{height: 60%;}
 
     .KidsCakesGallery8{max-width: unset;}

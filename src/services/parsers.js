@@ -134,12 +134,15 @@ function getFlavours(){
 function storeFlavours(data){
     globals.flavours = new globals.flavoursConstructor;
 
+    const re = new RegExp(/["\[\]]|null/g)
+
     for(let i = 0; i < data.length; i++){
+        //console.log(String(data[i].Flavours).replace(re,""))
         globals.flavours.ID.push(data[i].ID);
         globals.flavours.Heading.push(data[i].Heading);
-        globals.flavours.Type.push(data[i].Type);
-        globals.flavours.Text.push(data[i].Text);
-        globals.flavours.Flavours.push(data[i].Flavours);
+        globals.flavours.Type.push(data[i].Type.replace(re,"").split(", "));
+        globals.flavours.Text.push(data[i].Text.replace(re,"").split(", "));
+        globals.flavours.Flavours.push(String(data[i].Flavours).replace(re,"").split(", "));
     }
 
     console.log("Flavours stored");

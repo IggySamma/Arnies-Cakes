@@ -66,7 +66,7 @@
 
 .modalContainer{
     height: 100%;
-    width: 100%;
+    /*width: 100%;*/
     border-radius: inherit;
 }
 
@@ -88,7 +88,7 @@
 }
 
 .modalWrapper{
-    width: 100%;
+    /*width: 100%;*/
     position: relative;
 }
 
@@ -163,7 +163,7 @@
     }
 
     .modalContainer{
-        width: 95vw;
+        width: 50vw;
     }
 
     .modal-content{

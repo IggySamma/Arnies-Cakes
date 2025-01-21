@@ -212,7 +212,14 @@ function flavourHeaders(item, flavs, minOrder) {
         min: minOrder,
         disabled: true
     }, "form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex");
-
+/*
+    if(item == "Cupcakes") {
+        inputSecond.stepUp(6);
+        inputSecond.stepDown(6);
+        inputSecond.value = 0;
+        inputSecond.placeholder = "0";
+    }
+*/
     if (item == "Cake") {
         const nDiv = createElement("div", {}, `btn-group cakeSizes`);
         div.appendChild(nDiv);
@@ -238,6 +245,8 @@ function flavourHeaders(item, flavs, minOrder) {
 
     div.appendChild(inputSecond);
 }
+
+
 
 function enableDisable(id){
     const box = document.getElementById(id);
