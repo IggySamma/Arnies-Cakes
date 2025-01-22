@@ -377,7 +377,7 @@ function buildModal(gallery){
   let container = document.getElementById("modal-carousel")
   for(let i = 0; i < gallery.length; i++){
     let wrapper = createGalleryElement('div', {"id": gallery[i].ID}, "carousel-item modalWrapper carousel-fade")
-    wrapper.appendChild(createGalleryElement('img', {src:gallery[i].Path, loading: "lazy"}, "modalImages"))
+    wrapper.appendChild(createGalleryElement('img', {src:gallery[i].Path, loading: "lazy"}, "modalImages pt-3"))
     container.appendChild(wrapper)
   }
 }

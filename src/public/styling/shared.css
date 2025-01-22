@@ -155,6 +155,43 @@ a:active {
   100% { transform: translateY(0%); }
 }
 
+@keyframes hideNav{
+  0%{
+      top: 0px;
+  }
+  100%{
+      top: -150px;
+  }
+}
+
+@-webkit-keyframes hideNav{
+  0%{
+    top: 0px;
+  }
+  100%{
+      top: -150px;
+  }
+}
+
+@keyframes showNav{
+  0%{
+      top: -150px;
+  }
+  100%{
+      top: 0px;
+  }
+}
+
+@-webkit-keyframes showNav{
+  0%{
+    top: -150px;
+  }
+  100%{
+      top: 0px;
+  }
+}
+
+
 /* Height % */
 
 .h10{height: 10%;}

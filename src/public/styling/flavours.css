@@ -32,8 +32,9 @@
 }
 
 .flavours{
-    text-wrap: wrap;
-    word-break:break-all;
+    text-wrap: pretty;
+    word-break: break-word;
+    text-align: center;
     background-color: #ECE3F0;
 }
 
@@ -86,6 +87,7 @@
     justify-content: center;
     flex: 1;
     margin: 0;
+    font-size: 1rem;
 }
 
 .footer{
@@ -140,4 +142,9 @@
     .footer{
         bottom: -100px !important;
     }
+
+    .textAlign>h4{
+        font-size: 1.3rem;
+    }
+    
 }

@@ -174,15 +174,36 @@ footerItems.forEach(item => {
 });
 }
 
-/*Nav disappear/appear on scroll*/
 var prevScrollpos = window.scrollY;
-var navCollapse = new bootstrap.Collapse(document.getElementById("navbar"))
+var navCollapse = new bootstrap.Collapse(document.getElementById("navbar"));
+var scrollThreshold = 15;
+
 window.onscroll = function() {
+    const container = document.getElementById("navbar");
+
+    container.addEventListener("animationend", () => {
+        container.style.removeProperty("animation");
+        container.style.removeProperty("-webkit-animation");
+    }, { once: true });
+
     var currentScrollPos = window.scrollY;
-    if (prevScrollpos > currentScrollPos) {
-        document.getElementById("navbar").style.top = "0";
-    } else  if (document.getElementById("toggling").classList.contains("collapsed")) {
-        document.getElementById("navbar").style.top = "-150px";
+
+    if (currentScrollPos < 150){
+        return
     }
-    prevScrollpos = currentScrollPos;
-}
+
+    if (Math.abs(prevScrollpos - currentScrollPos) >= scrollThreshold) {
+        if (prevScrollpos > currentScrollPos) {
+            if (container.style.top !== "0px") {
+                container.style = "animation: showNav ease-in-out 0.4s; -webkit-animation: showNav ease-in-out 0.4s;";
+                container.style.top = "0";
+            }
+        } else if (document.getElementById("toggling").classList.contains("collapsed")) {
+            if (container.style.top !== "-150px") { 
+                container.style = "animation: hideNav ease-in-out 0.4s; -webkit-animation: hideNav ease-in-out 0.4s;";
+                container.style.top = "-150px";
+            }
+        }
+        prevScrollpos = currentScrollPos;
+    }
+};

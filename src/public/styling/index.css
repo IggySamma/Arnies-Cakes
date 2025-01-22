@@ -67,7 +67,7 @@
 .aboutMeBGImage{
     overflow: hidden;
     height: 100%;
-    max-width: 100vw;
+    max-width: 105vw;
     aspect-ratio: 4480 / 6720;
     position: absolute;
     top: 0px;
@@ -769,6 +769,28 @@ and (max-width: 935px){
 /*992*/
 @media only screen and (min-width: 992px){
 
+  /* desktop height % */
+  .d-h10{height: 10% !important;}
+
+  .d-h20{height: 20% !important;}
+  
+  .d-h30{height: 30% !important;}
+  
+  .d-h40{height: 40% !important;}
+  
+  .d-h50{height: 50% !important;}
+  
+  .d-h60{height: 60% !important;}
+  
+  .d-h70{height: 70% !important;}
+  
+  .d-h80{height: 80% !important;}
+  
+  .d-h90{height: 90% !important;}
+  
+  .d-h100{height: 100% !important;}
+
+
     /*-------------Gallery------------------*/
 
     .galleryHeader{font-size: 4rem;}
@@ -820,9 +842,11 @@ and (max-width: 935px){
 
     .KidsCakesGallery2{object-position: 50% 0%; object-fit: cover;}
 
-    .KidsCakesGallery4{object-position: 50% 0%; object-fit: contain;}
+    .KidsCakesGallery4{object-position: 50% 0%; /*object-fit: contain;*/}
 
-    .KidsCakesGallery9{object-position: 50% 0%; object-fit: contain;}
+    .KidsCakesGallery5{height: 100% !important;}
+
+    .KidsCakesGallery9{object-position: 50% 0%; /*object-fit: contain;*/}
 
     .CakesGallery7{height: 60%;}
 
@@ -861,7 +885,7 @@ and (max-width: 935px){
         min-height: 100%;
         background-image: url("../images/Index/aboutMeBG.jpg");
         aspect-ratio: 6780 / 4480;
-        width: 100%
+        width: 105%
     }
 
     .aboutMeHeader{
