@@ -376,7 +376,7 @@ function submitEnquire(file){
             res.status === 406 ? alert("Mobile number is invalid") :
             res.status === 407 ? alert("Incorrect file attached. Only .Png, .Jpg, .Jpeg allowed") :
             res.status === 500 ? alert("Something went wrong, please check file is .Png | .Jpg | .Jpeg format. Otherwise please contact us on our social links instead") :
-            res.status === 200 ? window.location.href = "/enquiresty.html" : 
+            res.status === 200 ? window.location.href = "/enquiriesty.html" : 
             document.getElementById("submit").disabled = false;
         });
     }

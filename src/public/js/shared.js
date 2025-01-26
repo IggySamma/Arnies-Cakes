@@ -175,7 +175,10 @@ footerItems.forEach(item => {
 }
 
 var prevScrollpos = window.scrollY;
-var navCollapse = new bootstrap.Collapse(document.getElementById("navbar"));
+if (!(document.getElementById("navbar") === null || document.getElementById("navbar") === undefined)){
+    var navCollapse = new bootstrap.Collapse(document.getElementById("navbar"));
+}
+
 var scrollThreshold = 15;
 
 window.onscroll = function() {

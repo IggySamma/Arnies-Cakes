@@ -107,7 +107,7 @@ body{
 
 .footerEnquires{
   background-color: #D3BBDD;
-  font-size: 1.3rem;
+  font-size: 1rem;
 }
 
 a{
@@ -635,6 +635,7 @@ a:active {
 
   .footerEnquires{
     margin: 10px;
+    font-size: 1.3rem;
   }
 
 }
