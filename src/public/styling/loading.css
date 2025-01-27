@@ -1,7 +1,7 @@
-* {
+/*div * {
 	visibility: hidden;
 }
-
+*/
 
 .loading-container{
 	visibility: visible !important;
@@ -46,7 +46,14 @@
 	text-wrap: break-word;
 }
 
-
 @keyframes clockSweep {
-
+	0%{clip-path: polygon(25% 0, 50% 0, 75% 0, 50% 50%);}
+	12.5%{clip-path: polygon(75% 0, 100% 0, 100% 25%, 50% 50%);}
+	25%{clip-path: polygon(100% 25%, 100% 50%, 100% 75%, 50% 50%);}
+	37.5%{clip-path: polygon(100% 75%, 100% 100%, 75% 100%, 50% 50%);}
+	50%{clip-path: polygon(75% 100%, 50% 100%, 25% 100%, 50% 50%);}
+	62.5%{clip-path: polygon(25% 100%, 0 100%, 0 75%, 50% 50%);}
+	75%{clip-path: polygon(0 75%, 0 50%, 0 25%, 50% 50%);}
+	87.5%{clip-path: polygon(0 25%, 0 0, 25% 0, 50% 50%);}
+	100%{clip-path: polygon(25% 0, 50% 0, 75% 0, 50% 50%);}
 }

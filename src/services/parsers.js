@@ -40,7 +40,6 @@ const clientUpload = multer({
 
 function isNotEmptyEnquire(data){
     let adjData = {};
-    //console.log("Data: ", data)
     for (var i = 0; i < Object.keys(data).length; i++) {
         /*if(Object.keys(data)[i] == "Order"){
 
@@ -103,8 +102,7 @@ function attachTextBody(adjData, photos, res){
         if(Object.keys(adjData)[i] == "Order"){
 
             const orderList = Object.values(adjData)[i]
-            
-            Object.keys(orderList).forEach(order => {
+            Object.values(orderList).forEach(order => {
                 const orderObj = JSON.parse(order)
                 for (const [key, value] of Object.entries(orderObj)){
                     textBody = textBody + "<p>" + key + ": " + value + "</p>";

@@ -33,7 +33,7 @@ serverConfig.app.post('/api/submitEnquire', parsers.clientUpload.array("clientPh
 
 /*--------------------- Admin Page API's ---------------------*/
 
-
+/*
 serverConfig.app.get('/login', (req, res) => { res.sendFile(path.join(__dirname, '/admin/login.html')) });
 
 serverConfig.app.get('/login/google', serverConfig.passport.authenticate('google', {
@@ -49,12 +49,12 @@ serverConfig.app.get('/admin', (req, res) => {
       } else {
         console.log('error');
       }*/
-})
+/*})*/
 
-serverConfig.app.post('/api/upload', parsers.galleryUpload.array("myFiles"), utils.uploadFiles);
+/*serverConfig.app.post('/api/upload', parsers.galleryUpload.array("myFiles"), utils.uploadFiles);
 
 serverConfig.app.post('/api/deleteGallery', (req, res) => { utils.deleteFromGallery(req, res) });
 
 //serverConfig.app.post('/api/adminGallery', (req, res) => { sqlQuery.getAllFromGallery(req, res) });
 serverConfig.app.post('/api/adminGallery', (req, res) => { utils.filterGallery( req, res)  });
-
+*/

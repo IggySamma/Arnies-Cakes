@@ -121,7 +121,6 @@ function fetchGallery(params = sectionNames){
     }))
     .then(res => {
       return new Promise((resolve) =>{
-        console.log(res.data)
         storeGallery(res.data.reverse()).then(() =>{
           setColumns();
         })       
@@ -359,6 +358,11 @@ function setNewParam(element){
 }
 
 carouselContainer.addEventListener('slide.bs.carousel', event => {
+  /*window.scroll({top:0, behavior: 'smooth'});*/
+  /*console.log(document.getElementsByClassName('active')[1])
+  document.getElementsByClassName('active')[1].scrollTop = 0;
+
+  document.getElementsByClassName('active')[1].scrollTo(0,0);*/
   window.history.replaceState({},"", (window.location.pathname + '?type=' + document.querySelector("[data-bs-slide-to='" + event.to + "']").innerHTML.replace(' ','')).toString())
   sectionNames = new URLSearchParams(window.location.search).get('type');
   galleryContainer = document.getElementById(sectionNames);
@@ -401,7 +405,7 @@ modalCarousel.addEventListener('slid.bs.carousel', event => {
 */
 modalCarousel.addEventListener('slide.bs.carousel', event => { 
   imageId = document.getElementsByClassName("modalWrapper")[event.to].id 
-  modalWidths()
+  /*modalWidths()*/
 });
 
 modalView.addEventListener('hide.bs.modal', () => {

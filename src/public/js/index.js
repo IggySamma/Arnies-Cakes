@@ -5,6 +5,7 @@ const gCarousel = new bootstrap.Carousel(document.querySelector('#carouselContai
   ride: false,
   keyboard: false,
 })
+
 /*
 const tCarousel = new bootstrap.Carousel(document.querySelector('#testimonialsCarousel'), {
   interval: 3000,

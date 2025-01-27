@@ -282,9 +282,7 @@ function updatePlaceholder(id) {
     const check = document.querySelectorAll("[id$='CheckBox']");
     const flavours = document.querySelectorAll("[class^='Flavours']");
 
-    //console.log(check)
     if (id != '') {
-        //console.log(cakeSize)
         if (document.getElementById(id + "CheckBox").checked) {
             incrementCheckBox.setAttribute("placeholder", incrementCheckBox.min);
             incrementCheckBox.value = incrementCheckBox.min;
@@ -320,7 +318,8 @@ function updatePlaceholder(id) {
         //Need to add additional logic if additional item with flavours is checked
         /*if (item.parentElement.className.startsWith("Flavours") && item.parentElement.parentElement.firstElementChild.checked == true){
             item.checked? counter++ : counter--;
-        } else*/ if (item.parentElement.parentElement.id != "mainHeader" ){
+        } else*/ 
+         if (item.parentElement.parentElement.id != "mainHeader" ){
             item.checked? counter++ : "";
         }
     })
@@ -342,6 +341,7 @@ form.addEventListener("submit", submitEnquire);
 
 function submitEnquire(file){
     file.preventDefault();
+    document.body.style.cursor = 'wait';
     document.getElementById("submit").disabled = true;
     
     const formData = new FormData();
@@ -380,7 +380,7 @@ function submitEnquire(file){
             document.getElementById("submit").disabled = false;
         });
     }
-
+    document.body.style.cursor = 'auto';
     //document.getElementById("submit").disabled = false; //debugging
 };
 
@@ -399,6 +399,7 @@ function validation(formData){
     const allergyNo = document.getElementById("AllergyNo");
     const allergyMessage = document.getElementById("AllergyInput");
     const photo = document.getElementById("files");
+    let cakeQuantity = 0;
 
     const emailRegEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const phoneRegEx = /^(?:08\d{8}|\+3538\d{8})$/;
@@ -479,8 +480,9 @@ function validation(formData){
                 "Item": "Cake",
                 "Flavour": item.parentElement.previousElementSibling.innerHTML,
                 "Cake Size": item.value,
-                "Quantity": item.parentElement.lastElementChild.value
+                "Quantity": item.parentElement.parentElement.lastElementChild.value
             }
+            cakeQuantity++;
             formData.append("Order", JSON.stringify(obj))
         }
     })
@@ -538,11 +540,13 @@ function validation(formData){
         formData.append("Allergies Information", allergyMessage.value);
     }
 
-    if (photo.value == ""){
+    if (photo.value == "" && cakeQuantity != 0){
         const error = new Error("Please attach example of designs you'd like for your order.");
         error.focus = "files";
         throw error;
-    } else {
+    } else if (photo.value == "" && cakeQuantity == 0){
+        formData.append("clientPhotos", "")
+    } else{
         for (let i = 0; i < photo.files.length; i++) {
             const file = photo.files[i];
             const validTypes = ["image/png", "image/jpeg", "image/jpg"];
