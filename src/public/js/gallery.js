@@ -358,11 +358,7 @@ function setNewParam(element){
 }
 
 carouselContainer.addEventListener('slide.bs.carousel', event => {
-  /*window.scroll({top:0, behavior: 'smooth'});*/
-  /*console.log(document.getElementsByClassName('active')[1])
-  document.getElementsByClassName('active')[1].scrollTop = 0;
-
-  document.getElementsByClassName('active')[1].scrollTo(0,0);*/
+  document.getElementsByClassName('galleryContainers')[0].scrollTo(0,0); /* Scroll to top on change */
   window.history.replaceState({},"", (window.location.pathname + '?type=' + document.querySelector("[data-bs-slide-to='" + event.to + "']").innerHTML.replace(' ','')).toString())
   sectionNames = new URLSearchParams(window.location.search).get('type');
   galleryContainer = document.getElementById(sectionNames);

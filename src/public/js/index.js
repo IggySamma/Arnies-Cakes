@@ -1,4 +1,5 @@
-const testimonialCaoursel = document.getElementById('testimonialsCarousel')
+const testimonialCaoursel = document.getElementById('testimonialsCarousel');
+const galContainer = document.getElementById('carouselContainer');
 
 const gCarousel = new bootstrap.Carousel(document.querySelector('#carouselContainer'), {
   touch: true,
@@ -28,7 +29,12 @@ const tCarousel = new bootstrap.Carousel(testimonialCaoursel, {
 //const tCarouselInstance = bootstrap.Carousel.getInstance(testimonialCaoursel)
 
 //tCarouselInstance.next()
-
+/*
+galContainer.addEventListener('slide.bs.carousel', event => {
+  console.log(document.getElementsByClassName('selectorContainer')[0].getBoundingClientRect())
+  const nav = document.getElementsByClassName('selectorContainer')[0].getBoundingClientRect();
+  window.scrollTo(0, -(nav.y));
+})*/
 
 
 testimonialCaoursel.addEventListener('slide.bs.carousel', event => {

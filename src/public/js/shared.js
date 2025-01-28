@@ -53,7 +53,7 @@ function buildNavBar() {
         id: "toggling",
         "data-bs-toggle": "collapse",
         "data-bs-target": "#navbarSupportedContent"
-    }, "navbar-toggler collapsed");
+    }, "navbar-toggler collapsed ms-2");
     const spanIcon = createElement("span", {}, "navbar-toggler-icon");
     toggleButton.appendChild(spanIcon);
     containerFluid.appendChild(toggleButton);

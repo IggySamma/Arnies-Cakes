@@ -278,13 +278,12 @@ a{color: black !important;}
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     overflow: hidden;
 }
 
 .card-text{
     font-size: 1.5rem;
-    flex-basis: 90%;
+    flex-basis: 80%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -337,17 +336,18 @@ a{color: black !important;}
     width: 100%;
     /*z-index: 1;*/
 }
-
+/*
 .rating{
     appearance: none;
     color: transparent;
+    background: transparent;
     width: 100%;
-    flex-basis: 10%;
+    flex-basis: 15%;
     overflow: hidden;
-    top: 0px;
 }
 
 .rating::before{
+    display:block;
     --percent: calc(var(--UpdateRating)/5*100%);
     content:"\2605\2605\2605\2605\2605";
     background: linear-gradient(90deg, gold var(--percent), rgba(0,0,0,0.2) var(--percent));
@@ -355,12 +355,34 @@ a{color: black !important;}
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 1.5rem;
-    display: flex;
+    font-size: 2rem;
     align-items: center; 
     justify-content: center;
     top: 0px;
+}*/
+
+.rating{
+    position: relative;
+    flex-basis: 20%;
+    height:100%;
+    color: rgba(0, 0, 0, 0.2);
+    font-size: 2rem;
 }
+
+.rating::before{
+    content: "\2605\2605\2605\2605\2605";
+    background: linear-gradient(90deg, gold var(--percent), rgba(0, 0, 0, 0.2) var(--percent));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    font-size: 2rem;
+}
+
 
 .testimonialUserImageContainer{
     height: 12vh;
