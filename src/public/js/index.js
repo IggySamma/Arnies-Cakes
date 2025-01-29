@@ -26,15 +26,29 @@ const tCarousel = new bootstrap.Carousel(testimonialCaoursel, {
   keyboard: true,
 })
 
-//const tCarouselInstance = bootstrap.Carousel.getInstance(testimonialCaoursel)
-
-//tCarouselInstance.next()
-/*
 galContainer.addEventListener('slide.bs.carousel', event => {
-  console.log(document.getElementsByClassName('selectorContainer')[0].getBoundingClientRect())
-  const nav = document.getElementsByClassName('selectorContainer')[0].getBoundingClientRect();
-  window.scrollTo(0, -(nav.y));
-})*/
+  scrollDisable = true;
+  document.getElementsByClassName('galleryHeader')[0].scrollIntoView({behavior: "instant"});
+
+  let to  = document.querySelector("[data-bs-slide-to='" + event.to + "']").innerHTML;
+  let from = document.querySelector("[data-bs-slide-to='" + event.from + "']");
+
+  let links = document.querySelectorAll('.carousel-button');
+  links.forEach(link => {
+    if (link.innerHTML == to){
+      link.classList.add('active');
+      from.classList.remove('active');
+    }
+  })
+})
+
+galContainer.addEventListener('slid.bs.carousel', () => {
+  /*const container = document.getElementById("navbar");
+  container.style.top = "-150px";*/
+  setTimeout(() => {
+    scrollDisable = false
+  },1000);
+})
 
 
 testimonialCaoursel.addEventListener('slide.bs.carousel', event => {

@@ -180,8 +180,12 @@ if (!(document.getElementById("navbar") === null || document.getElementById("nav
 }
 
 var scrollThreshold = 15;
+var scrollDisable = false;
 
 window.onscroll = function() {
+    if (scrollDisable){
+        return
+    }
     const container = document.getElementById("navbar");
 
     container.addEventListener("animationend", () => {

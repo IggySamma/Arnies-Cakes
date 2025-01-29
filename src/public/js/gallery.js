@@ -2,6 +2,13 @@ let sectionNames = new URLSearchParams(window.location.search).get('type');
 let galleryContainer = document.getElementById(sectionNames);
 galleryContainer.parentNode.classList.add("active")
 
+let links = document.querySelectorAll('.carousel-button');
+links.forEach(link => {
+  if (link.innerHTML.replace(' ','') == sectionNames){
+    link.classList.add('active');
+  }
+})
+
 let vwMax = 1175;
 let vw = window.innerWidth;
 let galleryWrapper;
@@ -362,6 +369,18 @@ carouselContainer.addEventListener('slide.bs.carousel', event => {
   window.history.replaceState({},"", (window.location.pathname + '?type=' + document.querySelector("[data-bs-slide-to='" + event.to + "']").innerHTML.replace(' ','')).toString())
   sectionNames = new URLSearchParams(window.location.search).get('type');
   galleryContainer = document.getElementById(sectionNames);
+
+  let to  = document.querySelector("[data-bs-slide-to='" + event.to + "']").innerHTML;
+  let from = document.querySelector("[data-bs-slide-to='" + event.from + "']");
+
+  links = document.querySelectorAll('.carousel-button');
+  links.forEach(link => {
+    if (link.innerHTML == to){
+      link.classList.add('active');
+      from.classList.remove('active');
+    }
+  })
+
   getGallery(sectionNames)
 })
 

@@ -56,6 +56,10 @@
     -webkit-animation: load ease-in 1s;
 }
 
+.img:hover{
+    cursor: pointer;
+}
+
 .modal-content{
     /*height: 90vh;*/
     height: 75vh;
@@ -91,6 +95,12 @@
 .modalWrapper{
     /*width: 100%;*/
     position: relative;
+}
+
+
+.carousel-button.active{
+    scale: 1.3;
+    color: #ECE3F0 !important;
 }
 
 .carousel-control-prev,
@@ -174,6 +184,12 @@
 }
 
 @media only screen and (min-width: 1175px){
+    .carousel-button:hover{
+        scale: 1.3;
+        color: #ECE3F0 !important;
+        cursor: pointer;
+    }
+
     .containerWrapper{
         position: relative;
         width: 100%;
