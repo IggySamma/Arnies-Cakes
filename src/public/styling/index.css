@@ -132,6 +132,7 @@ a{color: black !important;}
 
 .carouselGallery{
     object-fit: cover;
+    min-width: 100%;
     width: 100%;
     height: 40vh;
     margin-bottom: 0px !important;
@@ -157,6 +158,7 @@ a{color: black !important;}
 }
 
 /*------- Kids Gallery ----------*/
+
 .KidsCakesGallery4{object-position: 50% 100%;}
 
 .KidsCakesGallery7{object-position: 50% 30%;}

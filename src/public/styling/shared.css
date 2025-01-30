@@ -75,7 +75,7 @@ body{
   pointer-events: none;
   transform-origin: top left;
   transform: rotate(-30deg);
-  left: 30vw;
+  left: 37vw;
 }
 
 .footer{
@@ -92,7 +92,7 @@ body{
   display: inline-flex;
 }
 .footerLogo{
-  height: 80px;
+  height: 70px;
   aspect-ratio: 1 / 1;
 }
 
@@ -334,6 +334,10 @@ a:active {
 
 #navbarSupportedContent{
   overflow: visible !important;
+}
+
+@media only screen and (min-width: 400px){
+  .footerLogo{height: 80px;}
 }
 
 @media only screen and (min-width: 992px){  

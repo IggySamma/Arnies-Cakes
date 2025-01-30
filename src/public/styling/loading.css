@@ -1,9 +1,16 @@
-/*div * {
-	visibility: hidden;
+div{
+	visibility: hidden !important;
+	display: none !important;
 }
-*/
+
+nav{
+	visibility: hidden !important;
+	display: none !important;
+}
+
 
 .loading-container{
+	display: unset !important;
 	visibility: visible !important;
 	position: absolute;
 	width: 100vw;
@@ -17,17 +24,19 @@
 
 .loading-wrapper{
 	visibility: visible !important;
-	width: 100%;
-	height: 100%;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
 	position: relative;
 	text-align: center;
-	display: flex;
+	display: flex !important;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center; 
 }
 
-.loadingLogo{
+.loadingLogo{	
+	display: block !important;
 	visibility: visible !important;
 	position: relative;
 	width: 100%;  
@@ -41,6 +50,7 @@
 }
 
 .loading-wrapper p{
+	display: block !important;
 	visibility: visible !important;
 	font-size: 1.3rem;
 	text-wrap: break-word;

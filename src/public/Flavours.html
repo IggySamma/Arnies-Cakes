@@ -11,8 +11,8 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="./js/bootstrap.js"></script>
-
         <link rel="stylesheet" href="./styling/bootstrap.css">
+        <link rel="stylesheet" href="./styling/loading.css" id="loading">
         <link rel="stylesheet" href="./styling/flavours.css">
         <link rel="stylesheet" href="./styling/shared.css">
     </head>
@@ -20,13 +20,20 @@
         <nav id="navbar"></nav>
     </header>
     <body>
-        <!--<div class="loading-container m-0 p-0" id="loading">
+        <div class="loading-container m-0 p-0" id="loading">
             <div class="loading-wrapper">
                 <img class="loadingLogo m-1 p-1" src="./images/home logo.png">
                 <p>Please wait while we load the page, please make sure JavaScript isn't disabled.</p>
             </div>
         </div>
-        <script src="./js/loading.js"></script>-->
+        <script src="./js/loading.js" id="loading"></script>
+        <div class="loading-container m-0 p-0" id="loading">
+            <div class="loading-wrapper">
+                <img class="loadingLogo m-1 p-1" src="./images/home logo.png">
+                <p>Please wait while we load the page, please make sure JavaScript isn't disabled.</p>
+            </div>
+        </div>
+        <script src="./js/loading.js" id="loading"></script>
         <div class="flavoursContainer container-fluid m-0 p-0">
             <div class="row flavours" id="flavours">
             </div>
@@ -38,5 +45,5 @@
     <script src="./js/shared.js" onload="buildNavBar();"></script>
     <script src="./js/shared.js" onload="buildFooter();"></script>
     <script src="./js/flavours.js"></script>
-    <!--script src="./js/loading.js" onload="show();"></script>-->
+    <script src="./js/loading.js" onload="show();" id="loading"></script>
 </html>

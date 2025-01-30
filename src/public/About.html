@@ -12,6 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="./js/bootstrap.js"></script>
         <link rel="stylesheet" href="./styling/bootstrap.css">
+        <link rel="stylesheet" href="./styling/loading.css" id="loading">
         <link rel="stylesheet" href="./styling/index.css">
         <link rel="stylesheet" href="./styling/shared.css">
     </head>
@@ -19,13 +20,14 @@
         <!--[if lt IE 7]>
             <p class="browsehappy"> You are using an <strong>outdated</strong> browser. Please  <a href="#">upgrade your browser</a > to improve your experience.</p>
         <![endif]-->
-        <!--<div class="loading-container m-0 p-0" id="loading">
+        <div class="loading-container m-0 p-0" id="loading">
             <div class="loading-wrapper">
                 <img class="loadingLogo m-1 p-1" src="./images/home logo.png">
                 <p>Please wait while we load the page, please make sure JavaScript isn't disabled.</p>
             </div>
         </div>
-        <script src="./js/loading.js"></script>-->
+        <script src="./js/loading.js" id="loading"></script>
+
         <nav id="navbar"></nav>
         <div class="container-fluid m-0 p-0 overflow-x-hidden">      
             <div class="row aboutMe"> 
@@ -64,5 +66,5 @@
         <script src="./js/shared.js" onload="buildNavBar();"></script>
         <script src="./js/shared.js" onload="buildFooter();"></script>
         <script src="./js/index.js"></script>
-        <!--script src="./js/loading.js" onload="show();"></script>-->
+        <script src="./js/loading.js" onload="show();" id="loading"></script>
     </html>
