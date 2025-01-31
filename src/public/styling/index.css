@@ -142,7 +142,7 @@ a{color: black !important;}
     position: relative;
     /*height: 100%;*/
     /*min-width: 100%;*/
-    display: inline flex;
+    display: inline-flex;
     flex-direction: row; 
     padding-right: 0px !important;
 }
@@ -636,7 +636,7 @@ and (max-width: 935px){
 
     .WelcomeText{font-size: 2rem !important;}
 
-    .Gallery{width: 100%;}
+    /*.Gallery{max-width: 100%;}*/
 
     .carouselGallery{height: 90vh !important;}
 
@@ -767,11 +767,13 @@ and (max-width: 935px){
 /*----------------------------------------------------------*/
 @media screen and (min-width: 545px) and (max-width: 991px){
 
-    .Gallery{min-width: 100%;}
+/*    .Gallery{
+
+    }*/
 
     .KidsCakesGallery8{max-width: 49%;}
 
-    .CakesGallery2{min-width: 100%;}
+    .CakesGallery2{max-width: 49%;}
 
     .CakesGallery3{min-width: 100%;}
 
@@ -833,6 +835,7 @@ and (max-width: 935px){
         height: 100%;
         min-width: unset;
         display: block;
+        overflow: hidden;
     }
 
     .galleryContainer{
@@ -850,7 +853,7 @@ and (max-width: 935px){
     }
 
     .galleryDoubleInCol{
-        width: 100%;
+        max-width: 50%;
         height: 100%;
     }
 
