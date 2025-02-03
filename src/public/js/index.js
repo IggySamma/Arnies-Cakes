@@ -28,6 +28,8 @@ const tCarousel = new bootstrap.Carousel(testimonialCaoursel, {
 
 galContainer.addEventListener('slide.bs.carousel', event => {
   scrollDisable = true;
+  const container = document.getElementById("navbar");
+  container.style.top = "-150px";
   document.getElementsByClassName('galleryHeader')[0].scrollIntoView({behavior: "instant"});
 
   let to  = document.querySelector("[data-bs-slide-to='" + event.to + "']").innerHTML;

@@ -116,7 +116,7 @@ function getMainHeaders(){
         response.json().then(data =>{
             mainHeadings = data
             for(let i = 0; i < mainHeadings.length; i++){
-                tempFlavs = mainHeadings[i].Flavours.split(",")
+                tempFlavs = mainHeadings[i].Flavours/*.split(",")*/
                 let flavours = [];
                 for(let j = 0; j < tempFlavs.length; j++){
                     flavours.push(tempFlavs[j].replace("[","").replace("]","").replace('"',"").replace('"',"").replace(" ",""))

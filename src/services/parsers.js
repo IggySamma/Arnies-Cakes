@@ -7,14 +7,30 @@ const multer = require("multer");
 
 /*------------------------------- Gallery ------------------------------------*/
 
+/*------------------------------- MySql ----------------------------*/
+/*
 function getAllFromGallery(){
     globals.gallery = new globals.galleryConstructor
     serverConfig.connection.query('SELECT * FROM GALLERY ORDER BY ID ASC;',(error, result) => {
-        if(result === undefined){
-            res.json(new Error("Error rows is undefined"));
-        }else{
-            globals.gallery = JSON.parse(JSON.stringify(result));
+        
     }}); 
+}*/
+
+/*------------------------------- MySql2 ----------------------------*/
+
+function getAllFromGallery(){
+    globals.gallery = new globals.galleryConstructor
+
+    serverConfig.connection.execute(
+        'SELECT * FROM GALLERY ORDER BY ID ASC;',
+        function (err, results) {
+            if(err){
+                res.json(new Error(err));
+            }else{
+                globals.gallery = JSON.parse(JSON.stringify(results));
+            }
+        }
+    );
 }
 
 const galleryUpload = multer({ 
@@ -41,31 +57,9 @@ const clientUpload = multer({
 function isNotEmptyEnquire(data){
     let adjData = {};
     for (var i = 0; i < Object.keys(data).length; i++) {
-        /*if(Object.keys(data)[i] == "Order"){
-
-            const orderList = Object.values(data)[i]
-
-            orderList.forEach(order => {
-                const orderObj = JSON.parse(order)
-                for (const [key, value] of Object.entries(orderObj)){
-                    console.log(key, value)
-                    //adjData.push(key:value)
-                }
-            })
-
-
-
-
-            //console.log(JSON.parse(Object.values(data)[i]))  
-        }*/
         if (Object.values(data)[i] != "" && Object.values(data)[i] != "0") {
-                //adjData[Object.keys(data)[i].replace('CheckBox1','').replace('Input','')/*.charAt(0).toUpperCase()*//* + Object.keys(data)[i].replace('CheckBox1','').replace('Input','')/*.slice(1).toLowerCase()*//*] = Object.values(data)[i];
-                //adjData[Object.keys(data)[i].replace('CheckBox1','').replace('Input','')] = Object.values(data)[i];
-                adjData[Object.keys(data)[i]] = Object.values(data)[i];
-                //adjData.push(Object.keys(data)[i]:Object.values(data)[i])
+            adjData[Object.keys(data)[i]] = Object.values(data)[i];         
         }
-       //console.log("Key: ", Object.keys(data)[i], " Value: ", Object.values(data)[i])
-        
     };
     return adjData;
 };
@@ -118,7 +112,8 @@ function attachTextBody(adjData, photos, res){
     })
 }
 /*------------------------------- Flavours ------------------------------------*/
-
+/*------------------------------- MySql ----------------------------*/
+/*
 function getFlavours(){
     serverConfig.connection.query('SELECT * FROM flavours;', (error, result) => {
         if (error) {
@@ -127,6 +122,22 @@ function getFlavours(){
             storeFlavours(JSON.parse(JSON.stringify(result)));
         }
     })
+}*/
+
+/*------------------------------- MySql2 ----------------------------*/
+
+
+function getFlavours(){
+   serverConfig.connection.execute(
+        'SELECT * FROM flavours;',
+        function (err, results) {
+            if (err) {
+                console.log(err);
+            } else {
+                storeFlavours(JSON.parse(JSON.stringify(results)));
+            }
+        }
+   );
 }
 
 function storeFlavours(data){
@@ -135,12 +146,11 @@ function storeFlavours(data){
     const re = new RegExp(/["\[\]]|null/g)
 
     for(let i = 0; i < data.length; i++){
-        //console.log(String(data[i].Flavours).replace(re,""))
         globals.flavours.ID.push(data[i].ID);
         globals.flavours.Heading.push(data[i].Heading);
-        globals.flavours.Type.push(data[i].Type.replace(re,"").split(", "));
-        globals.flavours.Text.push(data[i].Text.replace(re,"").split(", "));
-        globals.flavours.Flavours.push(String(data[i].Flavours).replace(re,"").split(", "));
+        globals.flavours.Type.push(String(data[i].Type).replace(re,"").split(","));
+        globals.flavours.Text.push(String(data[i].Text).replace(re,"").split(","));
+        globals.flavours.Flavours.push(String(data[i].Flavours).replace(re,"").split(","));
     }
 
     console.log("Flavours stored");
@@ -148,8 +158,8 @@ function storeFlavours(data){
 
 /*------------------------------- Enquires Callender ------------------------------------*/
 
-
-
+/*------------------------------- MySql ----------------------------*/
+/*
 function getDisabledDates(){
     serverConfig.connection.query('SELECT * FROM disabledDates;', (error, result) => {
         if (error) {
@@ -159,6 +169,22 @@ function getDisabledDates(){
         }
     });
 }
+*/
+/*------------------------------- MySql2 ----------------------------*/
+
+function getDisabledDates(){
+   serverConfig.connection.execute(
+        'SELECT * FROM disabledDates;',
+        function (err, results) {
+            if (err) {
+                console.log(err)
+            } else {
+                storeDisabledDates(JSON.parse(JSON.stringify(results)));
+            }
+        }
+   );
+}
+
 
 function storeDisabledDates(data){
     globals.disabledDates = new globals.disabledDatesContructor
@@ -198,6 +224,8 @@ function checkDates(){
     console.log("Disabled dates cleaned up")
 };
 
+/*------------------------------- MySql ----------------------------*/
+/*
 function deleteDates(ID){
     serverConfig.connection.query('DELETE FROM disabledDates WHERE ID= ?;', ID ,(error, result) => {
         if(result === undefined){
@@ -206,6 +234,23 @@ function deleteDates(ID){
             getDisabledDates();
     }})
     console.log("Deleted old disabled date ID: " + ID)
+}*/
+
+/*------------------------------- MySql2 ----------------------------*/
+function deleteDates(ID){
+    serverConfig.connection.execute(
+        'DELETE FROM disabledDates WHERE ID= ?;', 
+        [ID],
+        function (err, results) {
+            if (err) {
+                console.log(err);
+                res.json(new Error(err));
+            } else {
+                getDisabledDates();
+                console.log("Deleted old disabled date ID: " + ID);
+            }
+        }
+    );
 }
 
 function checkMinimumDate(){

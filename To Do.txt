@@ -153,3 +153,22 @@ Joana's Cake pic is wrong
 Update Photos
 Modal ???
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+Flavours:
+
+
+Pictures same size as text
+**Complete - headers not go past picture, go to edge.
+**Complete - Text to be in centre along with Pricing for each flavour

@@ -118,7 +118,6 @@ function createFlavours(heading, type, text, flavours){
 		}
 
 		for(let i = 0; i < text.length; i++){
-			console.log(type[i] + " " + text[i]);
 			const textWrapper = createElement("div", {}, `row textAlign m-0 p-0`);
 			itemWrapper.appendChild(textWrapper);
 			

@@ -44,11 +44,28 @@ let sqlConfig = {
     host: process.env.SQL_HOST,
     user: process.env.SQL_USER,
     password: process.env.SQL_PASSWORD,
-    database: process.env.SQL_DATABASE
+    database: process.env.SQL_DATABASE,
+    port: process.env.SQL_PORT
+    /*authPlugins: {
+        'ssh-key-auth': function ({ password }) {
+          return function (pluginData) {
+            return getPrivate(key)
+              .then((key) => {
+                const response = encrypt(key, password, pluginData);
+                // continue handshake by sending response data
+                return response;
+              })
+              .catch((err) => {
+                // throw error to propagate error to connect/changeUser handlers
+              });
+          };
+        },
+      },*/
 };
 
-const mysql = require('mysql');
+//const mysql = require('mysql');
 //const mysql = require('mysql2/promise');
+const mysql = require('mysql2');
 const connection =  mysql.createConnection(sqlConfig);
 
 
