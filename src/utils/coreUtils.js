@@ -37,7 +37,7 @@ function deleteFromGallery(req,res){
     sqlQuery.deleteFromGalleryByID(data, res)
 };
 
-/*------------------------------- Enquires ------------------------------------*/
+/*------------------------------- Enquiries ------------------------------------*/
 
 function sendEmails(enqNum, data, textBody, photos, res, date){
     let photo = [];
@@ -46,10 +46,10 @@ function sendEmails(enqNum, data, textBody, photos, res, date){
         photo.push(attach);
     })
     
-    const enquireToClient = {
+    const EnquirieToClient = {
         from: "arniescakes@gmail.com",
         to: data.Email,
-        subject: "Arnies Cakes Enquire: Number - " + enqNum,
+        subject: "Arnies Cakes Enquirie: Number - " + enqNum,
         generateTextFromHTML: true,
         html: '<div style="margin:auto; padding:auto; position: relative; height: 300px; width: 300px;"><img src="cid:logo" style="height: 300px; width: 300px;"></div><div style="margin:auto; padding: 3px 3px 3px 3px; text-align: center; position: relative; top: 220px; height: auto; background-color: #D3BBDD; border-radius: 8px;"><p>' + textBody + '</p></div>',
         attachments: [
@@ -61,15 +61,15 @@ function sendEmails(enqNum, data, textBody, photos, res, date){
         }],
     };
 
-    serverConfig.emailTransporter.sendMail(enquireToClient, (error, response) => {
+    serverConfig.emailTransporter.sendMail(EnquirieToClient, (error, response) => {
         error ? console.log(error) : serverConfig.emailTransporter.close();
         eApi.getGmailLinkNStore(enqNum, date, res)
     });
 
-    const enquireToSelf = {
+    const EnquirieToSelf = {
         from: "arniescakes@gmail.com",
         to: "arniescakes@gmail.com",
-        subject: "NEW Enquire: Number - " + enqNum,
+        subject: "NEW Enquirie: Number - " + enqNum,
         generateTextFromHTML: true,
         html: '<div style="margin:auto; padding:auto; position: relative; height: 300px; width: 300px;"><img src="cid:logo" style="height: 300px; width: 300px;"></div><div style="margin:auto; padding: 3px 3px 3px 3px; text-align: center; position: relative; top: 220px; height: auto; background-color: #D3BBDD; border-radius: 8px;"><p>' + textBody + '</p></div>',
         attachments: [
@@ -81,7 +81,7 @@ function sendEmails(enqNum, data, textBody, photos, res, date){
         }],
     };
 
-    serverConfig.emailTransporter.sendMail(enquireToSelf, (error, response) => {
+    serverConfig.emailTransporter.sendMail(EnquirieToSelf, (error, response) => {
         error ? console.log(error) : serverConfig.emailTransporter.close();
     });
 };

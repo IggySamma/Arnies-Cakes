@@ -21,13 +21,11 @@ function loadCalender(){
     })
     .then(response => {
         response.json().then(data =>{
-            /*console.log(data)*/
             var flatpickrDate = document.getElementById("datetimeDate");
             var flatpickrEvent = document.getElementById("datetimeEvent");
             var flatpickrEvents = document.getElementsByClassName("flatpickrEvent")
 
-            flatpickrDate.flatpickr(/*".flatpickrDate", */{ 
-                //'inline' : true,
+            flatpickrDate.flatpickr({ 
                 altInput: true,
                 altFormat: "F j, Y",
                 allowInput: false,
@@ -46,26 +44,21 @@ function loadCalender(){
                         month: 'long',
                         day: 'numeric'
                       });
-                    //console.log("selectDate: " + selectedDate+ " Date: " + new Date(dateStr.split(' ', 1)).fp_incr(1))
-
                     const col = document.getElementById("Collection")
                     const del = document.getElementById("Delivery")
                     
                     col.removeAttribute("disabled")
                     del.removeAttribute("disabled")
 
-                    flatpickrEvent.flatpickr(/*".flatpickrEvent", */{ 
-                        //'inline' : true,
+                    flatpickrEvent.flatpickr({ 
                         altInput: true,
                         altFormat: "F j, Y, H:i",
-                        //altFormat: "Y-m-d, H:i",
                         allowInput: false,
                         defaultDate: new Date(dateStr.split(' ', 1)) + ", 12:00",
                         enableTime: true,
                         dateFormat: "Y-m-d, H:i",
                         minDate: new Date(dateStr.split(' ', 1)).fp_incr(-2),
                         maxDate: new Date(dateStr.split(' ', 1)).fp_incr(1),
-                        /*disable: new Date(dateStr.split(' ', 1)).fp_incr(1),*/
                         enable: [new Date(dateStr.split(' ', 1)).fp_incr(-2), new Date(dateStr.split(' ', 1)).fp_incr(-1), new Date(dateStr.split(' ', 1))],
                         minTime: "10:00",
                         maxTime: "20:00",
@@ -78,14 +71,10 @@ function loadCalender(){
                     });
 
                     flatpickrEvents[0].value = dateStr.split(' ', 1) + ", 12:00";
-                    /*flatpickrEvents[1].max = dateStr.split(' ', 1);*/
                     flatpickrEvents[1].value =formattedDate + ", 12:00";
-                    //flatpickrEvents[2].value = formattedDate + ", 12:00";
-
                 }
             });
-            flatpickrEvent.flatpickr(/*".flatpickrEvent", */{ 
-                //'inline' : true,
+            flatpickrEvent.flatpickr({ 
                 altInput: true,
                 altFormat: "F j, Y, H:i",
                 allowInput: false,
@@ -116,12 +105,12 @@ function getMainHeaders(){
         response.json().then(data =>{
             mainHeadings = data
             for(let i = 0; i < mainHeadings.length; i++){
-                tempFlavs = mainHeadings[i].Flavours/*.split(",")*/
+                tempFlavs = mainHeadings[i].Flavours
                 let flavours = [];
                 for(let j = 0; j < tempFlavs.length; j++){
                     flavours.push(tempFlavs[j].replace("[","").replace("]","").replace('"',"").replace('"',"").replace(" ",""))
                 }
-                createHeaders(mainHeadings[i].Type, "mainHeader", flavours, true, mainHeadings[i].minOrder);
+                createHeaders(mainHeadings[i].Type, "mainHeader", flavours, true, mainHeadings[i].minOrder, mainHeadings[i].Step);
             }
         })
     })
@@ -136,7 +125,7 @@ function getTreatsHeaders(){
         response.json().then(data =>{
             treatsHeadings = data
             for(let i = 0; i < treatsHeadings.length; i++){
-                createHeaders(treatsHeadings[i].Type, "subHeader", "", false, treatsHeadings[i].minOrder);
+                createHeaders(treatsHeadings[i].Type, "subHeader", "", false, treatsHeadings[i].minOrder, treatsHeadings[i].Step);
             }
         })
     })
@@ -148,7 +137,7 @@ getTreatsHeaders();
 
 /*-------------------------------------------------*/
 
-function createHeaders(item, heading, flavours, includeFlavours, minOrder) {
+function createHeaders(item, heading, flavours, includeFlavours, minOrder, step) {
     const header = document.getElementById(heading);
 
     const div = createElement("div", { id: item }, `${item} itemWrapper`);
@@ -169,7 +158,7 @@ function createHeaders(item, heading, flavours, includeFlavours, minOrder) {
     div.appendChild(label);
 
     if (includeFlavours) {
-        flavours.forEach(flavour => flavourHeaders(item, flavour, minOrder));
+        flavours.forEach(flavour => flavourHeaders(item, flavour, minOrder, step));
     } else {
         const inputSecond = createElement("input", {
             type: "number",
@@ -177,13 +166,14 @@ function createHeaders(item, heading, flavours, includeFlavours, minOrder) {
             for: `${item}CheckBox`,
             placeholder: "0",
             min: minOrder,
+            step: step,
             disabled: true
         }, "form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex");
         div.appendChild(inputSecond);
     }
 }
 
-function flavourHeaders(item, flavs, minOrder) {
+function flavourHeaders(item, flavs, minOrder, step) {
     const header = document.getElementById(item);
 
     const div = createElement("div", {}, `Flavours ${flavs}`);
@@ -210,16 +200,10 @@ function flavourHeaders(item, flavs, minOrder) {
         for: `${item}${flavs}CheckBox`,
         placeholder: "0",
         min: minOrder,
+        step: step,
         disabled: true
     }, "form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex");
-/*
-    if(item == "Cupcakes") {
-        inputSecond.stepUp(6);
-        inputSecond.stepDown(6);
-        inputSecond.value = 0;
-        inputSecond.placeholder = "0";
-    }
-*/
+
     if (item == "Cake") {
         const nDiv = createElement("div", {}, `btn-group cakeSizes`);
         div.appendChild(nDiv);
@@ -315,10 +299,6 @@ function updatePlaceholder(id) {
 
 
     check.forEach(item => {
-        //Need to add additional logic if additional item with flavours is checked
-        /*if (item.parentElement.className.startsWith("Flavours") && item.parentElement.parentElement.firstElementChild.checked == true){
-            item.checked? counter++ : counter--;
-        } else*/ 
          if (item.parentElement.parentElement.id != "mainHeader" ){
             item.checked? counter++ : "";
         }
@@ -334,12 +314,12 @@ function updatePlaceholder(id) {
 
 
 
-/* Submitting enquires */
+/* Submitting Enquiries */
 const form = document.getElementById("form");
-form.addEventListener("submit", submitEnquire);
+form.addEventListener("submit", submitEnquirie);
 
 
-function submitEnquire(file){
+function submitEnquirie(file){
     file.preventDefault();
     document.body.style.cursor = 'wait';
     document.getElementById("submit").disabled = true;
@@ -353,21 +333,18 @@ function submitEnquire(file){
         errors = true;
         if (error.focus == "datetimeDate" || error.focus == "datetimeEvent") {
             document.getElementById(error.focus).nextElementSibling.focus();  
+            document.body.style.cursor = 'auto';
+            document.getElementById("submit").disabled = false;
         } else {
             document.getElementById(error.focus).focus();
+            document.body.style.cursor = 'auto';
+            document.getElementById("submit").disabled = false;
         }
         alert(error);
-    } finally {
-        document.getElementById("submit").disabled = false;
-    }
+    } 
    
     if (!errors) {
-/*
-        for (var pair of formData.entries()) {
-            console.log(pair[0]+ ', ' + pair[1]); 
-        }
-*/
-        fetch('/api/submitEnquire', {
+        fetch('/api/submitEnquirie', {
             method: 'POST',
             body: formData,
         })
@@ -376,12 +353,11 @@ function submitEnquire(file){
             res.status === 406 ? alert("Mobile number is invalid") :
             res.status === 407 ? alert("Incorrect file attached. Only .Png, .Jpg, .Jpeg allowed") :
             res.status === 500 ? alert("Something went wrong, please check file is .Png | .Jpg | .Jpeg format. Otherwise please contact us on our social links instead") :
-            res.status === 200 ? window.location.href = "/enquiriesty.html" : 
-            document.getElementById("submit").disabled = false;
+            res.status === 200 ? window.location.href = "/enquiriesty" : 
+            document.getElementById("submit").disabled = false;     
+            document.body.style.cursor = 'auto';
         });
     }
-    document.body.style.cursor = 'auto';
-    //document.getElementById("submit").disabled = false; //debugging
 };
 
 function validation(formData){
@@ -394,7 +370,7 @@ function validation(formData){
     const event = document.getElementById("datetimeEvent");
     const order = document.querySelectorAll("[id$='CheckBox']");
     const cakeSize = document.querySelectorAll("[id$='CakeSize']");
-    const message = document.getElementById("EnquireInput");
+    const message = document.getElementById("EnquirieInput");
     const allergyYes = document.getElementById("AllergyYes");
     const allergyNo = document.getElementById("AllergyNo");
     const allergyMessage = document.getElementById("AllergyInput");
@@ -510,14 +486,14 @@ function validation(formData){
 
 
     if (counter == 0) {
-        const error = new Error("Please select the type of item you'd like to enquire about.");
+        const error = new Error("Please select the type of item you'd like to Enquirie about.");
         error.focus = "CakeCheckBox";
         throw error;
     }
 
     if (message.value == "") {
         const error = new Error("Please give me some details about the items you'd like to order.");
-        error.focus = "EnquireInput";
+        error.focus = "EnquirieInput";
         throw error;
     } else {
         formData.append("Message", message.value);

@@ -1,6 +1,7 @@
 let sectionNames = new URLSearchParams(window.location.search).get('type');
 let galleryContainer = document.getElementById(sectionNames);
 galleryContainer.parentNode.classList.add("active")
+window.history.replaceState({},"", (window.location.pathname.replace('.html','') + '?type=' + sectionNames).toString())
 
 let links = document.querySelectorAll('.carousel-button');
 links.forEach(link => {
@@ -12,7 +13,6 @@ links.forEach(link => {
 let vwMax = 1175;
 let vw = window.innerWidth;
 let galleryWrapper;
-//let galleryContainer;
 let colCounter = 0;
 let colLength = 0;
 let columnsSetAs;
@@ -62,17 +62,6 @@ let colLgImages = [
   "vph525", "vph425", "vph65", "vph425", "vph30 w50", "vph30 w51",
   "vph325", "vph45", "vph30", "vph275", "vph65" 
 ]
-
-/*let colLgImages = [
-  "vph40", "vph325", "vph45", "vph725", "vph425",
-  "vph325", "vph45", "vph50", "vph375", "vph425 w50", "vph425 w51",
-  "vph575", "vph425", "vph275", "vph525", "vph325",
-  "vph425", "vph40", "vph55", "vph40", "vph525",
-  "vph525", "vph40", "vph65", "vph475", "vph30 w50", "vph30 w51",
-  "vph325", "vph475", "vph30", "vph275", "vph65" 
-]
-*/
-
 
 window.addEventListener('resize', setColumns);
 
@@ -389,7 +378,6 @@ function activeId(id){
   if(document.getElementById(id) !== null && document.getElementById(id) !== undefined){
     document.getElementById(id).classList.add("active")
   }
-  modalWidths()
 }
 
 function buildModal(gallery){
@@ -412,15 +400,9 @@ function destoryModal(){
   let modalContent = document.getElementById("lightBoxContent")
   modalContent.style.aspectRatio = 0.75/1;
 }
-/*
-modalCarousel.addEventListener('slid.bs.carousel', event => { 
-  //imageId = document.getElementsByClassName("modalWrapper")[event.to].id 
-  //modalWidths()
-});
-*/
+
 modalCarousel.addEventListener('slide.bs.carousel', event => { 
   imageId = document.getElementsByClassName("modalWrapper")[event.to].id 
-  /*modalWidths()*/
 });
 
 modalView.addEventListener('hide.bs.modal', () => {
@@ -433,18 +415,3 @@ modalView.addEventListener('hide.bs.modal', () => {
 modalView.addEventListener('show.bs.modal', () => {
   buildModal(storedGallery)
 });
-/*
-function modalWidths(){
-  let imageContainer = document.getElementById(imageId).childNodes[0]
-  let modalContent = document.getElementById("lightBoxContent")
-  modalContent.style.removeProperty("animation");
-  modalContent.style.removeProperty("-webkit-animation");
-  let keyframes = document.createElement("style");
-  keyframes.type = "text/css";
-  keyframes.innerHTML = "@keyframes grow{0%{aspect-ratio: " + modalContent.style.aspectRatio + ";}100%{aspect-ratio: " + imageContainer.width/imageContainer.height + ";}}@-webkit-keyframes grow{0%{aspect-ratio: " + modalContent.style.aspectRatio + ";}100%{aspect-ratio: " + imageContainer.width/imageContainer.height + ";}}"
-  modalContent.appendChild(keyframes);
-  modalContent.style="animation: .5s grow linear; -webkit-animation: .5s grow linear"
-  modalContent.style.aspectRatio = imageContainer.width/imageContainer.height
-}
-
-*/

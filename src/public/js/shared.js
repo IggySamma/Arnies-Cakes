@@ -1,3 +1,7 @@
+if (!(window.location.pathname.includes('Gallery'))){
+    window.history.replaceState({},"", (window.location.pathname.replace('.html','')).toString())
+}
+
 function createElement(type, attributes = {}, classes = "", innerHTML = "") {
     const element = document.createElement(type);
     if (classes) element.className = classes;
@@ -67,16 +71,16 @@ function buildNavBar() {
 
   // Define the nav items and links
     const navItems = [
-        { class: "nav-item", linkClass: "nav-link active fontsize", href: "./Index.html", text: "Home" },
-        { class: "nav-item", linkClass: "nav-link fontsize", href: "./About.html", text: "About Me" },
+        { class: "nav-item", linkClass: "nav-link active fontsize", href: "./Index", text: "Home" },
+        { class: "nav-item", linkClass: "nav-link fontsize", href: "./About", text: "About Me" },
         { class: "nav-item dropdown", linkClass: "nav-link dropdown-toggle fontsize", href: "#", id: "navbarDropdown", role: "button", "data-bs-toggle": "dropdown", text: "Gallery" },
-        { class: "nav-item", linkClass: "nav-link fontsize", href: "./Flavours.html", text: "Flavours" },
-        { class: "nav-item", linkClass: "nav-link fontsize", href: "./Enquiries.html", text: "Enquiries", extra: createElement("img", { src: "./images/ribbon.png" }, "ribbon") }
+        { class: "nav-item", linkClass: "nav-link fontsize", href: "./Flavours", text: "Flavours" },
+        { class: "nav-item", linkClass: "nav-link fontsize", href: "./Enquiries", text: "Enquiries", extra: createElement("img", { src: "./images/ribbon.png" }, "ribbon") }
     ];
 
     // Add the logo item separately
     const logoItem = createElement("li", {}, "nav-item nav-logo m-0 p-0");
-    const logoLink = createElement("a", { href: "./Index.html" });
+    const logoLink = createElement("a", { href: "./Index" });
     const logoImg = createElement("img", { src: "./images/home logo.png" }, "navBarLogo");
     logoLink.appendChild(logoImg);
     logoItem.appendChild(logoLink);
@@ -94,10 +98,10 @@ function buildNavBar() {
             const dropDiv = createElement("div", {}, "dropdown-menu fontsize");
             const galleryItems = [
                 { href: "./Gallery.html?type=All", text: "All" },
+                { href: "./Gallery.html?type=KidsCakes", text: "Kids Cakes" },
                 { href: "./Gallery.html?type=Cakes", text: "Cakes" },
                 { href: "./Gallery.html?type=Cakepops", text: "Cakepops" },
                 { href: "./Gallery.html?type=Cupcakes", text: "Cupcakes" },
-                { href: "./Gallery.html?type=KidsCakes", text: "Kids Cakes" },
                 { href: "./Gallery.html?type=Treats", text: "Treats" }
             ];
             galleryItems.forEach(gItem => {
@@ -117,7 +121,7 @@ function buildFooter() {
     attach.appendChild(ul);
 
     const logoItem = createElement("li", {}, "nav-item nav-logo-footer");
-    const logoLink = createElement("a", { href: "./Index.html" });
+    const logoLink = createElement("a", { href: "./Index" });
     const logoImg = createElement("img", { src: "./images/home logo.png" }, "footerLogo");
     logoLink.appendChild(logoImg);
     logoItem.appendChild(logoLink);
@@ -147,7 +151,7 @@ const footerItems = [
     },
     {
         class: "nav-item footerEnquires my-auto rounded-5",
-        link: { href: "./Enquiries.html", text: "Enquiries" }
+        link: { href: "./Enquiries", text: "Enquiries" }
     }
 ];
 

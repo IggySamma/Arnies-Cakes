@@ -23,9 +23,9 @@ function getEmailID(query){
 }
 
 function getGmailLinkNStore(ID, date, res){ 
-    let messageID = getEmailID('label:sent subject:Arnies Cakes Enquire: Number - ' + ID);
+    let messageID = getEmailID('label:sent subject:Arnies Cakes Enquirie: Number - ' + ID);
     messageID.then(data => {
-        sqlQuery.storeEnquireLink(date, "https://mail.google.com/mail?authuser=arniescakes@gmail.com#all/" + data[0].threadId, ID, res);
+        sqlQuery.storeEnquirieLink(date, "https://mail.google.com/mail?authuser=arniescakes@gmail.com#all/" + data[0].threadId, ID, res);
     })
 }
 

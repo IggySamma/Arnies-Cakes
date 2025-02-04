@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="./styling/bootstrap.css">
         <link rel="stylesheet" href="./styling/loading.css" id="loading">
         <link rel="stylesheet" href="./styling/confirmDate.css">
-        <link rel="stylesheet" href="./styling/enquires.css">
+        <link rel="stylesheet" href="./styling/enquiries.css">
         <link rel="stylesheet" href="./styling/shared.css">
     </head>
     <header>
@@ -32,7 +32,7 @@
         </div>
         <script src="./js/loading.js" id="loading"></script>
 
-        <div class="container-fluid enquiresContainer m-0 p-0">
+        <div class="container-fluid EnquiriesContainer m-0 p-0">
             <div id="sideScroll"></div>
             <div class="ennquiresWrapper m-0 p-0">
                 <div class="row policyContainer m-0 p-3 pb-5">
@@ -55,8 +55,8 @@
                     </div>
                 </div>
                 <div class="row formContainer m-0 p-3">
-                    <div class="col userForm fontsizeEnquires m-0 p-3 rounded">
-                        <form id="form" action="/api/submitEnquire" method="POST" enctype="multipart/form-data" novalidate>
+                    <div class="col userForm fontsizeEnquiries m-0 p-3 rounded">
+                        <form id="form" action="/api/submitEnquirie" method="POST" enctype="multipart/form-data" novalidate>
                             <div class="mb-3">
                                 <label for="fullNameInput" class="form-label">Full Name:</label>
                                 <input type="text" class="form-control form-control-lg" id="fullNameInput" placeholder="Name" required>
@@ -80,7 +80,6 @@
                                 <label class="form-label">Date of Event:</label>
                                 <br>
                                 <input class="flatpickrDate form-control form-control-lg" id="datetimeDate" placeholder="Select Date..." required>
-                                <!--<input type="datetime-local" class="datetime rounded" id="datetime" step="900"/>-->
                                 <div class="invalid-feedback">Please select date of the event.</div>
                             </div>
                             <div class="mb-3">
@@ -99,13 +98,11 @@
                             <div class="mb-3">
                                     <label class="form-label">What items would you like?</label><br>
                                     <div id="mainHeader"></div>
-                                    <!--<label class="form-label" id="">Treats</label><br>-->
                                     <div id="subHeader"></div>
-
                             </div>
                             <div class="mb-3">
-                                <label for="enquireInput" class="form-label">Tell me more about the event the cake is for - Cake theme, colours, characters etc.</label>
-                                <textarea class="form-control form-control-lg" id="EnquireInput" rows="6" placeholder="My daughter loves Disney princesses, especially Cinderella and Ariel! She loves the colour pink, tiaras and sprinkles." required></textarea>
+                                <label for="EnquirieInput" class="form-label">Tell me more about the event the cake is for - Cake theme, colours, characters etc.</label>
+                                <textarea class="form-control form-control-lg" id="EnquirieInput" rows="6" placeholder="My daughter loves Disney princesses, especially Cinderella and Ariel! She loves the colour pink, tiaras and sprinkles." required></textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="allergy" class="form-label">Are there any allergies I should be aware of?</label>
@@ -128,7 +125,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="row enquiresSpacing m-0 p-0"></div>
+                <div class="row EnquiriesSpacing m-0 p-0"></div>
             </div>
             
             <div class="w-100 m-0 p-0"></div>
@@ -136,7 +133,7 @@
         
         </div>
     </body>
-    <script src="./js/enquires.js"></script>
+    <script src="./js/Enquiries.js"></script>
     <script src="./js/shared.js" onload="buildNavBar();"></script>
     <script src="./js/shared.js" onload="buildSideScroll();"></script>
     <script src="./js/shared.js" onload="buildFooter();"></script>

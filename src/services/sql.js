@@ -34,7 +34,7 @@ function insertNewToGallery(newType, newPath) {
 
    serverConfig.connection.execute(
         'INSERT INTO Gallery(Type, Path) Values(?, ?);', 
-        [newImage],
+        newImage,
         function (err, results) {
             if (err) {
                 console.log(err);
@@ -59,12 +59,12 @@ function deleteFromGalleryByID(data, res){
 }
 
 
-/*------------------------------- Enquires ------------------------------------*/
+/*------------------------------- Enquiries ------------------------------------*/
 
 /*--------------------------- Main Page Retrieve --------------------- */
 /*------------------------------- MySql  ----------------------------*/
 /*
-function getEnquiresMainHeaders(req, res){
+function getEnquiriesMainHeaders(req, res){
     serverConfig.connection.query('SELECT * FROM mainHeaders;', (error, result) => {
         if (error) { 
             throw error; 
@@ -75,7 +75,7 @@ function getEnquiresMainHeaders(req, res){
     })
 }
 
-function getEnquiresSubHHeaders(req, res){
+function getEnquiriesSubHHeaders(req, res){
     serverConfig.connection.query('SELECT * FROM subHeaders;', (error, result) => {
         if (error) { 
             throw error; 
@@ -89,7 +89,7 @@ function getEnquiresSubHHeaders(req, res){
 
 /*------------------------------- MySql2  ----------------------------*/
 
-function getEnquiresMainHeaders(req, res){
+function getEnquiriesMainHeaders(req, res){
    serverConfig.connection.execute(
         'SELECT * FROM mainHeaders;',
         function (err, results) {
@@ -104,7 +104,7 @@ function getEnquiresMainHeaders(req, res){
    );
 }
 
-function getEnquiresSubHHeaders(req, res){
+function getEnquiriesSubHHeaders(req, res){
     serverConfig.connection.execute(
         'SELECT * FROM subHeaders;',
         function (err, results) {
@@ -158,7 +158,7 @@ function insertDisabledDate(req, res, Date, isRange){
 
     serverConfig.connection.execute(
         'insert into disabledDates (Date, IsRange) values (?, ?);',
-        [updateData],
+        updateData,
         function (err, results) {
             if (err) {
                 console.log(err);
@@ -187,11 +187,11 @@ function deleteDisabledDate(req, res, ID){
     );
 }
 
-/*--------------------------- Enquire functions --------------------- */
+/*--------------------------- Enquirie functions --------------------- */
 
 /*------------------------------- MySql ----------------------------*/
 /*
-function storeNewEnquire(res, cb){
+function storeNewEnquirie(res, cb){
     return new Promise((resolve, reject) => {
         let storeLink = [
             date = "",
@@ -199,7 +199,7 @@ function storeNewEnquire(res, cb){
             Link = "",
             Completed = "No",
         ]
-        serverConfig.connection.query('INSERT INTO enquires(Date, Confirmed, Link, Completed) Values(?, ?, ?, ?);', storeLink, (error, result) => {
+        serverConfig.connection.query('INSERT INTO Enquiries(Date, Confirmed, Link, Completed) Values(?, ?, ?, ?);', storeLink, (error, result) => {
             if (error) { 
                 console.log(error);
                 res.sendStatus(500); 
@@ -210,13 +210,13 @@ function storeNewEnquire(res, cb){
 }
 
 
-function storeEnquireLink(newDate, newLink, nID, res){
+function storeEnquirieLink(newDate, newLink, nID, res){
     let storeLink = [
         date = newDate,
         Link = newLink,
         ID = nID,
     ]
-    serverConfig.connection.query('UPDATE enquires SET date = ?, Link = ? WHERE ID = ?;', storeLink, (error, result) => {
+    serverConfig.connection.query('UPDATE Enquiries SET date = ?, Link = ? WHERE ID = ?;', storeLink, (error, result) => {
         if (error) { 
             console.log(error);
             res.sendStatus(500); 
@@ -225,9 +225,9 @@ function storeEnquireLink(newDate, newLink, nID, res){
     })
 }
 
-function getAllEnquires(){
+function getAllEnquiries(){
     return new Promise((resolve, reject) => {
-        serverConfig.connection.query('SELECT * FROM enquires;', (error, result) => {
+        serverConfig.connection.query('SELECT * FROM Enquiries;', (error, result) => {
             if (error) { 
                 reject(error)
                 return
@@ -238,13 +238,13 @@ function getAllEnquires(){
     })
 }
 
-function updateEnquiresConfirmed(req, res, ID, Date, Confirmed){
+function updateEnquiriesConfirmed(req, res, ID, Date, Confirmed){
     let updateData = [
         ndate = Date,
         nConfirmed = Confirmed,
         nID = ID,
     ]
-    serverConfig.connection.query('UPDATE enquires SET Date = ?, Confirmed = ? WHERE ID = ?;', updateData, (error, result) => {
+    serverConfig.connection.query('UPDATE Enquiries SET Date = ?, Confirmed = ? WHERE ID = ?;', updateData, (error, result) => {
         if (error) { 
             throw error; 
         } else {
@@ -254,7 +254,7 @@ function updateEnquiresConfirmed(req, res, ID, Date, Confirmed){
     })
 }
 
-function removeEnquire(req, res, ID){
+function removeEnquirie(req, res, ID){
     serverConfig.connection.query('delete from mainHeaders where ID=;', ID, (error, result) => {
         if (error) { 
             throw error; 
@@ -268,7 +268,7 @@ function removeEnquire(req, res, ID){
 /*------------------------------- MySql2 ----------------------------*/
 
 /*fix me*/
-function storeNewEnquire(res, cb){
+function storeNewEnquirie(res, cb){
     return new Promise((resolve, reject) => {
         let storeLink = [
             date = "",
@@ -278,8 +278,8 @@ function storeNewEnquire(res, cb){
         ]
 
         serverConfig.connection.execute(
-            'INSERT INTO enquires(Date, Confirmed, Link, Completed) Values(?, ?, ?, ?);',
-            [storelink],
+            'INSERT INTO Enquiries(Date, Confirmed, Link, Completed) Values(?, ?, ?, ?);',
+            storeLink,
             function (err) {
                 if (err) {
                     console.log(err);
@@ -293,7 +293,7 @@ function storeNewEnquire(res, cb){
 }
 
 
-function storeEnquireLink(newDate, newLink, nID, res){
+function storeEnquirieLink(newDate, newLink, nID, res){
     let storeLink = [
         date = newDate,
         Link = newLink,
@@ -301,8 +301,8 @@ function storeEnquireLink(newDate, newLink, nID, res){
     ]
 
     serverConfig.connection.execute(
-        'UPDATE enquires SET date = ?, Link = ? WHERE ID = ?;', 
-        [storeLink],
+        'UPDATE Enquiries SET date = ?, Link = ? WHERE ID = ?;', 
+        storeLink,
         function (err, results) {
             if (err) {
                 console.log(err);
@@ -314,20 +314,32 @@ function storeEnquireLink(newDate, newLink, nID, res){
     );
 }
 
-function getAllEnquires(){
+function getAllEnquiries(){
     return new Promise((resolve, reject) => {
-        try {
+        /*try {
             const [results] = serverConfig.connection.execute(
-                'SELECT * FROM enquires;'
+                'SELECT * FROM Enquiries;'
             );
             resolve(JSON.parse(JSON.stringify(results)))
         } catch (err) {
             reject(err)
-        }
+        }*/
+
+        serverConfig.connection.execute(
+             'SELECT * FROM Enquiries;', 
+            function (err, results) {
+                if (err) {
+                    console.log(err);
+                    res.json(new Error(err));
+                } else {
+                    resolve(JSON.parse(JSON.stringify(results)))
+                }
+            }
+        );
     })
 }
 
-function updateEnquiresConfirmed(req, res, ID, Date, Confirmed){
+function updateEnquiriesConfirmed(req, res, ID, Date, Confirmed){
     let updateData = [
         ndate = Date,
         nConfirmed = Confirmed,
@@ -335,7 +347,7 @@ function updateEnquiresConfirmed(req, res, ID, Date, Confirmed){
     ]
 
     serverConfig.connection.execute(
-        'UPDATE enquires SET Date = ?, Confirmed = ? WHERE ID = ?;', 
+        'UPDATE Enquiries SET Date = ?, Confirmed = ? WHERE ID = ?;', 
         [updateData],
         function (err, results) {
             if (err) {
@@ -349,7 +361,7 @@ function updateEnquiresConfirmed(req, res, ID, Date, Confirmed){
     );
 }
 
-function removeEnquire(req, res, ID){
+function removeEnquirie(req, res, ID){
     serverConfig.connection.execute(
         'delete from mainHeaders where ID=;'
         [ID],
@@ -366,15 +378,15 @@ function removeEnquire(req, res, ID){
 }
 
 module.exports = {
-    getEnquiresMainHeaders,
-    getEnquiresSubHHeaders,
+    getEnquiriesMainHeaders,
+    getEnquiriesSubHHeaders,
     insertNewToGallery,
     deleteFromGalleryByID,
-    storeEnquireLink,
-    updateEnquiresConfirmed,
-    removeEnquire,
+    storeEnquirieLink,
+    updateEnquiriesConfirmed,
+    removeEnquirie,
     insertDisabledDate,
     deleteDisabledDate,
-    getAllEnquires,
-    storeNewEnquire
+    getAllEnquiries,
+    storeNewEnquirie
 }

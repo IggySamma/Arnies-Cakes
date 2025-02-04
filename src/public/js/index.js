@@ -7,16 +7,6 @@ const gCarousel = new bootstrap.Carousel(document.querySelector('#carouselContai
   keyboard: false,
 })
 
-/*
-const tCarousel = new bootstrap.Carousel(document.querySelector('#testimonialsCarousel'), {
-  interval: 3000,
-  touch:    true,
-  pause:    "hover",
-  ride:     false,//true
-  wrap:     true,
-  keyboard: false,
-})*/
-
 const tCarousel = new bootstrap.Carousel(testimonialCaoursel, {
   interval: 3000,
   touch:    true,
@@ -45,8 +35,6 @@ galContainer.addEventListener('slide.bs.carousel', event => {
 })
 
 galContainer.addEventListener('slid.bs.carousel', () => {
-  /*const container = document.getElementById("navbar");
-  container.style.top = "-150px";*/
   setTimeout(() => {
     scrollDisable = false
   },1000);
@@ -137,7 +125,6 @@ function updateBG(div, animeSpeed){
 function loadTestBG(){
   let bg = document.getElementsByClassName('testBGInView')
   let div = document.querySelectorAll('div.testimonialContainer.active')
-  //console.log(div[0].children[0].children[1].children[0].src)
   bg[0].style.removeProperty("background-image")
   bg[0].style="background-image: url('" + div[0].children[0].children[1].children[0].src + "');"
 }

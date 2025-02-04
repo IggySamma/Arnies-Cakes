@@ -1,4 +1,4 @@
-.enquiresContainer{
+.EnquiriesContainer{
     position: relative;
     height: 100%;
 }
@@ -47,7 +47,7 @@
     background-color: #D3BBDD;
 }
 
-.fontsizeEnquires {
+.fontsizeEnquiries {
     font-size: 22px;
     /*font-weight: bold;*/
 }
@@ -144,7 +144,7 @@ input[id="AllergyYes"]:checked ~ #AllergyInput {
         height: 100%;
     }
 
-    .enquiresSpacing{
+    .EnquiriesSpacing{
         flex: 1 1 0;
     }
 

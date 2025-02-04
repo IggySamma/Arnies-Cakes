@@ -11,7 +11,13 @@ serverConfig.app.listen(3000, () => {
     console.log(`Server started...`);
 });
 
-serverConfig.app.get('', function(req, res) { res.sendFile(path.join(__dirname, '/public/index.html'))});
+serverConfig.app.get('', function(req, res) { res.sendFile(path.join(__dirname, '/public/Index.html'))});
+serverConfig.app.get('/index', function(req, res) { res.sendFile(path.join(__dirname, '/public/Index.html'))});
+serverConfig.app.get('/about', function(req, res) { res.sendFile(path.join(__dirname, '/public/About.html'))});
+serverConfig.app.get('/gallery', function(req, res) { res.redirect('../Gallery.html?type=All')});
+serverConfig.app.get('/flavours', function(req, res) { res.sendFile(path.join(__dirname, '/public/Flavours.html'))});
+serverConfig.app.get('/enquiries', function(req, res) { res.sendFile(path.join(__dirname, '/public/Enquiries.html'))});
+serverConfig.app.get('/enquiriesty', function(req, res) { res.sendFile(path.join(__dirname, '/public/EnquiriesTY.html'))});
 
 /*------------------ Gallery API -----------------*/
 
@@ -21,15 +27,15 @@ serverConfig.app.post('/api/gallery', (req, res) => { utils.filterGallery( req, 
 
 serverConfig.app.get('/api/flavours', (req, res) => { res.json(globals.flavours) });
 
-/*---------------------- Enquires API's -------------------------*/
+/*---------------------- Enquiries API's -------------------------*/
 
 serverConfig.app.post('/api/disabledDates', (req, res) => { res.json(globals.disabledDates)})
 
-serverConfig.app.post('/api/getMainHeaders', (req, res) => { sqlQuery.getEnquiresMainHeaders(req, res) })
+serverConfig.app.post('/api/getMainHeaders', (req, res) => { sqlQuery.getEnquiriesMainHeaders(req, res) })
 
-serverConfig.app.post('/api/getTreatsHeaders', (req, res) => { sqlQuery.getEnquiresSubHHeaders(req, res) })
+serverConfig.app.post('/api/getTreatsHeaders', (req, res) => { sqlQuery.getEnquiriesSubHHeaders(req, res) })
 
-serverConfig.app.post('/api/submitEnquire', parsers.clientUpload.array("clientPhotos"), (req, res) => { parsers.enquires(req, res)});
+serverConfig.app.post('/api/submitEnquirie', parsers.clientUpload.array("clientPhotos"), (req, res) => { parsers.Enquiries(req, res)});
 
 /*--------------------- Admin Page API's ---------------------*/
 

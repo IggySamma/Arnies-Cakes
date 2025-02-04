@@ -52,9 +52,9 @@ const clientUpload = multer({
     },
 });
 
-/*------------------------------- Enquires ------------------------------------*/
+/*------------------------------- Enquiries ------------------------------------*/
 
-function isNotEmptyEnquire(data){
+function isNotEmptyEnquirie(data){
     let adjData = {};
     for (var i = 0; i < Object.keys(data).length; i++) {
         if (Object.values(data)[i] != "" && Object.values(data)[i] != "0") {
@@ -64,7 +64,7 @@ function isNotEmptyEnquire(data){
     return adjData;
 };
 
-function enquiresValidation(value1, value2){
+function EnquiriesValidation(value1, value2){
     let emailRegEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     let numberRegEx = /^(?:08\d{8}|\+3538\d{8})$/;
 
@@ -72,13 +72,13 @@ function enquiresValidation(value1, value2){
             value2.match(numberRegEx) === null ? "number" : "";
 }
 
-function enquires(req, res){
+function Enquiries(req, res){
     let photos = req.files;
     
-    let adjData = isNotEmptyEnquire(JSON.parse(JSON.stringify(req.body)));
+    let adjData = isNotEmptyEnquirie(JSON.parse(JSON.stringify(req.body)));
 
-    return enquiresValidation(adjData.Email, adjData.Number) === "email" ? res.sendStatus(405) : 
-            enquiresValidation(adjData.Email, adjData.Number) === "number" ? res.sendStatus(406) : 
+    return EnquiriesValidation(adjData.Email, adjData.Number) === "email" ? res.sendStatus(405) : 
+            EnquiriesValidation(adjData.Email, adjData.Number) === "number" ? res.sendStatus(406) : 
             photos === undefined ? res.sendStatus(407) : attachTextBody(adjData, photos, res);
 };
 
@@ -107,7 +107,7 @@ function attachTextBody(adjData, photos, res){
         }
     }
 
-    sqlQuery.storeNewEnquire(res, sqlQuery.getAllEnquires).then(ID => {
+    sqlQuery.storeNewEnquirie(res, sqlQuery.getAllEnquiries).then(ID => {
         utils.sendEmails(ID[ID.length -1].ID, adjData, textBody, photos, res, date);
     })
 }
@@ -156,7 +156,7 @@ function storeFlavours(data){
     console.log("Flavours stored");
 }
 
-/*------------------------------- Enquires Callender ------------------------------------*/
+/*------------------------------- Enquiries Callender ------------------------------------*/
 
 /*------------------------------- MySql ----------------------------*/
 /*
@@ -294,6 +294,6 @@ getFlavours();
 module.exports = {
     galleryUpload,
     clientUpload,
-    isNotEmptyEnquire,
-    enquires
+    isNotEmptyEnquirie,
+    Enquiries
 }
