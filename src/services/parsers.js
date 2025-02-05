@@ -4,6 +4,7 @@ const sqlQuery = require('./sql.js');
 const serverConfig = require('../config/config.js');
 const fs = require('fs');
 const multer = require("multer");
+const { text } = require('body-parser');
 
 /*------------------------------- Gallery ------------------------------------*/
 
@@ -85,6 +86,21 @@ function Enquiries(req, res){
 function attachTextBody(adjData, photos, res){
     let textBody = ""; 
     let date = ""
+    let start = false;
+    let finish = false;
+
+    let tableHeader = {
+        "Item": "Item",
+        "Quantity": "Quantity",
+        "Flavour": "Flavour",
+        "Cake Size": "Cake Size",
+    }
+    let tableData = {
+        "Item": [],
+        "Quantity": [],
+        "Flavour": [],
+        "Cake Size": [],
+    }
 
     if("Date of Collection" in adjData){
         date = adjData["Date of Collection"]
@@ -99,11 +115,42 @@ function attachTextBody(adjData, photos, res){
             Object.values(orderList).forEach(order => {
                 const orderObj = JSON.parse(order)
                 for (const [key, value] of Object.entries(orderObj)){
-                    textBody = textBody + "<p>" + key + ": " + value + "</p>";
+                    //console.log("Key to test: " + key)
+                    if(key in tableData){
+                        finish = false;
+                        start = true;
+                        tableData[key].push(value);
+                    }
+                    finish = true;
                 }
             })
+            if (start && finish) {
+                let activeKeys = Object.keys(tableData).filter(key => tableData[key].length > 0);
+                const maxLength = Math.max(...activeKeys.map(key => tableData[key].length));
+                //console.log(activeKeys);
+                //console.log(maxLength);
+                textBody = textBody + '<table>';
+
+                for (const key of Object.keys(tableHeader)) {
+                    textBody += '<th>' + (tableHeader[key] || "") + '</th>';
+                    //console.log("Header: " + key);
+                }
+
+                
+                for (let i = 0; i < maxLength; i++) {
+                    textBody += '<tr>';
+                    for (const key of activeKeys) {
+                        textBody += '<td>' + (tableData[key][i] || "") + '</td>';
+                        //console.log("TD: " + key, " value: " + tableData[key][i]);
+                    }
+                    textBody += '</tr>';
+                }
+                textBody += '</table>';
+                //console.log("after orer added: " + textBody);
+            }
+            //console.log("I ran here")
         } else {
-            textBody = textBody + "<p>" + Object.keys(adjData)[i] + ": " + Object.values(adjData)[i] + "</p>";
+            textBody += "<p><strong>" + Object.keys(adjData)[i] + ":</strong> " + Object.values(adjData)[i] + "</p>";
         }
     }
 

@@ -51,7 +51,8 @@ function sendEmails(enqNum, data, textBody, photos, res, date){
         to: data.Email,
         subject: "Arnies Cakes Enquirie: Number - " + enqNum,
         generateTextFromHTML: true,
-        html: '<div style="margin:auto; padding:auto; position: relative; height: 300px; width: 300px;"><img src="cid:logo" style="height: 300px; width: 300px;"></div><div style="margin:auto; padding: 3px 3px 3px 3px; text-align: center; position: relative; top: 220px; height: auto; background-color: #D3BBDD; border-radius: 8px;"><p>' + textBody + '</p></div>',
+        //html: '<div style="margin:auto; padding:auto; position: relative; height: 300px; width: 300px;"><img src="cid:logo" style="height: 300px; width: 300px;"></div><div style="margin:auto; padding: 3px 3px 3px 3px; text-align: center; position: relative; top: 220px; height: auto; background-color: #D3BBDD; border-radius: 8px;"><p>' + textBody + '</p></div>',
+        html: '<style>table {font-family: arial, sans-serif;border-collapse: collapse;width: 100%;}td, th {border: 1px solid #dddddd;text-align: left;padding: 8px;}tr:nth-child(even) {background-color: #ECE3F0;}</style><div style="margin:auto; padding:auto; position: relative; height: 300px; width: 300px;"><img src="cid:logo" style="height: 300px; width: 300px;"></div><div style="margin:auto; padding: 3px 3px 3px 3px; text-align: center; position: relative; top: 220px; height: auto; background-color: #D3BBDD; border-radius: 8px;"><p>' + textBody + '</p></div>',
         attachments: [
        ...photo,
         {
@@ -60,6 +61,7 @@ function sendEmails(enqNum, data, textBody, photos, res, date){
             cid: "logo"
         }],
     };
+    //console.log(EnquirieToClient.html);
 
     serverConfig.emailTransporter.sendMail(EnquirieToClient, (error, response) => {
         error ? console.log(error) : serverConfig.emailTransporter.close();

@@ -18,6 +18,7 @@ serverConfig.app.get('/gallery', function(req, res) { res.redirect('../Gallery.h
 serverConfig.app.get('/flavours', function(req, res) { res.sendFile(path.join(__dirname, '/public/Flavours.html'))});
 serverConfig.app.get('/enquiries', function(req, res) { res.sendFile(path.join(__dirname, '/public/Enquiries.html'))});
 serverConfig.app.get('/enquiriesty', function(req, res) { res.sendFile(path.join(__dirname, '/public/EnquiriesTY.html'))});
+serverConfig.app.get('/tests/email', function(req, res) { res.sendFile(path.join(__dirname, '/tests/sendEmail.html'))});
 
 /*------------------ Gallery API -----------------*/
 
