@@ -108,6 +108,8 @@ function attachTextBody(adjData, photos, res){
         date = adjData["Date of Delivery"]
     }
 
+    //console.log("AdjData:  " + adjData);
+    
     for (let i = 0; i < Object.keys(adjData).length; i++) {
         if(Object.keys(adjData)[i] == "Order"){
 
@@ -115,7 +117,7 @@ function attachTextBody(adjData, photos, res){
             Object.values(orderList).forEach(order => {
                 const orderObj = JSON.parse(order)
                 for (const [key, value] of Object.entries(orderObj)){
-                    //console.log("Key to test: " + key)
+                    //console.log("Key to test: " + key + " Value: " + value);
                     if(key in tableData){
                         finish = false;
                         start = true;
@@ -131,11 +133,21 @@ function attachTextBody(adjData, photos, res){
                 //console.log(maxLength);
                 textBody = textBody + '<table>';
 
-                for (const key of Object.keys(tableHeader)) {
-                    textBody += '<th>' + (tableHeader[key] || "") + '</th>';
+                
+                for (const key of Object.keys(activeKeys)) {
+                    //console.log(Object.keys(tableHeader)[key])
+                    //textBody += '<th>' + (tableHeader[key] || "") + '</th>';
+                    textBody += '<th>' + Object.keys(tableHeader)[key] + '</th>';
                     //console.log("Header: " + key);
                 }
+                
 
+                /*console.log(Object.values(tableData))
+                console.log(Object.values(tableData).length)*/
+
+                /*for (let i = 0; i < maxLength; i++) {
+                    textBody += '<th>' + Object.keys(tableHeader)[i] + '</th>';
+                }*/
                 
                 for (let i = 0; i < maxLength; i++) {
                     textBody += '<tr>';

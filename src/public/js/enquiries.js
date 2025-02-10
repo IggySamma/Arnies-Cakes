@@ -464,9 +464,17 @@ function validation(formData){
     })
 
     order.forEach(item => {
-        if (item.parentElement.parentElement.id != "mainHeader"  && !(item.id.startsWith("Cake")) && item.parentElement.className.startsWith("Flavours") && item.checked == true){
+        if (item.parentElement.parentElement.id != "Cake" && item.parentElement.parentElement.className.includes("itemWrapper") && item.checked == true){
             counter++;
-            console.log("test")
+            var obj = {
+                "Item": item.parentElement.parentElement.id,
+                "Flavour": item.nextElementSibling.innerHTML,
+                "Quantity": document.getElementById(item.id+1).value
+            }
+            formData.append("Order", JSON.stringify(obj))
+
+        } else if (item.parentElement.parentElement.id != "mainHeader"  && !(item.id.startsWith("Cake")) && item.parentElement.className.startsWith("Flavours") && item.checked == true){
+            counter++;
             var obj = {
                 "Item": item.parentElement.parentElement.id,
                 "Flavour": item.nextElementSibling.innerHTML,
