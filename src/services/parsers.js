@@ -107,8 +107,6 @@ function attachTextBody(adjData, photos, res){
     } else if("Date of Delivery" in adjData){
         date = adjData["Date of Delivery"]
     }
-
-    //console.log("AdjData:  " + adjData);
     
     for (let i = 0; i < Object.keys(adjData).length; i++) {
         if(Object.keys(adjData)[i] == "Order"){
@@ -117,7 +115,6 @@ function attachTextBody(adjData, photos, res){
             Object.values(orderList).forEach(order => {
                 const orderObj = JSON.parse(order)
                 for (const [key, value] of Object.entries(orderObj)){
-                    //console.log("Key to test: " + key + " Value: " + value);
                     if(key in tableData){
                         finish = false;
                         start = true;
@@ -129,38 +126,22 @@ function attachTextBody(adjData, photos, res){
             if (start && finish) {
                 let activeKeys = Object.keys(tableData).filter(key => tableData[key].length > 0);
                 const maxLength = Math.max(...activeKeys.map(key => tableData[key].length));
-                //console.log(activeKeys);
-                //console.log(maxLength);
-                textBody = textBody + '<table>';
 
+                textBody = textBody + '<table>';
                 
                 for (const key of Object.keys(activeKeys)) {
-                    //console.log(Object.keys(tableHeader)[key])
-                    //textBody += '<th>' + (tableHeader[key] || "") + '</th>';
                     textBody += '<th>' + Object.keys(tableHeader)[key] + '</th>';
-                    //console.log("Header: " + key);
                 }
-                
-
-                /*console.log(Object.values(tableData))
-                console.log(Object.values(tableData).length)*/
-
-                /*for (let i = 0; i < maxLength; i++) {
-                    textBody += '<th>' + Object.keys(tableHeader)[i] + '</th>';
-                }*/
                 
                 for (let i = 0; i < maxLength; i++) {
                     textBody += '<tr>';
                     for (const key of activeKeys) {
                         textBody += '<td>' + (tableData[key][i] || "") + '</td>';
-                        //console.log("TD: " + key, " value: " + tableData[key][i]);
                     }
                     textBody += '</tr>';
                 }
                 textBody += '</table>';
-                //console.log("after orer added: " + textBody);
             }
-            //console.log("I ran here")
         } else {
             textBody += "<p><strong>" + Object.keys(adjData)[i] + ":</strong> " + Object.values(adjData)[i] + "</p>";
         }

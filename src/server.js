@@ -20,6 +20,11 @@ serverConfig.app.get('/enquiries', function(req, res) { res.sendFile(path.join(_
 serverConfig.app.get('/enquiriesty', function(req, res) { res.sendFile(path.join(__dirname, '/public/EnquiriesTY.html'))});
 serverConfig.app.get('/tests/email', function(req, res) { res.sendFile(path.join(__dirname, '/tests/sendEmail.html'))});
 
+function isAuthenticated (req, res, next) {
+    if (req.session.user) next()
+    else next('route')
+}
+
 /*------------------ Gallery API -----------------*/
 
 serverConfig.app.post('/api/gallery', (req, res) => { utils.filterGallery( req, res) });
@@ -47,17 +52,7 @@ serverConfig.app.get('/login/google', serverConfig.passport.authenticate('google
     successRedirect: '/admin',
     failureRedirect: '/'
 }))
-
-serverConfig.app.get('/admin', (req, res) => { 
-  res.sendFile(path.join(__dirname, '/admin/index.html'))
-    /*if (serverConfig.checkUserLoggedIn(req)) {
-        console.log('User logged');
-        res.sendFile(path.join(__dirname, '/admin/index.html'))
-      } else {
-        console.log('error');
-      }*/
-/*})*/
-
+*/
 /*serverConfig.app.post('/api/upload', parsers.galleryUpload.array("myFiles"), utils.uploadFiles);
 
 serverConfig.app.post('/api/deleteGallery', (req, res) => { utils.deleteFromGallery(req, res) });
@@ -65,3 +60,59 @@ serverConfig.app.post('/api/deleteGallery', (req, res) => { utils.deleteFromGall
 //serverConfig.app.post('/api/adminGallery', (req, res) => { sqlQuery.getAllFromGallery(req, res) });
 serverConfig.app.post('/api/adminGallery', (req, res) => { utils.filterGallery( req, res)  });
 */
+
+serverConfig.app.get(
+    "/login",
+    serverConfig.passport.authenticate("google", {
+        scope: ["https://www.googleapis.com/auth/plus.login", "email"],
+    })
+)
+
+serverConfig.app.get(  
+    "/oauth2callback",
+    serverConfig.passport.authenticate("google", { failureRedirect: "/login" }),
+    function (req, res) {
+    // Successful authentication
+    /*console.log(req.session);
+    console.log(req.session.passport.user.id);
+    console.log(req.session.passport.user.emails);
+    console.log(req.session.passport.user.emails[0]);
+    console.log(req.session.passport.user.emails[0].value);
+    console.log(req.session.passport.user.emails[0].verified);*/
+
+    let id = req.session.passport.user.id
+    
+    req.session.regenerate((err) => {
+        if (err) next(err)
+
+        req.session.user = id
+        console.log("Saving ?: " + req.session.user)
+        console.log("Saving ?: " + req.sessionID)
+        req.session.save((err) => {
+            if (err) return next(err)
+            res.redirect("/admin")
+        })
+    })
+})
+
+serverConfig.app.get('/admin', isAuthenticated, (req, res) => { 
+    console.log(req.session.user)
+    console.log(req.sessionID)
+    res.sendFile(path.join(__dirname, '/admin/index.html')) 
+});
+/*
+serverConfig.app.get('/admin', (req, res) => { 
+    console.log(req.session)
+    console.log(req.sessionID)
+    res.sendFile(path.join(__dirname, '/admin/index.html')) 
+    /*res.redirect("/")*//*
+});*/
+
+
+serverConfig.app.get('/logout', (req, res, next) => {
+    req.session.user = null;
+    req.session.save((err) => {
+        if (err) next(err)
+        res.redirect('/')
+    });
+});

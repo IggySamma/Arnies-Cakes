@@ -1,4 +1,3 @@
-//require('dotenv').config();
 require('dotenv').config({path:__dirname + '/.env'})
 
 /*-------------------Gmail Access setup -------------------------*/
@@ -10,6 +9,12 @@ const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 const {authenticate} = require('@google-cloud/local-auth');
 const process = require('process');
+
+
+const passport = require('passport');
+const session = require('express-session');
+//const session = require('cookie-session');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const oauth2Client = new OAuth2(
     process.env.GMAIL_CLIENT_ID, // ClientID
@@ -46,25 +51,8 @@ let sqlConfig = {
     password: process.env.SQL_PASSWORD,
     database: process.env.SQL_DATABASE,
     port: process.env.SQL_PORT
-    /*authPlugins: {
-        'ssh-key-auth': function ({ password }) {
-          return function (pluginData) {
-            return getPrivate(key)
-              .then((key) => {
-                const response = encrypt(key, password, pluginData);
-                // continue handshake by sending response data
-                return response;
-              })
-              .catch((err) => {
-                // throw error to propagate error to connect/changeUser handlers
-              });
-          };
-        },
-      },*/
 };
 
-//const mysql = require('mysql');
-//const mysql = require('mysql2/promise');
 const mysql = require('mysql2');
 const connection =  mysql.createConnection(sqlConfig);
 
@@ -82,59 +70,136 @@ app.use(express.static(path.join(__dirname, '../admin/')));
 
 /*-------------------------- Admin Setup ----------------------- */
 
-var passport = require('passport');
-var GoogleStrategy = require('passport-google-oidc');
-//var db = require('../db');
-var router = express.Router();
-//var logger = require('morgan');
-var session = require('express-session');
-/*
-var authr = router.get('/admin', function(req, res, next) {
-    res.render(path.join(__dirname, '../admin/index.html'));
-});
+/*app.use(cookieSession({
+    name: 'google-auth-session',
+    keys: ['key1', 'key2']
+}))*/
 
-app.use('/', authr)
-*/
-app.use(session({
-    secret: process.env.GMAIL_SECRET,
+const adminPaths = ['/login', '/admin', '/oauth2callback']
+
+adminPaths.forEach( (path) => {
+    app.use(path, session({
+        secret: `${process.env.COOKIE_SECRET}`,
+        name: 'arniescakes',
+        resave: false,
+        saveUninitialized: true,
+        rolling: true,
+        cookie: {
+            maxAge: 1 * 60 * 60 * 1000, //1 hour
+            sameSite: true,
+        }
+    }))
+    app.use(path, passport.initialize());
+    app.use(path, passport.session());
+})
+
+/*app.use('/login', session({
+    secret: `${process.env.COOKIE_SECRET}`,
+    name: 'arniescakes',
     resave: false,
-    saveUninitialized: false,
-    /*cookie: {
-        secure: true
-    }*/
-    //store: new SQLiteStore({ db: 'sessions.db', dir: './var/db' })
+    saveUninitialized: true,
+    rolling: true,
+    cookie: {
+        maxAge: 1 * 60 * 60 * 1000, //1 hour
+        sameSite: true,
+    }
 }));
+app.use('/login', passport.initialize());
+app.use('/login', passport.session());
 
-passport.use(new GoogleStrategy({
-    clientID: process.env.GMAIL_CLIENT_ID,
-    clientSecret: process.env.GMAIL_CLIENT_SECRET,
-    callbackURL: '/login/google',
-    scope: [ 'profile' ]
-    }, function verify(issuer, profile, cb) {
-    if(profile.id !== process.env.GMAIL_ID){
-        cb('Incorrect credentials. IP Logged :)');
+app.use('/admin', session({
+    secret: `${process.env.COOKIE_SECRET}`,
+    name: 'arniescakes',
+    resave: false,
+    saveUninitialized: true,
+    rolling: true,
+    cookie: {
+        maxAge: 1 * 60 * 60 * 1000, //1 hour
+        sameSite: true,
+    }
+}));
+app.use('/admin', passport.initialize());
+app.use('/admin', passport.session());
+app.use('/oauth2callback', session({
+    secret: `${process.env.COOKIE_SECRET}`,
+    name: 'arniescakes',
+    resave: false,
+    saveUninitialized: true,
+    rolling: true,
+    cookie: {
+        maxAge: 1 * 60 * 60 * 1000, //1 hour
+        sameSite: true,
+    }
+}));
+app.use('/oauth2callback', passport.initialize());
+app.use('/oauth2callback', passport.session());*/
+
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+        done(null, user);
+});
+
+passport.use(
+    new GoogleStrategy(
+        {
+            clientID: `${process.env.GMAIL_CLIENT_ID}`,
+            clientSecret: `${process.env.GMAIL_CLIENT_SECRET}`,
+            callbackURL: `${process.env.GMAIL_REDIRECTS}`,
+        },
+        async function(token, tokenSecret, profile, done) {
+            try {
+                /*console.log("Token: " + token)
+                console.log("Token Secret: " + tokenSecret)
+                console.log("Profile: " + profile)*/
+                return done(null, profile);
+            } catch (err) {
+                return done(err, null);
+            }
+        }
+    )
+)
+/*
+function authenticateUser(user){
+    if(user.id == process.env.GMAIL_ID && user.emails[0].value == process.env.GMAIL_USER && user.emails[0].verified == true){
+        return true
     } else {
-        console.log(profile.id);
-        cb(null, profile)
-    }}
-));
-
-passport.serializeUser(function(user, cb) {
-    process.nextTick(function() {
-        cb(null, { id: user.id, username: user.username, name: user.name });
-    });
-});
-
-passport.deserializeUser(function(user, cb) {
-    process.nextTick(function() {
-        return cb(null, user);
-    });
-});
-
-function checkUserLoggedIn(req, res, next) {
-    console.log(req.session)
-    return req.session;
+        return false
+    }
 }
+*/
+function isAuthenticated (req, res, next) {
+    if (req.session.user) next()
+    else next('route')
+}
+
+/*app.get('/admin', (req, res) => { 
+    const OAUTH_SCOPE = [
+        'https://www.googleapis.com/auth/userinfo.email',
+        'https://www.googleapis.com/auth/userinfo.profile',
+    ];
+    //const state = "some_state";
+    const scopes = OAUTH_SCOPE.join(" ");
+    const OAUTH_CONSENT_SCEEN_URL = `${process.env.GMAIL_AUTH_URL}?client_id=${process.env.GMAIL_CLIENT_ID}
+    &redirect_uri=${process.env.GMAIL_REDIRECTS}
+    &response_type=token
+    &scope=${scopes}`
+   
+    res.redirect(OAUTH_CONSENT_SCEEN_URL)
+})
+
+app.get('/oauth2callback', async (req, res) => {
+    console.log("Req: " + req)
+})*/
+
+
+
+  
+
+
+
 /*-------------------------- Config Expotrs ----------------------- */
 
 module.exports = {
@@ -143,7 +208,8 @@ module.exports = {
     connection,
     app,
     oauth2Client,
+    express,
     passport,
-    checkUserLoggedIn,
-    express
+    /*authenticateUser,*/
+    isAuthenticated,
 }
