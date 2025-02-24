@@ -70,69 +70,70 @@ app.use(express.static(path.join(__dirname, '../admin/')));
 
 /*-------------------------- Admin Setup ----------------------- */
 
-/*app.use(cookieSession({
-    name: 'google-auth-session',
-    keys: ['key1', 'key2']
-}))*/
+const memoryStore = new session.MemoryStore();
+
+app.use(
+    session({
+        secret: `${process.env.COOKIE_SECRET}`,
+        name: 'arniescakes',
+        resave: true,
+        saveUninitialized: false,
+        /*rolling: true,*/
+        cookie: {
+            httpOnly: true,
+            secure: false,
+            maxAge: 1 * 60 * 60 * 500, //30 mins
+            sameSite: true,
+        },
+        genid: function(req) {
+            return genuuid()
+        },
+        store: memoryStore,
+    })
+)
+
 
 const adminPaths = ['/login', '/admin', '/oauth2callback']
 
 adminPaths.forEach( (path) => {
-    app.use(path, session({
-        secret: `${process.env.COOKIE_SECRET}`,
-        name: 'arniescakes',
-        resave: false,
-        saveUninitialized: true,
-        rolling: true,
-        cookie: {
-            maxAge: 1 * 60 * 60 * 1000, //1 hour
-            sameSite: true,
-        }
-    }))
     app.use(path, passport.initialize());
     app.use(path, passport.session());
 })
 
-/*app.use('/login', session({
-    secret: `${process.env.COOKIE_SECRET}`,
-    name: 'arniescakes',
-    resave: false,
-    saveUninitialized: true,
-    rolling: true,
-    cookie: {
-        maxAge: 1 * 60 * 60 * 1000, //1 hour
-        sameSite: true,
-    }
-}));
-app.use('/login', passport.initialize());
-app.use('/login', passport.session());
+function genuuid() { // Public Domain/MIT
+    var d = new Date().getTime();//Timestamp
+    var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16;//random number between 0 and 16
+        if(d > 0){//Use timestamp until depleted
+            r = (d + r)%16 | 0;
+            d = Math.floor(d/16);
+        } else {//Use microseconds since page-load if supported
+            r = (d2 + r)%16 | 0;
+            d2 = Math.floor(d2/16);
+        }
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+}
 
-app.use('/admin', session({
-    secret: `${process.env.COOKIE_SECRET}`,
-    name: 'arniescakes',
-    resave: false,
-    saveUninitialized: true,
-    rolling: true,
-    cookie: {
-        maxAge: 1 * 60 * 60 * 1000, //1 hour
-        sameSite: true,
+function authenticateUser(req) {
+    if (req.session.user === process.env.GMAIL_ID){
+        return true
+    } else {
+        return false
     }
-}));
-app.use('/admin', passport.initialize());
-app.use('/admin', passport.session());
-app.use('/oauth2callback', session({
-    secret: `${process.env.COOKIE_SECRET}`,
-    name: 'arniescakes',
-    resave: false,
-    saveUninitialized: true,
-    rolling: true,
-    cookie: {
-        maxAge: 1 * 60 * 60 * 1000, //1 hour
-        sameSite: true,
+}
+
+function isAuthenticated (req) {
+    if(Object.keys(memoryStore.sessions).includes(req.sessionID)){
+        const sessionData = JSON.parse(memoryStore.sessions[req.sessionID])
+        if (sessionData.user === process.env.GMAIL_ID){ 
+            return true
+        }
+    } else {
+        return false
     }
-}));
-app.use('/oauth2callback', passport.initialize());
-app.use('/oauth2callback', passport.session());*/
+}
 
 passport.serializeUser(function(user, done) {
     done(null, user);
@@ -151,9 +152,6 @@ passport.use(
         },
         async function(token, tokenSecret, profile, done) {
             try {
-                /*console.log("Token: " + token)
-                console.log("Token Secret: " + tokenSecret)
-                console.log("Profile: " + profile)*/
                 return done(null, profile);
             } catch (err) {
                 return done(err, null);
@@ -161,44 +159,6 @@ passport.use(
         }
     )
 )
-/*
-function authenticateUser(user){
-    if(user.id == process.env.GMAIL_ID && user.emails[0].value == process.env.GMAIL_USER && user.emails[0].verified == true){
-        return true
-    } else {
-        return false
-    }
-}
-*/
-function isAuthenticated (req, res, next) {
-    if (req.session.user) next()
-    else next('route')
-}
-
-/*app.get('/admin', (req, res) => { 
-    const OAUTH_SCOPE = [
-        'https://www.googleapis.com/auth/userinfo.email',
-        'https://www.googleapis.com/auth/userinfo.profile',
-    ];
-    //const state = "some_state";
-    const scopes = OAUTH_SCOPE.join(" ");
-    const OAUTH_CONSENT_SCEEN_URL = `${process.env.GMAIL_AUTH_URL}?client_id=${process.env.GMAIL_CLIENT_ID}
-    &redirect_uri=${process.env.GMAIL_REDIRECTS}
-    &response_type=token
-    &scope=${scopes}`
-   
-    res.redirect(OAUTH_CONSENT_SCEEN_URL)
-})
-
-app.get('/oauth2callback', async (req, res) => {
-    console.log("Req: " + req)
-})*/
-
-
-
-  
-
-
 
 /*-------------------------- Config Expotrs ----------------------- */
 
@@ -210,6 +170,7 @@ module.exports = {
     oauth2Client,
     express,
     passport,
-    /*authenticateUser,*/
+    authenticateUser,
     isAuthenticated,
+    memoryStore,
 }

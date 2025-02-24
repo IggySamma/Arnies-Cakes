@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+  </head>
+  <body>
+	<script>
+		fetch('/loginRedirect', {
+			method: "GET",
+			credentials: "include"
+		}).then(response => {
+			if (response.redirected) {
+				window.location.href = response.url;
+			}
+		}).catch(error => console.error("OAuth error:", error));
+	</script>
+  </body>
+</html>

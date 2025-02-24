@@ -20,11 +20,6 @@ serverConfig.app.get('/enquiries', function(req, res) { res.sendFile(path.join(_
 serverConfig.app.get('/enquiriesty', function(req, res) { res.sendFile(path.join(__dirname, '/public/EnquiriesTY.html'))});
 serverConfig.app.get('/tests/email', function(req, res) { res.sendFile(path.join(__dirname, '/tests/sendEmail.html'))});
 
-function isAuthenticated (req, res, next) {
-    if (req.session.user) next()
-    else next('route')
-}
-
 /*------------------ Gallery API -----------------*/
 
 serverConfig.app.post('/api/gallery', (req, res) => { utils.filterGallery( req, res) });
@@ -71,43 +66,39 @@ serverConfig.app.get(
 serverConfig.app.get(  
     "/oauth2callback",
     serverConfig.passport.authenticate("google", { failureRedirect: "/login" }),
-    function (req, res) {
-    // Successful authentication
-    /*console.log(req.session);
-    console.log(req.session.passport.user.id);
-    console.log(req.session.passport.user.emails);
-    console.log(req.session.passport.user.emails[0]);
-    console.log(req.session.passport.user.emails[0].value);
-    console.log(req.session.passport.user.emails[0].verified);*/
-
-    let id = req.session.passport.user.id
-    
-    req.session.regenerate((err) => {
-        if (err) next(err)
-
-        req.session.user = id
-        console.log("Saving ?: " + req.session.user)
-        console.log("Saving ?: " + req.sessionID)
-        req.session.save((err) => {
+    function (req, res, next) {
+        let id = req.session.passport.user.id
+        
+        req.session.regenerate((err) => {
             if (err) return next(err)
-            res.redirect("/admin")
+            req.session.user = id
+            if(serverConfig.authenticateUser(req)){
+                req.session.save((err) => {
+                    if (err) return next(err)     
+                    return res.redirect('/loginSuccess')
+                })
+            } else {
+                res.redirect('/')
+            }
+
         })
-    })
 })
 
-serverConfig.app.get('/admin', isAuthenticated, (req, res) => { 
-    console.log(req.session.user)
-    console.log(req.sessionID)
-    res.sendFile(path.join(__dirname, '/admin/index.html')) 
+serverConfig.app.get('/admin',(req, res) => { 
+    if (serverConfig.isAuthenticated(req)) {
+        res.sendFile(path.join(__dirname, '/admin/index.html')) 
+    } else {
+        res.redirect("/login")
+    }
 });
-/*
-serverConfig.app.get('/admin', (req, res) => { 
-    console.log(req.session)
-    console.log(req.sessionID)
-    res.sendFile(path.join(__dirname, '/admin/index.html')) 
-    /*res.redirect("/")*//*
-});*/
 
+serverConfig.app.get('/loginSuccess', (req, res) => {
+    res.sendFile(path.join(__dirname, '/admin/saveCookies.html')) 
+})
+
+serverConfig.app.get('/loginRedirect', (req, res) => {
+    res.redirect('/admin')
+})
 
 serverConfig.app.get('/logout', (req, res, next) => {
     req.session.user = null;
