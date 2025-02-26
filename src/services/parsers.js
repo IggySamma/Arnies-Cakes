@@ -8,17 +8,6 @@ const { text } = require('body-parser');
 
 /*------------------------------- Gallery ------------------------------------*/
 
-/*------------------------------- MySql ----------------------------*/
-/*
-function getAllFromGallery(){
-    globals.gallery = new globals.galleryConstructor
-    serverConfig.connection.query('SELECT * FROM GALLERY ORDER BY ID ASC;',(error, result) => {
-        
-    }}); 
-}*/
-
-/*------------------------------- MySql2 ----------------------------*/
-
 function getAllFromGallery(){
     globals.gallery = new globals.galleryConstructor
 
@@ -52,6 +41,14 @@ const clientUpload = multer({
             cb(undefined, true);
     },
 });
+
+function uploadFiles(req, res) {
+    for (var i = 0; i < req.files.length; i++) {
+        sqlQuery.insertNewToGallery(req.body.name, "/gallery/" + req.files[i].filename);
+    }
+    getAllFromGallery();
+    res.redirect('/admin')
+}
 
 /*------------------------------- Enquiries ------------------------------------*/
 
@@ -152,20 +149,6 @@ function attachTextBody(adjData, photos, res){
     })
 }
 /*------------------------------- Flavours ------------------------------------*/
-/*------------------------------- MySql ----------------------------*/
-/*
-function getFlavours(){
-    serverConfig.connection.query('SELECT * FROM flavours;', (error, result) => {
-        if (error) {
-            throw error;
-        } else {
-            storeFlavours(JSON.parse(JSON.stringify(result)));
-        }
-    })
-}*/
-
-/*------------------------------- MySql2 ----------------------------*/
-
 
 function getFlavours(){
    serverConfig.connection.execute(
@@ -197,20 +180,6 @@ function storeFlavours(data){
 }
 
 /*------------------------------- Enquiries Callender ------------------------------------*/
-
-/*------------------------------- MySql ----------------------------*/
-/*
-function getDisabledDates(){
-    serverConfig.connection.query('SELECT * FROM disabledDates;', (error, result) => {
-        if (error) {
-            throw error;
-        } else {
-            storeDisabledDates(JSON.parse(JSON.stringify(result)));
-        }
-    });
-}
-*/
-/*------------------------------- MySql2 ----------------------------*/
 
 function getDisabledDates(){
    serverConfig.connection.execute(
@@ -264,19 +233,7 @@ function checkDates(){
     console.log("Disabled dates cleaned up")
 };
 
-/*------------------------------- MySql ----------------------------*/
-/*
-function deleteDates(ID){
-    serverConfig.connection.query('DELETE FROM disabledDates WHERE ID= ?;', ID ,(error, result) => {
-        if(result === undefined){
-            res.json(new Error("Error rows is undefined"));
-        }else{
-            getDisabledDates();
-    }})
-    console.log("Deleted old disabled date ID: " + ID)
-}*/
 
-/*------------------------------- MySql2 ----------------------------*/
 function deleteDates(ID){
     serverConfig.connection.execute(
         'DELETE FROM disabledDates WHERE ID= ?;', 
@@ -335,5 +292,6 @@ module.exports = {
     galleryUpload,
     clientUpload,
     isNotEmptyEnquirie,
-    Enquiries
+    Enquiries,
+    uploadFiles
 }

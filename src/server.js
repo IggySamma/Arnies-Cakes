@@ -38,23 +38,7 @@ serverConfig.app.post('/api/getTreatsHeaders', (req, res) => { sqlQuery.getEnqui
 
 serverConfig.app.post('/api/submitEnquirie', parsers.clientUpload.array("clientPhotos"), (req, res) => { parsers.Enquiries(req, res)});
 
-/*--------------------- Admin Page API's ---------------------*/
-
-/*
-serverConfig.app.get('/login', (req, res) => { res.sendFile(path.join(__dirname, '/admin/login.html')) });
-
-serverConfig.app.get('/login/google', serverConfig.passport.authenticate('google', {
-    successRedirect: '/admin',
-    failureRedirect: '/'
-}))
-*/
-/*serverConfig.app.post('/api/upload', parsers.galleryUpload.array("myFiles"), utils.uploadFiles);
-
-serverConfig.app.post('/api/deleteGallery', (req, res) => { utils.deleteFromGallery(req, res) });
-
-//serverConfig.app.post('/api/adminGallery', (req, res) => { sqlQuery.getAllFromGallery(req, res) });
-serverConfig.app.post('/api/adminGallery', (req, res) => { utils.filterGallery( req, res)  });
-*/
+/*--------------------- Admin oAuth2---------------------*/
 
 serverConfig.app.get(
     "/login",
@@ -84,14 +68,6 @@ serverConfig.app.get(
         })
 })
 
-serverConfig.app.get('/admin',(req, res) => { 
-    if (serverConfig.isAuthenticated(req)) {
-        res.sendFile(path.join(__dirname, '/admin/index.html')) 
-    } else {
-        res.redirect("/login")
-    }
-});
-
 serverConfig.app.get('/loginSuccess', (req, res) => {
     res.sendFile(path.join(__dirname, '/admin/saveCookies.html')) 
 })
@@ -107,3 +83,32 @@ serverConfig.app.get('/logout', (req, res, next) => {
         res.redirect('/')
     });
 });
+
+serverConfig.app.get('/admin',(req, res) => { 
+    if (serverConfig.isAuthenticated(req)) {
+        res.sendFile(path.join(__dirname, '/admin/index.html')) 
+    } else {
+        res.redirect("/login")
+    }
+});
+
+/*--------------------- Admin Page API's ---------------------*/
+
+serverConfig.app.post('/api/upload', parsers.galleryUpload.array("myFiles"), (req, res) => {
+    if (serverConfig.isAuthenticated(req)) {
+        parsers.uploadFiles(req, res)
+    } else {
+        res.redirect("/login")
+    }
+});
+
+serverConfig.app.post('/api/deleteGallery', (req, res) => { 
+    if (serverConfig.isAuthenticated(req)) {
+        utils.deleteFromGallery(req, res) 
+    } else {
+        res.redirect("/login")
+    }
+});
+
+serverConfig.app.post('/api/adminGallery', (req, res) => { utils.filterGallery( req, res)  });
+

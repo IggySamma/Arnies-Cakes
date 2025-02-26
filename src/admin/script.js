@@ -79,9 +79,12 @@ function setActive(ID){
 }
 
 function deleteAlert(){
+    activeID = document.getElementsByClassName('carousel-item active')[0].id
     const response = confirm("Are you sure you want to delete ?");
+    console.log(activeId)
     const parentPath = document.getElementById('img' + activeID.replace('carousel', ''));
     const pathSrc = parentPath.src.substring(parentPath.src.lastIndexOf('/'));
+
     if (response) {
         deletePicture(activeID.replace('carousel', ''), pathSrc);
     } else {}
