@@ -1,0 +1,244 @@
+.contain{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+.containerWrapper{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /*top: 50px;*/
+    top: 50px;
+}
+
+.viewWrapper{
+    position: relative;
+    width: 100%;
+    height: 98%;
+    overflow: hidden;
+}
+
+.uploadForm{
+    position: relative;
+    top: 50px;
+    width: 100%;
+}
+
+.form{
+    background-color: #D3BBDD;
+}
+
+
+.galleryContainers{
+    position: relative;
+    height: 100%;
+    /*width: 100%;*/
+    /*display: flex;*/
+    overflow-y: scroll;
+    overflow-x: hidden;
+    /*scroll-behavior: smooth;*/
+}
+
+.carItemContainer{
+    position: relative;
+    display: flex !important;
+    background-color: white;
+    width: 100%;
+}
+
+.galleryWrapper{
+    position: relative;
+    height: inherit;
+}
+
+.galleryWrapperLG{
+    position: relative;
+    height: inherit;
+}
+
+.img{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    padding: 2px;
+    animation: load ease-in 1s ;
+    -webkit-animation: load ease-in 1s;
+}
+
+.img:hover{
+    cursor: pointer;
+}
+
+.modal-content{
+    /*height: 90vh;*/
+    height: 75vh;
+    max-width: 95vw;
+    width: auto;
+    background-color: #ECE3F0;
+    position: relative;
+}
+
+.modalContainer{
+    height: 100%;
+    /*width: 100%;*/
+    border-radius: inherit;
+}
+
+.carousel-item{
+    height: inherit;
+    width: inherit;
+    border-radius: inherit;
+}
+
+
+.modalImages{
+    height: 100%;
+    width: 95%;
+    object-fit: scale-down;
+    /*border-radius: inherit;*/
+    display: block;
+    margin: auto;
+
+}
+
+.modalWrapper{
+    /*width: 100%;*/
+    position: relative;
+}
+
+
+.carousel-button.active{
+    scale: 1.3;
+    color: #ECE3F0 !important;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    opacity: 1;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    color: black;
+}
+
+.btn-close{
+    color: black;
+    filter: none !important;
+    opacity: 1;
+    font-size: 1.2rem;
+}
+
+.close-button{
+    display: none;
+}
+
+@keyframes load{
+    0%{
+        opacity: 0%;
+    }
+    100%{
+        opacity: 100%;
+    } 
+}
+
+@-webkit-keyframes load{
+    0%{
+        opacity: 0%;
+    }
+    100%{
+        opacity: 100%;
+    }
+}
+
+@media only screen and (min-width: 992px){
+    .viewWrapper{
+        position: relative;
+        width: 100%;
+        /*height: 85vh;*/
+        height: 99%;
+        /*top: 30px;*/
+        
+    }
+    /*.carousel-control-next, .carousel-control-next:hover {
+        background: linear-gradient(90deg, 70%, #D3BBDD);
+    }
+    
+    .carousel-control-prev, .carousel-control-prev:hover  {
+        background: linear-gradient(90deg, #D3BBDD,#ECE3F0 );
+    }*/
+    
+    .carousel-control-prev,
+    .carousel-control-next {
+        opacity: 0.5;
+    }
+    .close-button{
+        display: block;
+    }
+    .close-button-mobile{
+        display: none;
+    }
+
+    .galleryContainers{
+        width: 100%;
+    }
+
+    .modalContainer{
+        width: 50vw;
+    }
+
+    .modal-content{
+        height: 95vh;
+    }
+    
+}
+
+@media only screen and (min-width: 1175px){
+    .carousel-button:hover{
+        scale: 1.3;
+        color: #ECE3F0 !important;
+        cursor: pointer;
+    }
+
+    .containerWrapper{
+        position: relative;
+        width: 100%;
+        height: 100%;
+        top: 80px;
+    }
+
+    .galleryContainers{
+        position: relative;
+        height: 100%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        /*display: inline-flex;*/
+    }
+
+    .w50{
+        position: relative;
+        width: 50%;
+        display: inline-flex;
+        flex-direction: row;
+    }
+
+    .w51{
+        position: relative;
+        width: 50%;
+        display: inline-flex;
+        flex-direction: row;
+    }
+
+    .uploadForm{
+        position: relative;
+        top: 100px;
+        width: 100%;
+    }
+    
+    .form{
+        background-color: #D3BBDD;
+    }
+
+}

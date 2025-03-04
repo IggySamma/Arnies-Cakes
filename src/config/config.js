@@ -2,7 +2,7 @@ require('dotenv').config({path:__dirname + '/.env'})
 
 /*-------------------Gmail Access setup -------------------------*/
 
-const fs = require('fs').promises;
+
 const path = require('path');
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
@@ -66,7 +66,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../public/')));
 app.use(express.static('/gallery/'));
-app.use(express.static(path.join(__dirname, '../admin/')));
+app.use('/admin/', express.static('admin'));
+
 
 /*-------------------------- Admin Setup ----------------------- */
 

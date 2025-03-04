@@ -33,7 +33,7 @@ function loadCalender(){
                 enableTime: false,
                 dateFormat: "Y-m-d",
                 minDate: data.MinDate,
-                maxDate: new Date().fp_incr(186),
+                maxDate: new Date().fp_incr(730),
                 disable: data.Date,
                 disableMobile: false,
                 plugins: [new confirmDatePlugin({})],

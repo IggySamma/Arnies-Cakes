@@ -84,9 +84,60 @@ serverConfig.app.get('/logout', (req, res, next) => {
     });
 });
 
+/*--------------------- Admin Page's ---------------------*/
+
 serverConfig.app.get('/admin',(req, res) => { 
     if (serverConfig.isAuthenticated(req)) {
-        res.sendFile(path.join(__dirname, '/admin/index.html')) 
+        /*res.sendFile(path.join(__dirname, '/admin/index.html')) */
+        res.redirect('../admin/Gallery.html?type=All')
+    } else {
+        res.redirect("/login")
+    }
+});
+
+serverConfig.app.get('/admin/index',(req, res) => { 
+    if (serverConfig.isAuthenticated(req)) {
+        /*res.sendFile(path.join(__dirname, '/admin/index.html')) */
+        res.redirect('../admin/Gallery.html?type=All')
+    } else {
+        res.redirect("/login")
+    }
+});
+
+serverConfig.app.get('/admin/gallery',(req, res) => { 
+    if (serverConfig.isAuthenticated(req)) {
+        res.redirect('../admin/Gallery.html?type=All')
+    } else {
+        res.redirect("/login")
+    }
+});
+serverConfig.app.get('/admin/catalog',(req, res) => { 
+    if (serverConfig.isAuthenticated(req)) {
+        res.sendFile(path.join(__dirname, '/admin/catalog.html')) 
+    } else {
+        res.redirect("/login")
+    }
+});
+
+serverConfig.app.get('/admin/flavours',(req, res) => { 
+    if (serverConfig.isAuthenticated(req)) {
+        res.sendFile(path.join(__dirname, '/admin/flavours.html')) 
+    } else {
+        res.redirect("/login")
+    }
+});
+
+serverConfig.app.get('/admin/order',(req, res) => { 
+    if (serverConfig.isAuthenticated(req)) {
+        res.sendFile(path.join(__dirname, '/admin/order.html')) 
+    } else {
+        res.redirect("/login")
+    }
+});
+
+serverConfig.app.get('/admin/photos',(req, res) => { 
+    if (serverConfig.isAuthenticated(req)) {
+        res.sendFile(path.join(__dirname, '/admin/photos.html')) 
     } else {
         res.redirect("/login")
     }
@@ -104,7 +155,7 @@ serverConfig.app.post('/api/upload', parsers.galleryUpload.array("myFiles"), (re
 
 serverConfig.app.post('/api/deleteGallery', (req, res) => { 
     if (serverConfig.isAuthenticated(req)) {
-        utils.deleteFromGallery(req, res) 
+        parsers.deleteFromGallery(req, res) 
     } else {
         res.redirect("/login")
     }

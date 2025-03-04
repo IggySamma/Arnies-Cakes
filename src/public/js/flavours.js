@@ -7,6 +7,7 @@ function getFlavours(){
 			for(let i = 0; i < data.ID.length; i++) {
 				createFlavours(data.Heading[i], data.Type[i], data.Text[i], data.Flavours[i])
 			}
+			createFlavours("OrderNow")
         })
 
     })
@@ -72,7 +73,13 @@ function createFlavours(heading, type, text, flavours){
 			textWrapper.appendChild(h4);
 		}
 
+		const textWrapper = createElement("div", {}, `row textAlign m-0 p-0`);
+		itemWrapper.appendChild(textWrapper);
 
+		const h4 = createElement("h4", {}, ``);
+		h4.innerHTML = "hidden";
+		h4.style.visibility = "hidden";
+		textWrapper.appendChild(h4);
 	} else if (heading === "Sub") {
 
 		let items = document.getElementById("treatsItem")
@@ -127,6 +134,26 @@ function createFlavours(heading, type, text, flavours){
 		}
 
 
+	} else if (heading == "OrderNow") {
+			let itemWrapper = document.getElementById("itemWrapper")
+
+			const textWrapper = createElement("div", {}, `row textAlign m-0 p-0`);
+			itemWrapper.appendChild(textWrapper);
+	
+			const h4 = createElement("h4", {}, ``);
+			h4.innerHTML = "hidden";
+			h4.style.visibility = "hidden";
+			textWrapper.appendChild(h4);
+
+			const sep = createElement("div", {}, `col heading2`);
+			itemWrapper.appendChild(sep);
+
+			const a = createElement("a", {"href":"./Enquiries"}, ``);
+			sep.appendChild(a)
+	
+			const sepText = createElement("h3", {"href":"./Enquiries"}, ``);
+			sepText.innerHTML = "Order Now!";
+			a.appendChild(sepText);
 	}
 }
 

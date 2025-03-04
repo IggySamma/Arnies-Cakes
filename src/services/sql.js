@@ -19,10 +19,10 @@ function insertNewToGallery(newType, newPath) {
    );
 }
 
-function deleteFromGalleryByID(data, res){
+function deleteFromGalleryByID(ID, res){
     serverConfig.connection.execute(
         'DELETE FROM Gallery WHERE ID= ?;', 
-        [data.ID],
+        [ID],
         function (err, results) {
             if (err) {
                 console.log(err);
@@ -34,6 +34,31 @@ function deleteFromGalleryByID(data, res){
     );
 }
 
+function checkGalleryByID(ID, path){
+    return new Promise((resolve, reject) => {
+        let check = [
+            ID = ID,
+            Path = path,
+        ]
+    
+        serverConfig.connection.execute(
+            'SELECT * FROM Gallery WHERE ID= ? AND Path= ? LIMIT 1;',
+            check,
+            function (err, results){
+                if (err){
+                    console.log(err)
+                    return reject(false);
+                } else {
+                    if((results[0].ID == ID) && (results[0].Path == path)){
+                        return resolve(true);
+                    } else {
+                        return resolve(false);
+                    }
+                }
+            }
+        );
+    })
+}
 
 /*------------------------------- Enquiries ------------------------------------*/
 
@@ -221,5 +246,6 @@ module.exports = {
     insertDisabledDate,
     deleteDisabledDate,
     getAllEnquiries,
-    storeNewEnquirie
+    storeNewEnquirie,
+    checkGalleryByID
 }

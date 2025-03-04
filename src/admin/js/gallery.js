@@ -1,6 +1,5 @@
 let sectionNames = new URLSearchParams(window.location.search).get('type');
 let galleryContainer = document.getElementById(sectionNames);
-console.log(sectionNames)
 galleryContainer.parentNode.classList.add("active")
 window.history.replaceState({},"", (window.location.pathname.replace('.html','') + '?type=' + sectionNames).toString())
 
@@ -416,3 +415,27 @@ modalView.addEventListener('hide.bs.modal', () => {
 modalView.addEventListener('show.bs.modal', () => {
   buildModal(storedGallery)
 });
+
+function deleteAlert(){
+  const response = confirm("Are you sure you want to delete ?");
+  const parentPath = document.getElementsByClassName('ID:' + imageId)[0].src;;
+  const pathSrc = parentPath.substring(parentPath.lastIndexOf('/'));
+  
+  if (response) {
+      deletePicture(imageId, pathSrc.substring(1));
+  }
+}
+
+function deletePicture(ID, Path){
+  fetch('/api/deleteGallery', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ID, Path}),
+  }).then((res) => {
+      if(res.status === 200){
+          location.reload();
+      } else {
+          console.log(res);
+      }
+  }); 
+}

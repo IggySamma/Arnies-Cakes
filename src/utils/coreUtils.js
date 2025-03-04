@@ -1,8 +1,6 @@
 const globals = require('../globals/globals.js');
 const serverConfig = require('../config/config.js');
-const sqlQuery = require('../services/sql.js');
 const eApi = require('../services/externalAPIs.js');
-const parser = require('../services/parsers.js');
 
 /*------------------------------- Gallery ------------------------------------*/
 
@@ -22,15 +20,6 @@ function filterGallery(req, res){
         res.json(tempGallery)
     }
 }
-
-function deleteFromGallery(req,res){
-    let data = req.body;
-    console.log('./gallery/' + data.Path)
-    fs.unlink('./gallery/' + data.Path, (err) => {
-    if (err) throw err;
-    });
-    sqlQuery.deleteFromGalleryByID(data, res)
-};
 
 /*------------------------------- Enquiries ------------------------------------*/
 
@@ -83,6 +72,5 @@ function sendEmails(enqNum, data, textBody, photos, res, date){
 
 module.exports = {
     sendEmails,
-    deleteFromGallery,
     filterGallery
 }
