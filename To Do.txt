@@ -4,7 +4,6 @@ Setup individual pages per type of actions.
 
 Index     - will be enquires tracker, block dates, accepted orders.
 --Complete -- Gallery   - for adding/removing gallery photos.
-Photos    - for updating static photos like on index, flavours, side scroller.
-Flavours  - for adding additional items and flavours to enquires and flavours pages.
+--Out of Scope -- Can be updated through sftp access -- Flavours  - for adding additional items and flavours to enquires and flavours pages.
 Order     - for calculating price for orders.
 Catalog   - Update pricing of items

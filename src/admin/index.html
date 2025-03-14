@@ -6,10 +6,10 @@
     <title>Arnie's Cakes</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="./js/bootstrap.js"></script>
-    <link rel="stylesheet" href="./styling/bootstrap.css">
-    <link rel="stylesheet" href="./styling/admin-page.css">
-    <link rel="stylesheet" href="./styling/shared.css">
+    <script src="./admin/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="./admin/styling/bootstrap.css">
+    <link rel="stylesheet" href="./admin/styling/admin-page.css">
+    <link rel="stylesheet" href="./admin/styling/shared.css">
 </head>
 <body>
   <header>
@@ -38,42 +38,7 @@
             </form>
         </div>
       </div>
-
-      <div class="col d-inline-flex m-3 p-3">  
-        <div class="row m-3 p-3 deleteFromGallery rounded">
-          <div class="row fullSize overflow-y-scroll bottom-0" id="Gallery"></div>
-
-          <div class="modal modal-xl" id="modalImages" aria-hidden="true" tab-index="-1">
-            <div class="modal-dialog ">
-                <div class="modal-content">
-                    <div class="modal-body m-2 p-2" data-bs-theme="dark">
-                        <div id="carouselContainer" class="carousel slide">
-                            <div class="carousel-inner" id="carousel">
-                            </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselContainer" data-bs-slide="prev">
-                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                              <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselContainer" data-bs-slide="next">
-                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                              <span class="visually-hidden">Next</span>
-                            </button>
-                          </div>
-                        </div>
-                    <div class="modal-footer mx-auto p-2">
-                        <div class="m-3 m-2 p-2">
-                            <a class="btn btn-danger mb-3 p-2 px-4 modalFontSize" tabindex="-1" role="button" data-bs-dismiss="modal" onclick="deleteAlert()">Delete this photo.</a>                             
-                        </div>
-                    </div>
-                </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
     </div>   
-    <script src="./js/script.js" onload="getAdminGallery()"></script>
-    <script src="./js/shared.js" onload="buildNavBar();"></script>
+    <script src="./admin/js/shared.js" onload="buildNavBar();"></script>
   </body>
 </html>

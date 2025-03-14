@@ -13,13 +13,12 @@ const process = require('process');
 
 const passport = require('passport');
 const session = require('express-session');
-//const session = require('cookie-session');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const oauth2Client = new OAuth2(
-    process.env.GMAIL_CLIENT_ID, // ClientID
-    process.env.GMAIL_CLIENT_SECRET, // Client Secret
-    "https://developers.google.com/oauthplayground/" // Redirect URL
+    process.env.GMAIL_CLIENT_ID,
+    process.env.GMAIL_CLIENT_SECRET,
+    "https://developers.google.com/oauthplayground/"
 );
 
 
@@ -59,6 +58,7 @@ const connection =  mysql.createConnection(sqlConfig);
 
 /*-------------------------- Server Setup ----------------------- */
 
+const fs = require('fs');
 const express = require('express');
 const app = express();
 
@@ -66,8 +66,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../public/')));
 app.use(express.static('/gallery/'));
-app.use('/admin/', express.static('admin'));
-
 
 /*-------------------------- Admin Setup ----------------------- */
 
@@ -85,6 +83,7 @@ app.use(
             secure: false,
             maxAge: 1 * 60 * 60 * 500, //30 mins
             sameSite: true,
+            //sameSite: 'lax',
         },
         genid: function(req) {
             return genuuid()
@@ -93,13 +92,8 @@ app.use(
     })
 )
 
-
-const adminPaths = ['/login', '/admin', '/oauth2callback']
-
-adminPaths.forEach( (path) => {
-    app.use(path, passport.initialize());
-    app.use(path, passport.session());
-})
+app.use(passport.initialize());
+app.use(passport.session());
 
 function genuuid() { // Public Domain/MIT
     var d = new Date().getTime();//Timestamp
@@ -117,49 +111,117 @@ function genuuid() { // Public Domain/MIT
     });
 }
 
-function authenticateUser(req) {
-    if (req.session.user === process.env.GMAIL_ID){
-        return true
-    } else {
-        return false
-    }
-}
-
-function isAuthenticated (req) {
-    if(Object.keys(memoryStore.sessions).includes(req.sessionID)){
-        const sessionData = JSON.parse(memoryStore.sessions[req.sessionID])
-        if (sessionData.user === process.env.GMAIL_ID){ 
-            return true
-        }
-    } else {
-        return false
-    }
-}
-
-passport.serializeUser(function(user, done) {
-    done(null, user);
+passport.serializeUser((user, done) => {
+    done(null, user.id);
 });
 
-passport.deserializeUser(function(user, done) {
-        done(null, user);
+passport.deserializeUser((id, done) => {
+    done(null, { id });
 });
 
 passport.use(
     new GoogleStrategy(
         {
-            clientID: `${process.env.GMAIL_CLIENT_ID}`,
-            clientSecret: `${process.env.GMAIL_CLIENT_SECRET}`,
-            callbackURL: `${process.env.GMAIL_REDIRECTS}`,
+            clientID: process.env.GMAIL_CLIENT_ID,
+            clientSecret: process.env.GMAIL_CLIENT_SECRET,
+            callbackURL: process.env.GMAIL_REDIRECTS,
         },
-        async function(token, tokenSecret, profile, done) {
-            try {
+        (token, tokenSecret, profile, done) => {
+            if (profile.id === process.env.GMAIL_ID) {
                 return done(null, profile);
-            } catch (err) {
-                return done(err, null);
+            } else {
+                return done(null, false); 
             }
         }
     )
-)
+);
+
+function isAuthenticated(req) {
+    return req.isAuthenticated() && req.user.id === process.env.GMAIL_ID;
+}
+
+function ensureAuthenticated(req, res, next) {
+    if (isAuthenticated(req)) {
+        return next();
+    }
+    res.redirect('/login');
+}
+
+/*-------------------------- Admin Paths ----------------------- */
+
+app.get('/login', passport.authenticate('google', { scope: ['email', 'profile'] }));
+
+app.get('/oauth2callback',
+    passport.authenticate('google', { failureRedirect: '/login' }),
+    (req, res) => {
+        req.session.user = req.user.emails[0].value;
+        res.redirect('/loginSuccess');
+    }
+);
+
+app.get('/loginSuccess', (req, res) => {
+    res.sendFile(path.join(__dirname, '../admin/saveCookies.html')) 
+})
+
+app.get('/loginRedirect', (req, res) => {
+    res.redirect('/admin')
+})
+
+app.get('/admin/logout', (req, res) => {
+    req.logout(() => {
+        req.session.destroy(() => {
+            res.redirect('/');
+        });
+    });
+});
+
+app.get(['/admin', '/admin/'], ensureAuthenticated, (req, res) => {
+    res.sendFile(path.join(__dirname, '../admin/index.html')) 
+});
+
+/*-------------------------- Admin Auto Paths ----------------------- */
+
+const adminPath = path.join(__dirname, '../admin/')
+
+function getAllFilesAndDirs(dir) {
+    let results = [];
+
+    const list = fs.readdirSync(dir);
+    list.forEach(file => {
+        const fullPath = path.join(dir, file);
+        const stat = fs.statSync(fullPath);
+
+        if (stat && stat.isDirectory()) {
+            /*temp = fullPath.replace(path.join(__dirname, '../admin/'),'')
+            results.push(temp.replace(/\\/g, '/'));*/
+            results = results.concat(getAllFilesAndDirs(fullPath));
+        } else {
+            temp =  fullPath.replace(path.join(__dirname, '../admin/'), '')
+                            .replace(/ /g, '%20')
+                            .replace(/\\/g, '/');
+            
+            results.push(temp);
+        }
+    });
+
+    return results;
+}
+
+function removePathSuffix(str) {
+    const index = str.lastIndexOf('.');
+    return index !== -1 ? str.slice(0, index) : str;
+}
+
+getAllFilesAndDirs(adminPath).forEach(file => {
+    app.get(`/admin/${file}`, ensureAuthenticated, (req, res) => {
+        res.sendFile(path.join(__dirname, '../admin/' + file.replace(/%20/g, ' '))) 
+    })
+
+    app.get(`/admin/${removePathSuffix(file)}`, ensureAuthenticated, (req, res) => {
+        res.sendFile(path.join(__dirname, '../admin/' + file.replace(/%20/g, ' '))) 
+    })
+})
+
 
 /*-------------------------- Config Expotrs ----------------------- */
 
@@ -171,7 +233,6 @@ module.exports = {
     oauth2Client,
     express,
     passport,
-    authenticateUser,
-    isAuthenticated,
+    ensureAuthenticated,
     memoryStore,
 }

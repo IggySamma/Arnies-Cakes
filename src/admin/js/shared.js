@@ -71,13 +71,14 @@ function buildNavBar() {
 
   // Define the nav items and links
     const navItems = [
-        { class: "nav-item", linkClass: "nav-link active fontsize", href: "./Index", text: "Home" },
-        { class: "nav-item", linkClass: "nav-link fontsize", href: "./Gallery.html?type=All", text: "Gallery" },
-        { class: "nav-item", linkClass: "nav-link fontsize", href: "./Photos", text: "Photos" },
+        { class: "nav-item", linkClass: "nav-link active fontsize", href: "/admin", text: "Home" },
+        { class: "nav-item", linkClass: "nav-link fontsize", href: "/admin/Gallery.html?type=All", text: "Gallery" },
+        /*{ class: "nav-item", linkClass: "nav-link fontsize", href: "./Photos", text: "Photos" },*/
         /*{ class: "nav-item dropdown", linkClass: "nav-link dropdown-toggle fontsize", href: "#", id: "navbarDropdown", role: "button", "data-bs-toggle": "dropdown", text: "Gallery" },*/
-        { class: "nav-item", linkClass: "nav-link fontsize", href: "./Flavours", text: "Flavours" },
-        { class: "nav-item", linkClass: "nav-link fontsize", href: "./Catalog", text: "Catalog" },
-        { class: "nav-item", linkClass: "nav-link fontsize", href: "./Order", text: "Order", extra: createElement("img", { src: "./images/ribbon.png" }, "ribbon") }
+        { class: "nav-item", linkClass: "nav-link fontsize", href: "/admin/Flavours", text: "Flavours" },
+        { class: "nav-item", linkClass: "nav-link fontsize", href: "/admin/Catalog", text: "Catalog" },
+        { class: "nav-item", linkClass: "nav-link fontsize", href: "/admin/Order", text: "Order" },
+        { class: "nav-item", linkClass: "nav-link fontsize", href: "/admin/logout", text: "Log Out" }
     ];
 
     // Add the logo item separately

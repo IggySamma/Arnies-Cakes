@@ -431,6 +431,7 @@ function deletePicture(ID, Path){
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ID, Path}),
+      credentials: "include",
   }).then((res) => {
       if(res.status === 200){
           location.reload();
