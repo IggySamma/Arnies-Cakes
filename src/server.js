@@ -44,3 +44,5 @@ server.post('/api/upload', serverConfig.ensureAuthenticated, parsers.galleryUplo
 server.post('/api/deleteGallery', serverConfig.ensureAuthenticated, (req, res) => { parsers.deleteFromGallery(req, res) });
 
 server.post('/api/adminGallery', serverConfig.ensureAuthenticated, (req, res) => { utils.filterGallery( req, res) });
+
+server.post('/api/allEnquiries', serverConfig.ensureAuthenticated , (req, res) => { sqlQuery.getAllEnquiries().then(data => res.json(data)) });

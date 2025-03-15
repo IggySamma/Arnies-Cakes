@@ -1,6 +1,7 @@
 const globals = require('../globals/globals.js');
 const serverConfig = require('../config/config.js');
 const eApi = require('../services/externalAPIs.js');
+const sql = require('../services/sql.js')
 
 /*------------------------------- Gallery ------------------------------------*/
 
@@ -69,6 +70,10 @@ function sendEmails(enqNum, data, textBody, photos, res, date){
         error ? console.log(error) : serverConfig.emailTransporter.close();
     });
 };
+
+/*------------------------------- Admin ------------------------------------*/
+
+
 
 module.exports = {
     sendEmails,

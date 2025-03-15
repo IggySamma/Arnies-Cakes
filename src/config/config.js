@@ -175,7 +175,11 @@ app.get('/admin/logout', (req, res) => {
     });
 });
 
-app.get(['/admin', '/admin/'], ensureAuthenticated, (req, res) => {
+app.get('/admin', ensureAuthenticated, (req, res) => {
+    res.sendFile(path.join(__dirname, '../admin/index.html')) 
+});
+
+app.get('/admin/', ensureAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, '../admin/index.html')) 
 });
 

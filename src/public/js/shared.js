@@ -37,10 +37,10 @@ function buildSideScroll() {
 
     for (let j = 0; j <= 1; j++) {
         for (let i = 1; i <= 3; i++) {
-            rowL.appendChild(createImageColumn(`./images/Sidescroll/${i}.jpg`));
+            rowL.appendChild(createImageColumn(`/images/Sidescroll/${i}.jpg`));
         }
         for (let i = 4; i <= 6; i++) {
-            rowR.appendChild(createImageColumn(`./images/Sidescroll/${i}.jpg`));
+            rowR.appendChild(createImageColumn(`/images/Sidescroll/${i}.jpg`));
         }
     }
 }
@@ -71,17 +71,17 @@ function buildNavBar() {
 
   // Define the nav items and links
     const navItems = [
-        { class: "nav-item", linkClass: "nav-link active fontsize", href: "./Index", text: "Home" },
-        { class: "nav-item", linkClass: "nav-link fontsize", href: "./About", text: "About Me" },
+        { class: "nav-item", linkClass: "nav-link active fontsize", href: "/", text: "Home" },
+        { class: "nav-item", linkClass: "nav-link fontsize", href: "/About", text: "About Me" },
         { class: "nav-item dropdown", linkClass: "nav-link dropdown-toggle fontsize", href: "#", id: "navbarDropdown", role: "button", "data-bs-toggle": "dropdown", text: "Gallery" },
-        { class: "nav-item", linkClass: "nav-link fontsize", href: "./Flavours", text: "Flavours" },
-        { class: "nav-item", linkClass: "nav-link fontsize", href: "./Enquiries", text: "Enquiries", extra: createElement("img", { src: "./images/ribbon.png" }, "ribbon") }
+        { class: "nav-item", linkClass: "nav-link fontsize", href: "/Flavours", text: "Flavours" },
+        { class: "nav-item", linkClass: "nav-link fontsize", href: "/Enquiries", text: "Enquiries", extra: createElement("img", { src: "/images/ribbon.png" }, "ribbon") }
     ];
 
     // Add the logo item separately
     const logoItem = createElement("li", {}, "nav-item nav-logo m-0 p-0");
-    const logoLink = createElement("a", { href: "./Index" });
-    const logoImg = createElement("img", { src: "./images/home logo.png" }, "navBarLogo");
+    const logoLink = createElement("a", { href: "/" });
+    const logoImg = createElement("img", { src: "/images/home logo.png" }, "navBarLogo");
     logoLink.appendChild(logoImg);
     logoItem.appendChild(logoLink);
     ul.appendChild(logoItem);
@@ -97,12 +97,12 @@ function buildNavBar() {
         if (item.text === "Gallery") {
             const dropDiv = createElement("div", {}, "dropdown-menu fontsize");
             const galleryItems = [
-                { href: "./Gallery.html?type=All", text: "All" },
-                { href: "./Gallery.html?type=KidsCakes", text: "Kids Cakes" },
-                { href: "./Gallery.html?type=Cakes", text: "Cakes" },
-                { href: "./Gallery.html?type=Cakepops", text: "Cakepops" },
-                { href: "./Gallery.html?type=Cupcakes", text: "Cupcakes" },
-                { href: "./Gallery.html?type=Treats", text: "Treats" }
+                { href: "/Gallery.html?type=All", text: "All" },
+                { href: "/Gallery.html?type=KidsCakes", text: "Kids Cakes" },
+                { href: "/Gallery.html?type=Cakes", text: "Cakes" },
+                { href: "/Gallery.html?type=Cakepops", text: "Cakepops" },
+                { href: "/Gallery.html?type=Cupcakes", text: "Cupcakes" },
+                { href: "/Gallery.html?type=Treats", text: "Treats" }
             ];
             galleryItems.forEach(gItem => {
                 const a = createElement("a", { href: gItem.href }, "dropdown-item", gItem.text);
@@ -121,8 +121,8 @@ function buildFooter() {
     attach.appendChild(ul);
 
     const logoItem = createElement("li", {}, "nav-item nav-logo-footer");
-    const logoLink = createElement("a", { href: "./Index" });
-    const logoImg = createElement("img", { src: "./images/home logo.png" }, "footerLogo");
+    const logoLink = createElement("a", { href: "/" });
+    const logoImg = createElement("img", { src: "/images/home logo.png" }, "footerLogo");
     logoLink.appendChild(logoImg);
     logoItem.appendChild(logoLink);
     ul.appendChild(logoItem);
@@ -131,27 +131,27 @@ const footerItems = [
     {
         class: "nav-item my-auto",
         link: [
-            { href: "https://www.instagram.com/arnies_cakes/", target: "_blank", img: { src: "./images/instagram.svg", class: "footerImages" } },
+            { href: "https://www.instagram.com/arnies_cakes/", target: "_blank", img: { src: "/images/instagram.svg", class: "footerImages" } },
             { href: "https://www.instagram.com/arnies_cakes/", target: "_blank", text: "@arnies_cakes", class: "footerLinks" }
         ]
     },
     {
         class: "nav-item my-auto",
         link: [
-            { href: "https://www.facebook.com/ArniesCakes", target: "_blank", img: { src: "./images/facebook.svg", class: "footerImages" } },
+            { href: "https://www.facebook.com/ArniesCakes", target: "_blank", img: { src: "/images/facebook.svg", class: "footerImages" } },
             { href: "https://www.facebook.com/ArniesCakes", target: "_blank", text: "Dublin Tortai - 'Arnie's Cakes'", class: "footerLinks" }
         ]
     },
     {
         class: "nav-item my-auto",
         link: [
-            { href: "mailto:arniescakes@gmail.com", img: { src: "./images/gmail.svg", class: "footerImages" } },
+            { href: "mailto:arniescakes@gmail.com", img: { src: "/images/gmail.svg", class: "footerImages" } },
             { href: "mailto:arniescakes@gmail.com", text: "arniescakes@gmail.com", class: "footerLinks" }
         ]
     },
     {
         class: "nav-item footerEnquires my-auto rounded-5",
-        link: { href: "./Enquiries", text: "Enquiries" }
+        link: { href: "/Enquiries", text: "Enquiries" }
     }
 ];
 

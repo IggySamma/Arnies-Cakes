@@ -6,39 +6,23 @@
     <title>Arnie's Cakes</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="./admin/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="./admin/styling/bootstrap.css">
-    <link rel="stylesheet" href="./admin/styling/admin-page.css">
-    <link rel="stylesheet" href="./admin/styling/shared.css">
-</head>
-<body>
+    <script src="/admin/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="/admin/styling/bootstrap.css">
+    <link rel="stylesheet" href="/admin/styling/index.css">
+    <link rel="stylesheet" href="/admin/styling/shared.css">
+  </head>
   <header>
     <nav id="navbar"></nav>
   </header>
-  <body>
-    <div class="container-flex m-5 p-5">
-      <div class="col d-inline-flex m-3 p-3">  
-        <div class="row m-3 p-3 uploadForm">
-            <form id="form" class="form m-3 p-3 rounded" action="/api/upload" method="POST" enctype="multipart/form-data">
-            <h4>Upload to Gallery</h4>
-            <h5 class="m-3 p-3">Category</h5>
-            <div class="m-3 p-3">
-              <select id="select-box" name="name" class="form-select form-select-sm rounded">
-                <option value="Cakes">Cakes</option>
-                <option value="Cakepops">Cakepops</option>
-                <option value="Cupcakes">Cupcakes</option>
-                <option value="KidsCakes">Kids Cakes</option>
-                <option value="Treats">Treats</option>
-              </select>
-            </div>
-              <div class="form-group mb-3 pb-3">
-                <input type="file" name="myFiles" id="files" class="form-control-file border" multiple/>
-              </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+  <body class="navSpacer">
+    <div class="container-fluid m-0 p-0">
+      <div class="row m-0 p-0">
+        <div class="col enquiriesList m-2 p-1">
+          <table id="enquiries"></table>
         </div>
       </div>
-    </div>   
-    <script src="./admin/js/shared.js" onload="buildNavBar();"></script>
+    </div>
+    <script src="/admin/js/index.js" onload="getAllEnquiries()"></script>
+    <script src="/admin/js/shared.js" onload="buildNavBar();"></script>
   </body>
 </html>
