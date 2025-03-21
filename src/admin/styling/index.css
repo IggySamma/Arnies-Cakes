@@ -1,17 +1,22 @@
 .navSpacer{
     position: relative;
-    top: 55px;
+    top: 60px;
 }
 
-.enquiriesList{
-    width: 100vw;
-    /*top: 100px;*/
+.enquiriesList, .ordersCalender{
     position: relative;
-    /*background-color: #D3BBDD;*/
-    /*width: 50vw;*/
-    height: 40vh;
+    height: 35vh;
     overflow: hidden;
     overflow-y: scroll;
+    border: 1px solid #ECE3F0;
+}
+
+.enquiriesContainer, .ordersContainer{
+    width: 100%;
+    position: relative;
+    height: 40vh;
+    overflow: hidden;
+    border: 1px solid #ECE3F0;
 }
 
 table {
@@ -24,16 +29,18 @@ table {
 table tr th {
     position: sticky;
     position: -webkit-sticky;
-    z-index: 1;
+    z-index: 10;
     top: 0;
     border: 1px solid #dddddd;
+    background: #D3BBDD;
     text-align: left;
-    padding: 8px;
+    padding: 10px;
 }
 
-td, th {
+td{
     border: 1px solid #dddddd;
     text-align: left;
+    font-size: 0.77rem;
     padding: 8px;
 }
 
@@ -41,9 +48,107 @@ tr:nth-child(even) {
     background-color: #ECE3F0;
 }
 
+td:nth-child(4):hover {
+    cursor: pointer;
+}
+
+h1{
+    top: 0;
+    font-size: 1rem;
+    text-align: center;
+    background-color: #ECE3F0;
+    padding: 0px;
+    margin: 0px;
+}
+
+.orderingContainer{
+    display: inline-flex;
+    width: 100vw;
+}
+
+.ordersContainer, .ordersCalender{
+    height: 50%;
+}
+
+.ordersCalender{
+    display: flex;
+}
+
+
+/*-------------- Calendar -------------------*/
+
+.calendar {
+    width: 400px;
+    background-color: #fff;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.calendar-header button {
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+#month-year {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.calendar-weekdays, .calendar-dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-weekdays div, .calendar-dates div {
+    text-align: center;
+    padding: 10px;
+}
+
+.calendar-weekdays {
+    background-color: #eaeef3;
+}
+
+.calendar-weekdays div {
+    font-weight: bold;
+}
+
+.calendar-dates div {
+    border-bottom: 1px solid #eaeef3;
+    cursor: pointer;
+}
+
+.calendar-dates div:hover {
+    background-color: #f1f1f1;
+}
+
+.current-date {
+    background-color: #ECE3F0;
+}
+
+
+
 @media only screen and (min-width: 992px){
     .navSpacer{
         position: relative;
-        top: 100px;
+        top: 110px;
+    }
+
+    td{
+        font-size: 1rem;
+    }
+
+    .enquiriesList h1{
+        font-size: 2rem;
+    }
+
+    .enquiriesContainer{
+        width: 50vw;
     }
 }

@@ -7,3 +7,9 @@ Index     - will be enquires tracker, block dates, accepted orders.
 --Out of Scope -- Can be updated through sftp access -- Flavours  - for adding additional items and flavours to enquires and flavours pages.
 Order     - for calculating price for orders.
 Catalog   - Update pricing of items
+
+Unconfirmed by half, then upcoming orders
+Upcomming orders is a calender with the names
+On click of date select name and see details for the order.
+
+Confirm enquiry pops up to add with information initiall sent and can then be modified to update before submit.

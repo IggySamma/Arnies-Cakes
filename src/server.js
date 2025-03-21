@@ -26,23 +26,18 @@ server.get('/tests/email', function(req, res) { res.sendFile(path.join(__dirname
 /*------------------ Front API's -----------------*/
 
 server.post('/api/gallery', (req, res) => { utils.filterGallery( req, res) });
-
 server.get('/api/flavours', (req, res) => { res.json(globals.flavours) });
-
 server.post('/api/disabledDates', (req, res) => { res.json(globals.disabledDates)})
-
 server.post('/api/getMainHeaders', (req, res) => { sqlQuery.getEnquiriesMainHeaders(req, res) })
-
 server.post('/api/getTreatsHeaders', (req, res) => { sqlQuery.getEnquiriesSubHHeaders(req, res) })
-
 server.post('/api/submitEnquirie', parsers.clientUpload.array("clientPhotos"), (req, res) => { parsers.Enquiries(req, res)});
 
 /*--------------------- Admin Page API's ---------------------*/
 
 server.post('/api/upload', serverConfig.ensureAuthenticated, parsers.galleryUpload.array("myFiles"), (req, res) => { parsers.uploadFiles(req, res) });
-
 server.post('/api/deleteGallery', serverConfig.ensureAuthenticated, (req, res) => { parsers.deleteFromGallery(req, res) });
-
-server.post('/api/adminGallery', serverConfig.ensureAuthenticated, (req, res) => { utils.filterGallery( req, res) });
-
+server.post('/api/adminGallery', serverConfig.ensureAuthenticated, (req, res) => { utils.filterGallery(req, res) });
 server.post('/api/allEnquiries', serverConfig.ensureAuthenticated , (req, res) => { sqlQuery.getAllEnquiries().then(data => res.json(data)) });
+server.post('/api/confirmEnquiry', serverConfig.ensureAuthenticated , (req, res) => {sqlQuery.confirmEnquiry(req, res) });
+server.post('/api/declineEnquiry', serverConfig.ensureAuthenticated , (req, res) => {sqlQuery.declineEnquiry(req, res) });
+server.post('/api/deleteEnquiry', serverConfig.ensureAuthenticated , (req, res) => {sqlQuery.deleteEnquiry(req, res) });

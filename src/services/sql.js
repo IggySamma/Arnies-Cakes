@@ -135,17 +135,23 @@ function deleteDisabledDate(req, res, ID){
 
 /*--------------------------- Enquirie functions --------------------- */
 
-function storeNewEnquirie(res, cb){
+function storeNewEnquirie(res, data, cb){
+    //console.log(data)
     return new Promise((resolve, reject) => {
         let storeLink = [
             date = "",
             Confirmed = "No",
             Link = "",
             Completed = "No",
+            Name = data.Name,
+            Order = data.Order,
+            Message = data.Message,
+            Allergy = data.Allergies,
+            Allergy_Message = data["Allergies Information"],
         ]
 
         serverConfig.connection.execute(
-            'INSERT INTO Enquiries(Date, Confirmed, Link, Completed) Values(?, ?, ?, ?);',
+            'INSERT INTO Enquiries(Date, Confirmed, Link, Completed, Name, Order_Details, Message, Allergy, Allergy_Message) Values(?, ?, ?, ?, ?, ?, ?, ?, ?);',
             storeLink,
             function (err) {
                 if (err) {
@@ -184,7 +190,7 @@ function storeEnquirieLink(newDate, newLink, nID, res){
 function getAllEnquiries(){
     return new Promise((resolve, reject) => {
         serverConfig.connection.execute(
-             'SELECT * FROM Enquiries;', 
+             'SELECT * FROM Enquiries ;', 
             function (err, results) {
                 if (err) {
                     console.log(err);
@@ -195,6 +201,61 @@ function getAllEnquiries(){
             }
         );
     })
+}
+
+function confirmEnquiry(req, res){
+    let data = req.body;
+    let ID = data.id;
+
+    serverConfig.connection.execute(
+        'UPDATE Enquiries SET Confirmed = "Yes" WHERE ID = ?', 
+        [ID],
+        function (err, results) {
+            if (err) {
+                console.log(err);
+                res.json([new Error(err)]);
+            } else {
+                res.sendStatus(200);
+            }
+        }
+    );
+}
+
+
+function declineEnquiry(req, res){
+    let data = req.body;
+    let ID = data.id;
+
+    serverConfig.connection.execute(
+        'UPDATE Enquiries SET Confirmed = "Rejected" WHERE ID = ?', 
+        [ID],
+        function (err, results) {
+            if (err) {
+                console.log(err);
+                res.json([new Error(err)]);
+            } else {
+                res.sendStatus(200);
+            }
+        }
+    );
+}
+
+function deleteEnquiry(req, res){
+    let data = req.body;
+    let ID = data.id;
+
+    serverConfig.connection.execute(
+        'DELETE FROM Enquiries WHERE ID = ?', 
+        [ID],
+        function (err, results) {
+            if (err) {
+                console.log(err);
+                res.json([new Error(err)]);
+            } else {
+                res.sendStatus(200);
+            }
+        }
+    );
 }
 
 function updateEnquiriesConfirmed(req, res, ID, Date, Confirmed){
@@ -247,5 +308,8 @@ module.exports = {
     deleteDisabledDate,
     getAllEnquiries,
     storeNewEnquirie,
-    checkGalleryByID
+    checkGalleryByID,
+    confirmEnquiry,
+    declineEnquiry,
+    deleteEnquiry
 }

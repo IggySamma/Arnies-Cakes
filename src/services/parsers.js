@@ -240,7 +240,7 @@ function attachTextBody(adjData, photos, res){
         }
     }
 
-    sqlQuery.storeNewEnquirie(res, sqlQuery.getAllEnquiries).then(ID => {
+    sqlQuery.storeNewEnquirie(res, adjData, sqlQuery.getAllEnquiries).then(ID => {
         utils.sendEmails(ID[ID.length -1].ID, adjData, textBody, photos, res, date);
     })
 }
