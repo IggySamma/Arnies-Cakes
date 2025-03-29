@@ -1,91 +1,120 @@
-//const { DatabaseSync } = require("node:sqlite");
-
 let disabledDates = [];
 let confirmedEnquirys = [];
 
 async function getDisabledDates() {
-    const response = await fetch('/api/disabledDates', { method: 'POST' });
-    const data = await response.json();
-    return data;
+	const response = await fetch('/api/disabledDates', { method: 'POST' });
+	const data = await response.json();
+	return data;
 }
 
 function getDatesInRange(from, to) {
-    const startDate = new Date(from);
-    const endDate = new Date(to);
-    let dates = [];
+	const startDate = new Date(from);
+	const endDate = new Date(to);
+	let dates = [];
 
-    while (startDate <= endDate) {
-        dates.push(startDate.toISOString().split('T')[0]); // Format as "YYYY-MM-DD"
-        startDate.setDate(startDate.getDate() + 1);
-    }
+	while (startDate <= endDate) {
+		dates.push(startDate.toISOString().split('T')[0]); // Format as "YYYY-MM-DD"
+		startDate.setDate(startDate.getDate() + 1);
+	}
 
-    return dates;
+	return dates;
 }
 
 async function fetchDisabledDates() {
-    const data = await getDisabledDates();
-    let datesArray = [];
+	const data = await getDisabledDates();
+	let datesArray = [];
 
-    data.Date.forEach((date, index) => {
-        if (data.IsRange[index] === "Yes" && typeof date === "object") {
-            datesArray.push(...getDatesInRange(date.from, date.to));
-        } else if (typeof date === "string") {
-            datesArray.push(date);
-        }
-    });
+	data.Date.forEach((date, index) => {
+	if (data.IsRange[index] === "Yes" && typeof date === "object") {
+		datesArray.push(...getDatesInRange(date.from, date.to));
+	} else if (typeof date === "string") {
+		datesArray.push(date);
+	}
+	});
 
-    disabledDates = datesArray;
+	disabledDates = datesArray;
 	renderCalendar(currentMonth, currentYear);
 }
 
 function getAllEnquiries() {
-    fetch('/api/allEnquiries', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+	fetch('/api/allEnquiries', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
 		credentials: "include",
-    })
-    .then(response => response.json())
-    .then(data => {
+	})
+	.then(response => response.json())
+	.then(data => {
 		displayEnquiries(data);
-    })
+	})
 }
 
+function requestFullEnquiry(enquiry){
+	let id = String(enquiry.parentElement.parentElement.firstChild.innerHTML);
+	id = {id}
+	fetch('/api/requestEnquiry', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(id),
+		credentials: "include",
+	})
+	.then(response => response.json())
+	.then(data => {
+		console.log(data);
+	})
+}
 
 function confirmEnquiry(enquiry){
 	let id = enquiry.parentElement.parentElement.firstChild.innerHTML;
-	console.log("Yes")
-	fetch('/api/confirmEnquiry', {
-		method: 'POST',
-		headers: {'Content-Type': 'application/json' },
-		body: JSON.stringify({id}),
-		credentials: "include",
-	})
-	.then((res) => {
-		if(res.status === 200){
-			location.reload();
-		} else {
-			console.log(res);
-		}
-	});
+	const response = confirm(`All details are updated for enquiry ${id}?`);
+	
+	if(response){
+		fetch('/api/confirmEnquiry', {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json' },
+			body: JSON.stringify({id}),
+			credentials: "include",
+		})
+		.then((res) => {
+			if(res.status === 200){
+				location.reload();
+			} else {
+				console.log(res);
+			}
+		});
+	}
 }
 
 function declineEnquiry(enquiry){
 	let id = enquiry.parentElement.parentElement.firstChild.innerHTML;
-	console.log("Rejected")
-	fetch('/api/declineEnquiry', {
-		method: 'POST',
-		headers: {'Content-Type': 'application/json' },
-		body: JSON.stringify({id}),
-		credentials: "include",
-	})
-	.then((res) => {
-		if(res.status === 200){
-			location.reload();
-		} else {
-			console.log(res);
-		}
-	});
+	
+
+	if(response) {
+		fetch('/api/declineEnquiry', {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json' },
+			body: JSON.stringify({id}),
+			credentials: "include",
+		})
+		.then((res) => {
+			if(res.status === 200){
+				location.reload();
+			} else {
+				console.log(res);
+			}
+		});
+	}
 }
+
+function confirmation(){
+	const response = confirm("Are you sure you want to delete ?");
+	const parentPath = document.getElementsByClassName('ID:' + imageId)[0].src;;
+	const pathSrc = parentPath.substring(parentPath.lastIndexOf('/'));
+	
+	if (response) {
+		deletePicture(imageId, pathSrc.substring(1));
+	}
+  }
+
 /*
 function deleteEnquiry(enquiry){
 	let id = enquiry.parentElement.parentElement.firstChild.innerHTML;
@@ -138,17 +167,9 @@ function displayEnquiries(data){
 				} else if(`${column}`.includes("Action")){
 					const td = createElement('td', {}, "");
 
-					const confirm = createElement('a', {onclick: "confirmEnquiry(this)"}, "");
-					confirm.innerHTML = "Confirm";
-
-					const spacer = createElement('a', {}, "");
-					spacer.innerHTML = " | ";
-
-					const decline = createElement('a', {onclick: "declineEnquiry(this)"}, "");
-					decline.innerHTML = "Decline";
-
-					/*const deleteE = createElement('a', {onclick: "deleteEnquiry(this)"}, "");
-					deleteE.innerHTML = "Delete";*/
+					const confirm = createElement('a', { onclick: "requestFullEnquiry(this)", 'data-bs-toggle': 'modal' , 'data-bs-target':'#confirmEnquiry'}, "", "Confirm");
+					const spacer = createElement('a', {}, "", " | ");
+					const decline = createElement('a', { onclick: "requestFullEnquiry(this)", 'data-bs-toggle': 'modal' , 'data-bs-target':'#confirmEnquiry'}, "", "Decline");
 
 					td.appendChild(confirm);
 					td.appendChild(spacer);
@@ -164,10 +185,10 @@ function displayEnquiries(data){
 			confirmedEnquirys.push(row)
 		}
 	})
-	console.log(confirmedEnquirys)
+	//console.log(confirmedEnquirys)
 	//Sequencing callbacks
 	earliestOrderDate();
-	console.log(earliestDate)
+	//console.log(earliestDate)
 	fetchDisabledDates();
 }
 
@@ -184,8 +205,8 @@ let currentYear = currentDate.getFullYear();
 let earliestDate;
 
 const months = [
-  'January', 'February', 'March', 'April', 'May', 'June', 
-  'July', 'August', 'September', 'October', 'November', 'December'
+	'January', 'February', 'March', 'April', 'May', 'June', 
+	'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
 function earliestOrderDate(){
@@ -239,7 +260,7 @@ function renderCalendar(month, year) {
 	for (let i = 1; i <= daysInMonth; i++) {
 		const dDate = i < 10? '0' + i: i;
 		const nDate = year + '-' + uMonth +  '-' + dDate;
-		let day// = createElement('div', {'id': nDate}, '', i);
+		let day;
 
 		/*console.log("Date: " + nDate + " : ", nDate == confirmedEnquirys[0].Date.split(',')[0])*/
 
@@ -287,7 +308,7 @@ function addEnquiryOverview(data, element){
 		element.classList.remove('Disable')
 	}
 	element.classList.add('Enabled')
-	let div = createElement('div', {id: 'enq:' + data.ID, 'onclick': 'selectEnquiry(this)'}, 'rounded-5 enquiry m-0 p-1', data.Name)
+	let div = createElement('div', {id: 'enq:' + data.ID, 'onclick': 'selectEnquiry(this)'}, 'rounded-4 enquiry m-0 p-1', data.Name)
 	element.appendChild(div)	
 	/*let div2 = createElement('div', {id: 'enq:' + data.ID}, 'rounded-5 enquiry m-0 p-1', data.Name)
 	element.appendChild(div2)	

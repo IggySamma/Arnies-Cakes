@@ -38,6 +38,9 @@ server.post('/api/upload', serverConfig.ensureAuthenticated, parsers.galleryUplo
 server.post('/api/deleteGallery', serverConfig.ensureAuthenticated, (req, res) => { parsers.deleteFromGallery(req, res) });
 server.post('/api/adminGallery', serverConfig.ensureAuthenticated, (req, res) => { utils.filterGallery(req, res) });
 server.post('/api/allEnquiries', serverConfig.ensureAuthenticated , (req, res) => { sqlQuery.getAllEnquiries().then(data => res.json(data)) });
-server.post('/api/confirmEnquiry', serverConfig.ensureAuthenticated , (req, res) => {sqlQuery.confirmEnquiry(req, res) });
-server.post('/api/declineEnquiry', serverConfig.ensureAuthenticated , (req, res) => {sqlQuery.declineEnquiry(req, res) });
-server.post('/api/deleteEnquiry', serverConfig.ensureAuthenticated , (req, res) => {sqlQuery.deleteEnquiry(req, res) });
+server.post('/api/allConfirmedEnquiries', serverConfig.ensureAuthenticated , (req, res) => { sqlQuery.getAllConfirmedEnquiries().then(data => res.json(data)) });
+server.post('/api/confirmEnquiry', serverConfig.ensureAuthenticated , (req, res) => { sqlQuery.confirmEnquiry(req, res) });
+server.post('/api/declineEnquiry', serverConfig.ensureAuthenticated , (req, res) => { sqlQuery.declineEnquiry(req, res) });
+server.post('/api/deleteEnquiry', serverConfig.ensureAuthenticated , (req, res) => { sqlQuery.deleteEnquiry(req, res) });
+server.post('/api/requestEnquiry', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.requestEnquiryByID(req, res, req.body.id) });
+server.post('/api/requestConfirmedEnquiry', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.requestConfirmedEnquiryByID(req, res, req.body.id) });

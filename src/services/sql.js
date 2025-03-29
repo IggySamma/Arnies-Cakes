@@ -203,6 +203,22 @@ function getAllEnquiries(){
     })
 }
 
+function getAllConfirmedEnquiries(){
+    return new Promise((resolve, reject) => {
+        serverConfig.connection.execute(
+            'SELECT * FROM confirmedEnquiries WHERE Completed = "No" ;', 
+            function (err, results) {
+                if (err) {
+                    console.log(err);
+                    res.json(new Error(err));
+                } else {
+                    resolve(JSON.parse(JSON.stringify(results)))
+                }
+            }
+        );
+    })
+}
+
 function confirmEnquiry(req, res){
     let data = req.body;
     let ID = data.id;
@@ -280,6 +296,39 @@ function updateEnquiriesConfirmed(req, res, ID, Date, Confirmed){
     );
 }
 
+function requestEnquiryByID(req, res, ID){
+	serverConfig.connection.execute(
+		'SELECT * FROM Enquiries WHERE ID = ?;',
+		[ID],
+		function (err, results) {
+			if(err){
+				console.log(err);
+				res.json(new Error(err));
+			} else {
+				var obj = JSON.parse(JSON.stringify(results));
+				res.json(obj)
+			}
+		}
+	);
+}
+
+function requestConfirmedEnquiryByID(req, res, ID) {
+	serverConfig.connection.execute(
+		'SELECT * FROM confirmedEnquiries WHERE ID = ?;',
+		[ID],
+		function (err, results) {
+			if (err) {
+				console.log(err);
+				res.json(new Error(err));
+			} else {
+				var obj = JSON.parse(JSON.stringify(results));
+				res.json(obj)
+			}
+		}
+	);
+}
+
+
 function removeEnquirie(req, res, ID){
     serverConfig.connection.execute(
         'delete from mainHeaders where ID=;'
@@ -297,19 +346,22 @@ function removeEnquirie(req, res, ID){
 }
 
 module.exports = {
-    getEnquiriesMainHeaders,
-    getEnquiriesSubHHeaders,
-    insertNewToGallery,
-    deleteFromGalleryByID,
-    storeEnquirieLink,
-    updateEnquiriesConfirmed,
-    removeEnquirie,
-    insertDisabledDate,
-    deleteDisabledDate,
-    getAllEnquiries,
-    storeNewEnquirie,
-    checkGalleryByID,
-    confirmEnquiry,
-    declineEnquiry,
-    deleteEnquiry
+	getEnquiriesMainHeaders,
+	getEnquiriesSubHHeaders,
+	insertNewToGallery,
+	deleteFromGalleryByID,
+	storeEnquirieLink,
+	updateEnquiriesConfirmed,
+	removeEnquirie,
+	insertDisabledDate,
+	deleteDisabledDate,
+	getAllEnquiries,
+	getAllConfirmedEnquiries,
+	storeNewEnquirie,
+	checkGalleryByID,
+	confirmEnquiry,
+	declineEnquiry,
+	deleteEnquiry,
+	requestConfirmedEnquiryByID,
+	requestEnquiryByID
 }

@@ -1,0 +1,154 @@
+.EnquiriesContainer{
+    position: relative;
+    height: 100%;
+}
+
+.ennquiresWrapper{
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin:0 0 0 20%; /* ### */
+}
+
+.policyContainer{
+    top: 50px;
+    position: relative;
+    height: 100%;
+}
+
+.formContainer{
+    position: relative;
+    height: 100%;
+}
+
+#mainHeader{
+    position: relative;
+}
+
+#subHeader{
+    position: relative;
+}
+
+.sideScrollContainer{
+    z-index: -1;
+    height: 100% !important;
+}
+
+.policy{
+    background-color: #ECE3F0;
+    text-align: center;
+}
+
+.policy h1{
+    font-family: 'Halimun';
+}
+
+.userForm{
+    background-color: #D3BBDD;
+}
+
+.fontsizeEnquiries {
+    font-size: 22px;
+    /*font-weight: bold;*/
+}
+
+.datetime {
+    border: 0px;
+    font-size: 20px;
+}
+
+.Flavours{
+    visibility: hidden;
+    display: none;
+    width: 100%;
+    position: relative;
+}
+
+input[type="checkbox"]:checked ~ .Flavours {
+    visibility: visible;
+    display: block;
+}
+
+.incrementalNumberBoxStyle{
+    width: 50px;
+    height: 30px;
+    right: 0px;
+    top: 0px;
+    position: absolute;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    align-self: left;
+}
+
+input[id="Collection"]:checked ~ .datetimeEvent, input[id="Delivery"]:checked ~ .datetimeEvent  {
+    visibility: visible;
+    display: block;
+}
+
+.datetimeEvent{
+    visibility: hidden;
+    display: none;
+}
+
+
+input[id="AllergyYes"]:checked ~ #AllergyInput {
+    visibility: visible;
+    display: block;
+}
+
+#AllergyInput{
+    visibility: hidden;
+    display: none;
+}
+
+.itemWrapper{
+    width: 100%;
+    position: relative;
+}
+
+.form-check-label{
+    text-wrap: pretty;
+    width: 75%;
+}
+
+@media only screen and (min-width: 640px) {
+    .form-check-label{
+        width: auto;
+        min-width: 0;
+    }
+}
+
+@media only screen and (min-width: 992px){  
+    .ennquiresWrapper{
+        top: 100px;
+        display: flex;
+        width: 100%;
+        height: auto;   
+        /*align-items: center;
+        justify-content: center;*/
+    }
+
+    .policyContainer{
+        /*top: 150px;  */
+        /*width: 30%;*/
+        flex: 1 1 0;
+        left: 1rem;
+    }
+
+    .formContainer{
+        /*top: 100px;*/
+        width: 50%;
+        flex: 2 1 0;
+        left: 2rem;
+        height: 100%;
+    }
+
+    .EnquiriesSpacing{
+        flex: 1 1 0;
+    }
+
+    .footer{
+        bottom: -100px !important;
+    }
+}

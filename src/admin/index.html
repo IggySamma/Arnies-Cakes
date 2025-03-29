@@ -1,65 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Arnie's Cakes</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="/admin/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="/admin/styling/bootstrap.css">
-    <link rel="stylesheet" href="/admin/styling/index.css">
-    <link rel="stylesheet" href="/admin/styling/shared.css">
-  </head>
-  <header>
-    <nav id="navbar"></nav>
-  </header>
-  <body class="navSpacer">
-    <div class="container-fluid m-0 p-0">
-      <div class="orderingContainer m-0 p-0">
-        <div class="row enquiriesContainer m-0 p-0">
-          <h1 class="m-1 p-1">Unconfirmed Enquiries</h1>
-          <div class="col enquiriesList mt-2 p-0">
-            <table id="enquiries"></table>
-          </div>
-        </div>
-        <div class="row ordersContainer m-0 p-0">
-          <h1 class="m-1 p-1">Upcoming Orders</h1>
-          <div class="col ordersCalender m-0 p-0">
-            <div class="calendar">
-              <div class="calendar-header">
-                <button id="prev-month">‹</button>
-                <div id="month-year"></div>
-                <button id="next-month">›</button>
-              </div>
-              <div class="calendar-body">
-                <div class="calendar-weekdays">
-                    <div>Mon</div>
-                    <div>Tue</div>
-                    <div>Wed</div>
-                    <div>Thu</div>
-                    <div>Fri</div>
-                    <div>Sat</div>
-                    <div>Sun</div>
-                </div>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Arnie's Cakes</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="/admin/js/bootstrap.js"></script>
+		<!--<script src="/admin/js/flatpickr.js"></script>
+		<!--<script src="/admin/js/confirmDate.js"></script>-->
+		<link rel="stylesheet" href="/admin/styling/bootstrap.css">
+		<link rel="stylesheet" href="/admin/styling/index.css">
+		<link rel="stylesheet" href="/admin/styling/shared.css">
+		<link rel="stylesheet" href="/admin/styling/enquiries.css">
+		<link rel="stylesheet" href="/admin/styling/confirmDate.css">
+		<link rel="stylesheet" href="/admin/styling/flatpickr.css">
+	</head>
+	<header>
+		<nav id="navbar"></nav>
+	</header>
+	<body class="navSpacer">
+	<div class="container-fluid m-0 p-0">
+		<div class="orderingContainer m-0 p-0">
+			<div class="row enquiriesContainer m-0 p-0">
+				<h1 class="m-1 p-1">Unconfirmed Enquiries</h1>
+				<div class="col enquiriesList mt-2 p-0">
+					<table id="enquiries"></table>
+				</div>
+			</div>
+			<div class="row ordersContainer m-0 p-0">
+				<h1 class="m-1 p-1">Upcoming Orders</h1>
+				<div class="col ordersCalender m-0 p-0">
+					<div class="calendar">
+						<div class="calendar-header">
+							<button id="prev-month">‹</button>
+							<div id="month-year"></div>
+							<button id="next-month">›</button>
+						</div>
+						<div class="calendar-body">
+							<div class="calendar-weekdays">
+								<div>Mon</div>
+								<div>Tue</div>
+								<div>Wed</div>
+								<div>Thu</div>
+								<div>Fri</div>
+								<div>Sat</div>
+								<div>Sun</div>
+							</div>
+							<div class="calendar-dates"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col ordersUpcomming">
+					<div class="row newOrder">
+						<h2 class="m-1 p-1" id="next-order-date">Next order Date:</h2>
+					</div>
+				</div>
+			</div>
 
-                <div class="calendar-dates"></div>
-              </div>
-            </div>
-          </div>
+		</div>
+	</div>
 
-          <div class="col ordersUpcomming">
-            <div class="row newOrder">
-                <h2 class="m-1 p-1" id="next-order-date">Next order Date:</h2>
-            </div>
-          </div>
+	<div class="modal fade" data-bs-backdrop="static" data-bs-keybaord="false" tabindex="-1" id="confirmEnquiry">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" >
 
-        </div>
+				<div class="modal-header">
+					<h1 id="confirmEnquiryID">ID: </h1>
+				</div>
+				<div class="modal-body" id="modal-body">
+					<form id="form" action="/api/submitEnquirie" method="POST" enctype="multipart/form-data" novalidate>
+						<div class="mb-3">
+							<label for="fullNameInput" class="form-label">Full Name:</label>
+							<input type="text" class="form-control form-control-lg" id="fullNameInput"
+								placeholder="Name" required>
+							<div class="invalid-feedback">Please enter your name.</div>
+						</div>
+						<div class="mb-3">
+							<label for="emailInput" class="form-label">Email:</label>
+							<input type="email" class="form-control form-control-lg" id="emailInput"
+								placeholder="name@example.com"
+								pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" required>
+							<div class="invalid-feedback">Please make sure email is entered correctly</div>
+						</div>
+						<div class="mb-3">
+							<label for="numberInput" class="form-label">Phone Number:</label>
+							<br>
+							<div class="d-flex">
+								<input type="tel" class="form-control form-control-lg" id="numberInput"
+									placeholder="0871234567 or +353871234567"
+									pattern="^(08\d{8}|\+3538\d{8})$" length="13"
+									title="Please enter number in the format of 0871231234 or +353871231234"
+									required>
+								<br>
+								<div class="invalid-feedback">Please make sure your number is starting with 08
+									or +353</div>
+							</div>
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Date of Event:</label>
+							<br>
+							<input class="flatpickrDate form-control form-control-lg" id="datetimeDate" placeholder="Select Date..." required>
+							<div class="invalid-feedback">Please select date of the event.</div>
+						</div>
+						<div class="mb-3">
+							<input class="form-check-input mx-1 px-1" type="checkbox" id="Collection"
+								onclick="enableDisable('Delivery')" required disabled>
+							<label class="form-label">Collection</label>
+							<input class="form-check-input mx-1 px-1" type="checkbox" id="Delivery"
+								onclick="enableDisable('Collection')" required disabled>
+							<label class="form-label">Delivery</label>
+							<div class="invalid-feedback">Please select date of the event to enable these fields.
+							</div>
+							<br>
+							<div class="datetimeEvent">
+								<label class="form-label" id="colDel">? of Order:</label>
+								<br>
+								<input class="flatpickrEvent form-control form-control-lg" id="datetimeEvent" required>
+							</div>
+						</div>
+						<div class="mb-3">
+							<label class="form-label">What items would you like?</label><br>
+							<div id="mainHeader"></div>
+							<div id="subHeader"></div>
+						</div>
+						<div class="mb-3">
+							<label for="EnquirieInput" class="form-label">Tell me more about the event the cake is
+								for - Cake theme, colours, characters etc.</label>
+							<textarea class="form-control form-control-lg" id="EnquirieInput" rows="6"
+								placeholder="My daughter loves Disney princesses, especially Cinderella and Ariel! She loves the colour pink, tiaras and sprinkles."
+								required>
+							</textarea>
+						</div>
+						<div class="mb-3">
+							<label for="allergy" class="form-label">Are there any allergies I should be aware
+								of?</label>
+							<br>
+							<input class="form-check-input mx-1 px-1" type="checkbox" id="AllergyYes"
+								onclick="enableDisable('AllergyNo')" required>
+							<label class="form-label">Yes</label>
+							<input class="form-check-input mx-1 px-1" type="checkbox" id="AllergyNo"
+								onclick="enableDisable('AllergyYes')" required>
+							<label class="form-label">No</label>
+							<textarea class="form-control form-control-lg" id="AllergyInput" rows="1"
+								placeholder="If Yes, please explain here.">
+							</textarea>
+							<div class="invalid-feedback">Please let me know of any allergies.</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="submitEnquiry">Confirm</button>
+					<button type="button" class="btn btn-danger" id="rejectEnquiry">Reject</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+				</div>
 
-      </div>
+			</div>
+		</div>
+	</div>
 
-    </div>
-    <script src="/admin/js/shared.js" onload="buildNavBar();"></script>
-    <script src="/admin/js/index.js" onload="getAllEnquiries()"></script>
-  </body>
+	<script src="/admin/js/shared.js" onload="buildNavBar();"></script>
+	<script src="/admin/js/index.js" onload="getAllEnquiries()"></script>
+	<script src="/admin/js/enquiriesConfirm.js"></script>
+	</body>
 </html>
