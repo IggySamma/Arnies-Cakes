@@ -297,7 +297,7 @@ function storeDisabledDates(data){
         if(data[i].IsRange === "Yes"){
             let tempObj = {
                 "from": data[i].Date.slice(0, 10),
-                "to": data[i].Date.slice(12, 22)
+                "to": data[i].Date.slice(11, 22)
             }
             globals.disabledDates.ID.push(data[i].ID);
             globals.disabledDates.Date.push(tempObj);

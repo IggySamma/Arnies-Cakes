@@ -18,17 +18,14 @@
     <div class="container-fluid m-0 p-0">
       <div class="orderingContainer m-0 p-0">
         <div class="row enquiriesContainer m-0 p-0">
-          <h1>Unconfirmed Enquiries</h1>
+          <h1 class="m-1 p-1">Unconfirmed Enquiries</h1>
           <div class="col enquiriesList mt-2 p-0">
             <table id="enquiries"></table>
           </div>
         </div>
         <div class="row ordersContainer m-0 p-0">
-          <h1>Upcoming Orders</h1>
+          <h1 class="m-1 p-1">Upcoming Orders</h1>
           <div class="col ordersCalender m-0 p-0">
-
-
-
             <div class="calendar">
               <div class="calendar-header">
                 <button id="prev-month">‹</button>
@@ -49,17 +46,20 @@
                 <div class="calendar-dates"></div>
               </div>
             </div>
-
-
-
-
           </div>
+
+          <div class="col ordersUpcomming">
+            <div class="row newOrder">
+                <h2 class="m-1 p-1" id="next-order-date">Next order Date:</h2>
+            </div>
+          </div>
+
         </div>
 
       </div>
 
     </div>
-    <script src="/admin/js/index.js" onload="getAllEnquiries()"></script>
     <script src="/admin/js/shared.js" onload="buildNavBar();"></script>
+    <script src="/admin/js/index.js" onload="getAllEnquiries()"></script>
   </body>
 </html>
