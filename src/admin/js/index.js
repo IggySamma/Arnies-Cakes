@@ -59,7 +59,7 @@ function requestFullEnquiry(enquiry){
 	})
 	.then(response => response.json())
 	.then(data => {
-		console.log(data);
+		updateModal(data[0])
 	})
 }
 
@@ -190,6 +190,40 @@ function displayEnquiries(data){
 	earliestOrderDate();
 	//console.log(earliestDate)
 	fetchDisabledDates();
+}
+
+function updateModal(data){
+	console.log(data)
+	let id = document.getElementById("confirmEnquiryID");
+	id.innerHTML = `ID: ${data.ID}`
+	const ids = [
+		"confirmEnquiyID", "fullNameInput",
+		"emailInput", "numberInput",
+		
+	]
+
+	var flatpickrEvent = document.getElementById("datetimeEvent");
+
+	console.log(data.Date.replace(",", ""))
+
+	flatpickrEvent.flatpickr({
+		altInput: true,
+		altFormat: "F j, Y, H:i",
+		allowInput: false,
+		defaultDate: data.Date.replace(",", ""),
+		enableTime: true,
+		dateFormat: "Y-m-d H:i",
+		minDate: data.MinDate,
+		maxDate: new Date().fp_incr(186),
+		minuteIncrement: 15,
+		disableMobile: false,
+		static: true,
+	});
+}
+
+function updateInnerHTMLByID(inner, ID){
+	let temp = document.getElementById(ID);
+	temp.innerHTML = inner
 }
 
 /*---------------- calendar System ---------------------------*/

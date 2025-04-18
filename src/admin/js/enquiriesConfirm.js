@@ -15,7 +15,7 @@ let fpEvent = false;
 	});
 })();
 /*
-var flatpickrDate = document.getElementById("datetimeDate");
+var flatpickrDate = document.getElementById("datetimeEvent");
 
 flatpickrDate.flatpickr({
 	altInput: true,
@@ -29,7 +29,7 @@ flatpickrDate.flatpickr({
 	//plugins: [new confirmDatePlugin({})],
 	//onClose: () => { fpDate = true }
 })*/
-
+/*
 function loadCalender() {
 	fetch('/api/disabledDates', {
 		method: 'POST'
@@ -40,7 +40,7 @@ function loadCalender() {
 			var flatpickrEvent = document.getElementById("datetimeEvent");
 			var flatpickrEvents = document.getElementsByClassName("flatpickrEvent")
 
-			flatpickrDate.flatpickr({
+			/*flatpickrDate.flatpickr({
 				altInput: true,
 				altFormat: "F j, Y",
 				allowInput: false,
@@ -54,7 +54,7 @@ function loadCalender() {
 				static: true,
 				plugins: [new confirmDatePlugin({})],
 				onClose: () => { fpDate = true },
-				onChange: function (selectedDate, dateStr, instance) {
+				onChange: function (selectedDate, dateStr, instance) {*//*
 					const formattedDate = new Date(selectedDate).toLocaleDateString('en-US', {
 						year: 'numeric',
 						month: 'long',
@@ -112,7 +112,39 @@ function loadCalender() {
 			});
 		})
 	})
-}
+}*/
+
+/*
+function loadCalender(){
+	fetch('/api/disabledDates', {
+		method: 'POST'
+	})
+	.then(response => {
+		response.json().then(data => {
+			var flatpickrEvent = document.getElementById("datetimeEvent");
+			console.log("loaded")
+			flatpickrEvent.flatpickr({
+				altInput: true,
+				altFormat: "F j, Y, H:i",
+				allowInput: false,
+				defaultDate: data.MinDate + " 12:00",
+				enableTime: true,
+				dateFormat: "Y-m-d H:i",
+				minDate: data.MinDate,
+				maxDate: new Date().fp_incr(186),
+				disable: data.Date,
+				minTime: "10:00",
+				maxTime: "18:00",
+				defaultHour: 12,
+				defaultMinute: 0,
+				minuteIncrement: 15,
+				disableMobile: false,
+				static: true,
+				plugins: [new confirmDatePlugin({})]
+			});
+		})
+	})
+}*/
 
 function getMainHeaders() {
 	let mainHeadings;

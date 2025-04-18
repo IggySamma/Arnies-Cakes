@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Arnie's Cakes</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="./js/bootstrap.js"></script>
+		<link rel="stylesheet" href="./styling/bootstrap.css">
+		<link rel="stylesheet" href="./styling/loading.css" id="loading">
+		<link rel="stylesheet" href="./styling/flavours.css">
+		<link rel="stylesheet" href="./styling/shared.css">
+	</head>
+	<header>
+		<nav id="navbar"></nav>
+	</header>
+	<body>
+		<div class="loading-container m-0 p-0" id="loading">
+			<div class="loading-wrapper">
+				<img class="loadingLogo m-1 p-1" src="./images/home logo.png">
+				<p>Please wait while we load the page, please make sure JavaScript isn't disabled.</p>
+			</div>
+		</div>
+		<script src="./js/loading.js" id="loading"></script>
+
+
+		<div class="flavoursContainer container-fluid m-0 p-0">
+			<div class="row flavours" id="flavours">
+
+
+
+								
+
+				<% if (heading==="Main" ) { %>
+					<div class="row items m-0 p-0">
+						<div class="col-6 sideImagesContainer m-0 p-0">
+							<div class="sideImages m-0 p-0">
+								<img class="img sideImage m-0 p-0" loading="lazy"
+									src="./images/flavours/<%= type %>/1.jpg" />
+							</div>
+							<div class="sideImages m-0 p-0">
+								<img class="img sideImage m-0 p-0" loading="lazy"
+									src="./images/flavours/<%= type %>/2.jpg" />
+							</div>
+						</div>
+						<div class="col-6 itemFlavours m-0 p-0">
+							<div class="col heading">
+								<h2>
+									<%= type %>
+								</h2>
+							</div>
+
+							<% text.forEach(t=> { %>
+								<div class="row textAlign m-0 p-0">
+									<h4>
+										<%= t %>
+									</h4>
+								</div>
+							<% }) %>
+
+							<div class="col heading2">
+								<h3>Flavours:</h3>
+							</div>
+
+							<% flavours.forEach(f=> { %>
+								<div class="row textAlign m-0 p-0">
+									<h4>
+										<%= f %>
+									</h4>
+								</div>
+							<% }) %>
+
+							<div class="row textAlign m-0 p-0">
+								<h4 style="visibility:hidden">hidden</h4>
+							</div>
+						</div>
+					</div>
+
+					<% } else if (heading==="Sub" ) { %>
+						<div class="row items m-0 p-0" id="treatsItem">
+							<div class="col-6 sideImagesContainer m-0 p-0" id="treats">
+								<div class="sideImages m-0 p-0">
+									<img class="img sideImage m-0 p-0" loading="lazy"
+										src="./images/flavours/Treats/1.jpg" />
+								</div>
+								<div class="sideImages m-0 p-0">
+									<img class="img sideImage m-0 p-0" loading="lazy"
+										src="./images/flavours/Treats/2.jpg" />
+								</div>
+							</div>
+							<div class="col-6 itemFlavours m-0 p-0" id="itemWrapper">
+								<div class="col heading" id="itemsHeading">
+									<h2>Treats:</h2>
+								</div>
+
+								<% text.forEach((t, i)=> { %>
+									<div class="row textAlign m-0 p-0">
+										<h4>
+											<%= type[i] %>: <%= t %>
+										</h4>
+									</div>
+								<% }) %>
+							</div>
+						</div>
+
+						<% } else if (heading==="OrderNow" ) { %>
+							<div class="col-6 itemFlavours m-0 p-0" id="itemWrapper">
+								<div class="row textAlign m-0 p-0">
+									<h4 style="visibility:hidden">hidden</h4>
+								</div>
+								<div class="col heading2">
+									<a href="./Enquiries">
+										<h3>Order Now!</h3>
+									</a>
+								</div>
+							</div>
+						<% } %>
+
+
+			</div>
+		</div>
+
+		<div class="w-100 m-0 p-0"></div>
+	<footer id="footer"></footer>
+	</body>
+	<!--<script src="./js/shared.js" onload="buildNavBar();"></script>
+	<script src="./js/shared.js" onload="buildFooter();"></script>
+	<script src="./js/flavours.js"></script>-->
+	<script src="./js/loading.js" onload="show();" id="loading"></script>
+</html>

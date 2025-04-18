@@ -5,6 +5,7 @@ const serverConfig = require('../config/config.js');
 const fs = require('fs');
 const multer = require("multer");
 const { text } = require('body-parser');
+const templates = require('../utils/fileRendering.js');
 
 /*------------------------------- Gallery ------------------------------------*/
 
@@ -273,6 +274,7 @@ function storeFlavours(data){
     }
 
     console.log("Flavours stored");
+    templates.saveNewPublicFile('Flavours.html', globals.flavours, 'Flavours.ejs');
 }
 
 /*------------------------------- Enquiries Callender ------------------------------------*/

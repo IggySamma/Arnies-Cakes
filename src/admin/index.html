@@ -7,8 +7,8 @@
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<script src="/admin/js/bootstrap.js"></script>
-		<!--<script src="/admin/js/flatpickr.js"></script>
-		<!--<script src="/admin/js/confirmDate.js"></script>-->
+		<script src="/admin/js/flatpickr.js"></script>
+		<script src="/admin/js/confirmDate.js"></script>
 		<link rel="stylesheet" href="/admin/styling/bootstrap.css">
 		<link rel="stylesheet" href="/admin/styling/index.css">
 		<link rel="stylesheet" href="/admin/styling/shared.css">
@@ -98,23 +98,17 @@
 							</div>
 						</div>
 						<div class="mb-3">
-							<label class="form-label">Date of Event:</label>
-							<br>
-							<input class="flatpickrDate form-control form-control-lg" id="datetimeDate" placeholder="Select Date..." required>
-							<div class="invalid-feedback">Please select date of the event.</div>
-						</div>
-						<div class="mb-3">
 							<input class="form-check-input mx-1 px-1" type="checkbox" id="Collection"
-								onclick="enableDisable('Delivery')" required disabled>
+								onclick="enableDisable('Delivery')" required>
 							<label class="form-label">Collection</label>
 							<input class="form-check-input mx-1 px-1" type="checkbox" id="Delivery"
-								onclick="enableDisable('Collection')" required disabled>
+								onclick="enableDisable('Collection')" required>
 							<label class="form-label">Delivery</label>
 							<div class="invalid-feedback">Please select date of the event to enable these fields.
 							</div>
 							<br>
 							<div class="datetimeEvent">
-								<label class="form-label" id="colDel">? of Order:</label>
+								<label class="form-label" id="colDel">Date of Event:</label>
 								<br>
 								<input class="flatpickrEvent form-control form-control-lg" id="datetimeEvent" required>
 							</div>
