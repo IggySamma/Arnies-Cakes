@@ -12,11 +12,13 @@ function renderTemplate(data, ejsPath){
 	if (ejsPath === 'Flavours.ejs'){
 		dataArray = normalizeFlavoursData(data);
 	}
-	
 
-	return dataArray.map(entry => {
-		return ejs.render(base, entry)
-	}).join('\n');
+	console.log(dataArray)
+
+	return ejs.render(base, {
+		filename: basePath,
+		entries: dataArray
+	})
 }
 
 function normalizeFlavoursData(data) {
@@ -25,8 +27,7 @@ function normalizeFlavoursData(data) {
 		heading: data.Heading[i],
 		type: data.Type[i],
 		text: data.Text[i],
-		flavours: data.Flavours[i],
-		lastIndex: data.ID.length - 1
+		flavours: data.Flavours[i]
 	}));
 }
 
