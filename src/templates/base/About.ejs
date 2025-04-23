@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Arnie's Cakes</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="./js/bootstrap.js"></script>
+	<link rel="stylesheet" href="./styling/bootstrap.css">
+	<link rel="stylesheet" href="./styling/index.css">
+	<link rel="stylesheet" href="./styling/shared.css">
+</head>
+<header>
+	<%- include('./addons/navbar') %>
+</header>
+<body>
+	
+	<div class="container-fluid m-0 p-0 overflow-x-hidden">
+		<div class="row aboutMe">
+			<div class="col position-relative overflow-hidden m-0 p-2 py-5">
+				<div class="row m-0 p-0 mt-5">
+					<div class="col">
+						<h1 class="aboutMeHeader">About Me</h1>
+					</div>
+				</div>
+				<div class="row aboutMeContainer">
+					<div class="col aboutMeImageContainer my-auto py-auto">
+						<img class="img-thumbnail rounded-3 aboutMeImage" loading="lazy"
+							src="./images/arnie.jpg">
+					</div>
+					<div class="col aboutMePragraph py-2 my-auto py-auto">
+						<p>
+							Hi! I'm Arnie.
+							<br><br>
+							Growing up I always dreamt of how amazing it would be to go to
+							work every day to a place that smelled of fresh cakes and
+							colorfully decorated treats. I put this dream on the backburner,
+							until the beginning of 2020.
+							<br><br>
+							I found so much comfort in baking cakes in my home kitchen. My
+							friends and family started wondering how they could order and
+							taste what I was baking, and that's how Arnie's Cakes was born!
+							<br><br>
+							Since then, I have spent the years learning and baking, creating
+							fun treats for so many special occasions, and doing what I love.
+							<br><br>
+							I am HACCP Level 1 and Food Allergen certified.
+							<br>
+							Based in Dublin 24.
+						</p>
+					</div>
+				</div>
+				<div class="aboutMeBGImage"></div>
+			</div>
+		</div>
+		<div class="w-100 m-0 p-0"></div>
+		<%- include('./addons/footer') %>
+</body>
+<script src="./js/shared.js"></script>
+</html>

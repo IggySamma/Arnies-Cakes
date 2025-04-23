@@ -21,131 +21,12 @@
 	<link rel="stylesheet" href="./styling/shared.css">
 </head>
 <header>
-	<nav id="navbar" class="navbar fixed-top navbar-expand-lg " style="top: 0px;">
-	<div class="container-fluid m-0 p-0 navContainer">
-		<button class="navbar-toggler collapsed ms-2" type="button" id="toggling" data-bs-toggle="collapse"
-			data-bs-target="#navbarSupportedContent">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-
-		<div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent"
-			style="top: 0px;">
-			<ul class="navbar-nav">
-
-				<!-- Logo -->
-				<li class="nav-item nav-logo m-0 p-0">
-					<a href="/">
-						<img class="navBarLogo" src="/images/home logo.png">
-					</a>
-				</li>
-
-				<!-- Nav Items -->
-				<li class="nav-item">
-					<a class="nav-link active fontsize" href="/">Home</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link fontsize" href="/About">About Me</a>
-				</li>
-
-				<!-- Gallery Dropdown -->
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle fontsize" href="#" id="navbarDropdown"
-						role="button" data-bs-toggle="dropdown">Gallery</a>
-					<div class="dropdown-menu fontsize">
-						<a class="dropdown-item" href="/Gallery.html?type=All">All</a>
-						<a class="dropdown-item" href="/Gallery.html?type=KidsCakes">Kids
-							Cakes</a>
-						<a class="dropdown-item" href="/Gallery.html?type=Cakes">Cakes</a>
-						<a class="dropdown-item" href="/Gallery.html?type=Cakepops">Cakepops</a>
-						<a class="dropdown-item" href="/Gallery.html?type=Cupcakes">Cupcakes</a>
-						<a class="dropdown-item" href="/Gallery.html?type=Treats">Treats</a>
-					</div>
-				</li>
-
-				<li class="nav-item">
-					<a class="nav-link fontsize" href="/Flavours">Flavours</a>
-				</li>
-
-				<li class="nav-item">
-					<img class="ribbon" src="/images/ribbon.png">
-					<a class="nav-link fontsize" href="/Enquiries">Enquiries</a>
-				</li>
-			</ul>
-		</div>
-	</div>
-</nav>
+	<%- include('./addons/navbar') %>
 </header>
 
 <body>
 	<div class="container-fluid EnquiriesContainer m-0 p-0">
-		<div id="sideScroll" class="row sideScrollContainer m-0 p-0">
-	<div class="col homeImageContainer">
-		<div class="row sideScrollL m-1 d-inline-block">
-			<div class="col p-0 my-1 py-1">
-				<img class="homeImage" 
-					loading="lazy"
-					src="/images/Sidescroll/1.jpg">
-			</div>
-			<div class="col p-0 my-1 py-1">
-				<img class="homeImage" 
-					loading="lazy"
-					src="/images/Sidescroll/2.jpg">
-			</div>
-			<div class="col p-0 my-1 py-1">
-				<img class="homeImage" 
-					loading="lazy"
-					src="/images/Sidescroll/3.jpg">
-			</div>
-			<div class="col p-0 my-1 py-1">
-				<img class="homeImage" 
-					loading="lazy"
-					src="/images/Sidescroll/1.jpg">
-			</div>
-			<div class="col p-0 my-1 py-1">
-				<img class="homeImage" 
-					loading="lazy"
-					src="/images/Sidescroll/2.jpg">
-			</div>
-			<div class="col p-0 my-1 py-1">
-				<img class="homeImage" 
-					loading="lazy"
-					src="/images/Sidescroll/3.jpg">
-			</div>
-		</div>
-		<div class="row sideScrollR m-1 d-inline-block">
-			<div class="col p-0 my-1 py-1">
-				<img class="homeImage" 
-					loading="lazy"
-					src="/images/Sidescroll/4.jpg">
-			</div>
-			<div class="col p-0 my-1 py-1">
-				<img class="homeImage" 
-					loading="lazy"
-					src="/images/Sidescroll/5.jpg">
-			</div>
-			<div class="col p-0 my-1 py-1">
-				<img class="homeImage" 
-					loading="lazy"
-					src="/images/Sidescroll/6.jpg">
-			</div>
-			<div class="col p-0 my-1 py-1">
-				<img class="homeImage" 
-					loading="lazy"
-					src="/images/Sidescroll/4.jpg">
-			</div>
-			<div class="col p-0 my-1 py-1">
-				<img class="homeImage" 
-					loading="lazy"
-					src="/images/Sidescroll/5.jpg">
-			</div>
-			<div class="col p-0 my-1 py-1">
-				<img class="homeImage" 
-					loading="lazy"
-					src="/images/Sidescroll/6.jpg">
-			</div>
-		</div>
-	</div>
-</div>
+		<%- include('./addons/sideScroll') %>
 		<div class="ennquiresWrapper m-0 p-0">
 			<div class="row policyContainer m-0 p-3 pb-5">
 				<div class="col policy m-0 p-3 ms-3 rounded">
@@ -289,45 +170,7 @@
 		</div>
 
 		<div class="w-100 m-0 p-0"></div>
-		<footer id="footer" class="footer container-fluid m-0 p-0">
-	<ul class="nav border-top m-0 p-0 footerList">
-		<li class="nav-item nav-logo-footer">
-			<a href="/">
-				<img class="footerLogo"
-					src="/images/home logo.png">
-			</a>
-		</li>
-		<li class="nav-item my-auto">
-			<a href="https://www.instagram.com/arnies_cakes/" target="_blank">
-				<img class="footerImages" src="/images/instagram.svg">
-			</a>
-			<a class="footerLinks" href="https://www.instagram.com/arnies_cakes/" target="_blank">
-				@arnies_cakes
-			</a>
-		</li>
-		<li class="nav-item my-auto">
-			<a href="https://www.facebook.com/ArniesCakes" target="_blank">
-				<img class="footerImages" src="/images/facebook.svg">
-			</a>
-			<a class="footerLinks" href="https://www.facebook.com/ArniesCakes" target="_blank">
-				Dublin Tortai - 'Arnie's Cakes'
-			</a>
-		</li>
-		<li class="nav-item my-auto">
-			<a href="mailto:arniescakes@gmail.com" target="">
-				<img class="footerImages" src="/images/gmail.svg">
-			</a>
-			<a class="footerLinks" href="mailto:arniescakes@gmail.com" target="">
-				arniescakes@gmail.com
-			</a>
-		</li>
-		<li class="nav-item footerEnquires my-auto rounded-5">
-			<a href="/Enquiries">
-				Enquiries
-			</a>
-		</li>
-	</ul>
-</footer>
+		<%- include('./addons/footer') %>
 
 	</div>
 </body>

@@ -13,7 +13,7 @@ function renderTemplate(data, ejsPath){
 		dataArray = normalizeFlavoursData(data);
 	}
 
-	console.log(dataArray)
+	//console.log(dataArray)
 
 	return ejs.render(base, {
 		filename: basePath,
@@ -58,6 +58,8 @@ function saveNewPublicFile(ogFile, data, ejsPath){
 	}
 	
 }
+
+saveNewPublicFile('Index.html',[], 'Index.ejs');
 
 module.exports = {
 	saveNewPublicFile

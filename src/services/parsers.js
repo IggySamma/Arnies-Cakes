@@ -275,6 +275,7 @@ function storeFlavours(data){
 
     console.log("Flavours stored");
     templates.saveNewPublicFile('Flavours.html', globals.flavours, 'Flavours.ejs');
+    templates.saveNewPublicFile('Enquiries.html', globals.flavours, 'Enquiries.ejs')
 }
 
 /*------------------------------- Enquiries Callender ------------------------------------*/
