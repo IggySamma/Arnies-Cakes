@@ -2,19 +2,18 @@ const ejs = require('ejs');
 const fs = require('fs');
 const path = require('path');
 
-
 function renderTemplate(data, ejsPath){
 	const basePath = path.join(__dirname, '../templates/base/', ejsPath);
 	const base = fs.readFileSync(basePath, 'utf8');
 
 	let dataArray = data;
-
+	
 	if (ejsPath === 'Flavours.ejs'){
 		dataArray = normalizeFlavoursData(data);
 	}
 
 	//console.log(dataArray)
-
+	
 	return ejs.render(base, {
 		filename: basePath,
 		entries: dataArray
@@ -44,6 +43,7 @@ function saveNewPublicFile(ogFile, data, ejsPath){
 	
 	try{
 		fs.writeFileSync(`../src/public/${ogFile}`, htmlOutput);
+		console.log('Creating file: ' + ogFile)
 	} catch (err) {
 		console.log(`Issue with creating from ${ejsPath} template, check exists`);
 		console.log(err);
@@ -59,7 +59,7 @@ function saveNewPublicFile(ogFile, data, ejsPath){
 	
 }
 
-saveNewPublicFile('Index.html',[], 'Index.ejs');
+//saveNewPublicFile('Gallery.html', [] , 'Gallery.ejs');
 
 module.exports = {
 	saveNewPublicFile

@@ -29,7 +29,7 @@ server.post('/api/gallery', (req, res) => { utils.filterGallery( req, res) });
 server.get('/api/flavours', (req, res) => { res.json(globals.flavours) });
 server.post('/api/disabledDates', (req, res) => { res.json(globals.disabledDates)})
 server.post('/api/getMainHeaders', (req, res) => { sqlQuery.getEnquiriesMainHeaders(req, res) })
-server.post('/api/getTreatsHeaders', (req, res) => { sqlQuery.getEnquiriesSubHHeaders(req, res) })
+server.post('/api/getTreatsHeaders', (req, res) => { sqlQuery.getEnquiriesSubHeaders(req, res) })
 server.post('/api/submitEnquirie', parsers.clientUpload.array("clientPhotos"), (req, res) => { parsers.Enquiries(req, res)});
 
 /*--------------------- Admin Page API's ---------------------*/

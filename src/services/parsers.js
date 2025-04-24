@@ -275,10 +275,60 @@ function storeFlavours(data){
 
     console.log("Flavours stored");
     templates.saveNewPublicFile('Flavours.html', globals.flavours, 'Flavours.ejs');
-    templates.saveNewPublicFile('Enquiries.html', globals.flavours, 'Enquiries.ejs')
+    
+	getEnquiriesHeadersPreRender()
+    //templates.saveNewPublicFile('Enquiries.html', globals.flavours, 'Enquiries.ejs')
 }
 
-/*------------------------------- Enquiries Callender ------------------------------------*/
+/*------------------------------- Enquiries ------------------------------------*/
+
+function getEnquiriesHeadersPreRender() {
+	serverConfig.connection.execute(
+		'SELECT * FROM mainHeaders;',
+		function (err, results) {
+			if (err) {
+				console.log(err);
+				res.json(new Error(err));
+			} else {
+				const obj = JSON.parse(JSON.stringify(results));
+				
+				const header = obj.map(item => ({
+					...item, 
+					Header: 'Main'
+				}));
+				//console.log(header);
+				getEnquiriesSubHeadersPreRender(header);
+				//templates.saveNewPublicFile('Enquiries.html', obj, 'Enquiries.ejs');
+			}
+		}
+	);
+}
+
+
+function getEnquiriesSubHeadersPreRender(main) {
+	serverConfig.connection.execute(
+		'SELECT * FROM subHeaders;',
+		function (err, results) {
+			if (err) {
+				console.log(err);
+				res.json(new Error(err));
+			} else {
+				var obj = JSON.parse(JSON.stringify(results));
+				//console.log(obj)
+				const sub = obj.map( item => ({
+					...item,
+					Header: 'Sub'
+				}));
+
+				const headers = [...main, ...sub];
+				//console.log(headers)
+				templates.saveNewPublicFile('Enquiries.html', headers, 'Enquiries.ejs')
+			}
+		}
+	);
+}
+
+/*------------------------------- Enquiries Calendar ------------------------------------*/
 
 function getDisabledDates(){
    serverConfig.connection.execute(

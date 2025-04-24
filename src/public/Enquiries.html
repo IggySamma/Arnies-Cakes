@@ -238,8 +238,584 @@
 						</div>
 						<div class="mb-3">
 							<label class="form-label">What items would you like?</label><br>
-							<div id="mainHeader"></div>
-							<div id="subHeader"></div>
+
+
+							
+							<div id="mainHeader">
+								
+									
+									
+										<div id="Cake" class="Cake itemWrapper">
+	<input type="checkbox" id="CakeCheckBox" value=""
+		onclick=updatePlaceholder(&#39;&#39;)
+		required class="form-check-input CheckBox">
+	<label for="CakeCheckBox" class="form-check-label mx-1 px-1">Cake</label>
+	
+		
+			<div class="Flavours Vanilla">
+				<input type="checkbox" id="CakeVanillaCheckBox" value=""
+					onclick="updatePlaceholder('CakeVanilla')" required class="form-check-input ms-4">
+				<label for="CakeVanillaCheckBox" class="form-check-label mx-1 px-1">Vanilla</label>
+
+				
+					<div class="btn-group cakeSizes">
+						<select id="CakeVanillaCakeSize" class="form-select cakeSizes m-1 p-1 pb-1 ms-4"
+							required disabled style="display: none;">
+
+							<option value="" selected disabled min="4" max="10">Please select cake size</option>
+							<option value="4">4 inch (Round cake) - Feeds 4-6 People</option>
+							<option value="6">6 inch (Round cake) - Feeds 14 People</option>
+							<option value="8">8 inch (Round cake) - Feeds 24 People - Standard Size</option>
+							<option value="10">10 inch (Square cake) - Feeds 50 People</option>
+						</select>
+					</div>
+				
+
+						<input type="number" id="CakeVanillaCheckBox1" for="CakeVanillaCheckBox"
+							placeholder="0" min="1" step="1" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Chocolate">
+				<input type="checkbox" id="CakeChocolateCheckBox" value=""
+					onclick="updatePlaceholder('CakeChocolate')" required class="form-check-input ms-4">
+				<label for="CakeChocolateCheckBox" class="form-check-label mx-1 px-1">Chocolate</label>
+
+				
+					<div class="btn-group cakeSizes">
+						<select id="CakeChocolateCakeSize" class="form-select cakeSizes m-1 p-1 pb-1 ms-4"
+							required disabled style="display: none;">
+
+							<option value="" selected disabled min="4" max="10">Please select cake size</option>
+							<option value="4">4 inch (Round cake) - Feeds 4-6 People</option>
+							<option value="6">6 inch (Round cake) - Feeds 14 People</option>
+							<option value="8">8 inch (Round cake) - Feeds 24 People - Standard Size</option>
+							<option value="10">10 inch (Square cake) - Feeds 50 People</option>
+						</select>
+					</div>
+				
+
+						<input type="number" id="CakeChocolateCheckBox1" for="CakeChocolateCheckBox"
+							placeholder="0" min="1" step="1" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Red Velvet">
+				<input type="checkbox" id="CakeRed VelvetCheckBox" value=""
+					onclick="updatePlaceholder('CakeRed Velvet')" required class="form-check-input ms-4">
+				<label for="CakeRed VelvetCheckBox" class="form-check-label mx-1 px-1">Red Velvet</label>
+
+				
+					<div class="btn-group cakeSizes">
+						<select id="CakeRed VelvetCakeSize" class="form-select cakeSizes m-1 p-1 pb-1 ms-4"
+							required disabled style="display: none;">
+
+							<option value="" selected disabled min="4" max="10">Please select cake size</option>
+							<option value="4">4 inch (Round cake) - Feeds 4-6 People</option>
+							<option value="6">6 inch (Round cake) - Feeds 14 People</option>
+							<option value="8">8 inch (Round cake) - Feeds 24 People - Standard Size</option>
+							<option value="10">10 inch (Square cake) - Feeds 50 People</option>
+						</select>
+					</div>
+				
+
+						<input type="number" id="CakeRed VelvetCheckBox1" for="CakeRed VelvetCheckBox"
+							placeholder="0" min="1" step="1" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Raffaello">
+				<input type="checkbox" id="CakeRaffaelloCheckBox" value=""
+					onclick="updatePlaceholder('CakeRaffaello')" required class="form-check-input ms-4">
+				<label for="CakeRaffaelloCheckBox" class="form-check-label mx-1 px-1">Raffaello</label>
+
+				
+					<div class="btn-group cakeSizes">
+						<select id="CakeRaffaelloCakeSize" class="form-select cakeSizes m-1 p-1 pb-1 ms-4"
+							required disabled style="display: none;">
+
+							<option value="" selected disabled min="4" max="10">Please select cake size</option>
+							<option value="4">4 inch (Round cake) - Feeds 4-6 People</option>
+							<option value="6">6 inch (Round cake) - Feeds 14 People</option>
+							<option value="8">8 inch (Round cake) - Feeds 24 People - Standard Size</option>
+							<option value="10">10 inch (Square cake) - Feeds 50 People</option>
+						</select>
+					</div>
+				
+
+						<input type="number" id="CakeRaffaelloCheckBox1" for="CakeRaffaelloCheckBox"
+							placeholder="0" min="1" step="1" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Honey">
+				<input type="checkbox" id="CakeHoneyCheckBox" value=""
+					onclick="updatePlaceholder('CakeHoney')" required class="form-check-input ms-4">
+				<label for="CakeHoneyCheckBox" class="form-check-label mx-1 px-1">Honey</label>
+
+				
+					<div class="btn-group cakeSizes">
+						<select id="CakeHoneyCakeSize" class="form-select cakeSizes m-1 p-1 pb-1 ms-4"
+							required disabled style="display: none;">
+
+							<option value="" selected disabled min="4" max="10">Please select cake size</option>
+							<option value="4">4 inch (Round cake) - Feeds 4-6 People</option>
+							<option value="6">6 inch (Round cake) - Feeds 14 People</option>
+							<option value="8">8 inch (Round cake) - Feeds 24 People - Standard Size</option>
+							<option value="10">10 inch (Square cake) - Feeds 50 People</option>
+						</select>
+					</div>
+				
+
+						<input type="number" id="CakeHoneyCheckBox1" for="CakeHoneyCheckBox"
+							placeholder="0" min="1" step="1" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Black Forest">
+				<input type="checkbox" id="CakeBlack ForestCheckBox" value=""
+					onclick="updatePlaceholder('CakeBlack Forest')" required class="form-check-input ms-4">
+				<label for="CakeBlack ForestCheckBox" class="form-check-label mx-1 px-1">Black Forest</label>
+
+				
+					<div class="btn-group cakeSizes">
+						<select id="CakeBlack ForestCakeSize" class="form-select cakeSizes m-1 p-1 pb-1 ms-4"
+							required disabled style="display: none;">
+
+							<option value="" selected disabled min="4" max="10">Please select cake size</option>
+							<option value="4">4 inch (Round cake) - Feeds 4-6 People</option>
+							<option value="6">6 inch (Round cake) - Feeds 14 People</option>
+							<option value="8">8 inch (Round cake) - Feeds 24 People - Standard Size</option>
+							<option value="10">10 inch (Square cake) - Feeds 50 People</option>
+						</select>
+					</div>
+				
+
+						<input type="number" id="CakeBlack ForestCheckBox1" for="CakeBlack ForestCheckBox"
+							placeholder="0" min="1" step="1" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Napoleon">
+				<input type="checkbox" id="CakeNapoleonCheckBox" value=""
+					onclick="updatePlaceholder('CakeNapoleon')" required class="form-check-input ms-4">
+				<label for="CakeNapoleonCheckBox" class="form-check-label mx-1 px-1">Napoleon</label>
+
+				
+					<div class="btn-group cakeSizes">
+						<select id="CakeNapoleonCakeSize" class="form-select cakeSizes m-1 p-1 pb-1 ms-4"
+							required disabled style="display: none;">
+
+							<option value="" selected disabled min="4" max="10">Please select cake size</option>
+							<option value="4">4 inch (Round cake) - Feeds 4-6 People</option>
+							<option value="6">6 inch (Round cake) - Feeds 14 People</option>
+							<option value="8">8 inch (Round cake) - Feeds 24 People - Standard Size</option>
+							<option value="10">10 inch (Square cake) - Feeds 50 People</option>
+						</select>
+					</div>
+				
+
+						<input type="number" id="CakeNapoleonCheckBox1" for="CakeNapoleonCheckBox"
+							placeholder="0" min="1" step="1" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Lemon">
+				<input type="checkbox" id="CakeLemonCheckBox" value=""
+					onclick="updatePlaceholder('CakeLemon')" required class="form-check-input ms-4">
+				<label for="CakeLemonCheckBox" class="form-check-label mx-1 px-1">Lemon</label>
+
+				
+					<div class="btn-group cakeSizes">
+						<select id="CakeLemonCakeSize" class="form-select cakeSizes m-1 p-1 pb-1 ms-4"
+							required disabled style="display: none;">
+
+							<option value="" selected disabled min="4" max="10">Please select cake size</option>
+							<option value="4">4 inch (Round cake) - Feeds 4-6 People</option>
+							<option value="6">6 inch (Round cake) - Feeds 14 People</option>
+							<option value="8">8 inch (Round cake) - Feeds 24 People - Standard Size</option>
+							<option value="10">10 inch (Square cake) - Feeds 50 People</option>
+						</select>
+					</div>
+				
+
+						<input type="number" id="CakeLemonCheckBox1" for="CakeLemonCheckBox"
+							placeholder="0" min="1" step="1" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Fresh Fruit">
+				<input type="checkbox" id="CakeFresh FruitCheckBox" value=""
+					onclick="updatePlaceholder('CakeFresh Fruit')" required class="form-check-input ms-4">
+				<label for="CakeFresh FruitCheckBox" class="form-check-label mx-1 px-1">Fresh Fruit</label>
+
+				
+					<div class="btn-group cakeSizes">
+						<select id="CakeFresh FruitCakeSize" class="form-select cakeSizes m-1 p-1 pb-1 ms-4"
+							required disabled style="display: none;">
+
+							<option value="" selected disabled min="4" max="10">Please select cake size</option>
+							<option value="4">4 inch (Round cake) - Feeds 4-6 People</option>
+							<option value="6">6 inch (Round cake) - Feeds 14 People</option>
+							<option value="8">8 inch (Round cake) - Feeds 24 People - Standard Size</option>
+							<option value="10">10 inch (Square cake) - Feeds 50 People</option>
+						</select>
+					</div>
+				
+
+						<input type="number" id="CakeFresh FruitCheckBox1" for="CakeFresh FruitCheckBox"
+							placeholder="0" min="1" step="1" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+	
+</div>
+									
+								
+									
+									
+										<div id="Cakepops" class="Cakepops itemWrapper">
+	<input type="checkbox" id="CakepopsCheckBox" value=""
+		onclick=updatePlaceholder(&#39;&#39;)
+		required class="form-check-input CheckBox">
+	<label for="CakepopsCheckBox" class="form-check-label mx-1 px-1">Cakepops</label>
+	
+		
+			<div class="Flavours Vanilla">
+				<input type="checkbox" id="CakepopsVanillaCheckBox" value=""
+					onclick="updatePlaceholder('CakepopsVanilla')" required class="form-check-input ms-4">
+				<label for="CakepopsVanillaCheckBox" class="form-check-label mx-1 px-1">Vanilla</label>
+
+				
+
+						<input type="number" id="CakepopsVanillaCheckBox1" for="CakepopsVanillaCheckBox"
+							placeholder="0" min="12" step="6" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Chocolate">
+				<input type="checkbox" id="CakepopsChocolateCheckBox" value=""
+					onclick="updatePlaceholder('CakepopsChocolate')" required class="form-check-input ms-4">
+				<label for="CakepopsChocolateCheckBox" class="form-check-label mx-1 px-1">Chocolate</label>
+
+				
+
+						<input type="number" id="CakepopsChocolateCheckBox1" for="CakepopsChocolateCheckBox"
+							placeholder="0" min="12" step="6" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Red Velvet">
+				<input type="checkbox" id="CakepopsRed VelvetCheckBox" value=""
+					onclick="updatePlaceholder('CakepopsRed Velvet')" required class="form-check-input ms-4">
+				<label for="CakepopsRed VelvetCheckBox" class="form-check-label mx-1 px-1">Red Velvet</label>
+
+				
+
+						<input type="number" id="CakepopsRed VelvetCheckBox1" for="CakepopsRed VelvetCheckBox"
+							placeholder="0" min="12" step="6" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Honey">
+				<input type="checkbox" id="CakepopsHoneyCheckBox" value=""
+					onclick="updatePlaceholder('CakepopsHoney')" required class="form-check-input ms-4">
+				<label for="CakepopsHoneyCheckBox" class="form-check-label mx-1 px-1">Honey</label>
+
+				
+
+						<input type="number" id="CakepopsHoneyCheckBox1" for="CakepopsHoneyCheckBox"
+							placeholder="0" min="12" step="6" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Lemon">
+				<input type="checkbox" id="CakepopsLemonCheckBox" value=""
+					onclick="updatePlaceholder('CakepopsLemon')" required class="form-check-input ms-4">
+				<label for="CakepopsLemonCheckBox" class="form-check-label mx-1 px-1">Lemon</label>
+
+				
+
+						<input type="number" id="CakepopsLemonCheckBox1" for="CakepopsLemonCheckBox"
+							placeholder="0" min="12" step="6" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Fresh Fruit">
+				<input type="checkbox" id="CakepopsFresh FruitCheckBox" value=""
+					onclick="updatePlaceholder('CakepopsFresh Fruit')" required class="form-check-input ms-4">
+				<label for="CakepopsFresh FruitCheckBox" class="form-check-label mx-1 px-1">Fresh Fruit</label>
+
+				
+
+						<input type="number" id="CakepopsFresh FruitCheckBox1" for="CakepopsFresh FruitCheckBox"
+							placeholder="0" min="12" step="6" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+	
+</div>
+									
+								
+									
+									
+										<div id="Cakesicles" class="Cakesicles itemWrapper">
+	<input type="checkbox" id="CakesiclesCheckBox" value=""
+		onclick=updatePlaceholder(&#39;&#39;)
+		required class="form-check-input CheckBox">
+	<label for="CakesiclesCheckBox" class="form-check-label mx-1 px-1">Cakesicles</label>
+	
+		
+			<div class="Flavours Vanilla">
+				<input type="checkbox" id="CakesiclesVanillaCheckBox" value=""
+					onclick="updatePlaceholder('CakesiclesVanilla')" required class="form-check-input ms-4">
+				<label for="CakesiclesVanillaCheckBox" class="form-check-label mx-1 px-1">Vanilla</label>
+
+				
+
+						<input type="number" id="CakesiclesVanillaCheckBox1" for="CakesiclesVanillaCheckBox"
+							placeholder="0" min="12" step="6" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Chocolate">
+				<input type="checkbox" id="CakesiclesChocolateCheckBox" value=""
+					onclick="updatePlaceholder('CakesiclesChocolate')" required class="form-check-input ms-4">
+				<label for="CakesiclesChocolateCheckBox" class="form-check-label mx-1 px-1">Chocolate</label>
+
+				
+
+						<input type="number" id="CakesiclesChocolateCheckBox1" for="CakesiclesChocolateCheckBox"
+							placeholder="0" min="12" step="6" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Red Velvet">
+				<input type="checkbox" id="CakesiclesRed VelvetCheckBox" value=""
+					onclick="updatePlaceholder('CakesiclesRed Velvet')" required class="form-check-input ms-4">
+				<label for="CakesiclesRed VelvetCheckBox" class="form-check-label mx-1 px-1">Red Velvet</label>
+
+				
+
+						<input type="number" id="CakesiclesRed VelvetCheckBox1" for="CakesiclesRed VelvetCheckBox"
+							placeholder="0" min="12" step="6" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Honey">
+				<input type="checkbox" id="CakesiclesHoneyCheckBox" value=""
+					onclick="updatePlaceholder('CakesiclesHoney')" required class="form-check-input ms-4">
+				<label for="CakesiclesHoneyCheckBox" class="form-check-label mx-1 px-1">Honey</label>
+
+				
+
+						<input type="number" id="CakesiclesHoneyCheckBox1" for="CakesiclesHoneyCheckBox"
+							placeholder="0" min="12" step="6" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Lemon">
+				<input type="checkbox" id="CakesiclesLemonCheckBox" value=""
+					onclick="updatePlaceholder('CakesiclesLemon')" required class="form-check-input ms-4">
+				<label for="CakesiclesLemonCheckBox" class="form-check-label mx-1 px-1">Lemon</label>
+
+				
+
+						<input type="number" id="CakesiclesLemonCheckBox1" for="CakesiclesLemonCheckBox"
+							placeholder="0" min="12" step="6" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Fresh Fruit">
+				<input type="checkbox" id="CakesiclesFresh FruitCheckBox" value=""
+					onclick="updatePlaceholder('CakesiclesFresh Fruit')" required class="form-check-input ms-4">
+				<label for="CakesiclesFresh FruitCheckBox" class="form-check-label mx-1 px-1">Fresh Fruit</label>
+
+				
+
+						<input type="number" id="CakesiclesFresh FruitCheckBox1" for="CakesiclesFresh FruitCheckBox"
+							placeholder="0" min="12" step="6" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+	
+</div>
+									
+								
+									
+									
+										<div id="Cupcakes" class="Cupcakes itemWrapper">
+	<input type="checkbox" id="CupcakesCheckBox" value=""
+		onclick=updatePlaceholder(&#39;&#39;)
+		required class="form-check-input CheckBox">
+	<label for="CupcakesCheckBox" class="form-check-label mx-1 px-1">Cupcakes</label>
+	
+		
+			<div class="Flavours Vanilla">
+				<input type="checkbox" id="CupcakesVanillaCheckBox" value=""
+					onclick="updatePlaceholder('CupcakesVanilla')" required class="form-check-input ms-4">
+				<label for="CupcakesVanillaCheckBox" class="form-check-label mx-1 px-1">Vanilla</label>
+
+				
+
+						<input type="number" id="CupcakesVanillaCheckBox1" for="CupcakesVanillaCheckBox"
+							placeholder="0" min="12" step="6" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Chocolate">
+				<input type="checkbox" id="CupcakesChocolateCheckBox" value=""
+					onclick="updatePlaceholder('CupcakesChocolate')" required class="form-check-input ms-4">
+				<label for="CupcakesChocolateCheckBox" class="form-check-label mx-1 px-1">Chocolate</label>
+
+				
+
+						<input type="number" id="CupcakesChocolateCheckBox1" for="CupcakesChocolateCheckBox"
+							placeholder="0" min="12" step="6" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Raffaello">
+				<input type="checkbox" id="CupcakesRaffaelloCheckBox" value=""
+					onclick="updatePlaceholder('CupcakesRaffaello')" required class="form-check-input ms-4">
+				<label for="CupcakesRaffaelloCheckBox" class="form-check-label mx-1 px-1">Raffaello</label>
+
+				
+
+						<input type="number" id="CupcakesRaffaelloCheckBox1" for="CupcakesRaffaelloCheckBox"
+							placeholder="0" min="12" step="6" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Honey">
+				<input type="checkbox" id="CupcakesHoneyCheckBox" value=""
+					onclick="updatePlaceholder('CupcakesHoney')" required class="form-check-input ms-4">
+				<label for="CupcakesHoneyCheckBox" class="form-check-label mx-1 px-1">Honey</label>
+
+				
+
+						<input type="number" id="CupcakesHoneyCheckBox1" for="CupcakesHoneyCheckBox"
+							placeholder="0" min="12" step="6" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Lemon">
+				<input type="checkbox" id="CupcakesLemonCheckBox" value=""
+					onclick="updatePlaceholder('CupcakesLemon')" required class="form-check-input ms-4">
+				<label for="CupcakesLemonCheckBox" class="form-check-label mx-1 px-1">Lemon</label>
+
+				
+
+						<input type="number" id="CupcakesLemonCheckBox1" for="CupcakesLemonCheckBox"
+							placeholder="0" min="12" step="6" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Fresh Fruit">
+				<input type="checkbox" id="CupcakesFresh FruitCheckBox" value=""
+					onclick="updatePlaceholder('CupcakesFresh Fruit')" required class="form-check-input ms-4">
+				<label for="CupcakesFresh FruitCheckBox" class="form-check-label mx-1 px-1">Fresh Fruit</label>
+
+				
+
+						<input type="number" id="CupcakesFresh FruitCheckBox1" for="CupcakesFresh FruitCheckBox"
+							placeholder="0" min="12" step="6" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+	
+</div>
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+							</div>
+
+							<div id="subHeader">
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+										<div id="3dChocolateHeart" class="3dChocolateHeart itemWrapper">
+	<input type="checkbox" id="3dChocolateHeartCheckBox" value=""
+		onclick=updatePlaceholder(&#39;3dChocolateHeart&#39;)
+		required class="form-check-input CheckBox">
+	<label for="3dChocolateHeartCheckBox" class="form-check-label mx-1 px-1">3d Chocolate Heart</label>
+	
+		<input type="number" id="3dChocolateHeartCheckBox1" for="3dChocolateHeartCheckBox" placeholder="0" min="1"
+			step="1" disabled class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+	
+</div>
+									
+								
+									
+										<div id="ChocolateStrawberries" class="ChocolateStrawberries itemWrapper">
+	<input type="checkbox" id="ChocolateStrawberriesCheckBox" value=""
+		onclick=updatePlaceholder(&#39;ChocolateStrawberries&#39;)
+		required class="form-check-input CheckBox">
+	<label for="ChocolateStrawberriesCheckBox" class="form-check-label mx-1 px-1">Chocolate Strawberries</label>
+	
+		<input type="number" id="ChocolateStrawberriesCheckBox1" for="ChocolateStrawberriesCheckBox" placeholder="0" min="6"
+			step="1" disabled class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+	
+</div>
+									
+								
+									
+										<div id="GiftBox" class="GiftBox itemWrapper">
+	<input type="checkbox" id="GiftBoxCheckBox" value=""
+		onclick=updatePlaceholder(&#39;GiftBox&#39;)
+		required class="form-check-input CheckBox">
+	<label for="GiftBoxCheckBox" class="form-check-label mx-1 px-1">Gift Box</label>
+	
+		<input type="number" id="GiftBoxCheckBox1" for="GiftBoxCheckBox" placeholder="0" min="1"
+			step="1" disabled class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+	
+</div>
+									
+								
+									
+										<div id="Profiterolebags-PlikytiSausainukai" class="Profiterolebags-PlikytiSausainukai itemWrapper">
+	<input type="checkbox" id="Profiterolebags-PlikytiSausainukaiCheckBox" value=""
+		onclick=updatePlaceholder(&#39;Profiterolebags-PlikytiSausainukai&#39;)
+		required class="form-check-input CheckBox">
+	<label for="Profiterolebags-PlikytiSausainukaiCheckBox" class="form-check-label mx-1 px-1">Profiterole bags - Plikyti Sausainukai</label>
+	
+		<input type="number" id="Profiterolebags-PlikytiSausainukaiCheckBox1" for="Profiterolebags-PlikytiSausainukaiCheckBox" placeholder="0" min="3"
+			step="1" disabled class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+	
+</div>
+									
+								
+									
+										<div id="GingerbreadMushrooms(KG)-Grybukai" class="GingerbreadMushrooms(KG)-Grybukai itemWrapper">
+	<input type="checkbox" id="GingerbreadMushrooms(KG)-GrybukaiCheckBox" value=""
+		onclick=updatePlaceholder(&#39;GingerbreadMushrooms(KG)-Grybukai&#39;)
+		required class="form-check-input CheckBox">
+	<label for="GingerbreadMushrooms(KG)-GrybukaiCheckBox" class="form-check-label mx-1 px-1">Gingerbread Mushrooms (KG) - Grybukai</label>
+	
+		<input type="number" id="GingerbreadMushrooms(KG)-GrybukaiCheckBox1" for="GingerbreadMushrooms(KG)-GrybukaiCheckBox" placeholder="0" min="0.5"
+			step="0.5" disabled class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+	
+</div>
+									
+								
+							</div>
+
 						</div>
 						<div class="mb-3">
 							<label for="EnquirieInput" class="form-label">Tell me more about

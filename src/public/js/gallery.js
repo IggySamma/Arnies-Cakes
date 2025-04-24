@@ -1,6 +1,5 @@
 let sectionNames = new URLSearchParams(window.location.search).get('type');
 let galleryContainer = document.getElementById(sectionNames);
-console.log(sectionNames)
 galleryContainer.parentNode.classList.add("active")
 window.history.replaceState({},"", (window.location.pathname.replace('.html','') + '?type=' + sectionNames).toString())
 

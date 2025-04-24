@@ -73,13 +73,14 @@ function getEnquiriesMainHeaders(req, res){
                 res.json(new Error(err));
             } else {
                 var obj = JSON.parse(JSON.stringify(results));
+		//console.log(obj)
                 res.json(obj);
             }
         }
    );
 }
 
-function getEnquiriesSubHHeaders(req, res){
+function getEnquiriesSubHeaders(req, res){
     serverConfig.connection.execute(
         'SELECT * FROM subHeaders;',
         function (err, results) {
@@ -88,6 +89,7 @@ function getEnquiriesSubHHeaders(req, res){
                 res.json(new Error(err));
             } else {
                 var obj = JSON.parse(JSON.stringify(results));
+		//console.log(obj)
                 res.json(obj);
             }
         }
@@ -136,33 +138,51 @@ function deleteDisabledDate(req, res, ID){
 /*--------------------------- Enquirie functions --------------------- */
 
 function storeNewEnquirie(res, data, cb){
-    //console.log(data)
-    return new Promise((resolve, reject) => {
-        let storeLink = [
-            date = "",
-            Confirmed = "No",
-            Link = "",
-            Completed = "No",
-            Name = data.Name,
-            Order = data.Order,
-            Message = data.Message,
-            Allergy = data.Allergies,
-            Allergy_Message = data["Allergies Information"],
-        ]
+    	//console.log(data)
 
-        serverConfig.connection.execute(
-            'INSERT INTO Enquiries(Date, Confirmed, Link, Completed, Name, Order_Details, Message, Allergy, Allergy_Message) Values(?, ?, ?, ?, ?, ?, ?, ?, ?);',
-            storeLink,
-            function (err) {
-                if (err) {
-                    console.log(err);
-                    res.sendStatus(500);
-                } else {
-                    resolve(cb())
-                }
-            }
-        );
-    })
+	let colDel, colDelDate, allergy_Message;
+
+	if('Collection' in data){
+		colDel = 'Collection';
+		colDelDate = data['Date of collection'];
+	} else {
+		colDel = 'Delivery';
+		colDelDate = data['Date of delivery']
+	}
+
+	data.Allergies === 'No' ? allergy_Message = '' : allergy_Message = data["Allergies Information"];
+
+	return new Promise((resolve, reject) => {
+		let storeLink = [
+			date = data['Date of Event'],
+			Confirmed = "No",
+			Link = "",
+			Completed = "No",
+			Name = data.Name,
+			Order = JSON.parse(JSON.stringify(data.Order)),
+			Message = data.Message,
+			Allergy = data.Allergies,
+			Allergy_Message = allergy_Message,
+			Email = data.Email,
+			ColDel = colDel,
+			ColDelDate = colDelDate,
+		]
+
+		//console.log(storeLink);
+
+		serverConfig.connection.execute(
+		'INSERT INTO Enquiries(Date, Confirmed, Link, Completed, Name, Order_Details, Message, Allergy, Allergy_Message, Email, ColDel, ColDelDate) Values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+		storeLink,
+		function (err) {
+			if (err) {
+			console.log(err);
+			console.log(storeLink);
+			res.sendStatus(500);
+			} else {
+			resolve(cb())
+			}
+		});
+	})
 }
 
 
@@ -347,7 +367,7 @@ function removeEnquirie(req, res, ID){
 
 module.exports = {
 	getEnquiriesMainHeaders,
-	getEnquiriesSubHHeaders,
+	getEnquiriesSubHeaders,
 	insertNewToGallery,
 	deleteFromGalleryByID,
 	storeEnquirieLink,

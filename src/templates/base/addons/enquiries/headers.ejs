@@ -1,0 +1,36 @@
+<div id="<%= Type %>" class="<%= Type %> itemWrapper">
+	<input type="checkbox" id="<%= Type %>CheckBox" value=""
+		onclick=<%= Flavours && includeFlavours ? `updatePlaceholder('')` : `updatePlaceholder('${Type}')` %>
+		required class="form-check-input CheckBox">
+	<label for="<%= Type %>CheckBox" class="form-check-label mx-1 px-1"><%= item %></label>
+	<% if (Header === 'Main') { %>
+		<% Flavours.forEach(flavour=> { %>
+			<div class="Flavours <%= flavour %>">
+				<input type="checkbox" id="<%= Type + flavour %>CheckBox" value=""
+					onclick="updatePlaceholder('<%= Type + flavour %>')" required class="form-check-input ms-4">
+				<label for="<%= Type + flavour %>CheckBox" class="form-check-label mx-1 px-1"><%= flavour %></label>
+
+				<% if (item==='Cake' ) { %>
+					<div class="btn-group cakeSizes">
+						<select id="<%= Type + flavour %>CakeSize" class="form-select cakeSizes m-1 p-1 pb-1 ms-4"
+							required disabled style="display: none;">
+
+							<option value="" selected disabled min="4" max="10">Please select cake size</option>
+							<option value="4">4 inch (Round cake) - Feeds 4-6 People</option>
+							<option value="6">6 inch (Round cake) - Feeds 14 People</option>
+							<option value="8">8 inch (Round cake) - Feeds 24 People - Standard Size</option>
+							<option value="10">10 inch (Square cake) - Feeds 50 People</option>
+						</select>
+					</div>
+				<% } %>
+
+						<input type="number" id="<%= Type + flavour %>CheckBox1" for="<%= Type + flavour %>CheckBox"
+							placeholder="0" min="<%= minOrder %>" step="<%= step %>" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		<% }) %>
+	<% } else { %>
+		<input type="number" id="<%= Type %>CheckBox1" for="<%= Type %>CheckBox" placeholder="0" min="<%= minOrder %>"
+			step="<%= step %>" disabled class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+	<% } %>
+</div>

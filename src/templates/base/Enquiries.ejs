@@ -119,8 +119,42 @@
 						</div>
 						<div class="mb-3">
 							<label class="form-label">What items would you like?</label><br>
-							<div id="mainHeader"></div>
-							<div id="subHeader"></div>
+
+
+							
+							<div id="mainHeader">
+								<% entries.forEach(item=> { %>
+									<% if(item.Header === 'Main') {%>
+									
+										<%- include('./addons/enquiries/headers', { 
+											item: item.Type, 
+											Type: item.Type.replaceAll(' ', ''), 
+											Flavours: item.Flavours, 
+											minOrder: item.minOrder, 
+											step: item.Step,
+											Header: item.Header,
+											includeFlavours: 'True'
+										}) %>
+									<% } %>
+								<% }) %>
+							</div>
+
+							<div id="subHeader">
+								<% entries.forEach(item=> { %>
+									<% if(item.Header === 'Sub' ) {%>
+										<%- include('./addons/enquiries/headers', { 
+											item: item.Type, 
+											Type: item.Type.replaceAll(' ', ''), 
+											Flavours: item.Flavours, 
+											minOrder: item.minOrder,
+											step: item.Step, 
+											Header: item.Header,
+											includeFlavours: 'False'
+										}) %>
+									<% } %>
+								<% }) %>
+							</div>
+
 						</div>
 						<div class="mb-3">
 							<label for="EnquirieInput" class="form-label">Tell me more about

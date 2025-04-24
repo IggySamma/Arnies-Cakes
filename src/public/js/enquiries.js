@@ -95,7 +95,7 @@ function loadCalender(){
         })
     })
 }
-
+/*
 function getMainHeaders(){
     let mainHeadings;
     fetch('/api/getMainHeaders',{
@@ -104,12 +104,14 @@ function getMainHeaders(){
     .then(response => {
         response.json().then(data =>{
             mainHeadings = data
+	    console.log(mainHeadings);
             for(let i = 0; i < mainHeadings.length; i++){
                 tempFlavs = mainHeadings[i].Flavours
                 let flavours = [];
                 for(let j = 0; j < tempFlavs.length; j++){
                     flavours.push(tempFlavs[j].replace("[","").replace("]","").replace('"',"").replace('"',"").replace(" ",""))
                 }
+		
                 createHeaders(mainHeadings[i].Type, "mainHeader", flavours, true, mainHeadings[i].minOrder, mainHeadings[i].Step);
             }
         })
@@ -129,14 +131,14 @@ function getTreatsHeaders(){
             }
         })
     })
-}
+}*/
 
 loadCalender();
-getMainHeaders();
-getTreatsHeaders();
+//getMainHeaders();
+//getTreatsHeaders();
 
 /*-------------------------------------------------*/
-
+/*
 function createHeaders(item, heading, flavours, includeFlavours, minOrder, step) {
     const header = document.getElementById(heading);
 
@@ -172,7 +174,8 @@ function createHeaders(item, heading, flavours, includeFlavours, minOrder, step)
         div.appendChild(inputSecond);
     }
 }
-
+*/
+/*
 function flavourHeaders(item, flavs, minOrder, step) {
     const header = document.getElementById(item);
 
@@ -229,7 +232,7 @@ function flavourHeaders(item, flavs, minOrder, step) {
 
     div.appendChild(inputSecond);
 }
-
+*/
 
 
 function enableDisable(id){
