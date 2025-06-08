@@ -59,7 +59,11 @@ function saveNewPublicFile(ogFile, data, ejsPath){
 	
 }
 
-//saveNewPublicFile('Gallery.html', [] , 'Gallery.ejs');
+//saveNewPublicFile('Index.html', [], 'Index.ejs');
+//saveNewPublicFile('About.html', [] , 'About.ejs');
+//saveNewPublicFile('Gallery.html', [], 'Gallery.ejs');
+//saveNewPublicFile('Flavours.html', getFlavours(), 'Flavours.ejs'); // parsers.js storeFlavours(data) as it needs to be run after stored
+//saveNewPublicFile('Enquiries.html', [], 'Enquiries.ejs'); // parsers.js getEnquiriesSubHeadersPreRender(main) as it needs to be run after stored
 
 module.exports = {
 	saveNewPublicFile

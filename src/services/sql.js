@@ -9,7 +9,7 @@ function insertNewToGallery(newType, newPath) {
     ];
 
    serverConfig.connection.execute(
-        'INSERT INTO Gallery(Type, Path) Values(?, ?);', 
+        'INSERT INTO gallery(Type, Path) Values(?, ?);', 
         newImage,
         function (err, results) {
             if (err) {
@@ -21,7 +21,7 @@ function insertNewToGallery(newType, newPath) {
 
 function deleteFromGalleryByID(ID, res){
     serverConfig.connection.execute(
-        'DELETE FROM Gallery WHERE ID= ?;', 
+        'DELETE FROM gallery WHERE ID= ?;', 
         [ID],
         function (err, results) {
             if (err) {
@@ -42,7 +42,7 @@ function checkGalleryByID(ID, path){
         ]
     
         serverConfig.connection.execute(
-            'SELECT * FROM Gallery WHERE ID= ? AND Path= ? LIMIT 1;',
+            'SELECT * FROM gallery WHERE ID= ? AND Path= ? LIMIT 1;',
             check,
             function (err, results){
                 if (err){
@@ -66,7 +66,7 @@ function checkGalleryByID(ID, path){
 
 function getEnquiriesMainHeaders(req, res){
    serverConfig.connection.execute(
-        'SELECT * FROM mainHeaders;',
+        'SELECT * FROM mainheaders;',
         function (err, results) {
             if (err) {
                 console.log(err);
@@ -82,7 +82,7 @@ function getEnquiriesMainHeaders(req, res){
 
 function getEnquiriesSubHeaders(req, res){
     serverConfig.connection.execute(
-        'SELECT * FROM subHeaders;',
+        'SELECT * FROM subheaders;',
         function (err, results) {
             if (err) {
                 console.log(err);
@@ -105,7 +105,7 @@ function insertDisabledDate(req, res, Date, isRange){
     ]
 
     serverConfig.connection.execute(
-        'insert into disabledDates (Date, IsRange) values (?, ?);',
+        'insert into disableddates (Date, IsRange) values (?, ?);',
         updateData,
         function (err, results) {
             if (err) {
@@ -121,7 +121,7 @@ function insertDisabledDate(req, res, Date, isRange){
 
 function deleteDisabledDate(req, res, ID){
     serverConfig.connection.execute(
-        'delete from disabledDates where ID=;',
+        'delete from disableddates where ID=;',
         [ID],
         function (err, results) {
             if (err) {
@@ -171,7 +171,7 @@ function storeNewEnquirie(res, data, cb){
 		//console.log(storeLink);
 
 		serverConfig.connection.execute(
-		'INSERT INTO Enquiries(Date, Confirmed, Link, Completed, Name, Order_Details, Message, Allergy, Allergy_Message, Email, ColDel, ColDelDate) Values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+		'INSERT INTO enquiries(Date, Confirmed, Link, Completed, Name, Order_Details, Message, Allergy, Allergy_Message, Email, ColDel, ColDelDate) Values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
 		storeLink,
 		function (err) {
 			if (err) {
@@ -194,7 +194,7 @@ function storeEnquirieLink(newDate, newLink, nID, res){
     ]
 
     serverConfig.connection.execute(
-        'UPDATE Enquiries SET date = ?, Link = ? WHERE ID = ?;', 
+        'UPDATE enquiries SET date = ?, Link = ? WHERE ID = ?;', 
         storeLink,
         function (err, results) {
             if (err) {
@@ -210,7 +210,7 @@ function storeEnquirieLink(newDate, newLink, nID, res){
 function getAllEnquiries(){
     return new Promise((resolve, reject) => {
         serverConfig.connection.execute(
-             'SELECT * FROM Enquiries ;', 
+             'SELECT * FROM enquiries ;', 
             function (err, results) {
                 if (err) {
                     console.log(err);
@@ -226,7 +226,7 @@ function getAllEnquiries(){
 function getAllConfirmedEnquiries(){
     return new Promise((resolve, reject) => {
         serverConfig.connection.execute(
-            'SELECT * FROM confirmedEnquiries WHERE Completed = "No" ;', 
+            'SELECT * FROM confirmedenquiries WHERE Completed = "No" ;', 
             function (err, results) {
                 if (err) {
                     console.log(err);
@@ -244,7 +244,7 @@ function confirmEnquiry(req, res){
     let ID = data.id;
 
     serverConfig.connection.execute(
-        'UPDATE Enquiries SET Confirmed = "Yes" WHERE ID = ?', 
+        'UPDATE enquiries SET Confirmed = "Yes" WHERE ID = ?', 
         [ID],
         function (err, results) {
             if (err) {
@@ -263,7 +263,7 @@ function declineEnquiry(req, res){
     let ID = data.id;
 
     serverConfig.connection.execute(
-        'UPDATE Enquiries SET Confirmed = "Rejected" WHERE ID = ?', 
+        'UPDATE enquiries SET Confirmed = "Rejected" WHERE ID = ?', 
         [ID],
         function (err, results) {
             if (err) {
@@ -281,7 +281,7 @@ function deleteEnquiry(req, res){
     let ID = data.id;
 
     serverConfig.connection.execute(
-        'DELETE FROM Enquiries WHERE ID = ?', 
+        'DELETE FROM enquiries WHERE ID = ?', 
         [ID],
         function (err, results) {
             if (err) {
@@ -302,7 +302,7 @@ function updateEnquiriesConfirmed(req, res, ID, Date, Confirmed){
     ]
 
     serverConfig.connection.execute(
-        'UPDATE Enquiries SET Date = ?, Confirmed = ? WHERE ID = ?;', 
+        'UPDATE enquiries SET Date = ?, Confirmed = ? WHERE ID = ?;', 
         [updateData],
         function (err, results) {
             if (err) {
@@ -318,7 +318,7 @@ function updateEnquiriesConfirmed(req, res, ID, Date, Confirmed){
 
 function requestEnquiryByID(req, res, ID){
 	serverConfig.connection.execute(
-		'SELECT * FROM Enquiries WHERE ID = ?;',
+		'SELECT * FROM enquiries WHERE ID = ?;',
 		[ID],
 		function (err, results) {
 			if(err){
@@ -334,7 +334,7 @@ function requestEnquiryByID(req, res, ID){
 
 function requestConfirmedEnquiryByID(req, res, ID) {
 	serverConfig.connection.execute(
-		'SELECT * FROM confirmedEnquiries WHERE ID = ?;',
+		'SELECT * FROM confirmedenquiries WHERE ID = ?;',
 		[ID],
 		function (err, results) {
 			if (err) {
@@ -351,7 +351,7 @@ function requestConfirmedEnquiryByID(req, res, ID) {
 
 function removeEnquirie(req, res, ID){
     serverConfig.connection.execute(
-        'delete from mainHeaders where ID=;'
+        'delete from mainheaders where ID=;'
         [ID],
         function (err, results) {
             if (err) {

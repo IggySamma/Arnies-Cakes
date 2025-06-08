@@ -41,7 +41,7 @@ function sendEmails(enqNum, data, textBody, photos, res, date){
        ...photo,
         {
             filename: "Logo.png",
-            path: "./public/images/home logo.png",
+            path: "../public/images/home logo.png",
             cid: "logo"
         }],
     };
@@ -61,7 +61,7 @@ function sendEmails(enqNum, data, textBody, photos, res, date){
        ...photo,
         {
             filename: "Logo.png",
-            path: "./public/images/home logo.png",
+            path: "../public/images/home logo.png",
             cid: "logo"
         }],
     };

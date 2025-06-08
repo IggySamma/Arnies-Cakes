@@ -1,0 +1,47 @@
+services:
+  db:
+    image: mysql:9.3
+    cap_add:
+      - SYS_NICE
+    restart: always
+    ports:
+      - "3306:3306"
+    env_file:
+      - ./src/config/.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=${SQL_ROOT}
+      - MYSQL_DATABASE=${SQL_DATABASE}
+      - MYSQL_USER=${SQL_USER}
+      - MYSQL_PASSWORD=${SQL_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init-scripts:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${SQL_ROOT}"]
+      timeout: 20s
+      retries: 10
+      start_period: 40s
+      interval: 30s
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: arnies-cakes:latest
+    env_file:
+      - ./src/config/.env
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=db
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - gallery_data:/usr/src/app/src/public/gallery
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db_data:
+  gallery_data:

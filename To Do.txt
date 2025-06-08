@@ -16,7 +16,7 @@ Confirm enquiry pops up to add with information initiall sent and can then be mo
 
 
 
-
+Enquiries page that can be sent and it copies to clipboard to paste into chat.
 
 Add JSON-LD TO ALL PAGES WHEN LIVE - Updates robots.txt & sitemap.xml with correct url and submit 
 

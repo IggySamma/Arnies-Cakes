@@ -2,7 +2,6 @@ require('dotenv').config({path:__dirname + '/.env'})
 
 /*-------------------Gmail Access setup -------------------------*/
 
-
 const path = require('path');
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
@@ -44,6 +43,7 @@ let emailTransporter = nodemailer.createTransport({
 });
 
 /*----------------------------- MySQL Config ---------------------*/
+
 let sqlConfig = {
     host: process.env.SQL_HOST,
     user: process.env.SQL_USER,

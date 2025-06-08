@@ -13,7 +13,7 @@ function getAllFromGallery(){
     globals.gallery = new globals.galleryConstructor
 
     serverConfig.connection.execute(
-        'SELECT * FROM GALLERY ORDER BY ID ASC;',
+        'SELECT * FROM gallery ORDER BY ID ASC;',
         function (err, results) {
             if(err){
                 res.json(new Error(err));
@@ -260,6 +260,7 @@ function getFlavours(){
    );
 }
 
+
 function storeFlavours(data){
     globals.flavours = new globals.flavoursConstructor;
 
@@ -274,7 +275,7 @@ function storeFlavours(data){
     }
 
     console.log("Flavours stored");
-    templates.saveNewPublicFile('Flavours.html', globals.flavours, 'Flavours.ejs');
+    //templates.saveNewPublicFile('Flavours.html', globals.flavours, 'Flavours.ejs');
     
 	getEnquiriesHeadersPreRender()
     //templates.saveNewPublicFile('Enquiries.html', globals.flavours, 'Enquiries.ejs')
@@ -284,7 +285,7 @@ function storeFlavours(data){
 
 function getEnquiriesHeadersPreRender() {
 	serverConfig.connection.execute(
-		'SELECT * FROM mainHeaders;',
+		'SELECT * FROM mainheaders;',
 		function (err, results) {
 			if (err) {
 				console.log(err);
@@ -307,7 +308,7 @@ function getEnquiriesHeadersPreRender() {
 
 function getEnquiriesSubHeadersPreRender(main) {
 	serverConfig.connection.execute(
-		'SELECT * FROM subHeaders;',
+		'SELECT * FROM subheaders;',
 		function (err, results) {
 			if (err) {
 				console.log(err);
@@ -322,7 +323,7 @@ function getEnquiriesSubHeadersPreRender(main) {
 
 				const headers = [...main, ...sub];
 				//console.log(headers)
-				templates.saveNewPublicFile('Enquiries.html', headers, 'Enquiries.ejs')
+				//templates.saveNewPublicFile('Enquiries.html', headers, 'Enquiries.ejs')
 			}
 		}
 	);
@@ -332,7 +333,7 @@ function getEnquiriesSubHeadersPreRender(main) {
 
 function getDisabledDates(){
    serverConfig.connection.execute(
-        'SELECT * FROM disabledDates;',
+        'SELECT * FROM disableddates;',
         function (err, results) {
             if (err) {
                 console.log(err)
@@ -385,7 +386,7 @@ function checkDates(){
 
 function deleteDates(ID){
     serverConfig.connection.execute(
-        'DELETE FROM disabledDates WHERE ID= ?;', 
+        'DELETE FROM disableddates WHERE ID= ?;', 
         [ID],
         function (err, results) {
             if (err) {
