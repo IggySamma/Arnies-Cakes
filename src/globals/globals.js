@@ -28,13 +28,16 @@ class flavoursConstructor{
 let gallery = new galleryConstructor;
 let disabledDates = new disabledDatesContructor;
 let flavours = new flavoursConstructor;
+let publicGallery = "/usr/src/app/src/public/gallery" //Docker
+//let publicGallery = "./public/gallery" //Local Dev
 
 
 module.exports = {
-    galleryConstructor,
-    disabledDatesContructor,
-    flavoursConstructor,
-    flavours,
-    gallery,
-    disabledDates
+	galleryConstructor,
+	disabledDatesContructor,
+	flavoursConstructor,
+	flavours,
+	gallery,
+	disabledDates,
+	publicGallery
 }

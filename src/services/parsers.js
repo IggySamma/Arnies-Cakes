@@ -25,13 +25,14 @@ function getAllFromGallery(){
 }
 
 const galleryUpload = multer({ 
-    dest: "./public/gallery",
-    fileFilter(req, file, cb) {
-        if (!file.originalname.match(/\.(png|jpg|jpeg)$/)){
-            cb(new Error('Please upload an image.'));
-        }
-            cb(undefined, true);
-    },
+    	//dest: "./public/gallery", //Dev
+	dest: globals.publicGallery, //Docker
+	fileFilter(req, file, cb) {
+		if (!file.originalname.match(/\.(png|jpg|jpeg)$/)){
+		cb(new Error('Please upload an image.'));
+		}
+		cb(undefined, true);
+	},
 });
 
 const clientUpload = multer({
@@ -52,25 +53,26 @@ function uploadFiles(req, res) {
 }
 
 async function deleteFromGallery(req, res){
-    let data = req.body;
-    let path = '/gallery/' + data.Path
+    	let data = req.body;
+    	//let path = '/gallery/' + data.Path //local
+	let path = '/gallery/' + data.Path //Docker
 
-    try {
-        let exists = await sqlQuery.checkGalleryByID(data.ID, path);
-        
-        if (exists) {
-            fs.unlink('public/gallery/' + data.Path, (err) => {
-                if (err) throw err;
-            });
-            sqlQuery.deleteFromGalleryByID(data.ID, res);
-            getAllFromGallery();
-        } else {
-            res.sendStatus(500)
-        }
-    } catch (error) {
-        console.log("Error: ", error);
-        res.sendStatus(500);
-    }
+	try {
+		let exists = await sqlQuery.checkGalleryByID(data.ID, path);
+		//'public/gallery/' //local
+		if (exists) {
+		fs.unlink('/usr/src/app/src/public/gallery/' + data.Path, (err) => {
+			if (err) throw err;
+		});
+		sqlQuery.deleteFromGalleryByID(data.ID, res);
+		getAllFromGallery();
+		} else {
+		res.sendStatus(500)
+		}
+	} catch (error) {
+		console.log("Error: ", error);
+		res.sendStatus(500);
+	}
 };
 
 

@@ -25,50 +25,52 @@ function filterGallery(req, res){
 /*------------------------------- Enquiries ------------------------------------*/
 
 function sendEmails(enqNum, data, textBody, photos, res, date){
-    let photo = [];
-    photos.forEach( item => { 
-        attach = {"filename": item.originalname, "content": item.buffer}
-        photo.push(attach);
-    })
+	//let logoPath = "../public/images/home logo.png" //Local 
+	let logoPath = "/usr/src/app/src/public/images/home logo.png" //Docker
+	let photo = [];
+	photos.forEach( item => { 
+		attach = {"filename": item.originalname, "content": item.buffer}
+		photo.push(attach);
+	})
     
-    const EnquirieToClient = {
-        from: "arniescakes@gmail.com",
-        to: data.Email,
-        subject: "Arnies Cakes Enquirie: Number - " + enqNum,
-        generateTextFromHTML: true,
-        html: '<style>table {font-family: arial, sans-serif;border-collapse: collapse;width: 100%;}td, th {border: 1px solid #dddddd;text-align: left;padding: 8px;}tr:nth-child(even) {background-color: #ECE3F0;}</style><div style="margin:auto; padding:auto; position: relative; height: 300px; width: 300px;"><img src="cid:logo" style="height: 300px; width: 300px;"></div><div style="margin:auto; padding: 3px 3px 3px 3px; text-align: center; position: relative; top: 220px; height: auto; background-color: #D3BBDD; border-radius: 8px;"><p>' + textBody + '</p></div>',
-        attachments: [
-       ...photo,
-        {
-            filename: "Logo.png",
-            path: "../public/images/home logo.png",
-            cid: "logo"
-        }],
-    };
+	const EnquirieToClient = {
+		from: "arniescakes@gmail.com",
+		to: data.Email,
+		subject: "Arnies Cakes Enquirie: Number - " + enqNum,
+		generateTextFromHTML: true,
+		html: '<style>table {font-family: arial, sans-serif;border-collapse: collapse;width: 100%;}td, th {border: 1px solid #dddddd;text-align: left;padding: 8px;}tr:nth-child(even) {background-color: #ECE3F0;}</style><div style="margin:auto; padding:auto; position: relative; height: 300px; width: 300px;"><img src="cid:logo" style="height: 300px; width: 300px;"></div><div style="margin:auto; padding: 3px 3px 3px 3px; text-align: center; position: relative; top: 220px; height: auto; background-color: #D3BBDD; border-radius: 8px;"><p>' + textBody + '</p></div>',
+		attachments: [
+	...photo,
+		{
+			filename: "Logo.png",
+			path: logoPath,
+			cid: "logo"
+		}],
+	};
 
-    serverConfig.emailTransporter.sendMail(EnquirieToClient, (error, response) => {
-        error ? console.log(error) : serverConfig.emailTransporter.close();
-        eApi.getGmailLinkNStore(enqNum, date, res)
-    });
+	serverConfig.emailTransporter.sendMail(EnquirieToClient, (error, response) => {
+		error ? console.log(error) : serverConfig.emailTransporter.close();
+		eApi.getGmailLinkNStore(enqNum, date, res)
+	});
 
-    const EnquirieToSelf = {
-        from: "arniescakes@gmail.com",
-        to: "arniescakes@gmail.com",
-        subject: "NEW Enquirie: Number - " + enqNum,
-        generateTextFromHTML: true,
-        html: '<div style="margin:auto; padding:auto; position: relative; height: 300px; width: 300px;"><img src="cid:logo" style="height: 300px; width: 300px;"></div><div style="margin:auto; padding: 3px 3px 3px 3px; text-align: center; position: relative; top: 220px; height: auto; background-color: #D3BBDD; border-radius: 8px;"><p>' + textBody + '</p></div>',
-        attachments: [
-       ...photo,
-        {
-            filename: "Logo.png",
-            path: "../public/images/home logo.png",
-            cid: "logo"
-        }],
-    };
+	const EnquirieToSelf = {
+		from: "arniescakes@gmail.com",
+		to: "arniescakes@gmail.com",
+		subject: "NEW Enquirie: Number - " + enqNum,
+		generateTextFromHTML: true,
+		html: '<div style="margin:auto; padding:auto; position: relative; height: 300px; width: 300px;"><img src="cid:logo" style="height: 300px; width: 300px;"></div><div style="margin:auto; padding: 3px 3px 3px 3px; text-align: center; position: relative; top: 220px; height: auto; background-color: #D3BBDD; border-radius: 8px;"><p>' + textBody + '</p></div>',
+		attachments: [
+	...photo,
+		{
+			filename: "Logo.png",
+			path: logoPath,
+			cid: "logo"
+		}],
+	};
 
-    serverConfig.emailTransporter.sendMail(EnquirieToSelf, (error, response) => {
-        error ? console.log(error) : serverConfig.emailTransporter.close();
-    });
+	serverConfig.emailTransporter.sendMail(EnquirieToSelf, (error, response) => {
+		error ? console.log(error) : serverConfig.emailTransporter.close();
+	});
 };
 
 /*------------------------------- Admin ------------------------------------*/
