@@ -125,60 +125,80 @@ function fetchGallery(params = sectionNames){
 }
 
 function setColumns(){
-  let children = galleryContainer.childNodes;
-  if(window.innerWidth >= vwMax && vw >= vwMax){
-    columnsSetAs = "LG"
+	let children = galleryContainer.childNodes;
+	if(window.innerWidth >= vwMax && vw >= vwMax){
+	columnsSetAs = "LG"
 
-    if(children.length === 0 || children.length === undefined){
-      createColumns("LG");
-      return
-    }
+		if (children.length === 0 || children.length === undefined){
+			createColumns("LG");
+			return
+		}
 
-    if(children.length < colLG.length){
-      destroyChildren(children);
-      createColumns("LG");
-      return;
-    }
-    return;
-  }
+		if (children.length === 1) {
+			destroyChildren(children);
+			createColumns("LG");
+			return;
+		}
 
-  if(window.innerWidth < vwMax && vw < vwMax){
-    columnsSetAs = "SM"
+		if(children.length < colLG.length){
+			destroyChildren(children);
+			createColumns("LG");
+			return;
+		}
+		return;
+	}
 
-    if(children.length === 0 || children.length === undefined){
-      createColumns("SM");
-      return
-    }
+	if(window.innerWidth < vwMax && vw < vwMax){
+	columnsSetAs = "SM"
 
-    if(children.length > colSM.length){
-      destroyChildren(children);
-      createColumns("SM");
-      return
-    }
-    return;
-  }
+		if (children.length === 0 || children.length === undefined){
+			createColumns("SM");
+			return
+		}
+
+		if(children.length === 1){
+			destroyChildren(children);
+			createColumns("SM");
+			return
+		}
+
+		if(children.length > colSM.length){
+			destroyChildren(children);
+			createColumns("SM");
+			return
+		}
+		return;
+	}
   
-  if(window.innerWidth >= vwMax && vw < vwMax){
-    columnsSetAs = "LG"
-    if(children.length === 0 || children.length === undefined){
-      createColumns("LG");
-      return;
-    } else {
-      destroyChildren(children);
-      createColumns("LG");
-      return;
-    }
-  } else {
-    columnsSetAs = "SM"
-    if(children.length === 0 || children.length === undefined){
-      createColumns("SM");
-      return;
-    } else {
-      destroyChildren(children);
-      createColumns("SM");
-      return;
-    }
-  }
+	if(window.innerWidth >= vwMax && vw < vwMax){
+		columnsSetAs = "LG"
+		if(children.length === 0 || children.length === undefined){
+			createColumns("LG");
+			return;
+		} else if(children.length === 1){
+			destroyChildren(children);
+			createColumns("LG");
+			return;
+		} else {
+			destroyChildren(children);
+			createColumns("LG");
+			return;
+			}
+	} else {
+		columnsSetAs = "SM"
+		if(children.length === 0 || children.length === undefined){
+			createColumns("SM");
+			return;
+		} else if(children.length === 1){
+			destroyChildren(children);
+			createColumns("SM");
+			return;
+		} else {
+			destroyChildren(children);
+			createColumns("SM");
+			return;
+		}
+	}
 }
 
 function destroyChildren(children){
@@ -191,7 +211,6 @@ function createColumns(size = "LG"){
   vw = window.innerWidth;
   colCounter = 0;
   colLength = 0;
-
   if(size === "LG"){
     col = colLgImages
     colLG.forEach((element) => {
@@ -293,7 +312,6 @@ function insertImages(lastStop, data, colSet){
   if(lastStop >= stopAt){
     return 
   }
-
 
   for(let i = lastStop; i < stopAt; i++){
     if(colSet[colLength].includes("w50")){

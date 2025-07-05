@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   db:
     image: mysql:9.3
@@ -6,8 +8,8 @@ services:
     restart: always
     ports:
       - "3306:3306"
-    env_file:
-      - ./src/config/.env
+    #env_file:
+    #  - ./src/config/.env
     environment:
       - MYSQL_ROOT_PASSWORD=${SQL_ROOT}
       - MYSQL_DATABASE=${SQL_DATABASE}
@@ -35,7 +37,7 @@ services:
       - DB_HOST=db
     restart: always
     ports:
-      - "3000:3000"
+      - "3305:3305"
     volumes:
       - gallery_data:/usr/src/app/src/public/gallery
     depends_on:
@@ -45,3 +47,18 @@ services:
 volumes:
   db_data:
   gallery_data:
+
+#volumes:
+#  db_data:
+#    driver: local
+#    driver_opts:
+#      type: none
+#      o: bind
+#      device: /volumeUSB1/usbshare/arnies-cakes/db
+
+#  gallery_data:
+#    driver: local
+#    driver_opts:
+#      type: none
+#      o: bind
+#      device: /volumeUSB1/usbshare/arnies-cakes/src/public/gallery

@@ -643,4 +643,37 @@
 	<script src="./js/index.js"></script>
 </body>
 
+<script type="application/ld+json">
+	{
+		"@context": "http://schema.org",
+		"@type": "Bakery",
+		"name": "Arnie's Cakes",
+		"description": "Homemade custom cakes, treats, and desserts for any occasion, made in Dublin. Specializing in personalized cakes and treats for birthdays, weddings, and all events.",
+		"url": "https://www.arniescakes.ie",
+		"email": "mailto:arniescakes@gmail.com",
+		"sameAs": [
+			"https://www.facebook.com/arniescakes",
+			"https://www.instagram.com/arnies_cakes"
+			],
+		"logo": "https://www.arniescakes.ie/images/home%20logo.png",
+		"image": "https://www.arniescakes.ie/images/index/Kids%20Cakes/5.jpg",
+		"hasMenu": "https://www.arniescakes.ie/flavours",
+		"address": {
+			"@type": "PostalAddress",
+			"addressLocality": "Dublin",
+			"addressCountry": "IE"
+			},
+		"makesOffer": {
+				"@type": "Offer",
+				"url": "https://www.arniescakes.ie/Enquiries",
+				"priceCurrency": "EUR",
+					"itemOffered": {
+							"@type": "Product",
+							"name": "Custom Cakes & Treats",
+							"description": "Custom cakes, treats, and desserts baked to order for all occasions."
+							}
+				}
+	}
+</script>
+
 </html>

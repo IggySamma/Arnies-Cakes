@@ -8,7 +8,7 @@ const utils = require('./utils/coreUtils.js');
 const path = require('path');
 const server = serverConfig.app
 
-server.listen(3000, () => {
+server.listen(3305, () => {
     console.log(`Server started...`);
 });
 

@@ -26,15 +26,15 @@ Add JSON-LD TO ALL PAGES WHEN LIVE - Updates robots.txt & sitemap.xml with corre
     "@type": "Bakery",
     "name": "Arnie's Cakes",
     "description": "Homemade custom cakes, treats, and desserts for any occasion, made in Dublin. Specializing in personalized cakes and treats for birthdays, weddings, and all events.",
-    "url": "https://www.arniescakes.com",
+    "url": "https://www.arniescakes.ie",
     "email": "mailto:arniescakes@gmail.com",
     "sameAs": [
       "https://www.facebook.com/arniescakes",
       "https://www.instagram.com/arnies_cakes"
     ],
-    "logo": "https://www.arniescakes.com/images/home%20logo.png",
-    "image": "https://www.arniescakes.com/images/index/Kids%20Cakes/5.jpg",
-    "hasMenu": "https://www.arniescakes.com/flavours",
+    "logo": "https://www.arniescakes.ie/images/home%20logo.png",
+    "image": "https://www.arniescakes.ie/images/index/Kids%20Cakes/5.jpg",
+    "hasMenu": "https://www.arniescakes.ie/flavours",
     "product": {
       "@type": "Product",
       "name": "Custom Cakes & Treats",
@@ -42,7 +42,7 @@ Add JSON-LD TO ALL PAGES WHEN LIVE - Updates robots.txt & sitemap.xml with corre
       "offers": {
         "@type": "Offer",
         "priceCurrency": "EUR",
-        "url": "https://www.arniescakes.com/Enquiries"
+        "url": "https://www.arniescakes.ie/Enquiries"
       }
     }
   }

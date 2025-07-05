@@ -18,6 +18,9 @@ RUN --mount=type=bind,source=package.json,target=package.json \
 # Copy the init script first
 COPY init-scripts/init-gallery.sh /usr/src/app/init-gallery.sh
 
+# Copy init scripts into MySQL init directory inside the image
+COPY init-scripts/ /docker-entrypoint-initdb.d/
+
 # Copy the rest of the source files into the image.
 COPY . .
 
@@ -34,7 +37,7 @@ RUN chmod +x /usr/src/app/init-gallery.sh && \
 USER node
 
 # Expose the port that the application listens on.
-EXPOSE 3000
+EXPOSE 3305
 
 # Use the initialization script as entrypoint
 ENTRYPOINT ["/usr/src/app/init-gallery.sh"]

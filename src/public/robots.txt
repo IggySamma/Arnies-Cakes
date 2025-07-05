@@ -3,4 +3,4 @@ Disallow: /admin/
 Disallow: /login/
 Allow: /
 
-Sitemap: https://localhost:3000/sitemap.xml
+Sitemap: https://www.arneiscakes.ie/sitemap.xml

@@ -264,23 +264,23 @@ function getFlavours(){
 
 
 function storeFlavours(data){
-    globals.flavours = new globals.flavoursConstructor;
+	globals.flavours = new globals.flavoursConstructor;
 
-    const re = new RegExp(/["\[\]]|null/g)
+	const re = new RegExp(/["\[\]]|null/g)
 
-    for(let i = 0; i < data.length; i++){
-        globals.flavours.ID.push(data[i].ID);
-        globals.flavours.Heading.push(data[i].Heading);
-        globals.flavours.Type.push(String(data[i].Type).replace(re,"").split(","));
-        globals.flavours.Text.push(String(data[i].Text).replace(re,"").split(","));
-        globals.flavours.Flavours.push(String(data[i].Flavours).replace(re,"").split(","));
-    }
+	for(let i = 0; i < data.length; i++){
+		globals.flavours.ID.push(data[i].ID);
+		globals.flavours.Heading.push(data[i].Heading);
+		globals.flavours.Type.push(String(data[i].Type).replace(re,"").split(","));
+		globals.flavours.Text.push(String(data[i].Text).replace(re,"").split(","));
+		globals.flavours.Flavours.push(String(data[i].Flavours).replace(re,"").split(","));
+	}
 
-    console.log("Flavours stored");
-    //templates.saveNewPublicFile('Flavours.html', globals.flavours, 'Flavours.ejs');
+    	//console.log("Flavours stored");
+    	//templates.saveNewPublicFile('Flavours.html', globals.flavours, 'Flavours.ejs');
     
 	getEnquiriesHeadersPreRender()
-    //templates.saveNewPublicFile('Enquiries.html', globals.flavours, 'Enquiries.ejs')
+    	//templates.saveNewPublicFile('Enquiries.html', globals.flavours, 'Enquiries.ejs')
 }
 
 /*------------------------------- Enquiries ------------------------------------*/
