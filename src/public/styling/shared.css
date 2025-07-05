@@ -15,7 +15,8 @@ body{
 }
 
 .fontsize {
-  font-size: 2rem;
+	/*font-size: 2rem;*/
+	font-size: 1.75rem;
 }
 
 .navbar {
@@ -650,4 +651,25 @@ a:active {
     font-size: 1.3rem;
   }
 
+}
+
+
+@media only screen and (max-height: 690px) {
+	.fontsize {
+		font-size: 1.25rem;
+	}
+
+	.ribbon {
+		opacity: 90%;
+		position: absolute;
+		width: 140px;
+		height: 150px;
+		bottom: -50px;
+		margin: -32px;
+		z-index: -1;      
+	}
+
+	.navbar-toggler{
+		font-size:  1rem;
+	}
 }

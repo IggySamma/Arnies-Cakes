@@ -219,3 +219,13 @@
     }
 
 }
+
+.carousel-button {
+	font-size: 1.4rem;
+}
+
+@media only screen and (max-height: 690px) {
+	.carousel-button {
+		font-size: 1.2rem;
+	}
+}

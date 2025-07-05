@@ -66,6 +66,7 @@
 .aboutMePragraph{
     font-size: 1.25rem;
     position: relative;
+    color: black !important;
 }
 
 
@@ -400,6 +401,8 @@ a{color: black !important;}
     height: 100%;
     width: 100%;
 }
+
+
 
 @keyframes right{
     0%{
@@ -964,4 +967,10 @@ and (max-width: 935px){
     .card-text{font-size: 1.5rem;}
 
     .testimonialsBG{background-size: 100vw 250vh;}
+}
+
+@media only screen and (max-height: 690px) {
+	.card-text{
+		font-size: 1.2rem;
+	}
 }
