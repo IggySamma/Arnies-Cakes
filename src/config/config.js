@@ -1,7 +1,8 @@
-require('dotenv').config({path:__dirname + '/.env'})
-
+const isProd = false;
 const isDocker = false;
 const rebuildAllPages = false;
+
+require('dotenv').config(isProd ? { path: __dirname + '/.env.prod' } : { path: __dirname + '/.env.dev' })
 
 /*-------------------Gmail Access setup -------------------------*/
 
