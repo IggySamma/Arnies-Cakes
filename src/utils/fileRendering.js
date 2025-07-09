@@ -1,6 +1,7 @@
 const ejs = require('ejs');
 const fs = require('fs');
 const path = require('path');
+const serverConfig = require('../config/config.js');
 
 function renderTemplate(data, ejsPath){
 	const basePath = path.join(__dirname, '../templates/base/', ejsPath);
@@ -59,9 +60,9 @@ function saveNewPublicFile(ogFile, data, ejsPath){
 	
 }
 
-//saveNewPublicFile('Index.html', [], 'Index.ejs');
-//saveNewPublicFile('About.html', [] , 'About.ejs');
-//saveNewPublicFile('Gallery.html', [], 'Gallery.ejs');
+serverConfig.rebuildAllPages && saveNewPublicFile('Index.html', [], 'Index.ejs');
+serverConfig.rebuildAllPages && saveNewPublicFile('About.html', [] , 'About.ejs');
+serverConfig.rebuildAllPages && saveNewPublicFile('Gallery.html', [], 'Gallery.ejs');
 //saveNewPublicFile('Flavours.html', getFlavours(), 'Flavours.ejs'); // parsers.js storeFlavours(data) as it needs to be run after stored
 //saveNewPublicFile('Enquiries.html', [], 'Enquiries.ejs'); // parsers.js getEnquiriesSubHeadersPreRender(main) as it needs to be run after stored
 

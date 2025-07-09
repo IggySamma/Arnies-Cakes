@@ -34,5 +34,6 @@ LICENSE
 README.md
 
 node_modules
-src/config/.env
-.env
+src/config/.env.prod
+src/config/.env.dev
+.env.prod

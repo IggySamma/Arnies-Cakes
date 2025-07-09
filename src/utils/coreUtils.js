@@ -25,8 +25,7 @@ function filterGallery(req, res){
 /*------------------------------- Enquiries ------------------------------------*/
 
 function sendEmails(enqNum, data, textBody, photos, res, date){
-	//let logoPath = "../public/images/home logo.png" //Local 
-	let logoPath = "/usr/src/app/src/public/images/home logo.png" //Docker
+	let logoPath = serverConfig.isDocker ? "/usr/src/app/src/public/images/home logo.png" : "./public/images/home logo.png";
 	let photo = [];
 	photos.forEach( item => { 
 		attach = {"filename": item.originalname, "content": item.buffer}

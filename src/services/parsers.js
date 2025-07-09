@@ -26,7 +26,8 @@ function getAllFromGallery(){
 
 const galleryUpload = multer({ 
     	//dest: "./public/gallery", //Dev
-	dest: globals.publicGallery, //Docker
+	//dest: globals.publicGallery, //Docker
+	dest: serverConfig.isDocker ? globals.publicGallery : "./src/public/gallery",
 	fileFilter(req, file, cb) {
 		if (!file.originalname.match(/\.(png|jpg|jpeg)$/)){
 		cb(new Error('Please upload an image.'));
@@ -56,16 +57,17 @@ async function deleteFromGallery(req, res){
     	let data = req.body;
     	//let path = '/gallery/' + data.Path //local
 	let path = '/gallery/' + data.Path //Docker
+	let unlinkPath = serverConfig.isDocker ? '/usr/src/app/src/public/gallery/' : 'public/gallery/';
 
 	try {
 		let exists = await sqlQuery.checkGalleryByID(data.ID, path);
 		//'public/gallery/' //local
 		if (exists) {
-		fs.unlink('/usr/src/app/src/public/gallery/' + data.Path, (err) => {
-			if (err) throw err;
-		});
-		sqlQuery.deleteFromGalleryByID(data.ID, res);
-		getAllFromGallery();
+			fs.unlink(unlinkPath + data.Path, (err) => {
+				if (err) throw err;
+			});
+			sqlQuery.deleteFromGalleryByID(data.ID, res);
+			getAllFromGallery();
 		} else {
 		res.sendStatus(500)
 		}
@@ -105,75 +107,6 @@ function Enquiries(req, res){
             EnquiriesValidation(adjData.Email, adjData.Number) === "number" ? res.sendStatus(406) : 
             photos === undefined ? res.sendStatus(407) : attachTextBody(adjData, photos, res);
 };
-/*
-function attachTextBody(adjData, photos, res){
-    let textBody = ""; 
-    let date = ""
-    let start = false;
-    let finish = false;
-
-    let tableHeader = {
-        "Item": "Item",
-        "Quantity": "Quantity",
-        "Flavour": "Flavour",
-        "Cake Size": "Cake Size",
-    }
-    let tableData = {
-        "Item": [],
-        "Quantity": [],
-        "Flavour": [],
-        "Cake Size": [],
-    }
-
-    /*if("Date of Collection" in adjData){
-        date = adjData["Date of Collection"]
-    } else if("Date of Delivery" in adjData){
-        date = adjData["Date of Delivery"]
-    }*/
-    /*
-    for (let i = 0; i < Object.keys(adjData).length; i++) {
-        if(Object.keys(adjData)[i] == "Order"){
-
-            const orderList = Object.values(adjData)[i]
-            Object.values(orderList).forEach(order => {
-                const orderObj = JSON.parse(order)
-                for (const [key, value] of Object.entries(orderObj)){
-                    if(key in tableData){
-                        finish = false;
-                        start = true;
-                        tableData[key].push(value);
-                    }
-                    finish = true;
-                }
-            })
-            if (start && finish) {
-                let activeKeys = Object.keys(tableData).filter(key => tableData[key].length > 0);
-                const maxLength = Math.max(...activeKeys.map(key => tableData[key].length));
-
-                textBody = textBody + '<table>';
-                
-                for (const key of Object.keys(activeKeys)) {
-                    textBody += '<th>' + Object.keys(tableHeader)[key] + '</th>';
-                }
-                
-                for (let i = 0; i < maxLength; i++) {
-                    textBody += '<tr>';
-                    for (const key of activeKeys) {
-                        textBody += '<td>' + (tableData[key][i] || "") + '</td>';
-                    }
-                    textBody += '</tr>';
-                }
-                textBody += '</table>';
-            }
-        } else {
-            textBody += "<p><strong>" + Object.keys(adjData)[i] + ":</strong> " + Object.values(adjData)[i] + "</p>";
-        }
-    }
-
-    sqlQuery.storeNewEnquirie(res, sqlQuery.getAllEnquiries).then(ID => {
-        utils.sendEmails(ID[ID.length -1].ID, adjData, textBody, photos, res, date);
-    })
-}*/
 
 
 function attachTextBody(adjData, photos, res){
@@ -277,10 +210,8 @@ function storeFlavours(data){
 	}
 
     	//console.log("Flavours stored");
-    	//templates.saveNewPublicFile('Flavours.html', globals.flavours, 'Flavours.ejs');
-    
-	getEnquiriesHeadersPreRender()
-    	//templates.saveNewPublicFile('Enquiries.html', globals.flavours, 'Enquiries.ejs')
+	serverConfig.rebuildAllPages && templates.saveNewPublicFile('Flavours.html', globals.flavours, 'Flavours.ejs');
+	serverConfig.rebuildAllPages && getEnquiriesHeadersPreRender()
 }
 
 /*------------------------------- Enquiries ------------------------------------*/
@@ -299,9 +230,7 @@ function getEnquiriesHeadersPreRender() {
 					...item, 
 					Header: 'Main'
 				}));
-				//console.log(header);
 				getEnquiriesSubHeadersPreRender(header);
-				//templates.saveNewPublicFile('Enquiries.html', obj, 'Enquiries.ejs');
 			}
 		}
 	);
@@ -325,7 +254,7 @@ function getEnquiriesSubHeadersPreRender(main) {
 
 				const headers = [...main, ...sub];
 				//console.log(headers)
-				//templates.saveNewPublicFile('Enquiries.html', headers, 'Enquiries.ejs')
+				serverConfig.rebuildAllPages && templates.saveNewPublicFile('Enquiries.html', headers, 'Enquiries.ejs')
 			}
 		}
 	);

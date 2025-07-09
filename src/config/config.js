@@ -1,5 +1,8 @@
 require('dotenv').config({path:__dirname + '/.env'})
 
+const isDocker = false;
+const rebuildAllPages = false;
+
 /*-------------------Gmail Access setup -------------------------*/
 
 const path = require('path');
@@ -45,15 +48,22 @@ let emailTransporter = nodemailer.createTransport({
 /*----------------------------- MySQL Config ---------------------*/
 
 let sqlConfig = {
-    host: process.env.SQL_HOST,
-    user: process.env.SQL_USER,
-    password: process.env.SQL_PASSWORD,
-    database: process.env.SQL_DATABASE,
-    port: process.env.SQL_PORT
+	host: isDocker ? process.env.SQL_HOST : process.env.SQL_HOST_LOCAL,
+	user: process.env.SQL_USER,
+	password: process.env.SQL_PASSWORD,
+	database: process.env.SQL_DATABASE,
+	port: process.env.SQL_PORT,
 };
 
 const mysql = require('mysql2');
-const connection =  mysql.createConnection(sqlConfig);
+//const connection =  mysql.createConnection(sqlConfig);
+const connection = mysql.createPool(sqlConfig);
+
+connection.addListener('error', (err) => {
+	console.log(err);
+})
+
+
 
 
 /*-------------------------- Server Setup ----------------------- */
@@ -230,13 +240,15 @@ getAllFilesAndDirs(adminPath).forEach(file => {
 /*-------------------------- Config Expotrs ----------------------- */
 
 module.exports = {
-    emailTransporter,
-    sqlConfig,
-    connection,
-    app,
-    oauth2Client,
-    express,
-    passport,
-    ensureAuthenticated,
-    memoryStore,
+	emailTransporter,
+	sqlConfig,
+	connection,
+	app,
+	oauth2Client,
+	express,
+	passport,
+	ensureAuthenticated,
+	memoryStore,
+	isDocker,
+	rebuildAllPages,
 }

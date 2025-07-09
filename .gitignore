@@ -1,5 +1,6 @@
 node_modules
-src/config/.env
-.env
+src/config/.env.prod
+src/config/.env.dev
+.env.prod
 init-scripts
 arnies-cakes.tar
