@@ -1,5 +1,5 @@
 const isProd = false;
-const isDocker = false;
+const isDocker = true;
 const rebuildAllPages = false;
 
 require('dotenv').config(isProd ? { path: __dirname + '/.env.prod' } : { path: __dirname + '/.env.dev' })
@@ -63,7 +63,6 @@ const connection = mysql.createPool(sqlConfig);
 connection.addListener('error', (err) => {
 	console.log(err);
 })
-
 
 
 

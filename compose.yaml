@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   db:
     image: mysql:9.3
@@ -8,30 +6,21 @@ services:
     restart: always
     ports:
       - "3306:3306"
-    #env_file:
-    #  - ./src/config/.env
-    environment:
-      - MYSQL_ROOT_PASSWORD=${SQL_ROOT}
-      - MYSQL_DATABASE=${SQL_DATABASE}
-      - MYSQL_USER=${SQL_USER}
-      - MYSQL_PASSWORD=${SQL_PASSWORD}
+    env_file:
+      - ./.env.prod
     volumes:
       - db_data:/var/lib/mysql
       - ./init-scripts:/docker-entrypoint-initdb.d:ro
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${SQL_ROOT}"]
-      timeout: 20s
-      retries: 10
-      start_period: 40s
-      interval: 30s
 
   server:
     build:
       context: .
       dockerfile: Dockerfile
     image: arnies-cakes:latest
+    entrypoint: ["./init-scripts/init-gallery.sh"]
+    command: ["node", "src/server.js"]
     env_file:
-      - ./src/config/.env
+      - ./src/config/.env.dev
     environment:
       - NODE_ENV=production
       - DB_HOST=db
@@ -41,24 +30,9 @@ services:
     volumes:
       - gallery_data:/usr/src/app/src/public/gallery
     depends_on:
-      db:
-        condition: service_healthy
+      - db
+
 
 volumes:
   db_data:
   gallery_data:
-
-#volumes:
-#  db_data:
-#    driver: local
-#    driver_opts:
-#      type: none
-#      o: bind
-#      device: /volumeUSB1/usbshare/arnies-cakes/db
-
-#  gallery_data:
-#    driver: local
-#    driver_opts:
-#      type: none
-#      o: bind
-#      device: /volumeUSB1/usbshare/arnies-cakes/src/public/gallery

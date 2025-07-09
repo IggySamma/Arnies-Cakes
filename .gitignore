@@ -4,3 +4,6 @@ src/config/.env.dev
 .env.prod
 init-scripts
 arnies-cakes.tar
+Dockerfile.mysql
+Dockerfile.prod
+docker-compose.yml
