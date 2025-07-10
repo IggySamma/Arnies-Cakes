@@ -323,224 +323,243 @@ form.addEventListener("submit", submitEnquirie);
 
 
 function submitEnquirie(file){
-    file.preventDefault();
-    document.body.style.cursor = 'wait';
-    document.getElementById("submit").disabled = true;
-    
-    const formData = new FormData();
-    let errors = false;
+	file.preventDefault();
+	document.body.style.cursor = 'wait';
+	document.getElementById("submit").disabled = true;
+	
+	const formData = new FormData();
+	let errors = false;
 
-    try {
-        validation(formData);
-    } catch (error) {
-        errors = true;
-        if (error.focus == "datetimeDate" || error.focus == "datetimeEvent") {
-            document.getElementById(error.focus).nextElementSibling.focus();  
-            document.body.style.cursor = 'auto';
-            document.getElementById("submit").disabled = false;
-        } else {
-            document.getElementById(error.focus).focus();
-            document.body.style.cursor = 'auto';
-            document.getElementById("submit").disabled = false;
-        }
-        alert(error);
-    } 
+	try {
+		validation(formData);
+	} catch (error) {
+		errors = true;
+		if (error.focus == "datetimeDate" || error.focus == "datetimeEvent") {
+			document.body.style.cursor = 'auto';
+			document.getElementById("submit").disabled = false;
+			document.getElementById(error.focus).nextElementSibling.focus();  
+		} else {
+			document.body.style.cursor = 'auto';
+			document.getElementById("submit").disabled = false;
+			document.getElementById(error.focus).focus();
+		}
+		alert(error);
+	} 
    
-    if (!errors) {
-        fetch('/api/submitEnquirie', {
-            method: 'POST',
-            body: formData,
-        })
-        .then((res) => {
-            res.status === 405 ? alert("Email provided is invalid") :
-            res.status === 406 ? alert("Mobile number is invalid") :
-            res.status === 407 ? alert("Incorrect file attached. Only .Png, .Jpg, .Jpeg allowed") :
-            res.status === 500 ? alert("Something went wrong, please check file is .Png | .Jpg | .Jpeg format. Otherwise please contact us on our social links instead") :
-            res.status === 200 ? window.location.href = "/enquiriesty" : 
-            document.getElementById("submit").disabled = false;     
-            document.body.style.cursor = 'auto';
-        });
-    }
+	if (!errors) {
+		fetch('/api/submitEnquirie', {
+			method: 'POST',
+			body: formData,
+		})
+		.then((res) => {
+			switch(res.status) {
+				case 405:
+					alert("Email provided is invalid");
+					document.getElementById("emailInput").focus();
+					break;
+				case 406:
+					alert("Mobile number is invalid");
+					document.getElementById("numberInput").focus();
+					break;
+				case 407:
+					alert("Incorrect file attached. Only .Png, .Jpg, .Jpeg allowed");
+					document.getElementById("files").focus();
+					break;
+				case 500:
+					alert("Something went wrong, please check file is .Png | .Jpg | .Jpeg format. Otherwise please contact us on our social links instead");
+					document.getElementById("files").focus();
+					break;
+				case 200:
+					window.location.href = "/enquiriesty";
+					break;
+				default:
+					document.getElementById("submit").disabled = false;
+					document.body.style.cursor = 'auto';
+			}
+			document.getElementById("submit").disabled = false;     
+			document.body.style.cursor = 'auto';
+		});
+	}
 };
 
 function validation(formData){
-    const name = document.getElementById("fullNameInput");
-    const email = document.getElementById("emailInput");
-    const number = document.getElementById("numberInput");
-    const date = document.getElementById("datetimeDate");
-    const collection = document.getElementById("Collection");
-    const delivery = document.getElementById("Delivery");
-    const event = document.getElementById("datetimeEvent");
-    const order = document.querySelectorAll("[id$='CheckBox']");
-    const cakeSize = document.querySelectorAll("[id$='CakeSize']");
-    const message = document.getElementById("EnquirieInput");
-    const allergyYes = document.getElementById("AllergyYes");
-    const allergyNo = document.getElementById("AllergyNo");
-    const allergyMessage = document.getElementById("AllergyInput");
-    const photo = document.getElementById("files");
-    let cakeQuantity = 0;
+	const name = document.getElementById("fullNameInput");
+	const email = document.getElementById("emailInput");
+	const number = document.getElementById("numberInput");
+	const date = document.getElementById("datetimeDate");
+	const collection = document.getElementById("Collection");
+	const delivery = document.getElementById("Delivery");
+	const event = document.getElementById("datetimeEvent");
+	const order = document.querySelectorAll("[id$='CheckBox']");
+	const cakeSize = document.querySelectorAll("[id$='CakeSize']");
+	const message = document.getElementById("EnquirieInput");
+	const allergyYes = document.getElementById("AllergyYes");
+	const allergyNo = document.getElementById("AllergyNo");
+	const allergyMessage = document.getElementById("AllergyInput");
+	const photo = document.getElementById("files");
+	let cakeQuantity = 0;
 
-    const emailRegEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const phoneRegEx = /^(?:08\d{8}|\+3538\d{8})$/;
+	const emailRegEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	const phoneRegEx = /^(?:08\d{8}|\+3538\d{8})$/;
 
-    if (name.value == ""){
-        const error = new Error("Name field is empty, please enter your name.");
-        error.focus = "fullNameInput";
-        throw error;
-    } else {
-        formData.append("Name", name.value);
-    }
+	if (name.value == ""){
+		const error = new Error("Name field is empty, please enter your name.");
+		error.focus = "fullNameInput";
+		throw error;
+	} else {
+		formData.append("Name", name.value);
+	}
 
-    if (email.value == "") {
-        const error = new Error("Email field is empty, please enter your email.");
-        error.focus = "emailInput";
-        throw error;
-    } else if (email.value.match(emailRegEx) == false) {
-        const error = new Error("Email seems to be entered incorrect, please check again.");
-        error.focus = "email";
-        throw error;
-    } else {
-        formData.append("Email", email.value);
-    }
+	if (email.value == "") {
+		const error = new Error("Email field is empty, please enter your email.");
+		error.focus = "emailInput";
+		throw error;
+	} else if (email.value.match(emailRegEx) == false) {
+		const error = new Error("Email seems to be entered incorrect, please check again.");
+		error.focus = "email";
+		throw error;
+	} else {
+		formData.append("Email", email.value);
+	}
 
-    if (number.value == "") {
-        const error = new Error("Number field is empty, please enter your phone numbers.");
-        error.focus = "numberInput";
-        throw error;
-    } else if (number.value.match(phoneRegEx) == false) {
-        const error = new Error("Phone number seems to be incorrect, please check again.");
-        error.focus = "number";
-        throw error;
-    } else {
-        formData.append("Number", number.value);
-    }
+    	if (number.value == "") {
+		const error = new Error("Number field is empty, please enter your phone numbers.");
+		error.focus = "numberInput";
+		throw error;
+    	} else if (number.value.match(phoneRegEx) == false) {
+		const error = new Error("Phone number seems to be incorrect, please check again.");
+		error.focus = "numberInput";
+		throw error;
+    	} else {
+        	formData.append("Number", number.value);
+    	}
 
-    if (fpDate == false) {
-        const error = new Error("Please select date for your event.");
-        error.focus = "datetimeDate";
-        throw error;
-    }
+	if (fpDate == false) {
+		const error = new Error("Please select date for your event.");
+		error.focus = "datetimeDate";
+		throw error;
+	}
 
-    if (collection.checked == false && delivery.checked == false) {
-        const error = new Error("Please select either collection or delivery as an option");
-        error.focus = "Collection";
-        throw error;
-    } else if (collection.checked == true){
-        formData.append("Date of Event", date.value);
-        formData.append("Collection", "Yes");
-        formData.append("Date of collection", event.value);
-    } else if (delivery.checked == true) {
-        formData.append("Date of Event", date.value);
-        formData.append("Delivery", "Yes");
-        formData.append("Date of delivery", event.value);
-    }
+	if (collection.checked == false && delivery.checked == false) {
+		const error = new Error("Please select either collection or delivery as an option");
+		error.focus = "Collection";
+		throw error;
+	} else if (collection.checked == true){
+		formData.append("Date of Event", date.value);
+		formData.append("Collection", "Yes");
+		formData.append("Date of collection", event.value);
+	} else if (delivery.checked == true) {
+		formData.append("Date of Event", date.value);
+		formData.append("Delivery", "Yes");
+		formData.append("Date of delivery", event.value);
+	}
     
-    if (collection.checked == true && fpEvent == false) {
-        const error = new Error("Please select the collection date.")
-        error.focus = "datetimeEvent";
-        throw error;
-    } else if (delivery.checked == true && fpEvent == false) {
-        const error = new Error("Please select the delivery date.")
-        error.focus = "datetimeEvent";
-        throw error;
-    }
+	if (collection.checked == true && fpEvent == false) {
+		const error = new Error("Please select the collection date.")
+		error.focus = "datetimeEvent";
+		throw error;
+	} else if (delivery.checked == true && fpEvent == false) {
+		const error = new Error("Please select the delivery date.")
+		error.focus = "datetimeEvent";
+		throw error;
+	}
 
-    var counter = 0;
+	var counter = 0;
 
-    cakeSize.forEach(item => {
-        if(item.disabled == false && item.value == ""){
-            const error = new Error("Please select a cake szie.");        
-            error.focus = item.id;
-            throw error;
-            
-        } else if (item.disabled == false && item.value != ""){
-            counter++;
-            var obj = {
-                "Item": "Cake",
-                "Flavour": item.parentElement.previousElementSibling.innerHTML,
-                "Cake Size": item.value,
-                "Quantity": item.parentElement.parentElement.lastElementChild.value
-            }
-            cakeQuantity++;
-            formData.append("Order", JSON.stringify(obj))
-        }
-    })
+	cakeSize.forEach(item => {
+		if(item.disabled == false && item.value == ""){
+		const error = new Error("Please select a cake szie.");        
+		error.focus = item.id;
+		throw error;
+		
+		} else if (item.disabled == false && item.value != ""){
+		counter++;
+		var obj = {
+			"Item": "Cake",
+			"Flavour": item.parentElement.previousElementSibling.innerHTML,
+			"Cake Size": item.value,
+			"Quantity": item.parentElement.parentElement.lastElementChild.value
+		}
+		cakeQuantity++;
+		formData.append("Order", JSON.stringify(obj))
+		}
+	})
 
-    order.forEach(item => {
-        if (item.parentElement.parentElement.id != "Cake" && item.parentElement.parentElement.className.includes("itemWrapper") && item.checked == true){
-            counter++;
-            var obj = {
-                "Item": item.parentElement.parentElement.id,
-                "Flavour": item.nextElementSibling.innerHTML,
-                "Quantity": document.getElementById(item.id+1).value
-            }
-            formData.append("Order", JSON.stringify(obj))
+	order.forEach(item => {
+		if (item.parentElement.parentElement.id != "Cake" && item.parentElement.parentElement.className.includes("itemWrapper") && item.checked == true){
+		counter++;
+		var obj = {
+			"Item": item.parentElement.parentElement.id,
+			"Flavour": item.nextElementSibling.innerHTML,
+			"Quantity": document.getElementById(item.id+1).value
+		}
+		formData.append("Order", JSON.stringify(obj))
 
-        } else if (item.parentElement.parentElement.id != "mainHeader"  && !(item.id.startsWith("Cake")) && item.parentElement.className.startsWith("Flavours") && item.checked == true){
-            counter++;
-            var obj = {
-                "Item": item.parentElement.parentElement.id,
-                "Flavour": item.nextElementSibling.innerHTML,
-                "Quantity": document.getElementById(item.id+1).value
-            }
-            formData.append("Order", JSON.stringify(obj))
+		} else if (item.parentElement.parentElement.id != "mainHeader"  && !(item.id.startsWith("Cake")) && item.parentElement.className.startsWith("Flavours") && item.checked == true){
+		counter++;
+		var obj = {
+			"Item": item.parentElement.parentElement.id,
+			"Flavour": item.nextElementSibling.innerHTML,
+			"Quantity": document.getElementById(item.id+1).value
+		}
+		formData.append("Order", JSON.stringify(obj))
 
-        } else if (item.parentElement.parentElement.id != "mainHeader" && !(item.id.startsWith("Cake")) && item.checked == true) {
-            counter++;
-            var obj = {
-                "Item": item.nextElementSibling.innerHTML,
-                "Quantity": document.getElementById(item.id+1).value
-            }
-            formData.append("Order", JSON.stringify(obj))
-        }
-    })
+		} else if (item.parentElement.parentElement.id != "mainHeader" && !(item.id.startsWith("Cake")) && item.checked == true) {
+		counter++;
+		var obj = {
+			"Item": item.nextElementSibling.innerHTML,
+			"Quantity": document.getElementById(item.id+1).value
+		}
+		formData.append("Order", JSON.stringify(obj))
+		}
+	})
 
 
-    if (counter == 0) {
-        const error = new Error("Please select the type of item you'd like to Enquirie about.");
-        error.focus = "CakeCheckBox";
-        throw error;
-    }
+	if (counter == 0) {
+		const error = new Error("Please select the type of item you'd like to Enquirie about.");
+		error.focus = "CakeCheckBox";
+		throw error;
+	}
 
-    if (message.value == "") {
-        const error = new Error("Please give me some details about the items you'd like to order.");
-        error.focus = "EnquirieInput";
-        throw error;
-    } else {
-        formData.append("Message", message.value);
-    }
+	if (message.value == "") {
+		const error = new Error("Please give me some details about the items you'd like to order.");
+		error.focus = "EnquirieInput";
+		throw error;
+	} else {
+		formData.append("Message", message.value);
+	}
 
-    if (allergyNo.checked == false && allergyYes.checked == false) {
-        const error = new Error("Please let me know if there's any allergies I should be aware of.");
-        error.focus = "AllergyNo";
-        throw error;
-    }
+	if (allergyNo.checked == false && allergyYes.checked == false) {
+		const error = new Error("Please let me know if there's any allergies I should be aware of.");
+		error.focus = "AllergyNo";
+		throw error;
+	}
 
-    if (allergyYes.checked == true && allergyMessage == "") {
-        const error = new Error("Please let me know of what allergies I should be aware of.");
-        error.focus = "AllergyYes";
-        throw error;
-    } else if (allergyNo.checked == true){
-        formData.append("Allergies", "No");
-    } else {
-        formData.append("Allergies", "Yes!");
-        formData.append("Allergies Information", allergyMessage.value);
-    }
+	if (allergyYes.checked == true && allergyMessage == "") {
+		const error = new Error("Please let me know of what allergies I should be aware of.");
+		error.focus = "AllergyYes";
+		throw error;
+	} else if (allergyNo.checked == true){
+		formData.append("Allergies", "No");
+	} else {
+		formData.append("Allergies", "Yes!");
+		formData.append("Allergies Information", allergyMessage.value);
+	}
 
-    if (photo.value == "" && cakeQuantity != 0){
-        const error = new Error("Please attach example of designs you'd like for your order.");
-        error.focus = "files";
-        throw error;
-    } else if (photo.value == "" && cakeQuantity == 0){
-        formData.append("clientPhotos", "")
-    } else{
-        for (let i = 0; i < photo.files.length; i++) {
-            const file = photo.files[i];
-            const validTypes = ["image/png", "image/jpeg", "image/jpg"];
-            if (!validTypes.includes(file.type)) {
-                throw new Error("Please upload a file with .png, .jpg, or .jpeg format.");
-            }
-            formData.append("clientPhotos", file);
-        }
-    }
+	if (photo.value == "" && cakeQuantity != 0){
+		const error = new Error("Please attach example of designs you'd like for your order.");
+		error.focus = "files";
+		throw error;
+	} else if (photo.value == "" && cakeQuantity == 0){
+		formData.append("clientPhotos", "")
+	} else{
+		for (let i = 0; i < photo.files.length; i++) {
+		const file = photo.files[i];
+		const validTypes = ["image/png", "image/jpeg", "image/jpg"];
+		if (!validTypes.includes(file.type)) {
+			throw new Error("Please upload a file with .png, .jpg, or .jpeg format.");
+		}
+		formData.append("clientPhotos", file);
+		}
+	}
 }

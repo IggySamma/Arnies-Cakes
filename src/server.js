@@ -26,6 +26,7 @@ server.get('/tests/email', function(req, res) { res.sendFile(path.join(__dirname
 
 /*------------------ Front API's -----------------*/
 
+server.get('/favicon.ico', function (req, res) { res.sendFile(path.join(__dirname, '/public/images/favicon.ico')) })
 server.post('/api/gallery', (req, res) => { utils.filterGallery( req, res) });
 server.get('/api/flavours', (req, res) => { res.json(globals.flavours) });
 server.post('/api/disabledDates', (req, res) => { res.json(globals.disabledDates)})
