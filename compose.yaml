@@ -15,7 +15,7 @@ services:
   server:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     image: arnies-cakes:latest
     entrypoint: ["./init-scripts/init-gallery.sh"]
     command: ["node", "src/server.js"]

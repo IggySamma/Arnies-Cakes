@@ -41,4 +41,4 @@ EXPOSE 3305
 
 # Use the initialization script as entrypoint
 ENTRYPOINT ["/usr/src/app/init-gallery.sh"]
-#CMD ["node", "src/server.js"]
+CMD ["node", "src/server.js"]
