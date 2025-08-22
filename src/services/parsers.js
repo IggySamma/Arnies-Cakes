@@ -9,25 +9,26 @@ const templates = require('../utils/fileRendering.js');
 
 /*------------------------------- Gallery ------------------------------------*/
 
-function getAllFromGallery(){
-    globals.gallery = new globals.galleryConstructor
+function getAllFromGallery() { /*This functions duplicated in sql.js*/
+	globals.gallery = undefined;
+	globals.gallery = new globals.galleryConstructor;
 
-    serverConfig.connection.execute(
-        'SELECT * FROM gallery ORDER BY ID ASC;',
-        function (err, results) {
-            if(err){
-                res.json(new Error(err));
-            }else{
-                globals.gallery = JSON.parse(JSON.stringify(results));
-            }
-        }
-    );
+	serverConfig.connection.execute(
+		'SELECT * FROM gallery ORDER BY ID ASC;',
+		function (err, results) {
+			if(err){
+				res.json(new Error(err));
+			}else{
+				globals.gallery = JSON.parse(JSON.stringify(results));
+			}
+		}
+	);
 }
 
 const galleryUpload = multer({ 
     	//dest: "./public/gallery", //Dev
 	//dest: globals.publicGallery, //Docker
-	dest: serverConfig.isDocker ? globals.publicGallery : "./src/public/gallery",
+	dest: serverConfig.isDocker ? globals.publicGallery : globals.devGallery,
 	fileFilter(req, file, cb) {
 		if (!file.originalname.match(/\.(png|jpg|jpeg)$/)){
 		cb(new Error('Please upload an image.'));
@@ -57,19 +58,22 @@ async function deleteFromGallery(req, res){
     	let data = req.body;
     	//let path = '/gallery/' + data.Path //local
 	let path = '/gallery/' + data.Path //Docker
-	let unlinkPath = serverConfig.isDocker ? '/usr/src/app/src/public/gallery/' : 'public/gallery/';
+	let unlinkPath = serverConfig.isDocker ? globals.publicGallery : globals.devGallery;
 
 	try {
 		let exists = await sqlQuery.checkGalleryByID(data.ID, path);
 		//'public/gallery/' //local
 		if (exists) {
 			fs.unlink(unlinkPath + data.Path, (err) => {
-				if (err) throw err;
+				if (err) {
+					console.error("Failed to delete file. Path requested + Error: ", unlinkPath + data.Path + err);
+				} else {
+					console.log("File deleted successfully. Path requested:", unlinkPath + data.Path);
+				}
 			});
-			sqlQuery.deleteFromGalleryByID(data.ID, res);
-			getAllFromGallery();
+			await sqlQuery.deleteFromGalleryByID(data.ID, res);
 		} else {
-		res.sendStatus(500)
+			res.sendStatus(500)
 		}
 	} catch (error) {
 		console.log("Error: ", error);
@@ -375,5 +379,6 @@ module.exports = {
     isNotEmptyEnquirie,
     Enquiries,
     uploadFiles,
-    deleteFromGallery
+    deleteFromGallery,
+    getAllFromGallery
 }

@@ -9,7 +9,7 @@ const path = require('path');
 const server = serverConfig.app
 
 
-server.listen(3305, () => {
+server.listen( process.env.SERVER_PORT, () => {
 	console.log(`Server started...`);
 });	    
 
@@ -39,6 +39,7 @@ server.post('/api/submitEnquirie', parsers.clientUpload.array("clientPhotos"), (
 server.post('/api/upload', serverConfig.ensureAuthenticated, parsers.galleryUpload.array("myFiles"), (req, res) => { parsers.uploadFiles(req, res) });
 server.post('/api/deleteGallery', serverConfig.ensureAuthenticated, (req, res) => { parsers.deleteFromGallery(req, res) });
 server.post('/api/adminGallery', serverConfig.ensureAuthenticated, (req, res) => { utils.filterGallery(req, res) });
+server.get('/api/refreshGallery', serverConfig.ensureAuthenticated, (req, res) => { parsers.getAllFromGallery() });
 server.post('/api/allEnquiries', serverConfig.ensureAuthenticated , (req, res) => { sqlQuery.getAllEnquiries().then(data => res.json(data)) });
 server.post('/api/allConfirmedEnquiries', serverConfig.ensureAuthenticated , (req, res) => { sqlQuery.getAllConfirmedEnquiries().then(data => res.json(data)) });
 server.post('/api/confirmEnquiry', serverConfig.ensureAuthenticated , (req, res) => { sqlQuery.confirmEnquiry(req, res) });

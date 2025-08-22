@@ -28,9 +28,8 @@ class flavoursConstructor{
 let gallery = new galleryConstructor;
 let disabledDates = new disabledDatesContructor;
 let flavours = new flavoursConstructor;
-let publicGallery = "/usr/src/app/src/public/gallery" //Docker
-//let publicGallery = "./public/gallery" //Local Dev
-
+let publicGallery = "/usr/src/app/src/public/gallery/" //Docker
+let devGallery = "./public/gallery/"
 
 module.exports = {
 	galleryConstructor,
@@ -39,5 +38,6 @@ module.exports = {
 	flavours,
 	gallery,
 	disabledDates,
-	publicGallery
+	publicGallery,
+	devGallery
 }

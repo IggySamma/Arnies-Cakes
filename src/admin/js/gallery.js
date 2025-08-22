@@ -427,16 +427,48 @@ function deleteAlert(){
 }
 
 function deletePicture(ID, Path){
-  fetch('/api/deleteGallery', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ID, Path}),
-      credentials: "include",
-  }).then((res) => {
-      if(res.status === 200){
-          location.reload();
-      } else {
-          console.log(res);
-      }
-  }); 
+	fetch('/api/deleteGallery', {
+	method: 'POST',
+	headers: {'Content-Type': 'application/json'},
+	body: JSON.stringify({ID, Path}),
+	credentials: "include",
+	}).then((res) => {
+	if(res.status === 200){
+		refreshGallery();
+	} else {
+		console.log(res);
+	}
+	}); 
+}
+
+document.getElementById("form").addEventListener("submit", function (e) { //Upload form
+	e.preventDefault();
+	const formData = new FormData(this);
+
+	fetch(this.action, {
+		method: this.method,
+		body: formData
+	})
+		.then(response => {
+			if (response.ok) {
+				refreshGallery();
+			} else {
+				alert("Upload failed!");
+			}
+		})
+		.catch(err => {
+			console.error("Error uploading:", err);
+			alert("Error uploading file.");
+		});
+});
+
+function refreshGallery() {
+	fetch('/api/refreshGallery', {
+		method: 'GET',
+		headers: { 'Content-Type': 'application/json' },
+		credentials: "include",
+	}).then((res) => {
+		console.log(res);
+	});
+	setTimeout(() => location.reload(), 500)
 }

@@ -3,35 +3,35 @@ const serverConfig = require('../config/config.js');
 /*------------------------------- Gallery functions ----------------------------*/
 
 function insertNewToGallery(newType, newPath) {
-    let newImage = [
-        Type = newType,
-        Path = newPath,
-    ];
+	let newImage = [
+		Type = newType,
+		Path = newPath,
+	];
 
-   serverConfig.connection.execute(
-        'INSERT INTO gallery(Type, Path) Values(?, ?);', 
-        newImage,
-        function (err, results) {
-            if (err) {
-                console.log(err);
-            }
-        }
-   );
+	serverConfig.connection.execute(
+		'INSERT INTO gallery(Type, Path) Values(?, ?);', 
+		newImage,
+		function (err, results) {
+		if (err) {
+			console.log(err);
+			}
+		}
+	);
 }
 
 function deleteFromGalleryByID(ID, res){
-    serverConfig.connection.execute(
-        'DELETE FROM gallery WHERE ID= ?;', 
-        [ID],
-        function (err, results) {
-            if (err) {
-                console.log(err);
-                res.json(new Error(err));
-            } else {
-                res.sendStatus(200);
-            }
-        }
-    );
+	serverConfig.connection.execute(
+		'DELETE FROM gallery WHERE ID= ?;', 
+		[ID],
+		function (err, results) {
+			if (err) {
+				console.log(err);
+				res.json(new Error(err));
+			} else {
+				res.sendStatus(200);
+			}
+		}
+	);
 }
 
 function checkGalleryByID(ID, path){
