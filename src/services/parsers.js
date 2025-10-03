@@ -30,7 +30,7 @@ const galleryUpload = multer({
 	//dest: globals.publicGallery, //Docker
 	dest: serverConfig.isDocker ? globals.publicGallery : globals.devGallery,
 	fileFilter(req, file, cb) {
-		if (!file.originalname.match(/\.(png|jpg|jpeg)$/)){
+		if (!file.originalname.match(/\.(png|PNG|jpg|JPG|jpeg|JPEG)$/)){
 		cb(new Error('Please upload an image.'));
 		}
 		cb(undefined, true);
@@ -39,10 +39,10 @@ const galleryUpload = multer({
 
 const clientUpload = multer({
     fileFilter(req, file, cb) {
-        if (!file.originalname.match(/\.(png|jpg|jpeg)$/)){
-            cb(new Error('Please upload an image of the correct format.'), false);
-        }
-            cb(undefined, true);
+		if (!file.originalname.match(/\.(png|PNG|jpg|JPG|jpeg|JPEG)$/)){
+           	cb(new Error('Please upload an image of the correct format.'), false);
+        	}
+            	cb(undefined, true);
     },
 });
 
