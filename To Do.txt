@@ -14,8 +14,6 @@ On click of date select name and see details for the order.
 
 Confirm enquiry pops up to add with information initiall sent and can then be modified to update before submit.
 
-
-
 Enquiries page that can be sent and it copies to clipboard to paste into chat.
 
 Add JSON-LD TO ALL PAGES WHEN LIVE - Updates robots.txt & sitemap.xml with correct url and submit 
@@ -47,3 +45,7 @@ Add JSON-LD TO ALL PAGES WHEN LIVE - Updates robots.txt & sitemap.xml with corre
     }
   }
 </script>
+
+
+
+Add Cookies + Flavours to enquiries and flavours

@@ -2,31 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 	<url>
-		<loc>https://arniescakes.ie/</loc>
+		<loc>https://www.arniescakes.ie/</loc>
 		<lastmod>2025-06-23</lastmod>
 		<changefreq>yearly</changefreq>
 		<priority>1.0</priority>
 	</url>
 	<url>
-		<loc>https://arniescakes.ie/about</loc>
+		<loc>https://www.arniescakes.ie/about</loc>
 		<lastmod>2025-06-23</lastmod>
 		<changefreq>yearly</changefreq>
 		<priority>0.7</priority>
 	</url>
 	<url>
-		<loc>https://arniescakes.ie/gallery</loc>
+		<loc>https://www.arniescakes.ie/gallery</loc>
 		<lastmod>2025-06-23</lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>
 	</url>
 	<url>
-		<loc>https://arniescakes.ie/flavours</loc>
+		<loc>https://www.arniescakes.ie/flavours</loc>
 		<lastmod>2025-06-23</lastmod>
 		<changefreq>yearly</changefreq>
 		<priority>0.9</priority>
 	</url>
 		<url>
-		<loc>https://arniescakes.ie/enquiries</loc>
+		<loc>https://www.arniescakes.ie/enquiries</loc>
 		<lastmod>2025-06-23</lastmod>
 		<changefreq>yearly</changefreq>
 		<priority>1.0</priority>

@@ -23,6 +23,7 @@ server.get('/flavours', function(req, res) { res.sendFile(path.join(__dirname, '
 server.get('/enquiries', function(req, res) { res.sendFile(path.join(__dirname, '/public/Enquiries.html'))});
 server.get('/enquiriesty', function(req, res) { res.sendFile(path.join(__dirname, '/public/EnquiriesTY.html'))});
 server.get('/tests/email', function(req, res) { res.sendFile(path.join(__dirname, '/tests/sendEmail.html'))});
+server.get('/privacy', function (req, res) { res.sendFile(path.join(__dirname, '/public/privacy.html')) });
 
 /*------------------ Front API's -----------------*/
 

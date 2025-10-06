@@ -172,25 +172,30 @@ a{color: black !important;}
 .KidsCakesGallery9{object-position: 50% 100%;}
 
 /*----------Cakes--------------*/
-.CakesGallery1{object-position: 50% 57%;}
+.CakesGallery1{object-position: 0% 50%;}
 
 .CakesGallery2{
-    object-position: 50% 40%;
+    object-position: 50% 60%;
     max-width: 100%;
 }
 
 .CakesGallery3{
-    object-position: 50% 35%;
+    object-position: 50% 40%;
     padding-right: 0px !important;
     margin-right: 0px !important;
     /*width: 100%;*/
     /*right: 0px;*/
 }
 
-.CakesGallery6{height: 50%;}
+.CakesGallery5 {object-position: 50% 70%}
+
+.CakesGallery6{
+	height: 50%;
+	object-position: 50% 50%;
+}
 
 .CakesGallery7{
-    object-position: 50% 20%;
+    object-position: 100% 50%;
     height: 50%;
 }
 /*---------Cupcakes------------*/

@@ -63,6 +63,7 @@ function saveNewPublicFile(ogFile, data, ejsPath){
 serverConfig.rebuildAllPages && saveNewPublicFile('Index.html', [], 'Index.ejs');
 serverConfig.rebuildAllPages && saveNewPublicFile('About.html', [] , 'About.ejs');
 serverConfig.rebuildAllPages && saveNewPublicFile('Gallery.html', [], 'Gallery.ejs');
+serverConfig.rebuildAllPages && saveNewPublicFile('Privacy.html', [], 'Privacy.ejs');
 //saveNewPublicFile('Flavours.html', getFlavours(), 'Flavours.ejs'); // parsers.js storeFlavours(data) as it needs to be run after stored
 //saveNewPublicFile('Enquiries.html', [], 'Enquiries.ejs'); // parsers.js getEnquiriesSubHeadersPreRender(main) as it needs to be run after stored
 

@@ -1,0 +1,28 @@
+Flavours page:
+
+Cakes: Add Oreo
+
+Cupcakes: 
+Add: Ferrero Rocher, Oreo, 
+Remove: Honey
+Replace Fresh Fruit to Raspberry.
+
+Cakespops:
+Replace Fresh Fruit to Raspberry.
+
+Treats:
+Update Mushroom price: Eur 40 
+Add Chunky Cookies: Price 3.5 Eur
+Flavours: 
+Chocolate Chip
+Chocolate Chip with Walnuts
+Lemon Meringue
+Red Velvet
+
+Order Now! to be more standout.
+
+
+Enquiries Page:
+
+Add Cookies and their flavours.
+Make it a minimum of 4 cookies and Step of 1.

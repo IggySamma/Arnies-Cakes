@@ -341,6 +341,10 @@ a:active {
 
 .vpw100{width: 100vw;}
 
+.nav-privacy{
+	font-size: 1rem;
+}
+
 #navbarSupportedContent{
   overflow: visible !important;
 }
