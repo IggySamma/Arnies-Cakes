@@ -47,9 +47,23 @@ function sendEmails(enqNum, data, textBody, photos, res, date){
 		}],
 	};
 
-	serverConfig.emailTransporter.sendMail(EnquirieToClient, (error, response) => {
+	/*serverConfig.emailTransporter.sendMail(EnquirieToClient, (error, response) => {
 		error ? console.log(error) : serverConfig.emailTransporter.close();
 		eApi.getGmailLinkNStore(enqNum, date, res)
+	});*/
+
+	serverConfig.emailTransporter.sendMail(EnquirieToClient, (error, response) => {
+		if (error.code === 'EAUTH') {
+			res.sendStatus(504);
+			console.log('Refresh token revoked or expired');
+			return;
+		} else if (error) {
+			console.error('SendMail error:', error);
+		} else {
+			serverConfig.emailTransporter.close();
+		}
+		
+		eApi.getGmailLinkNStore(enqNum, date, res);
 	});
 
 	const EnquirieToSelf = {

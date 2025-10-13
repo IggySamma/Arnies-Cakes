@@ -29,7 +29,27 @@ oauth2Client.setCredentials({
     refresh_token: process.env.GMAIL_REFRESH_TOKEN,
 });
 
-const accessToken = oauth2Client.getAccessToken()
+
+//const accessToken = oauth2Client.getAccessToken()
+let accessToken = getAccessTokenOrHandleError()
+
+async function getAccessTokenOrHandleError() {
+    try {
+        const accessToken = await oauth2Client.getAccessToken();
+        return accessToken;
+    } catch (err) {
+        if (err.response?.data?.error === 'invalid_grant') {
+            console.log('Invalid grant: Refresh token might be expired or revoked.');
+            //handleInvalidGrant(); 
+        } else {
+            console.error('Unexpected error while fetching access token:', err);
+        }
+    }
+}
+
+/*function handleInvalidGrant(){
+        console.log('handler')
+}*/
 
 let emailTransporter = nodemailer.createTransport({
     service: "gmail",

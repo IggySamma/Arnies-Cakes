@@ -369,6 +369,9 @@ function submitEnquirie(file){
 					alert("Something went wrong, please check file is .Png | .Jpg | .Jpeg format. Otherwise please contact us on our social links instead");
 					document.getElementById("files").focus();
 					break;
+                case 504:
+                        alert("Something went wrong, please contact us on our social links instead");
+                        break;
 				case 200:
 					window.location.href = "/enquiriesty";
 					break;
