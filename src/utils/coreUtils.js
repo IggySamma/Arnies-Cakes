@@ -47,22 +47,20 @@ function sendEmails(enqNum, data, textBody, photos, res, date){
 		}],
 	};
 
-	/*serverConfig.emailTransporter.sendMail(EnquirieToClient, (error, response) => {
-		error ? console.log(error) : serverConfig.emailTransporter.close();
-		eApi.getGmailLinkNStore(enqNum, date, res)
-	});*/
-
 	serverConfig.emailTransporter.sendMail(EnquirieToClient, (error, response) => {
-		if (error.code === 'EAUTH') {
-			res.sendStatus(504);
-			console.log('Refresh token revoked or expired');
-			return;
-		} else if (error) {
+		if (error) {
+			if (error.code === 'EAUTH') {
+				console.log('Refresh token revoked or expired');
+				res.sendStatus(504);
+				return;
+			}
+
 			console.error('SendMail error:', error);
-		} else {
-			serverConfig.emailTransporter.close();
+			res.sendStatus(504);
+			return;
 		}
-		
+
+		serverConfig.emailTransporter.close();
 		eApi.getGmailLinkNStore(enqNum, date, res);
 	});
 
@@ -82,7 +80,19 @@ function sendEmails(enqNum, data, textBody, photos, res, date){
 	};
 
 	serverConfig.emailTransporter.sendMail(EnquirieToSelf, (error, response) => {
-		error ? console.log(error) : serverConfig.emailTransporter.close();
+		if (error) {
+			if (error.code === 'EAUTH') {
+				console.log('Refresh token revoked or expired');
+				res.sendStatus(504);
+				return;
+			}
+
+			console.error('SendMail error:', error);
+			res.sendStatus(504);
+			return;
+		}
+
+		serverConfig.emailTransporter.close();
 	});
 };
 

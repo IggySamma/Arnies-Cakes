@@ -55,12 +55,25 @@ let accessToken = getAccessTokenOrHandleError()
     },
 });*/
 
-let emailTransporter;
+let emailTransporter = nodemailer.createTransport({
+	service: "gmail",
+	auth: {
+		type: "OAuth2",
+		user: process.env.GMAIL_USER,
+		clientId: process.env.GMAIL_CLIENT_ID,
+		clientSecret: process.env.GMAIL_CLIENT_SECRET,
+		refreshToken: process.env.GMAIL_REFRESH_TOKEN,
+		accessToken: accessToken,
+	},
+	tls: {
+		rejectUnauthorized: false,
+	},
+});
 
 async function refreshEmailTransporter() {
     try {
         const accessTokenResponse = await oauth2Client.getAccessToken();
-        const accessToken = accessTokenResponse.token; // important!
+        const accessToken = accessTokenResponse.token;` // important!`
 
         emailTransporter = nodemailer.createTransport({
             service: "gmail",
@@ -83,7 +96,7 @@ async function refreshEmailTransporter() {
     }
 }
 
-refreshEmailTransporter();
+//refreshEmailTransporter();
 
 async function getAccessTokenOrHandleError() {
     try {
@@ -217,12 +230,12 @@ passport.use(
         scope: oauth2Scopes
   },
   function (req, accessToken, refreshToken, profile, cb) {
-        updateEnvVariable('GMAIL_REFRESH_TOKEN', refreshToken);
-        getAccessTokenOrHandleError()
         if (profile.id === process.env.GMAIL_ID) {
-            return cb(null, profile);
+		updateEnvVariable('GMAIL_REFRESH_TOKEN', refreshToken);
+		getAccessTokenOrHandleError()
+            	return cb(null, profile);
         } else {
-            return cb(null, false); 
+            	return cb(null, false); 
         }
   }
 ));
