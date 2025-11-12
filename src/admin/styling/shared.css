@@ -10,6 +10,11 @@
   src: local('Halimun'), url('./fonts/Halimun.ttf') format('truetype');
 }
 
+.navSpacer {
+	position: relative;
+	top: 60px;
+}
+
 body{
   font-family: 'Belleza';
 }
@@ -346,6 +351,11 @@ a:active {
 
 @media only screen and (min-width: 400px){
   .footerLogo{height: 80px;}
+
+  .navSpacer {
+  	position: relative;
+  	top: 110px;
+  }
 }
 
 @media only screen and (min-width: 992px){  

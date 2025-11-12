@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Arnie's Cakes</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="./js/bootstrap.js"></script>
+	<link rel="stylesheet" href="./styling/bootstrap.css">
+	<link rel="stylesheet" href="./styling/flavours.css">
+	<link rel="stylesheet" href="./styling/shared.css">
+	<link rel="stylesheet" href="./styling/index.css">
+</head>
+<header>
+	<nav id="navbar"></nav>
+</header>
+
+<body>
+
+	<div class="container-fluid m-3 p-3 navSpacer">
+		<div class="padding"></div>
+		<form class="form w50 rounded-2 m-1 p-1">
+			<div class="mb-3 p-3">
+				<label for="actionInput" class="form-label">Select action:</label>
+				<select class="form-select" id="actionInput">
+					<option selected> Please select an action </option>
+					<option value="Update">Update Existing</option>
+					<option value="Add">Add to Existing</option>
+					<option value="Delete">Delete Something</option>
+					<option value="Create">Create Completely New</option>
+				</select>	
+			</div>
+			<div class="mb-3 p-3" id="Update">
+
+			</div>
+			<div class="mb-3 p-3" id="Add">
+				<div class="m-5 p-5">
+					<p>Add block</p>
+				</div>
+			</div>
+			<div class="mb-3 p-3" id="Delete">
+				<div class="m-5 p-5">
+					<p>Delete block</p>
+				</div>
+			</div>
+			<div class="mb-3 p-3" id="Create">
+				<div class="m-5 p-5">
+					<p>Create block</p>
+				</div>
+			</div>
+		</form>
+		<div class="padding"></div>
+	</div>
+
+</body>
+<script src="./js/shared.js" onload="buildNavBar();"></script>
+<script src="./js/flavours.js" onload="getFlavours();" defer></script>
+
+</html>
