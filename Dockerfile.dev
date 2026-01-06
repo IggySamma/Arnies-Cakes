@@ -37,8 +37,7 @@ RUN chmod +x /usr/src/app/init-gallery.sh && \
 USER node
 
 # Expose the port that the application listens on.
-EXPOSE 3305
+EXPOSE 3000
 
 # Use the initialization script as entrypoint
 ENTRYPOINT ["/usr/src/app/init-gallery.sh"]
-#CMD ["node", "src/server.js"]

@@ -48,3 +48,5 @@ server.post('/api/declineEnquiry', serverConfig.ensureAuthenticated , (req, res)
 server.post('/api/deleteEnquiry', serverConfig.ensureAuthenticated , (req, res) => { sqlQuery.deleteEnquiry(req, res) });
 server.post('/api/requestEnquiry', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.requestEnquiryByID(req, res, req.body.id) });
 server.post('/api/requestConfirmedEnquiry', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.requestConfirmedEnquiryByID(req, res, req.body.id) });
+
+server.post('/api/mainheaderstest', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.mainHeadersTest() });

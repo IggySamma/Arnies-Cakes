@@ -365,6 +365,22 @@ function removeEnquirie(req, res, ID){
     );
 }
 
+
+
+function mainHeadersTest() {
+	serverConfig.connection.execute(
+		'SELECT * FROM mainheaders;',
+		function (err, results) {
+			if (err) {
+				console.log(err);
+				res.json(new Error(err));
+			} else {
+				var obj = JSON.parse(JSON.stringify(results));
+				console.log(obj)
+			}
+		}
+	);
+}
 module.exports = {
 	getEnquiriesMainHeaders,
 	getEnquiriesSubHeaders,
@@ -383,5 +399,6 @@ module.exports = {
 	declineEnquiry,
 	deleteEnquiry,
 	requestConfirmedEnquiryByID,
-	requestEnquiryByID
+	requestEnquiryByID,
+	mainHeadersTest
 }

@@ -98,9 +98,7 @@ function sendEmails(enqNum, data, textBody, photos, res, date){
 
 /*------------------------------- Admin ------------------------------------*/
 
-
-
 module.exports = {
-    sendEmails,
-    filterGallery
+    	sendEmails,
+    	filterGallery
 }

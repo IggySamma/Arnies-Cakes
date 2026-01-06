@@ -11,6 +11,24 @@ services:
     volumes:
       - db_data:/var/lib/mysql
       - ./init-scripts:/docker-entrypoint-initdb.d:ro
+      - ./init-scripts/db-hotfix.sql:/tmp/db-hotfix.sql:ro
+    command: >
+      bash -c "
+        docker-entrypoint.sh mysqld &
+        until mysqladmin ping -h localhost --silent; do sleep 2; done &&
+        echo 'Running one-time database updates...' &&
+        mysql -uroot -p$$MYSQL_ROOT_PASSWORD < /tmp/db-hotfix.sql &&
+        echo 'Updates complete!' &&
+        wait
+      "
+    #command: >
+    #  bash -c "
+    #    docker-entrypoint.sh mysqld &
+    #    echo 'Waiting for SQL...' &&
+    #    until mysqladmin ping -h localhost --silent; do sleep 2; done &&
+    #    echo 'SQL Started, launching app...' &&
+    #    wait
+    #  "
 
   server:
     build:
@@ -31,7 +49,6 @@ services:
       - gallery_data:/usr/src/app/src/public/gallery
     depends_on:
       - db
-
 
 volumes:
   db_data:

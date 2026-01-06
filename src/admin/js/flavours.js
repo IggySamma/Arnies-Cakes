@@ -1,7 +1,6 @@
 let control = document.getElementById("actionInput");
 let controlContainers = [
 	"Update"
-	,"Add"
 	,"Delete"
 	,"Create"
 ];
@@ -29,8 +28,11 @@ function getFlavours() {
 			}
 			updateContainer(flavours);
 		});
-
 	});
+
+	fetch('/api/mainheaderstest', {
+		method: 'POST',
+	})
 };
 
 function updateContainer(flavour){
@@ -75,9 +77,13 @@ function updateFiltered(){
 	segCon.appendChild(createElement('h5', {}, "form-label m-0 p-0 mb-1 text-info", "Seperate new text by commas ','"))
 
 	let type = flavours.find(item => item.Type.includes(updateSelect.value));
-
-	segCon.appendChild(createElement('input', { 'id': `${type.Type}CheckBoxUpdate`, 'type': 'checkbox', 'onclick': `enableTextBox('${type.Type}')` }, "form-check-input CheckBox"));
-	segCon.appendChild(createElement('label', { 'for': `${type.Type}CheckBoxUpdate` }, "form-check-label m-0", "Update Name ~ Do not update Cakes Name"));
+	console.log(type)
+	if(type.Type !== 'Cakes') {
+		segCon.appendChild(createElement('input', { 'id': `${type.Type}CheckBoxUpdate`, 'type': 'checkbox', 'onclick': `enableTextBox('${type.Type}')` }, "form-check-input CheckBox"));
+		segCon.appendChild(createElement('label', { 'for': `${type.Type}CheckBoxUpdate` }, "form-check-label m-0", "Update Name"));
+	} else {
+		segCon.appendChild(createElement('label', { 'for': `${type.Type}CheckBoxUpdate` }, "form-check-label m-0", "Cakes name cannot be updated."));
+	}
 	segCon.appendChild(createElement('textarea', { 'type': 'text', 'id': `${type.Type}TextBoxUpdate`, 'placeholder': type.Type, 'disabled': ''}, "form-control-m mb-1", type.Type));
 
 	if (type.Heading === "Main") {
