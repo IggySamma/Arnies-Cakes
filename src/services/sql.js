@@ -367,20 +367,54 @@ function removeEnquirie(req, res, ID){
 
 
 
-function mainHeadersTest() {
+function adminSelect(req, res) {
 	serverConfig.connection.execute(
-		'SELECT * FROM mainheaders;',
+		`SELECT
+			f.ID, 
+			f.Heading, 
+			f.Type, 
+			f.Text, 
+			f.Flavours,
+			mh.step AS step,
+			mh.minOrder AS minOrder,
+			GROUP_CONCAT(mh.ID ORDER BY mh.ID SEPARATOR ',') AS hID
+		FROM flavours f
+		
+		LEFT JOIN mainheaders mh
+			ON mh.flavoursRecId = f.ID
+			AND f.Heading = 'Main'
+		WHERE f.Heading = 'Main'   
+		GROUP BY
+			f.ID, f.Heading, f.Type, f.Text, f.Flavours, mh.step, mh.minOrder
+		UNION ALL  
+		SELECT
+			f.ID,
+			f.Heading,
+			f.Type,
+			f.Text,
+			f.Flavours,
+			sh.step AS step,
+			sh.minOrder AS minOrder,
+			sh.ID AS hID
+		FROM flavours f  
+		
+		LEFT JOIN subheaders sh
+			ON sh.flavoursRecId = f.ID
+			AND f.Heading = 'Sub'
+			WHERE f.Heading = 'Sub';`,
+
 		function (err, results) {
 			if (err) {
 				console.log(err);
 				res.json(new Error(err));
 			} else {
 				var obj = JSON.parse(JSON.stringify(results));
-				console.log(obj)
+				res.json(obj)
 			}
 		}
 	);
 }
+
 module.exports = {
 	getEnquiriesMainHeaders,
 	getEnquiriesSubHeaders,
@@ -400,5 +434,5 @@ module.exports = {
 	deleteEnquiry,
 	requestConfirmedEnquiryByID,
 	requestEnquiryByID,
-	mainHeadersTest
+	adminSelect
 }

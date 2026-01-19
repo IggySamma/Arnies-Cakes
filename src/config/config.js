@@ -1,5 +1,5 @@
 const isProd = false;
-const isDocker = true;
+const isDocker = false;
 const rebuildAllPages = false;
 
 require('dotenv').config(isProd ? { path: __dirname + '/.env.prod' } : { path: __dirname + '/.env.dev' })

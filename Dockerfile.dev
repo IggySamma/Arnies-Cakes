@@ -19,7 +19,7 @@ RUN --mount=type=bind,source=package.json,target=package.json \
 COPY init-scripts/init-gallery.sh /usr/src/app/init-gallery.sh
 
 # Copy init scripts into MySQL init directory inside the image
-COPY init-scripts/ /docker-entrypoint-initdb.d/
+#COPY init-scripts/ /docker-entrypoint-initdb.d/
 
 # Copy the rest of the source files into the image.
 COPY . .
