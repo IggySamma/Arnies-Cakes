@@ -7,3 +7,4 @@ arnies-cakes.tar
 Dockerfile.mysql
 Dockerfile.prod
 docker-compose.yml
+docker-compose-hotfix.yml
