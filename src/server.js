@@ -49,4 +49,5 @@ server.post('/api/deleteEnquiry', serverConfig.ensureAuthenticated , (req, res) 
 server.post('/api/requestEnquiry', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.requestEnquiryByID(req, res, req.body.id) });
 server.post('/api/requestConfirmedEnquiry', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.requestConfirmedEnquiryByID(req, res, req.body.id) });
 
-server.post('/api/adminSelect', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.adminSelect(req, res) });
+server.post('/api/adminSelect', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.adminSelect(req, res)});
+server.post('/api/updateFlavours', serverConfig.ensureAuthenticated, parsers.multerParser.none(), (req, res) => { parsers.adminUpdateFlavours(req, res)});

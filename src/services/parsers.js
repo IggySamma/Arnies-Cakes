@@ -46,6 +46,8 @@ const clientUpload = multer({
     },
 });
 
+const multerParser = multer();
+
 function uploadFiles(req, res) {
     for (var i = 0; i < req.files.length; i++) {
         sqlQuery.insertNewToGallery(req.body.name, "/gallery/" + req.files[i].filename);
@@ -367,6 +369,44 @@ function createDateArrayFromDateRanges(fromString, toString){
     return dateRange
 }
 
+/*------------------------------- Admin Page Functions ------------------------------------*/
+
+function adminUpdateFlavours(req, res){
+	
+	let buffer = JSON.parse(JSON.stringify(req.body));
+	let counter;
+	console.log(buffer);
+	if(('Heading' in buffer) && ('HID' in buffer)){
+		if ('Type' in buffer) {
+			console.log(parseSpaces(buffer['Type']));
+		}
+		if ('Flavours' in buffer) {
+			console.log(parseSpaces(buffer['Flavours']));
+		}
+		if ('Text' in buffer) {
+			console.log(parseSpaces(buffer['Text']));
+		}
+		if ('MinOrder' in buffer) {
+			console.log(parseSpaces(buffer['MinOrder']));
+		}
+		if ('Step' in buffer) {
+			console.log(parseSpaces(buffer['Step']));
+		}
+	}
+
+	//res.sendStatus(200);
+}
+
+function parseSpaces(buffer){
+	buffer = buffer
+		.replace(/[\n\r\t]+/g, '')   // remove line breaks & tabs
+		.replace(/ {2,}/g, ' ')      // collapse multiple spaces
+		.replace(/\s*,\s*/g, ',')    // remove spaces around commas
+		.trim();
+	
+	return buffer;
+}
+
 /*------------------------------- Bootup ------------------------------------*/
 
 getDisabledDates();
@@ -374,11 +414,13 @@ getAllFromGallery();
 getFlavours();
 
 module.exports = {
-    galleryUpload,
-    clientUpload,
-    isNotEmptyEnquirie,
-    Enquiries,
-    uploadFiles,
-    deleteFromGallery,
-    getAllFromGallery
+	galleryUpload,
+	clientUpload,
+	isNotEmptyEnquirie,
+	Enquiries,
+	uploadFiles,
+	deleteFromGallery,
+	getAllFromGallery,
+	adminUpdateFlavours,
+	multerParser
 }

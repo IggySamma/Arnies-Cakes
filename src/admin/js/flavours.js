@@ -14,8 +14,10 @@ control.addEventListener("change", function() {
 	document.getElementById(control.value).style.display = "block";
 });
 
+let form = document.getElementById("form");
+form.addEventListener("submit", pushUpdate);
 let flavours = [];
-
+let enabledUpdateFields = [];
 
 function getFlavours() {
 	/*fetch('/api/flavours', {
@@ -55,16 +57,16 @@ function getFlavours() {
 };
 
 function updateContainer(flavour){
-	console.log(flavour)
+	//console.log(flavour)
 	const updateCon = document.getElementById("Update");
-	const selCon = createElement('select', { 'id': 'updateSelect' }, "form-select");
+	const selCon = createElement('select', { 'id': 'selectedType' }, "form-select");
 	updateCon.appendChild(selCon);
 	selCon.appendChild(createElement('option', {'selected':''}, "", "Select name you want to update"));
 	flavour.forEach(types => {
 		selCon.appendChild(createElement('option', { 'value': types.Type }, "", "Update " + types.Type));
 	});
 
-	let updateSelect = document.getElementById("updateSelect");
+	let updateSelect = document.getElementById("selectedType");
 	updateSelect.addEventListener("change", function () {
 		updateFiltered();
 	});
@@ -73,9 +75,10 @@ function updateContainer(flavour){
 
 function updateFiltered(){
 	const updateCon = document.getElementById("Update");
-	let updateSelect = document.getElementById("updateSelect");
+	let updateSelect = document.getElementById("selectedType");
 	if(document.getElementById('updateContainer') !== null){
 		document.getElementById('updateContainer').remove();
+		enabledUpdateFields = [];
 	}
 	const segCon = createElement('div', {'id':'updateContainer'}, "row itemWrapper g-3 mt-2 mb-1");
 	updateCon.appendChild(segCon);
@@ -136,7 +139,9 @@ function updateFiltered(){
 	stepCon.appendChild(createElement('input', { 'type': 'number', 'id': 'StepTextBoxUpdate', 'placeholder': type.Step, 'step':'0.1', 'value':`${type.Step}`, 'disabled': '' }, "form-control mb-1", type.Step));
 
 	submitCon.appendChild(createElement('button', { 'id': 'submit' }, "btn btn-primary mb-3 p-2", "Submit"));
-
+	form.removeEventListener("submit", pushUpdate, true);
+	form = document.getElementById("form");
+	form.addEventListener("submit", pushUpdate);
 }
 
 function enableTextBox(id){
@@ -144,7 +149,69 @@ function enableTextBox(id){
 	let textbox = document.getElementById(id + "TextBoxUpdate")
 	if (checkbox.checked){
 		textbox.removeAttribute("disabled");
+		enabledUpdateFields.push(id)
 	} else {
 		textbox.setAttribute("disabled", "");
+		if (enabledUpdateFields.length > 0 ){
+			let temp = []
+			for (let i = 0; i < enabledUpdateFields.length; i++) {
+				if (enabledUpdateFields[i] !== id){
+					temp.push(enabledUpdateFields[i]);
+				}
+			}
+			enabledUpdateFields = temp;
+			temp = undefined;
+		}
 	}
 }
+
+
+function pushUpdate(submit){
+	submit.preventDefault();
+	/*console.log(document.getElementById("actionInput").value);
+	console.log(document.getElementById("selectedType").value);
+	console.log(enabledUpdateFields); 
+	console.log(flavours);*/
+	if (document.getElementById("actionInput").value === 'Update') {
+		if (enabledUpdateFields.length > 0){
+			let id;
+			for (let i = 0; i < flavours.length; i++) {
+				if (flavours[i].Type === document.getElementById("selectedType").value) {
+					id = i;
+					break;
+				}
+			};
+
+			if (id !== undefined) {
+				let buffer = new FormData();
+				buffer.append("Heading", flavours[id].Heading);
+				buffer.append("HID", flavours[id].HID);
+				enabledUpdateFields.forEach(item => {
+					if(item === "Flavours"){
+						let tempFlavours = document.getElementById(`${item}TextBoxUpdate`).value.split(",");
+						buffer.append(`${item}`, tempFlavours);
+					} else {
+						buffer.append(`${item}`, document.getElementById(`${item}TextBoxUpdate`).value);
+					}
+				})
+
+				for (const pair of buffer.entries()){
+					console.log(pair[0], pair[1])
+				}
+
+				fetch('/api/updateFlavours', {
+					method: 'POST',
+					body: buffer,
+				}).then(res => {
+					if(res.status === 200) {
+						window.location.href ="/admin/Flavours";
+					} else {
+						console.log(res.status);
+						console.log(res.body);
+					}
+				})
+			};
+		}
+	}
+}
+
