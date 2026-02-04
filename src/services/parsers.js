@@ -378,23 +378,73 @@ function adminUpdateFlavours(req, res){
 	console.log(buffer);
 	if(('Heading' in buffer) && ('HID' in buffer)){
 		if ('Type' in buffer) {
-			console.log(parseSpaces(buffer['Type']));
+			//console.log(parseSpaces(buffer['Type']));
+			sqlQuery.updateFlavours(
+				buffer['Heading'], 
+				buffer['HID'], 
+				'Type', 
+				parseSpaces(buffer['Type'])
+			);
 		}
 		if ('Flavours' in buffer) {
-			console.log(parseSpaces(buffer['Flavours']));
+			//console.log(parseSpaces(buffer['Flavours']));
+			//console.log(splitIntoArray(parseSpaces(buffer['Flavours']), ','));
+			sqlQuery.updateFlavours(
+				buffer['Heading'], 
+				buffer['HID'], 
+				'Flavours', 
+				splitIntoArray(parseSpaces(buffer['Flavours']), ',')
+			);
 		}
 		if ('Text' in buffer) {
-			console.log(parseSpaces(buffer['Text']));
+			//console.log(parseSpaces(buffer['Text']));
+			//console.log(splitIntoArray(parseSpaces(buffer['Text']), ','));
+			sqlQuery.updateFlavours(
+				buffer['Heading'],
+				buffer['HID'],
+				'Flavours',
+				splitIntoArray(parseSpaces(buffer['Text']), ',')
+			);
 		}
 		if ('MinOrder' in buffer) {
-			console.log(parseSpaces(buffer['MinOrder']));
+			//console.log(parseSpaces(buffer['MinOrder']));
+			sqlQuery.updateFlavours(
+				buffer['Heading'], 
+				buffer['HID'], 
+				'minOrder', 
+				parseSpaces(buffer['MinOrder'])
+			);
 		}
 		if ('Step' in buffer) {
-			console.log(parseSpaces(buffer['Step']));
+			//console.log(parseSpaces(buffer['Step']));
+			sqlQuery.updateFlavours(
+				buffer['Heading'], 
+				buffer['HID'], 
+				'Step', 
+				parseSpaces(buffer['Step'])
+			);
 		}
 	}
 
 	//res.sendStatus(200);
+}
+
+function splitIntoArray(buffer, sChar) {
+	if(buffer.length > 0) {
+		if(buffer.includes(sChar)) {
+			let tA = [];
+			let s = buffer.split(sChar);
+			s.forEach( i => {
+				tA.push(i)
+			})
+			return s
+		} else {
+			return buffer
+		}
+
+	} else {
+		return buffer
+	}
 }
 
 function parseSpaces(buffer){

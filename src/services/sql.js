@@ -415,6 +415,86 @@ function adminSelect(req, res) {
 	);
 }
 
+function updateFlavours(heading, hid, column, value ) {
+	let headers, flavours = undefined;
+	let ID;
+	hid === '2,3' ? ID = 2 : ID = hid;
+
+	if (column === 'minOrder' || column === 'Step') {
+		value = Number(value);
+	}
+
+	let flavoursCol = ['Type', 'Text', 'Flavours'];
+	let mainheadersCol = ['Type', 'Flavours', 'minOrder', 'Step'];
+	let subheadersCol = ['Type', 'minOrder', 'Step'];
+	
+
+	if (flavoursCol.includes(column)) {
+		flavours = `UPDATE flavours SET ${column} = ? WHERE ID = ?;`
+		console.log('flavours set')
+	}
+
+	if (heading === 'Main'){
+		if(mainheadersCol.includes(column)){
+			headers = `UPDATE mainheaders SET ${column} = ? WHERE flavoursRecId = ?;`
+			console.log('mainHeaders set')
+		}
+		
+		if(!(headers === undefined && flavours === undefined)){
+			updatesFlavours(flavours, headers, column, value, ID);
+		}
+	} else if (heading === 'Sub') {
+		if (subheadersCol.includes(column)) {
+			headers = `UPDATE subheaders SET ${column} = ? WHERE flavoursRecId = ?;`
+			console.log('subHeaders set')
+		}
+
+		if (!(headers === undefined && flavours === undefined)) {
+			console.log("Attempting update...");
+			updatesFlavours(flavours, headers, column, value, ID);
+			console.log("Updated");
+		}
+	} 
+
+}
+
+function updatesFlavours(flavours, headers, column, value, ID){
+	console.log(flavours);
+	console.log(headers);
+	console.log(column);
+	console.log(value);
+	console.log(ID);
+	if(!(flavours === undefined)){
+		serverConfig.connection.execute(
+			flavours,
+			[column, value, ID],
+			function (err, results) {
+				if (err) {
+					console.log(err);
+					return json(new Error(err));
+				}
+				console.log(`updated ${flavours}`);
+				console.log(results);
+			}
+		)
+	}
+
+	if (!(headers === undefined)) {
+		serverConfig.connection.execute(
+			headers,
+			[column, value, ID],
+			function (err, results) {
+				if (err) {
+					console.log(err);
+					return json(new Error(err));
+				} 
+				console.log(`updated ${headers}`);
+				console.log(results);
+			}
+		)
+	}
+}
+
 module.exports = {
 	getEnquiriesMainHeaders,
 	getEnquiriesSubHeaders,
@@ -434,5 +514,6 @@ module.exports = {
 	deleteEnquiry,
 	requestConfirmedEnquiryByID,
 	requestEnquiryByID,
-	adminSelect
+	adminSelect,
+	updateFlavours
 }
