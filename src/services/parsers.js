@@ -187,7 +187,7 @@ function attachTextBody(adjData, photos, res){
     })
 }
 /*------------------------------- Flavours ------------------------------------*/
-
+/*
 function getFlavours(){
    serverConfig.connection.execute(
         'SELECT * FROM flavours;',
@@ -199,6 +199,25 @@ function getFlavours(){
             }
         }
    );
+}*/
+
+function getFlavours(done) {
+	serverConfig.connection.execute(
+		'SELECT * FROM flavours;',
+		function (err, results) {
+			if (err) {
+				console.error(err);
+				if (typeof done === 'function') done(err);
+				return;
+			}
+
+			storeFlavours(JSON.parse(JSON.stringify(results)));
+
+			if (typeof done === 'function') {
+				done(null, results);
+			}
+		}
+	);
 }
 
 
@@ -216,13 +235,18 @@ function storeFlavours(data){
 	}
 
     	//console.log("Flavours stored");
-	serverConfig.rebuildAllPages && templates.saveNewPublicFile('Flavours.html', globals.flavours, 'Flavours.ejs');
-	serverConfig.rebuildAllPages && getEnquiriesHeadersPreRender()
+	/*serverConfig.rebuildAllPages && templates.saveNewPublicFile('Flavours.html', globals.flavours, 'Flavours.ejs');
+	serverConfig.rebuildAllPages && getEnquiriesHeadersPreRender();*/
+
+	if (serverConfig.rebuildAllPages) {
+		templates.saveNewPublicFile('Flavours.html', globals.flavours, 'Flavours.ejs');
+		getEnquiriesHeadersPreRender(true);
+	}
 }
 
 /*------------------------------- Enquiries ------------------------------------*/
 
-function getEnquiriesHeadersPreRender() {
+function getEnquiriesHeadersPreRender(rebuild = false) {
 	serverConfig.connection.execute(
 		'SELECT * FROM mainheaders;',
 		function (err, results) {
@@ -236,14 +260,14 @@ function getEnquiriesHeadersPreRender() {
 					...item, 
 					Header: 'Main'
 				}));
-				getEnquiriesSubHeadersPreRender(header);
+				getEnquiriesSubHeadersPreRender(header, rebuild);
 			}
 		}
 	);
 }
 
 
-function getEnquiriesSubHeadersPreRender(main) {
+function getEnquiriesSubHeadersPreRender(main, rebuild = false) {
 	serverConfig.connection.execute(
 		'SELECT * FROM subheaders;',
 		function (err, results) {
@@ -260,7 +284,9 @@ function getEnquiriesSubHeadersPreRender(main) {
 
 				const headers = [...main, ...sub];
 				//console.log(headers)
-				serverConfig.rebuildAllPages && templates.saveNewPublicFile('Enquiries.html', headers, 'Enquiries.ejs')
+				if (serverConfig.rebuildAllPages || rebuild ) {
+					templates.saveNewPublicFile('Enquiries.html', headers, 'Enquiries.ejs')
+				}
 			}
 		}
 	);
@@ -371,6 +397,7 @@ function createDateArrayFromDateRanges(fromString, toString){
 
 /*------------------------------- Admin Page Functions ------------------------------------*/
 
+/*
 function adminUpdateFlavours(req, res){
 	
 	let buffer = JSON.parse(JSON.stringify(req.body));
@@ -379,7 +406,7 @@ function adminUpdateFlavours(req, res){
 	if(('Heading' in buffer) && ('HID' in buffer)){
 		if ('Type' in buffer) {
 			//console.log(parseSpaces(buffer['Type']));
-			sqlQuery.updateFlavours(
+			updateFlavours(
 				buffer['Heading'], 
 				buffer['HID'], 
 				'Type', 
@@ -389,7 +416,7 @@ function adminUpdateFlavours(req, res){
 		if ('Flavours' in buffer) {
 			//console.log(parseSpaces(buffer['Flavours']));
 			//console.log(splitIntoArray(parseSpaces(buffer['Flavours']), ','));
-			sqlQuery.updateFlavours(
+			updateFlavours(
 				buffer['Heading'], 
 				buffer['HID'], 
 				'Flavours', 
@@ -399,7 +426,7 @@ function adminUpdateFlavours(req, res){
 		if ('Text' in buffer) {
 			//console.log(parseSpaces(buffer['Text']));
 			//console.log(splitIntoArray(parseSpaces(buffer['Text']), ','));
-			sqlQuery.updateFlavours(
+			updateFlavours(
 				buffer['Heading'],
 				buffer['HID'],
 				'Flavours',
@@ -408,7 +435,7 @@ function adminUpdateFlavours(req, res){
 		}
 		if ('MinOrder' in buffer) {
 			//console.log(parseSpaces(buffer['MinOrder']));
-			sqlQuery.updateFlavours(
+			updateFlavours(
 				buffer['Heading'], 
 				buffer['HID'], 
 				'minOrder', 
@@ -417,7 +444,7 @@ function adminUpdateFlavours(req, res){
 		}
 		if ('Step' in buffer) {
 			//console.log(parseSpaces(buffer['Step']));
-			sqlQuery.updateFlavours(
+			updateFlavours(
 				buffer['Heading'], 
 				buffer['HID'], 
 				'Step', 
@@ -425,8 +452,136 @@ function adminUpdateFlavours(req, res){
 			);
 		}
 	}
-
+	serverConfig.rebuildAllPages = true;
+	console.log(serverConfig.rebuildAllPages);
+	getFlavours();
+	serverConfig.rebuildAllPages = false;
+	console.log(serverConfig.rebuildAllPages);
 	//res.sendStatus(200);
+}*/
+
+function adminUpdateFlavours(req, res) {
+	const buffer = JSON.parse(JSON.stringify(req.body));
+	const jobs = [];
+
+	if (('Heading' in buffer) && ('HID' in buffer)) {
+
+		if ('Type' in buffer) {
+			jobs.push(cb => updateFlavours(buffer['Heading'], buffer['HID'], 'Type', parseSpaces(buffer['Type']), cb));
+		}
+
+		if ('Flavours' in buffer) {
+			jobs.push(cb => updateFlavours(buffer['Heading'], buffer['HID'], 'Flavours', splitIntoArray(parseSpaces(buffer['Flavours']), ','), cb));
+		}
+
+		if ('Text' in buffer) {
+			jobs.push(cb => updateFlavours(buffer['Heading'], buffer['HID'], 'Text', splitIntoArray(parseSpaces(buffer['Text']), ','), cb));
+		}
+
+		if ('MinOrder' in buffer) {
+			jobs.push(cb => updateFlavours(buffer['Heading'], buffer['HID'], 'minOrder', parseSpaces(buffer['MinOrder']), cb));
+		}
+
+		if ('Step' in buffer) {
+			jobs.push(cb => updateFlavours(buffer['Heading'], buffer['HID'], 'Step', parseSpaces(buffer['Step']), cb));
+		}
+	}
+
+	runSeries(jobs, function (err) {
+		if (err) {
+			console.error(err);
+			return res.status(500).json({ error: 'Update failed' });
+		}
+
+		serverConfig.rebuildAllPages = true;
+
+		getFlavours(function (err) {
+			serverConfig.rebuildAllPages = false;
+
+			if (err) {
+				console.error(err);
+				return res.status(500).json({ error: 'Rebuild failed' });
+			}
+
+			res.sendStatus(200);
+		});
+	});
+}
+
+/*function updateFlavours(heading, hid, column, value) {
+	let headers, flavours = undefined;
+	let ID;
+	hid === '2,3' ? ID = 2 : ID = hid;
+
+	if (column === 'minOrder' || column === 'Step') {
+		value = Number(value);
+	}
+
+	let flavoursCol = ['Type', 'Text', 'Flavours'];
+	let mainheadersCol = ['Type', 'Flavours', 'minOrder', 'Step'];
+	let subheadersCol = ['Type', 'minOrder', 'Step'];
+
+
+	if (flavoursCol.includes(column)) {
+		flavours = `UPDATE flavours SET ${column} = ? WHERE ID = ?;`
+		console.log('flavours set')
+	}
+
+	if (heading === 'Main') {
+		if (mainheadersCol.includes(column)) {
+			headers = `UPDATE mainheaders SET ${column} = ? WHERE flavoursRecId = ?;`
+			console.log('mainHeaders set')
+		}
+
+		if (!(headers === undefined && flavours === undefined)) {
+			sqlQuery.updatesFlavours(flavours, headers, column, value, ID);
+		}
+	} else if (heading === 'Sub') {
+		if (subheadersCol.includes(column)) {
+			headers = `UPDATE subheaders SET ${column} = ? WHERE flavoursRecId = ?;`
+			console.log('subHeaders set')
+		}
+
+		if (!(headers === undefined && flavours === undefined)) {
+			console.log("Attempting update...");
+			sqlQuery.updatesFlavours(flavours, headers, column, value, ID);
+			console.log("Updated");
+		}
+	}
+
+}*/
+
+function updateFlavours(heading, hid, column, value, done) {
+	let headers, flavours = undefined;
+	let ID = hid === '2,3' ? 2 : hid;
+
+	if (column === 'minOrder' || column === 'Step') {
+		value = Number(value);
+	}
+
+	let flavoursCol = ['Type', 'Text', 'Flavours'];
+	let mainheadersCol = ['Type', 'Flavours', 'minOrder', 'Step'];
+	let subheadersCol = ['Type', 'minOrder', 'Step'];
+
+	if (flavoursCol.includes(column)) {
+		flavours = `UPDATE flavours SET ${column} = ? WHERE ID = ?;`;
+	}
+
+	if (heading === 'Main') {
+		if (mainheadersCol.includes(column)) {
+			headers = `UPDATE mainheaders SET ${column} = ? WHERE flavoursRecId = ?;`;
+		}
+	} else if (heading === 'Sub') {
+		if (subheadersCol.includes(column)) {
+			headers = `UPDATE subheaders SET ${column} = ? WHERE flavoursRecId = ?;`;
+		}
+	}
+
+	if (headers === undefined && flavours === undefined) {
+		return done(null);
+	}
+
+	sqlQuery.updatesFlavours(flavours, headers, value, ID, done);
 }
 
 function splitIntoArray(buffer, sChar) {
@@ -457,11 +612,26 @@ function parseSpaces(buffer){
 	return buffer;
 }
 
+function runSeries(tasks, done) {
+	let i = 0;
+
+	function next(err) {
+		if (err) return done(err);
+		if (i >= tasks.length) return done(null);
+
+		const task = tasks[i++];
+		task(next);
+	}
+
+	next();
+}
+
 /*------------------------------- Bootup ------------------------------------*/
 
 getDisabledDates();
 getAllFromGallery();
 getFlavours();
+
 
 module.exports = {
 	galleryUpload,
@@ -472,5 +642,6 @@ module.exports = {
 	deleteFromGallery,
 	getAllFromGallery,
 	adminUpdateFlavours,
-	multerParser
+	multerParser,
+	updateFlavours
 }

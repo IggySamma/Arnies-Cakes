@@ -68,7 +68,7 @@
 
 				<li class="nav-item">
 					<img class="ribbon" src="/images/ribbon.png">
-					<a class="nav-link fontsize" href="/Enquiries">Enquiries</a>
+					<a class="nav-link fontsize" href="/Enquiries"><b>Enquiries</b></a>
 				</li>
 			</ul>
 		</div>
@@ -468,6 +468,30 @@
 							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
 			</div>
 		
+			<div class="Flavours Oreo">
+				<input type="checkbox" id="CakeOreoCheckBox" value=""
+					onclick="updatePlaceholder('CakeOreo')" required class="form-check-input ms-4">
+				<label for="CakeOreoCheckBox" class="form-check-label mx-1 px-1">Oreo</label>
+
+				
+					<div class="btn-group cakeSizes">
+						<select id="CakeOreoCakeSize" class="form-select cakeSizes m-1 p-1 pb-1 ms-4"
+							required disabled style="display: none;">
+
+							<option value="" selected disabled min="4" max="10">Please select cake size</option>
+							<option value="4">4 inch (Round cake) - Feeds 4-6 People</option>
+							<option value="6">6 inch (Round cake) - Feeds 14 People</option>
+							<option value="8">8 inch (Round cake) - Feeds 24 People - Standard Size</option>
+							<option value="10">10 inch (Square cake) - Feeds 50 People</option>
+						</select>
+					</div>
+				
+
+						<input type="number" id="CakeOreoCheckBox1" for="CakeOreoCheckBox"
+							placeholder="0" min="1" step="1" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
 	
 </div>
 									
@@ -489,7 +513,7 @@
 				
 
 						<input type="number" id="CakepopsVanillaCheckBox1" for="CakepopsVanillaCheckBox"
-							placeholder="0" min="12" step="6" disabled
+							placeholder="0" min="12" step="1" disabled
 							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
 			</div>
 		
@@ -501,19 +525,7 @@
 				
 
 						<input type="number" id="CakepopsChocolateCheckBox1" for="CakepopsChocolateCheckBox"
-							placeholder="0" min="12" step="6" disabled
-							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
-			</div>
-		
-			<div class="Flavours Red Velvet">
-				<input type="checkbox" id="CakepopsRed VelvetCheckBox" value=""
-					onclick="updatePlaceholder('CakepopsRed Velvet')" required class="form-check-input ms-4">
-				<label for="CakepopsRed VelvetCheckBox" class="form-check-label mx-1 px-1">Red Velvet</label>
-
-				
-
-						<input type="number" id="CakepopsRed VelvetCheckBox1" for="CakepopsRed VelvetCheckBox"
-							placeholder="0" min="12" step="6" disabled
+							placeholder="0" min="12" step="1" disabled
 							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
 			</div>
 		
@@ -525,7 +537,7 @@
 				
 
 						<input type="number" id="CakepopsHoneyCheckBox1" for="CakepopsHoneyCheckBox"
-							placeholder="0" min="12" step="6" disabled
+							placeholder="0" min="12" step="1" disabled
 							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
 			</div>
 		
@@ -537,19 +549,19 @@
 				
 
 						<input type="number" id="CakepopsLemonCheckBox1" for="CakepopsLemonCheckBox"
-							placeholder="0" min="12" step="6" disabled
+							placeholder="0" min="12" step="1" disabled
 							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
 			</div>
 		
-			<div class="Flavours Fresh Fruit">
-				<input type="checkbox" id="CakepopsFresh FruitCheckBox" value=""
-					onclick="updatePlaceholder('CakepopsFresh Fruit')" required class="form-check-input ms-4">
-				<label for="CakepopsFresh FruitCheckBox" class="form-check-label mx-1 px-1">Fresh Fruit</label>
+			<div class="Flavours Raspberry">
+				<input type="checkbox" id="CakepopsRaspberryCheckBox" value=""
+					onclick="updatePlaceholder('CakepopsRaspberry')" required class="form-check-input ms-4">
+				<label for="CakepopsRaspberryCheckBox" class="form-check-label mx-1 px-1">Raspberry</label>
 
 				
 
-						<input type="number" id="CakepopsFresh FruitCheckBox1" for="CakepopsFresh FruitCheckBox"
-							placeholder="0" min="12" step="6" disabled
+						<input type="number" id="CakepopsRaspberryCheckBox1" for="CakepopsRaspberryCheckBox"
+							placeholder="0" min="12" step="1" disabled
 							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
 			</div>
 		
@@ -574,7 +586,7 @@
 				
 
 						<input type="number" id="CakesiclesVanillaCheckBox1" for="CakesiclesVanillaCheckBox"
-							placeholder="0" min="12" step="6" disabled
+							placeholder="0" min="12" step="1" disabled
 							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
 			</div>
 		
@@ -586,19 +598,7 @@
 				
 
 						<input type="number" id="CakesiclesChocolateCheckBox1" for="CakesiclesChocolateCheckBox"
-							placeholder="0" min="12" step="6" disabled
-							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
-			</div>
-		
-			<div class="Flavours Red Velvet">
-				<input type="checkbox" id="CakesiclesRed VelvetCheckBox" value=""
-					onclick="updatePlaceholder('CakesiclesRed Velvet')" required class="form-check-input ms-4">
-				<label for="CakesiclesRed VelvetCheckBox" class="form-check-label mx-1 px-1">Red Velvet</label>
-
-				
-
-						<input type="number" id="CakesiclesRed VelvetCheckBox1" for="CakesiclesRed VelvetCheckBox"
-							placeholder="0" min="12" step="6" disabled
+							placeholder="0" min="12" step="1" disabled
 							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
 			</div>
 		
@@ -610,7 +610,7 @@
 				
 
 						<input type="number" id="CakesiclesHoneyCheckBox1" for="CakesiclesHoneyCheckBox"
-							placeholder="0" min="12" step="6" disabled
+							placeholder="0" min="12" step="1" disabled
 							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
 			</div>
 		
@@ -622,19 +622,19 @@
 				
 
 						<input type="number" id="CakesiclesLemonCheckBox1" for="CakesiclesLemonCheckBox"
-							placeholder="0" min="12" step="6" disabled
+							placeholder="0" min="12" step="1" disabled
 							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
 			</div>
 		
-			<div class="Flavours Fresh Fruit">
-				<input type="checkbox" id="CakesiclesFresh FruitCheckBox" value=""
-					onclick="updatePlaceholder('CakesiclesFresh Fruit')" required class="form-check-input ms-4">
-				<label for="CakesiclesFresh FruitCheckBox" class="form-check-label mx-1 px-1">Fresh Fruit</label>
+			<div class="Flavours Raspberry">
+				<input type="checkbox" id="CakesiclesRaspberryCheckBox" value=""
+					onclick="updatePlaceholder('CakesiclesRaspberry')" required class="form-check-input ms-4">
+				<label for="CakesiclesRaspberryCheckBox" class="form-check-label mx-1 px-1">Raspberry</label>
 
 				
 
-						<input type="number" id="CakesiclesFresh FruitCheckBox1" for="CakesiclesFresh FruitCheckBox"
-							placeholder="0" min="12" step="6" disabled
+						<input type="number" id="CakesiclesRaspberryCheckBox1" for="CakesiclesRaspberryCheckBox"
+							placeholder="0" min="12" step="1" disabled
 							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
 			</div>
 		
@@ -687,18 +687,6 @@
 							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
 			</div>
 		
-			<div class="Flavours Honey">
-				<input type="checkbox" id="CupcakesHoneyCheckBox" value=""
-					onclick="updatePlaceholder('CupcakesHoney')" required class="form-check-input ms-4">
-				<label for="CupcakesHoneyCheckBox" class="form-check-label mx-1 px-1">Honey</label>
-
-				
-
-						<input type="number" id="CupcakesHoneyCheckBox1" for="CupcakesHoneyCheckBox"
-							placeholder="0" min="12" step="6" disabled
-							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
-			</div>
-		
 			<div class="Flavours Lemon">
 				<input type="checkbox" id="CupcakesLemonCheckBox" value=""
 					onclick="updatePlaceholder('CupcakesLemon')" required class="form-check-input ms-4">
@@ -711,15 +699,100 @@
 							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
 			</div>
 		
-			<div class="Flavours Fresh Fruit">
-				<input type="checkbox" id="CupcakesFresh FruitCheckBox" value=""
-					onclick="updatePlaceholder('CupcakesFresh Fruit')" required class="form-check-input ms-4">
-				<label for="CupcakesFresh FruitCheckBox" class="form-check-label mx-1 px-1">Fresh Fruit</label>
+			<div class="Flavours Raspberry">
+				<input type="checkbox" id="CupcakesRaspberryCheckBox" value=""
+					onclick="updatePlaceholder('CupcakesRaspberry')" required class="form-check-input ms-4">
+				<label for="CupcakesRaspberryCheckBox" class="form-check-label mx-1 px-1">Raspberry</label>
 
 				
 
-						<input type="number" id="CupcakesFresh FruitCheckBox1" for="CupcakesFresh FruitCheckBox"
+						<input type="number" id="CupcakesRaspberryCheckBox1" for="CupcakesRaspberryCheckBox"
 							placeholder="0" min="12" step="6" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Ferrero Rocher">
+				<input type="checkbox" id="CupcakesFerrero RocherCheckBox" value=""
+					onclick="updatePlaceholder('CupcakesFerrero Rocher')" required class="form-check-input ms-4">
+				<label for="CupcakesFerrero RocherCheckBox" class="form-check-label mx-1 px-1">Ferrero Rocher</label>
+
+				
+
+						<input type="number" id="CupcakesFerrero RocherCheckBox1" for="CupcakesFerrero RocherCheckBox"
+							placeholder="0" min="12" step="6" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Oreo">
+				<input type="checkbox" id="CupcakesOreoCheckBox" value=""
+					onclick="updatePlaceholder('CupcakesOreo')" required class="form-check-input ms-4">
+				<label for="CupcakesOreoCheckBox" class="form-check-label mx-1 px-1">Oreo</label>
+
+				
+
+						<input type="number" id="CupcakesOreoCheckBox1" for="CupcakesOreoCheckBox"
+							placeholder="0" min="12" step="6" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+	
+</div>
+									
+								
+									
+									
+										<div id="ChunkyCookies" class="ChunkyCookies itemWrapper">
+	<input type="checkbox" id="ChunkyCookiesCheckBox" value=""
+		onclick=updatePlaceholder(&#39;&#39;)
+		required class="form-check-input CheckBox">
+	<label for="ChunkyCookiesCheckBox" class="form-check-label mx-1 px-1">Chunky Cookies</label>
+	
+		
+			<div class="Flavours Chocolate Chip">
+				<input type="checkbox" id="ChunkyCookiesChocolate ChipCheckBox" value=""
+					onclick="updatePlaceholder('ChunkyCookiesChocolate Chip')" required class="form-check-input ms-4">
+				<label for="ChunkyCookiesChocolate ChipCheckBox" class="form-check-label mx-1 px-1">Chocolate Chip</label>
+
+				
+
+						<input type="number" id="ChunkyCookiesChocolate ChipCheckBox1" for="ChunkyCookiesChocolate ChipCheckBox"
+							placeholder="0" min="4" step="1" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Chocolate Chip with Walnuts">
+				<input type="checkbox" id="ChunkyCookiesChocolate Chip with WalnutsCheckBox" value=""
+					onclick="updatePlaceholder('ChunkyCookiesChocolate Chip with Walnuts')" required class="form-check-input ms-4">
+				<label for="ChunkyCookiesChocolate Chip with WalnutsCheckBox" class="form-check-label mx-1 px-1">Chocolate Chip with Walnuts</label>
+
+				
+
+						<input type="number" id="ChunkyCookiesChocolate Chip with WalnutsCheckBox1" for="ChunkyCookiesChocolate Chip with WalnutsCheckBox"
+							placeholder="0" min="4" step="1" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Lemon Meringue">
+				<input type="checkbox" id="ChunkyCookiesLemon MeringueCheckBox" value=""
+					onclick="updatePlaceholder('ChunkyCookiesLemon Meringue')" required class="form-check-input ms-4">
+				<label for="ChunkyCookiesLemon MeringueCheckBox" class="form-check-label mx-1 px-1">Lemon Meringue</label>
+
+				
+
+						<input type="number" id="ChunkyCookiesLemon MeringueCheckBox1" for="ChunkyCookiesLemon MeringueCheckBox"
+							placeholder="0" min="4" step="1" disabled
+							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
+			</div>
+		
+			<div class="Flavours Red Velvet">
+				<input type="checkbox" id="ChunkyCookiesRed VelvetCheckBox" value=""
+					onclick="updatePlaceholder('ChunkyCookiesRed Velvet')" required class="form-check-input ms-4">
+				<label for="ChunkyCookiesRed VelvetCheckBox" class="form-check-label mx-1 px-1">Red Velvet</label>
+
+				
+
+						<input type="number" id="ChunkyCookiesRed VelvetCheckBox1" for="ChunkyCookiesRed VelvetCheckBox"
+							placeholder="0" min="4" step="1" disabled
 							class="form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex">
 			</div>
 		
@@ -740,6 +813,8 @@
 							</div>
 
 							<div id="subHeader">
+								
+									
 								
 									
 								
@@ -819,8 +894,8 @@
 						</div>
 						<div class="mb-3">
 							<label for="EnquirieInput" class="form-label">Tell me more about
-								the event the cake is for - Cake theme, colours,
-								characters etc.</label>
+								the event - Theme, colours,
+								characters, budget etc.</label>
 							<textarea class="form-control form-control-lg"
 								id="EnquirieInput" rows="6"
 								placeholder="My daughter loves Disney princesses, especially Cinderella and Ariel! She loves the colour pink, tiaras and sprinkles."
@@ -899,8 +974,11 @@
 		</li>
 		<li class="nav-item footerEnquires my-auto rounded-5">
 			<a href="/Enquiries">
-				Enquiries
+				<b>Enquiries</b>
 			</a>
+		</li>
+		<li class="nav-item nav-break">
+			<a>|</a>
 		</li>
 		<li class="nav-item nav-privacy">
 			<a href="/privacy">

@@ -414,50 +414,7 @@ function adminSelect(req, res) {
 		}
 	);
 }
-
-function updateFlavours(heading, hid, column, value ) {
-	let headers, flavours = undefined;
-	let ID;
-	hid === '2,3' ? ID = 2 : ID = hid;
-
-	if (column === 'minOrder' || column === 'Step') {
-		value = Number(value);
-	}
-
-	let flavoursCol = ['Type', 'Text', 'Flavours'];
-	let mainheadersCol = ['Type', 'Flavours', 'minOrder', 'Step'];
-	let subheadersCol = ['Type', 'minOrder', 'Step'];
-	
-
-	if (flavoursCol.includes(column)) {
-		flavours = `UPDATE flavours SET ${column} = ? WHERE ID = ?;`
-		console.log('flavours set')
-	}
-
-	if (heading === 'Main'){
-		if(mainheadersCol.includes(column)){
-			headers = `UPDATE mainheaders SET ${column} = ? WHERE flavoursRecId = ?;`
-			console.log('mainHeaders set')
-		}
-		
-		if(!(headers === undefined && flavours === undefined)){
-			updatesFlavours(flavours, headers, column, value, ID);
-		}
-	} else if (heading === 'Sub') {
-		if (subheadersCol.includes(column)) {
-			headers = `UPDATE subheaders SET ${column} = ? WHERE flavoursRecId = ?;`
-			console.log('subHeaders set')
-		}
-
-		if (!(headers === undefined && flavours === undefined)) {
-			console.log("Attempting update...");
-			updatesFlavours(flavours, headers, column, value, ID);
-			console.log("Updated");
-		}
-	} 
-
-}
-
+/*
 function updatesFlavours(flavours, headers, column, value, ID){
 	console.log(flavours);
 	console.log(headers);
@@ -467,7 +424,7 @@ function updatesFlavours(flavours, headers, column, value, ID){
 	if(!(flavours === undefined)){
 		serverConfig.connection.execute(
 			flavours,
-			[column, value, ID],
+			[value, ID],
 			function (err, results) {
 				if (err) {
 					console.log(err);
@@ -482,7 +439,7 @@ function updatesFlavours(flavours, headers, column, value, ID){
 	if (!(headers === undefined)) {
 		serverConfig.connection.execute(
 			headers,
-			[column, value, ID],
+			[value, ID],
 			function (err, results) {
 				if (err) {
 					console.log(err);
@@ -492,6 +449,35 @@ function updatesFlavours(flavours, headers, column, value, ID){
 				console.log(results);
 			}
 		)
+	}
+}*/
+
+function updatesFlavours(flavours, headers, value, ID, done) {
+	let pending = 0;
+	let failed = false;
+
+	function oneDone(err) {
+		if (failed) return;
+		if (err) {
+			failed = true;
+			return done(err);
+		}
+		pending--;
+		if (pending === 0) done(null);
+	}
+
+	if (flavours !== undefined) {
+		pending++;
+		serverConfig.connection.execute(flavours, [value, ID], oneDone);
+	}
+
+	if (headers !== undefined) {
+		pending++;
+		serverConfig.connection.execute(headers, [value, ID], oneDone);
+	}
+
+	if (pending === 0) {
+		done(null);
 	}
 }
 
@@ -515,5 +501,5 @@ module.exports = {
 	requestConfirmedEnquiryByID,
 	requestEnquiryByID,
 	adminSelect,
-	updateFlavours
+	updatesFlavours
 }
