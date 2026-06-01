@@ -17,18 +17,30 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
+      - dbdump:/dbdump
       #- ./init-scripts:/docker-entrypoint-initdb.d:ro
       #- ./init-scripts/db-hotfix.sql:/tmp/db-hotfix.sql:ro
+    #command: >
+    #  bash -c "
+    #    docker-entrypoint.sh mysqld &
+    #    echo 'Waiting for SQL...' &&
+    #    until mysqladmin ping -h localhost --silent; do sleep 2; done &&
+    #    echo 'Running hotfix...' &&
+    #    mysql -uroot -p$$MYSQL_ROOT_PASSWORD < /hotfixes/db-hotfix.sql &&
+    #    echo ''Hotfix complete. SQL Started.' &&
+    #    wait
+    #  "
     command: >
       bash -c "
         docker-entrypoint.sh mysqld &
         echo 'Waiting for SQL...' &&
         until mysqladmin ping -h localhost --silent; do sleep 2; done &&
-        echo 'Running hotfix...' &&
-        mysql -uroot -p$$MYSQL_ROOT_PASSWORD < /hotfixes/db-hotfix.sql &&
-        echo ''Hotfix complete. SQL Started.' &&
+        echo 'Creating DB dump...' &&
+        mysqldump -uroot -p$$MYSQL_ROOT_PASSWORD $$MYSQL_DATABASE > /dbdump/db-dump.sql &&
+        echo 'Dump complete.' &&
         wait
       "
+
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
       timeout: 20s
@@ -78,3 +90,10 @@ volumes:
       type: none
       o: bind
       device: /volumeUSB1/usbshare/arnies-cakes/hotfixes
+
+  dbdump:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /volumeUSB1/usbshare/arnies-cakes/dbdump

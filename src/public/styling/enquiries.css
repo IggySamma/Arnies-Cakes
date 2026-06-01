@@ -48,14 +48,11 @@
 }
 
 .fontsizeEnquiries {
-    font-size: 22px;
+    /*font-size: 22px;*/
+    font-size: 1.2rem;
     /*font-weight: bold;*/
 }
 
-.datetime {
-    border: 0px;
-    font-size: 20px;
-}
 
 .Flavours{
     visibility: hidden;
@@ -67,15 +64,23 @@
 input[type="checkbox"]:checked ~ .Flavours {
     visibility: visible;
     display: block;
+	width: 100%;
+	position: relative;
 }
-
+/*
+.cakeSizes{
+	padding: 0px !important;
+	margin: 0px !important;
+}
+*/
 .incrementalNumberBoxStyle{
     width: 50px;
-    height: 30px;
+    /*height: 30px;*/
+    height: 90%;
+    max-height:30px;
     right: 0px;
-    top: 0px;
+    top: -3px;
     position: absolute;
-    font-size: 16px;
     font-weight: bold;
     text-align: center;
     align-self: left;

@@ -21,9 +21,16 @@
 			background-color: #D3BBDD;
 		}
 	</style>
-	<nav id="navbar" class="navbar fixed-top navbar-expand-lg " style="top: 0px;">
+	<nav id="navbar" class="navbar fixed-top navbar-expand-lg m-0 p-1" style="top: 0px;">
 	<div class="container-fluid m-0 p-0 navContainer">
-		<button class="navbar-toggler collapsed ms-2" type="button" id="toggling" data-bs-toggle="collapse"
+		<button class="navbar-toggler navbar-logo-collapse justify-content-start collapsed ms-2" type="button" id="toggling" data-bs-toggle="collapse"
+			data-bs-target="#navbarSupportedContent">
+			<a href="/">
+				<img class="navBarLogoCollapsed" src="/images/home logo.png">
+			</a>
+		</button>
+
+		<button class="navbar-toggler justify-content-end collapsed ms-2" type="button" id="toggling" data-bs-toggle="collapse"
 			data-bs-target="#navbarSupportedContent">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -66,7 +73,7 @@
 					<a class="nav-link fontsize" href="/Flavours">Flavours</a>
 				</li>
 
-				<li class="nav-item">
+				<li class="nav-item ribbon-item">
 					<img class="ribbon" src="/images/ribbon.png">
 					<a class="nav-link fontsize" href="/Enquiries">Enquiries</a>
 				</li>
@@ -206,15 +213,15 @@
 				arniescakes@gmail.com
 			</a>
 		</li>
-		<li class="nav-item footerEnquires my-auto rounded-5">
+		<li class="nav-item footerEnquires my-auto p-2 rounded-4">
 			<a href="/Enquiries">
 				<b>Enquiries</b>
 			</a>
 		</li>
-		<li class="nav-item nav-break">
+		<li class="nav-item my-auto nav-break">
 			<a>|</a>
 		</li>
-		<li class="nav-item nav-privacy">
+		<li class="nav-item my-auto nav-privacy">
 			<a href="/privacy">
 				Privacy
 			</a>

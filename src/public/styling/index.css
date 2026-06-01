@@ -64,7 +64,7 @@
 .aboutMeImage{width: 90%;}
 
 .aboutMePragraph{
-    font-size: 1.25rem;
+    font-size: 1rem;
     position: relative;
     color: black !important;
 }
@@ -109,7 +109,7 @@ a{color: black !important;}
 .carousel-list{
     background-color: #D3BBDD;
     width: 100%;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
 .carousel-button.active{
@@ -207,7 +207,7 @@ a{color: black !important;}
 
 .CupcakesGallery4{object-position: 50% 80%;}
 
-.CupcakesGallery5{object-position: 50% 40%;}
+.CupcakesGallery5{object-position: 50% 20%;}
 /*--------Cakepops--------*/
 .CakepopsGallery3{object-position: 0% 50%;}
 
@@ -236,6 +236,7 @@ a{color: black !important;}
     height: 75vh;
     display: inline-flex;
     position: relative; 
+    width: 95%;
     /*opacity: 60%;*/
 }
 
@@ -281,6 +282,10 @@ a{color: black !important;}
     opacity: 50%;
 }
 
+.TestimonialsName{
+	font-weight: bold;
+}
+
 .card{width: 30rem;}
 
 .card-img{max-height:30vh;}
@@ -295,7 +300,7 @@ a{color: black !important;}
 }
 
 .card-text{
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     flex-basis: 80%;
     display: flex;
     justify-content: center;
@@ -308,7 +313,7 @@ a{color: black !important;}
 }
 
 .testimonialsParagraph{
-    font-size: 2rem;
+    font-size: 1.5rem;
     text-align: center;
     position: relative;
 }
@@ -679,7 +684,7 @@ and (max-width: 935px){
     
     .testimonialContainer.order-5{height: 80vh;}
 
-    .card-text{font-size: 1rem;}
+    .card-text{font-size: 1.4rem;}
 
     @keyframes grow1{
         0%{
@@ -794,7 +799,7 @@ and (max-width: 935px){
 
     .CakepopsGallery6{max-width: 50%;}
 
-    .card-text{font-size: 1.5rem;}
+    .card-text{font-size: 1.4rem;}
 
     .testimonialsBG{
         min-height: 100%;
@@ -840,7 +845,7 @@ and (max-width: 935px){
 
     /*-------------Gallery------------------*/
 
-    .galleryHeader{font-size: 4rem;}
+    .galleryHeader{font-size: 3rem;}
     
 
     .Gallery{
@@ -902,7 +907,7 @@ and (max-width: 935px){
 
     .CakesGallery8{max-width: unset;}
 
-    .card-text{font-size: 1.5rem;}
+    .card-text{font-size: 1.4rem;}
 
     .testimonialsBG{background-size: 100vw 250vh;}
 
@@ -935,7 +940,7 @@ and (max-width: 935px){
         width:  50vw;
         text-align: center;
         left: 0px;
-        font-size: 4.75rem;
+        font-size: 4rem;
     }
 
 /*---------------- About Me ---------------------*/
@@ -948,7 +953,7 @@ and (max-width: 935px){
     }
 
     .aboutMeHeader{
-        font-size: 5rem;
+        font-size: 3rem;
     }
 
     .aboutMeContainer{
@@ -958,7 +963,8 @@ and (max-width: 935px){
 
     .aboutMePragraph{
         position: relative;
-        font-size: 2rem;
+        /*font-size: 2rem;*/
+	font-size: 1.75rem;
         justify-content: center;
         align-items: center;
         margin: auto 50px auto 50px;
@@ -967,9 +973,9 @@ and (max-width: 935px){
         display: flex;
     }
 
-    .aboutMeImage{width: 30vw;}
+    .aboutMeImage{width: 25vw;}
 
-    .card-text{font-size: 1.5rem;}
+    .card-text{font-size: 1.4rem;}
 
     .testimonialsBG{background-size: 100vw 250vh;}
 }

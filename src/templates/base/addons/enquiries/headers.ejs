@@ -1,18 +1,18 @@
 <div id="<%= Type %>" class="<%= Type %> itemWrapper">
 	<input type="checkbox" id="<%= Type %>CheckBox" value=""
 		onclick=<%= Flavours && includeFlavours ? `updatePlaceholder('')` : `updatePlaceholder('${Type}')` %>
-		required class="form-check-input CheckBox">
+		required class="form-check-input CheckBox pt-1">
 	<label for="<%= Type %>CheckBox" class="form-check-label mx-1 px-1"><%= item %></label>
 	<% if (Header === 'Main') { %>
 		<% Flavours.forEach(flavour=> { %>
-			<div class="Flavours <%= flavour %>">
+			<div class="Flavours <%= flavour %> m-0 p-0">
 				<input type="checkbox" id="<%= Type + flavour %>CheckBox" value=""
 					onclick="updatePlaceholder('<%= Type + flavour %>')" required class="form-check-input ms-4">
 				<label for="<%= Type + flavour %>CheckBox" class="form-check-label mx-1 px-1"><%= flavour %></label>
 
 				<% if (item==='Cake' ) { %>
-					<div class="btn-group cakeSizes">
-						<select id="<%= Type + flavour %>CakeSize" class="form-select cakeSizes m-1 p-1 pb-1 ms-4"
+					<div class="btn-group cakeSizes m-0">
+						<select id="<%= Type + flavour %>CakeSize" class="form-select cakeSizes m-1 p-1 ms-4"
 							required disabled style="display: none;">
 
 							<option value="" selected disabled min="4" max="10">Please select cake size</option>
