@@ -465,15 +465,15 @@ function updatesFlavours(flavours, headers, value, ID, done) {
 		pending--;
 		if (pending === 0) done(null);
 	}
-
+	
 	if (flavours !== undefined) {
 		pending++;
-		serverConfig.connection.execute(flavours, [value, ID], oneDone);
+		serverConfig.connection.execute(flavours, [JSON.stringify(value), ID], oneDone);
 	}
 
 	if (headers !== undefined) {
 		pending++;
-		serverConfig.connection.execute(headers, [value, ID], oneDone);
+		serverConfig.connection.execute(headers, [JSON.stringify(value), ID], oneDone);
 	}
 
 	if (pending === 0) {

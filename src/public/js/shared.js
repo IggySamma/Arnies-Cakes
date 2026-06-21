@@ -218,3 +218,54 @@ window.onscroll = function() {
         prevScrollpos = currentScrollPos;
     }
 };
+
+function resolveImageSrc(path) {
+	const basePath = path.replace('-mobile.jpg', '.jpg');
+
+	if (!navigator.connection) {
+		return basePath.replace('.jpg', '-mobile.jpg');
+	}
+
+	const { effectiveType, saveData } = navigator.connection || {};
+
+	const isSlowConnection =
+		saveData ||
+		['slow-2g', '2g', '3g'].includes(effectiveType);
+
+	if (isSlowConnection) {
+		return basePath.replace('.jpg', '-mobile.jpg');
+	}
+
+	return basePath;
+}
+
+function updateAllImageSrcs(root = document) {
+	const images = root.querySelectorAll('img[src]');
+	
+	images.forEach(img => {
+		//console.log(img.getAttribute('src'))
+		const original = img.getAttribute('src');
+		if (!original) return;
+
+		const updated = resolveImageSrc(original);
+
+		if (updated !== original) {
+			//img.setAttribute('src', updated);
+			replaceImage(img, updated);
+		}
+	});
+}
+
+function replaceImage(img, newSrc) {
+	img.src = '';
+
+	requestAnimationFrame(() => {
+		img.src = newSrc;
+	});
+}
+
+//updateAllImageSrcs();
+
+const path = window.location.pathname;
+
+updateAllImageSrcs();

@@ -6,6 +6,7 @@ const parsers = require('./services/parsers.js');
 const sqlQuery = require('./services/sql.js');
 const utils = require('./utils/coreUtils.js');
 const path = require('path');
+//const compressor = require('./services/manualCompression.js')
 const server = serverConfig.app
 
 
@@ -37,7 +38,7 @@ server.post('/api/submitEnquirie', parsers.clientUpload.array("clientPhotos"), (
 
 /*--------------------- Admin Page API's ---------------------*/
 
-server.post('/api/upload', serverConfig.ensureAuthenticated, parsers.galleryUpload.array("myFiles"), (req, res) => { parsers.uploadFiles(req, res) });
+server.post('/api/upload', serverConfig.ensureAuthenticated, parsers.galleryUpload.array("myFiles"), parsers.processImages, (req, res) => { parsers.uploadFiles(req, res) });
 server.post('/api/deleteGallery', serverConfig.ensureAuthenticated, (req, res) => { parsers.deleteFromGallery(req, res) });
 server.post('/api/adminGallery', serverConfig.ensureAuthenticated, (req, res) => { utils.filterGallery(req, res) });
 server.get('/api/refreshGallery', serverConfig.ensureAuthenticated, (req, res) => { parsers.getAllFromGallery() });

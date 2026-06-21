@@ -293,6 +293,7 @@ function observerEntity(){
   observer.observe(infiniteScrollDiv);
 }
 
+/*
 function insertImages(lastStop, data, colSet){
   let stopAt = 0;
   if(columnsSetAs === "LG"){
@@ -327,7 +328,7 @@ function insertImages(lastStop, data, colSet){
       colCounter = colCounter-1
     } else if(colSet[colLength].includes("w51")){
         /*if adjacent half image in column exist shrink*/
-      if(galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50")[galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50").length-1].style.width === "100%"){
+      /*if(galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50")[galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50").length-1].style.width === "100%"){
         galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50")[galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50").length-1].style.width = "50%"
       }  
       let imageContainer = galleryWrapper[colCounter].getElementsByClassName("imageWrapper")[galleryWrapper[colCounter].getElementsByClassName("imageWrapper").length-1]
@@ -352,12 +353,97 @@ function insertImages(lastStop, data, colSet){
     
   }
   /*if adjacent half image in column !exist expand*/
-  if(galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50").length > galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w51").length){
+  /*if(galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50").length > galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w51").length){
     galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50")[galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50").length-1].style.width = "100%";
   }
 
   lastGalleryIdx = stopAt;
+}*/
+
+function getImageSrc(path) {
+	const basePath = path.replace('-mobile.jpg', '.jpg');
+
+	if (!navigator.connection) {
+		return columnsSetAs !== 'LG'
+			? basePath.replace('.jpg', '-mobile.jpg')
+			: basePath;
+	}
+
+	const { effectiveType, saveData } = navigator.connection;
+
+	const isSlowConnection = saveData ||
+		effectiveType === 'slow-2g' ||
+		effectiveType === '2g' ||
+		effectiveType === '3g';
+
+	if (columnsSetAs !== 'LG' || isSlowConnection) {
+		return basePath.replace('.jpg', '-mobile.jpg');
+	}
+
+	return basePath;
 }
+
+function insertImages(lastStop, data, colSet) {
+	let stopAt = 0;
+	if (columnsSetAs === "LG") {
+		if (data.length < lastStop + 16) {
+			stopAt = data.length;
+		} else {
+			stopAt = lastStop + 16;
+		}
+	} else {
+		if (data.length < lastStop + 2) {
+			stopAt = data.length;
+		} else {
+			stopAt = lastStop + 2;
+		}
+	}
+	if (lastStop >= stopAt) {
+		return
+	}
+	for (let i = lastStop; i < stopAt; i++) {
+		const imgSrc = getImageSrc(data[i].Path);
+
+		if (colSet[colLength].includes("w50")) {
+			let imageContainer = createGalleryElement(
+				'div', {}
+				, "imageWrapper " + colSet[colLength].replace("w50", "") + " m-0 p-0");
+			galleryWrapper[colCounter].appendChild(imageContainer);
+			imageContainer.appendChild(createGalleryElement('img', { src: imgSrc,/* loading: "lazy",*/ "data-bs-toggle": "modal", "data-bs-target": "#lightBox", "onclick": "activeId('" + data[i].ID + "')" },
+				"img" + " Type:" + data[i].Type + " ID:" + data[i].ID + " " + colSet[colLength] + " m-0 p-1"));
+			colCounter = colCounter - 1
+		} else if (colSet[colLength].includes("w51")) {
+			/*if adjacent half image in column exist shrink*/
+			if (galleryWrapper[galleryWrapper.length - 1].getElementsByClassName("w50")[galleryWrapper[galleryWrapper.length - 1].getElementsByClassName("w50").length - 1].style.width === "100%") {
+				galleryWrapper[galleryWrapper.length - 1].getElementsByClassName("w50")[galleryWrapper[galleryWrapper.length - 1].getElementsByClassName("w50").length - 1].style.width = "50%"
+			}
+			let imageContainer = galleryWrapper[colCounter].getElementsByClassName("imageWrapper")[galleryWrapper[colCounter].getElementsByClassName("imageWrapper").length - 1]
+			imageContainer.appendChild(
+				createGalleryElement('img', { src: imgSrc,/* loading: "lazy",*/ "data-bs-toggle": "modal", "data-bs-target": "#lightBox", "onclick": "activeId('" + data[i].ID + "')" },
+					"img" + " Type:" + data[i].Type + " ID:" + data[i].ID + " " + colSet[colLength] + " m-0 p-1"));
+		} else {
+			galleryWrapper[colCounter].appendChild(createGalleryElement('img', { src: imgSrc,/* loading: "lazy",*/ "data-bs-toggle": "modal", "data-bs-target": "#lightBox", "onclick": "activeId('" + data[i].ID + "')" },
+				"img" + " Type:" + data[i].Type + " ID:" + data[i].ID + " " + colSet[colLength] + " m-0 p-1"));
+		}
+		if (colCounter === checkColumnsSet()) {
+			colCounter = 0;
+		} else {
+			colCounter++;
+		}
+		if (colLength === colSet.length - 1) {
+			colLength = 0;
+		} else {
+			colLength++;
+		}
+	}
+	/*if adjacent half image in column !exist expand*/
+	if (galleryWrapper[galleryWrapper.length - 1].getElementsByClassName("w50").length > galleryWrapper[galleryWrapper.length - 1].getElementsByClassName("w51").length) {
+		galleryWrapper[galleryWrapper.length - 1].getElementsByClassName("w50")[galleryWrapper[galleryWrapper.length - 1].getElementsByClassName("w50").length - 1].style.width = "100%";
+	}
+	lastGalleryIdx = stopAt;
+}
+
+
 
 function checkColumnsSet(){
   if(columnsSetAs === "LG"){
@@ -397,7 +483,7 @@ function activeId(id){
     document.getElementById(id).classList.add("active")
   }
 }
-
+/*
 function buildModal(gallery){
   let container = document.getElementById("modal-carousel")
   for(let i = 0; i < gallery.length; i++){
@@ -405,6 +491,15 @@ function buildModal(gallery){
     wrapper.appendChild(createGalleryElement('img', {src:gallery[i].Path, loading: "lazy"}, "modalImages pt-3"))
     container.appendChild(wrapper)
   }
+}*/
+
+function buildModal(gallery) {
+	let container = document.getElementById("modal-carousel")
+	for (let i = 0; i < gallery.length; i++) {
+		let wrapper = createGalleryElement('div', { "id": gallery[i].ID }, "carousel-item modalWrapper carousel-fade")
+		wrapper.appendChild(createGalleryElement('img', { src: getImageSrc(gallery[i].Path)/*, loading: "lazy" */}, "modalImages pt-3"))
+		container.appendChild(wrapper)
+	}
 }
 
 function destoryModal(){

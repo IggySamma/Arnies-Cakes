@@ -1,10 +1,19 @@
 node_modules
+depricated
+init-scripts
 src/config/.env.prod
 src/config/.env.dev
 .env.prod
-init-scripts
-arnies-cakes.tar
+docker-compose-hotfix.yml
 Dockerfile.mysql
-Dockerfile.prod
+Dockerfile backup
+compose-old.yml
 docker-compose.yml
 docker-compose-hotfix.yml
+docker-compose-hotfix-old.yml
+*.jpg
+*.jpeg
+*.png
+*.webp
+*.gif
+*.txt

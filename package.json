@@ -24,15 +24,15 @@
     "flatpickr": "^4.6.13",
     "google-auth-library": "^8.8.0",
     "googleapi": "^1.0.2",
-    "googleapis": "^105.0.0",
+    "googleapis": "^173.0.0",
     "multer": "^2.0.2",
     "mysql2": "^3.12.0",
-    "node": "^20.2.0",
-    "nodemailer": "^7.0.13",
+    "nodemailer": "^9.0.1",
     "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-google-oidc": "^0.1.0",
     "promise": "^8.3.0",
+    "sharp": "^0.34.5",
     "uid-safe": "^2.1.5"
   }
 }

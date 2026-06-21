@@ -1,46 +1,23 @@
 services:
   db:
-    build:
-      context: .
-      dockerfile: Dockerfile.mysql
-    image: custom-mysql:latest
-    #image: mysql:9.3
-    cap_add:
-      - SYS_NICE
+    image: mysql:9.3
     restart: always
+    env_file:
+      - ./.env.prod
     ports:
       - "3306:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
       - dbdump:/dbdump
       #- ./init-scripts:/docker-entrypoint-initdb.d:ro
-      #- ./init-scripts/db-hotfix.sql:/tmp/db-hotfix.sql:ro
-    #command: >
-    #  bash -c "
-    #    docker-entrypoint.sh mysqld &
-    #    echo 'Waiting for SQL...' &&
-    #    until mysqladmin ping -h localhost --silent; do sleep 2; done &&
-    #    echo 'Running hotfix...' &&
-    #    mysql -uroot -p$$MYSQL_ROOT_PASSWORD < /hotfixes/db-hotfix.sql &&
-    #    echo ''Hotfix complete. SQL Started.' &&
-    #    wait
-    #  "
     command: >
       bash -c "
         docker-entrypoint.sh mysqld &
         echo 'Waiting for SQL...' &&
         until mysqladmin ping -h localhost --silent; do sleep 2; done &&
-        echo 'Creating DB dump...' &&
-        mysqldump -uroot -p$$MYSQL_ROOT_PASSWORD $$MYSQL_DATABASE > /dbdump/db-dump.sql &&
-        echo 'Dump complete.' &&
+        echo 'SQL Started' &&
         wait
       "
-
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
       timeout: 20s
@@ -48,15 +25,47 @@ services:
       start_period: 40s
       interval: 30s
 
+  db_hotfix_init:
+    image: mysql:9.3
+    depends_on:
+      db:
+        condition: service_started
+    env_file:
+      - ./.env.prod
+    volumes:
+      - ./init-scripts/db-hotfix.sql:/hotfix/db-hotfix.sql:ro
+    entrypoint: /bin/sh
+    command: >
+      -c "
+      echo 'Running DB hotfix (one-shot)...';
+      until mysqladmin ping -h db -u root -p$$MYSQL_ROOT_PASSWORD --silent; do sleep 2; done;
+      mysql -h db -u root -p$$MYSQL_ROOT_PASSWORD $$MYSQL_DATABASE < /hotfix/db-hotfix.sql;
+      echo 'DB hotfix complete';
+      "
+  asset_init:
+    image: alpine:3.20
+    volumes:
+      - gallery_data:/gallery
+      - images_data:/images
+      - ./src/public/gallery:/seed/gallery:ro
+      - ./src/public/images:/seed/images:ro
+    command: >
+      sh -c "
+      echo 'Seeding assets...';
+      [ -z \"$(ls -A /gallery 2>/dev/null)\" ] && cp -a /seed/gallery/. /gallery/;
+      [ -z \"$(ls -A /images 2>/dev/null)\" ] && cp -a /seed/images/. /images/;
+      echo 'Done';
+      "
+    restart: "no"
+
   server:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     image: arnies-cakes:latest
-    #entrypoint: ["./init-scripts/init-gallery.sh"]
-    #command: ["node", "src/server.js"]
+    command: ["node", "src/server.js"]
     env_file:
-      - ./src/config/.env.prod
+      - ./src/config/.env.dev
     environment:
       - NODE_ENV=production
       - DB_HOST=db
@@ -65,10 +74,21 @@ services:
       - "3305:3305"
     volumes:
       - gallery_data:/usr/src/app/src/public/gallery
+      - images_data:/usr/src/app/src/public/images
     depends_on:
       db:
-        condition: service_healthy
+        condition: service_started
+      asset_init:
+        condition: service_completed_successfully
+      db_hotfix_init:
+        condition: service_completed_successfully
 
+#volumes:
+#  db_data:
+#  gallery_data:
+#  images_data:
+
+#Mikeflix
 volumes:
   db_data:
     driver: local
@@ -83,6 +103,13 @@ volumes:
       type: none
       o: bind
       device: /volumeUSB1/usbshare/arnies-cakes/src/public/gallery
+
+  images_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /volumeUSB1/usbshare/arnies-cakes/src/public/images
 
   hotfixes:
     driver: local

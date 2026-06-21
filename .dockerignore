@@ -34,6 +34,8 @@ LICENSE
 README.md
 
 node_modules
+depricated
 src/config/.env.prod
 src/config/.env.dev
 .env.prod
+*.txt
