@@ -365,8 +365,64 @@ function removeEnquirie(req, res, ID){
     );
 }
 
+async function adminSelect(req, res) {
+	try {
+		const data = await adminSelectQuery();
+		res.json(data);
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({ error: err.message });
+	}
+}
 
+function adminSelectQuery() {
+	return new Promise((resolve, reject) => {
+		serverConfig.connection.execute(
+			`SELECT
+				f.ID, 
+				f.Heading, 
+				f.Type, 
+				f.Text, 
+				f.Flavours,
+				mh.step AS step,
+				mh.minOrder AS minOrder,
+				GROUP_CONCAT(mh.ID ORDER BY mh.ID SEPARATOR ',') AS hID
+			FROM flavours f
+			
+			LEFT JOIN mainheaders mh
+				ON mh.flavoursRecId = f.ID
+				AND f.Heading = 'Main'
+			WHERE f.Heading = 'Main'   
+			GROUP BY
+				f.ID, f.Heading, f.Type, f.Text, f.Flavours, mh.step, mh.minOrder
+			
+			UNION ALL  
+			
+			SELECT
+				f.ID,
+				f.Heading,
+				f.Type,
+				f.Text,
+				f.Flavours,
+				sh.step AS step,
+				sh.minOrder AS minOrder,
+				sh.ID AS hID
+			FROM flavours f  
+			
+			LEFT JOIN subheaders sh
+				ON sh.flavoursRecId = f.ID
+				AND f.Heading = 'Sub'
+			WHERE f.Heading = 'Sub';`,
 
+			(err, results) => {
+				if (err) return reject(err);
+				resolve(JSON.parse(JSON.stringify(results)));
+			}
+		);
+	});
+}
+
+/*
 function adminSelect(req, res) {
 	serverConfig.connection.execute(
 		`SELECT
@@ -413,7 +469,7 @@ function adminSelect(req, res) {
 			}
 		}
 	);
-}
+}*/
 /*
 function updatesFlavours(flavours, headers, column, value, ID){
 	console.log(flavours);
@@ -501,5 +557,6 @@ module.exports = {
 	requestConfirmedEnquiryByID,
 	requestEnquiryByID,
 	adminSelect,
-	updatesFlavours
+	updatesFlavours,
+	adminSelectQuery
 }

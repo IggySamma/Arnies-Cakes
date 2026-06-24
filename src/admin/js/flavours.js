@@ -112,11 +112,11 @@ function updateFiltered(){
 	rightCon.appendChild(submitCon);
 
 
-	if(type.Type !== 'Cakes') {
+	if (type.Type !== 'Cakes' && type.Type !== 'Cakepops and Cakesicles') {
 		typeCon.appendChild(createElement('input', { 'id': 'TypeCheckBoxUpdate', 'type': 'checkbox', 'onclick': `enableTextBox('Type')` }, "form-check-input CheckBox"));
 		typeCon.appendChild(createElement('label', { 'for': 'TypeCheckBoxUpdate' }, "form-check-label m-0", "Update Name"));
 	} else {
-		typeCon.appendChild(createElement('label', { 'for': 'TypeCheckBoxUpdate' }, "form-check-label m-0", "Cakes name cannot be updated."));
+		typeCon.appendChild(createElement('label', { 'for': 'TypeCheckBoxUpdate' }, "form-check-label m-0", `${type.Type} name cannot be updated.`));
 	}
 	typeCon.appendChild(createElement('textarea', { 'type': 'text', 'id': 'TypeTextBoxUpdate', 'placeholder': type.Type, 'disabled': ''}, "form-control-m mb-1", type.Type));
 
@@ -193,6 +193,7 @@ function pushUpdate(submit){
 					} else {
 						buffer.append(`${item}`, document.getElementById(`${item}TextBoxUpdate`).value);
 					}
+					console.log(item)
 				})
 
 				for (const pair of buffer.entries()){

@@ -685,9 +685,12 @@ function adminUpdateFlavours(req, res) {
 
 }*/
 
-function updateFlavours(heading, hid, column, value, done) {
+async function updateFlavours(heading, hid, column, value, done) {
 	let headers, flavours = undefined;
-	let ID = hid === '2,3' ? 2 : hid;
+	let ID = await sqlQuery.adminSelectQuery().then((res) => {
+		const result = res.find(item => item.Heading === heading && item.hID === hid)
+		return result.ID
+	})
 
 	if (column === 'minOrder' || column === 'Step') {
 		value = Number(value);
@@ -697,7 +700,11 @@ function updateFlavours(heading, hid, column, value, done) {
 	let mainheadersCol = ['Type', 'Flavours', 'minOrder', 'Step'];
 	let subheadersCol = ['Type', 'minOrder', 'Step'];
 
+
+
 	if (flavoursCol.includes(column)) {
+
+
 		flavours = `UPDATE flavours SET ${column} = ? WHERE ID = ?;`;
 	}
 

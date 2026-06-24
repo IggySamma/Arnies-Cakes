@@ -95,145 +95,8 @@ function loadCalender(){
         })
     })
 }
-/*
-function getMainHeaders(){
-    let mainHeadings;
-    fetch('/api/getMainHeaders',{
-        method: 'POST',
-    })
-    .then(response => {
-        response.json().then(data =>{
-            mainHeadings = data
-	    console.log(mainHeadings);
-            for(let i = 0; i < mainHeadings.length; i++){
-                tempFlavs = mainHeadings[i].Flavours
-                let flavours = [];
-                for(let j = 0; j < tempFlavs.length; j++){
-                    flavours.push(tempFlavs[j].replace("[","").replace("]","").replace('"',"").replace('"',"").replace(" ",""))
-                }
-		
-                createHeaders(mainHeadings[i].Type, "mainHeader", flavours, true, mainHeadings[i].minOrder, mainHeadings[i].Step);
-            }
-        })
-    })
-}
-
-function getTreatsHeaders(){
-    let treatsHeadings;
-    fetch('/api/getTreatsHeaders',{
-        method: 'POST',
-    })
-    .then(response => {
-        response.json().then(data =>{
-            treatsHeadings = data
-            for(let i = 0; i < treatsHeadings.length; i++){
-                createHeaders(treatsHeadings[i].Type, "subHeader", "", false, treatsHeadings[i].minOrder, treatsHeadings[i].Step);
-            }
-        })
-    })
-}*/
 
 loadCalender();
-//getMainHeaders();
-//getTreatsHeaders();
-
-/*-------------------------------------------------*/
-/*
-function createHeaders(item, heading, flavours, includeFlavours, minOrder, step) {
-    const header = document.getElementById(heading);
-
-    const div = createElement("div", { id: item }, `${item} itemWrapper`);
-    header.appendChild(div);
-
-    const input = createElement("input", {
-        type: "checkbox",
-        id: `${item}CheckBox`,
-        value: "",
-        onclick: includeFlavours ? `updatePlaceholder('')` : `updatePlaceholder('${item}')`,
-        required: ""
-    }, "form-check-input CheckBox");
-    div.appendChild(input);
-
-    const label = createElement("label", {
-        for: `${item}CheckBox`
-    }, "form-check-label mx-1 px-1", item);
-    div.appendChild(label);
-
-    if (includeFlavours) {
-        flavours.forEach(flavour => flavourHeaders(item, flavour, minOrder, step));
-    } else {
-        const inputSecond = createElement("input", {
-            type: "number",
-            id: `${item}CheckBox1`,
-            for: `${item}CheckBox`,
-            placeholder: "0",
-            min: minOrder,
-            step: step,
-            disabled: true
-        }, "form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex");
-        div.appendChild(inputSecond);
-    }
-}
-*/
-/*
-function flavourHeaders(item, flavs, minOrder, step) {
-    const header = document.getElementById(item);
-
-    const div = createElement("div", {}, `Flavours ${flavs}`);
-    header.appendChild(div);
-
-
-    const input = createElement("input", {
-        type: "checkbox",
-        id: `${item}${flavs}CheckBox`,
-        value: "",
-        onclick: `updatePlaceholder('${item}${flavs}')`,
-        required: ""
-    }, "form-check-input ms-4");
-    div.appendChild(input);
-
-    const label = createElement("label", {
-        for: `${item}${flavs}CheckBox`
-    }, "form-check-label mx-1 px-1", flavs);
-    div.appendChild(label);
-
-    const inputSecond = createElement("input", {
-        type: "number",
-        id: `${item}${flavs}CheckBox1`,
-        for: `${item}${flavs}CheckBox`,
-        placeholder: "0",
-        min: minOrder,
-        step: step,
-        disabled: true
-    }, "form-control m-1 p-1 incrementalNumberBoxStyle d-inline-flex");
-
-    if (item == "Cake") {
-        const nDiv = createElement("div", {}, `btn-group cakeSizes`);
-        div.appendChild(nDiv);
-    
-        const select = createElement("select", {"id": `${item}${flavs}CakeSize`, "disabled": "", "required":"", "style":"display: none;"}, `form-select cakeSizes m-1 p-1 pb-1 ms-4`);
-        nDiv.appendChild(select);
-    
-        const sizes = [
-            {value: "4", text: "4 inch (Round cake) - Feeds 4-6 People"},
-            {value: "6", text: "6 inch (Round cake) - Feeds 14 People"},
-            {value: "8", text: "8 inch (Round cake) - Feeds 24 People - Standard Size"},
-            {value: "10", text: "10 inch (Square cake) - Feeds 50 People"},
-        ]
-    
-        defaultSelect = createElement("option", {"value": "", "selected":"", "disabled":"", "min":"4", "max":"10"}, "", "Please select cake size");
-        select.appendChild(defaultSelect);
-    
-        sizes.forEach(size => {
-            const a = createElement("option", {"value": size.value}, "", size.text);
-            select.appendChild(a);
-        })
-    } 
-
-    div.appendChild(inputSecond);
-}
-*/
-
 
 function enableDisable(id){
     const box = document.getElementById(id);
@@ -245,24 +108,25 @@ function enableDisable(id){
         box.setAttribute("required","")
     }
 
-    id == "AllergyNo" ? document.getElementById("AllergyInput").setAttribute("required", ""):document.getElementById("AllergyInput").removeAttribute("required")
+    id == "AllergyNo" ? document.getElementById("AllergyInput").setAttribute("required", ""):document.getElementById("AllergyInput").removeAttribute("required");
 
     if (id == "Collection") {
         if (box.disabled == true){
-            document.getElementById("colDel").innerHTML = 'Delivery of order date & time:';
+            	document.getElementById("colDel").innerHTML = 'Delivery of order date & time:';
+		document.getElementById("AddressInput").setAttribute("required", "");
         } else {
-            document.getElementById("colDel").innerHTML = '';
+            	document.getElementById("colDel").innerHTML = '';
         }
     } else if (id == "Delivery") {
         if (box.disabled == true){
-            document.getElementById("colDel").innerHTML = 'Collection of order date & time:';
+            	document.getElementById("colDel").innerHTML = 'Collection of order date & time:';
+		document.getElementById("AddressInput").removeAttribute("required");
         } else {
-            document.getElementById("colDel").innerHTML = '';
+            	document.getElementById("colDel").innerHTML = '';
         }
     }
 }
 
-/* Disable and enable quantity */
 function updatePlaceholder(id) {
     const incrementCheckBox = document.getElementById(id + "CheckBox1");
     const cakeSize = document.getElementById(id+"CakeSize");
@@ -315,9 +179,6 @@ function updatePlaceholder(id) {
 }
 
 
-
-
-/* Submitting Enquiries */
 const form = document.getElementById("form");
 form.addEventListener("submit", submitEnquirie);
 
@@ -400,6 +261,7 @@ function validation(formData){
 	const allergyNo = document.getElementById("AllergyNo");
 	const allergyMessage = document.getElementById("AllergyInput");
 	const photo = document.getElementById("files");
+	const address = document.getElementById("AddressInput");
 	let cakeQuantity = 0;
 
 	const emailRegEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -452,9 +314,17 @@ function validation(formData){
 		formData.append("Collection", "Yes");
 		formData.append("Date of collection", event.value);
 	} else if (delivery.checked == true) {
-		formData.append("Date of Event", date.value);
-		formData.append("Delivery", "Yes");
-		formData.append("Date of delivery", event.value);
+		if (address.value == "") {
+			const error = new Error("Please enter delivery address or eircode");
+			error.focus = "AddressInput";
+			throw error;
+		} else {
+			formData.append("Date of Event", date.value);
+			formData.append("Delivery", "Yes");
+			formData.append("Date of delivery", event.value);
+			formData.append("Address/Eircode", address.value);
+		}
+
 	}
     
 	if (collection.checked == true && fpEvent == false) {

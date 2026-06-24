@@ -26,6 +26,13 @@ function filterGallery(req, res){
 
 function sendEmails(enqNum, data, textBody, photos, res, date){
 	let logoPath = serverConfig.isDocker ? "/usr/src/app/src/public/images/home logo.png" : "./public/images/home logo.png";
+	const transporter = serverConfig.getEmailTransporter();
+
+	if (!transporter) {
+		console.error('Transporter not setup?:', error);
+		return res.sendStatus(503);
+	}
+
 	let photo = [];
 	photos.forEach( item => { 
 		attach = {"filename": item.originalname, "content": item.buffer}
@@ -35,6 +42,7 @@ function sendEmails(enqNum, data, textBody, photos, res, date){
 	const EnquirieToClient = {
 		from: "arniescakes@gmail.com",
 		to: data.Email,
+		bcc: "arniescakes@gmail.com",
 		subject: "Arnies Cakes Enquirie: Number - " + enqNum,
 		generateTextFromHTML: true,
 		html: '<style>table {font-family: arial, sans-serif;border-collapse: collapse;width: 100%;}td, th {border: 1px solid #dddddd;text-align: left;padding: 8px;}tr:nth-child(even) {background-color: #ECE3F0;}</style><div style="margin:auto; padding:auto; position: relative; height: 300px; width: 300px;"><img src="cid:logo" style="height: 300px; width: 300px;"></div><div style="margin:auto; padding: 3px 3px 3px 3px; text-align: center; position: relative; top: 220px; height: auto; background-color: #D3BBDD; border-radius: 8px;"><p>' + textBody + '</p></div>',
@@ -46,8 +54,9 @@ function sendEmails(enqNum, data, textBody, photos, res, date){
 			cid: "logo"
 		}],
 	};
-
-	serverConfig.emailTransporter.sendMail(EnquirieToClient, (error, response) => {
+	
+	//serverConfig.getEmailTransporter.sendMail(EnquirieToClient, (error, response) => {
+	transporter.sendMail(EnquirieToClient, (error, response) => {
 		if (error) {
 			if (error.code === 'EAUTH') {
 				console.log('Refresh token revoked or expired');
@@ -59,12 +68,12 @@ function sendEmails(enqNum, data, textBody, photos, res, date){
 			res.sendStatus(504);
 			return;
 		}
-
-		serverConfig.emailTransporter.close();
+		//serverConfig.getEmailTransporter.close();
+		transporter.close();
 		eApi.getGmailLinkNStore(enqNum, date, res);
 	});
-
-	const EnquirieToSelf = {
+};
+	/*const EnquirieToSelf = {
 		from: "arniescakes@gmail.com",
 		to: "arniescakes@gmail.com",
 		subject: "NEW Enquirie: Number - " + enqNum,
@@ -79,7 +88,7 @@ function sendEmails(enqNum, data, textBody, photos, res, date){
 		}],
 	};
 
-	serverConfig.emailTransporter.sendMail(EnquirieToSelf, (error, response) => {
+	serverConfig.getEmailTransporter.sendMail(EnquirieToSelf, (error, response) => {
 		if (error) {
 			if (error.code === 'EAUTH') {
 				console.log('Refresh token revoked or expired');
@@ -92,9 +101,9 @@ function sendEmails(enqNum, data, textBody, photos, res, date){
 			return;
 		}
 
-		serverConfig.emailTransporter.close();
-	});
-};
+		serverConfig.getEmailTransporter.close();
+	});*/
+//};
 
 /*------------------------------- Admin ------------------------------------*/
 
