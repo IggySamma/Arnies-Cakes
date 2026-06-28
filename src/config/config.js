@@ -4,6 +4,9 @@ const rebuildAllPages = false;
 
 require('dotenv').config(isProd ? { path: __dirname + '/.env.prod' } : { path: __dirname + '/.env.dev' })
 
+//const manualCompression = require('../services/manualCompression.js');
+//manualCompression.migrateExistingImages();
+
 /*-------------------Gmail Access setup -------------------------*/
 
 const fs = require('fs');

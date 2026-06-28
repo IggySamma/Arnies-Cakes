@@ -1,7 +1,32 @@
 let sectionNames = new URLSearchParams(window.location.search).get('type');
 let galleryContainer = document.getElementById(sectionNames);
-galleryContainer.parentNode.classList.add("active")
-window.history.replaceState({},"", (window.location.pathname.replace('.html','') + '?type=' + sectionNames).toString())
+galleryContainer.parentNode.classList.add("active");
+window.history.replaceState({},"", (window.location.pathname.replace('.html','') + '?type=' + sectionNames).toString());
+
+//const tier = window.__ASSET_TIER;
+const assetMap = {
+	"high": "-thumbnail.jpg",
+	"mid": "-thumbnail-mid.jpg",
+	"mid-low": "-thumbnail-low.jpg",
+	"low": "-mobile-low.jpg",
+};
+const assetMapModal = {
+	"high": ".jpg",
+	"mid": "-thumbnail.jpg",
+	"mid-low": "-thumbnail-mid.jpg",
+	"low": "-thumbnail-low.jpg",
+};
+
+function applyTierToImage(path, tier, modal = false) {
+	let suffix = assetMap[tier] || assetMap.mid;
+	if(modal){
+		suffix = assetMapModal[tier] || assetMap.mid;
+	} 
+	//const suffix = assetMap[tier] || assetMap.mid;
+
+	return path.replace(/\.jpg$/i, suffix);
+}
+
 
 let links = document.querySelectorAll('.carousel-button');
 links.forEach(link => {
@@ -359,7 +384,7 @@ function insertImages(lastStop, data, colSet){
 
   lastGalleryIdx = stopAt;
 }*/
-
+/*
 function getImageSrc(path) {
 	const basePath = path.replace('-mobile.jpg', '.jpg');
 
@@ -381,7 +406,7 @@ function getImageSrc(path) {
 	}
 
 	return basePath;
-}
+}*/
 
 function insertImages(lastStop, data, colSet) {
 	let stopAt = 0;
@@ -402,7 +427,8 @@ function insertImages(lastStop, data, colSet) {
 		return
 	}
 	for (let i = lastStop; i < stopAt; i++) {
-		const imgSrc = getImageSrc(data[i].Path);
+		//let imgSrc = getImageSrc(data[i].Path);
+		let imgSrc = applyTierToImage(data[i].Path, window.__ASSET_TIER);
 
 		if (colSet[colLength].includes("w50")) {
 			let imageContainer = createGalleryElement(
@@ -497,7 +523,7 @@ function buildModal(gallery) {
 	let container = document.getElementById("modal-carousel")
 	for (let i = 0; i < gallery.length; i++) {
 		let wrapper = createGalleryElement('div', { "id": gallery[i].ID }, "carousel-item modalWrapper carousel-fade")
-		wrapper.appendChild(createGalleryElement('img', { src: getImageSrc(gallery[i].Path)/*, loading: "lazy" */}, "modalImages pt-3"))
+		wrapper.appendChild(createGalleryElement('img', { src: applyTierToImage(gallery[i].Path, window.__ASSET_TIER, true)/*getImageSrc(gallery[i].Path)*//*, loading: "lazy" */}, "modalImages pt-3"))
 		container.appendChild(wrapper)
 	}
 }

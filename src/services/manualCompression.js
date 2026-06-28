@@ -4,7 +4,9 @@ const sharp = require('sharp');
 
 
 const migrateExistingImages = async () => {
-	const dest = serverConfig.isDocker ? globals.publicGallery : globals.devGallery;
+	//const dest = serverConfig.isDocker ? globals.publicGallery : globals.devGallery;
+	const dest = path.resolve('services/jpg');
+	console.log(dest)
 
 	try {
 		const allFiles = fs.readdirSync(dest);
@@ -27,11 +29,14 @@ const migrateExistingImages = async () => {
 
 		for (const filename of toProcess) {
 			const inputPath = path.join(dest, filename);
-			const outputPath = path.join(dest, `${filename}.jpg`);
-			const outputMobile = path.join(dest, `${filename}-mobile.jpg`);
+			const outputFull = path.join(dest, `${filename}.jpg`); //Master
+			const outputThumb = path.join(dest, `${filename}-thumbnail.jpg`); //4k Thumb
+			const outputThumbMid = path.join(dest, `${filename}-thumbnail-mid.jpg`); //1080p/Fast mobile
+			const outputThumbLow = path.join(dest, `${filename}-thumbnail-low.jpg`); //Slow pc devices/Mid mobile
+			const outputMobileLow = path.join(dest, `${filename}-mobile-low.jpg`); //Slow mobile
 
 			// Skip if already migrated (both versions exist)
-			if (fs.existsSync(outputPath) && fs.existsSync(outputMobile)) {
+			if (fs.existsSync(outputFull) && fs.existsSync(outputThumb) && fs.existsSync(outputThumbMid) && fs.existsSync(outputThumbLow) && fs.existsSync(outputMobileLow)) {
 				console.log(`Migration: Skipping ${filename} — already migrated.`);
 				continue;
 			}
@@ -39,25 +44,44 @@ const migrateExistingImages = async () => {
 			try {
 				const pipeline = sharp(inputPath).rotate();
 
-				// Full quality version — same name + .jpg
-				if (!fs.existsSync(outputPath)) {
+				//Master
+				if (!fs.existsSync(outputFull)) {
 					await pipeline
 						.clone()
 						.toFormat('jpeg', {
-							quality: 85,
+							//quality: 85,
+							quality: 100,
 							mozjpeg: true,
 							chromaSubsampling: '4:4:4',
 						})
-						.toFile(outputPath);
+						.toFile(outputFull);
 				}
 
-				// Mobile version — same name + -mobile.jpg
-				if (!fs.existsSync(outputMobile)) {
+				//4k Thumb
+				if (!fs.existsSync(outputThumb)) {
 					await pipeline
 						.clone()
 						.resize({
-							width: 1440,
-							height: 1440,
+							width: 3600,
+							height: 3600,
+							fit: 'inside',
+							withoutEnlargement: true,
+						})
+						.toFormat('jpeg', {
+							quality: 85,
+							mozjpeg: true,
+							chromaSubsampling: '4:2:0',
+						})
+						.toFile(outputThumb);
+				}
+
+				//1080p/Fast mobile
+				if (!fs.existsSync(outputThumbMid)) {
+					await pipeline
+						.clone()
+						.resize({
+							width: 2400,
+							height: 2400,
 							fit: 'inside',
 							withoutEnlargement: true,
 						})
@@ -66,8 +90,44 @@ const migrateExistingImages = async () => {
 							mozjpeg: true,
 							chromaSubsampling: '4:2:0',
 						})
-						.toFile(outputMobile);
+						.toFile(outputThumbMid);
 				}
+				
+				//Slow pc devices/Mid mobile
+				if (!fs.existsSync(outputThumbLow)) {
+					await pipeline
+						.clone()
+						.resize({
+							width: 1400,
+							height: 1400,
+							fit: 'inside',
+							withoutEnlargement: true,
+						})
+						.toFormat('jpeg', {
+							quality: 65,
+							mozjpeg: true,
+							chromaSubsampling: '4:2:0',
+						})
+						.toFile(outputThumbLow);
+				}
+				//Slow mobile
+				if (!fs.existsSync(outputMobileLow)) {
+					await pipeline
+						.clone()
+						.resize({
+							width: 1100,
+							height: 1100,
+							fit: 'inside',
+							withoutEnlargement: true,
+						})
+						.toFormat('jpeg', {
+							quality: 60,
+							mozjpeg: true,
+							chromaSubsampling: '4:2:0',
+						})
+						.toFile(outputMobileLow);
+				}
+
 
 				console.log(`Migration: Processed ${filename}`);
 			} catch (err) {
@@ -314,8 +374,13 @@ const migrateDirectoryPNG = async (targetDir) => {
 
 
 // -- Image compression Manually --//
-//migrateDirectory(path.resolve('public/images/Compress')); // ~  Directory to copy jpg files, compress and make mobile versions
+//migrateDirectory(path.resolve('services/jpg')); // ~  Directory to copy jpg files, compress and make mobile versions
 
 //migrateDirectoryPNG(path.resolve('public/images/Compress')); // ~  Directory to copy png files, compress and make mobile versions
 
 //migrateExistingImages();
+module.exports = {
+	migrateExistingImages,
+	migrateDirectory,
+	migrateDirectoryPNG
+}

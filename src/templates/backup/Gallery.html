@@ -11,6 +11,34 @@
 	<title>Arnie's Cakes</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script>
+		window.__ASSET_TIER = (function () {
+			const conn = navigator.connection;
+
+			const isMobile = matchMedia("(max-width: 1175)").matches;
+			const dpr = devicePixelRatio || 1;
+			const width = Math.max(innerWidth, screen.width);
+
+			const slowNet =
+				conn?.saveData ||
+				conn?.effectiveType === "2g" ||
+				conn?.effectiveType === "slow-2g";
+
+			const fastNet =
+				conn?.effectiveType === "4g" /*&& (conn?.downlink || 0) > 5*/;
+
+			console.log("dpr:", dpr)
+			console.log("width: ", width)
+			console.log("fastNet: ", fastNet)
+
+			if (!isMobile && fastNet && width > 1950) return "high";
+			if (fastNet) return "mid";
+			if (slowNet) return "low";
+			return "mid-low";
+		})();
+	</script>
+
 	<script src="./js/bootstrap.js"></script>
 	<link rel="stylesheet" href="./styling/bootstrap.css">
 	<link rel="stylesheet" href="./styling/gallery.css">
@@ -18,6 +46,9 @@
 	<link rel="stylesheet" href="./styling/index.css">
 	<link rel="canonical" href="/gallery?type=All" />
 </head>
+
+
+
 <header>
 	<nav id="navbar" class="navbar fixed-top navbar-expand-lg m-0 p-1" style="top: 0px;">
 	<div class="container-fluid m-0 p-0 navContainer">

@@ -1,0 +1,26 @@
+<script>
+	window.__ASSET_TIER = (function () {
+		const conn = navigator.connection;
+
+		const isMobile = matchMedia("(max-width: 1175)").matches;
+		const dpr = devicePixelRatio || 1;
+		const width = Math.max(innerWidth, screen.width);
+
+		const slowNet =
+			conn?.saveData ||
+			conn?.effectiveType === "2g" ||
+			conn?.effectiveType === "slow-2g";
+
+		const fastNet =
+			conn?.effectiveType === "4g" /*&& (conn?.downlink || 0) > 5*/;
+
+		console.log("dpr:", dpr)
+		console.log("width: ", width)
+		console.log("fastNet: ", fastNet)
+
+		if (!isMobile && fastNet && width > 1950) return "high";
+		if (fastNet) return "mid";
+		if (slowNet) return "low";
+		return "mid-low";
+	})();
+</script>
