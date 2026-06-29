@@ -15,9 +15,11 @@ const migrateExistingImages = async () => {
 		// - have no extension (legacy uploads)
 		// - don't already have a -mobile counterpart
 		const toProcess = allFiles.filter(filename => {
-			const hasNoExtension = path.extname(filename) === '';
-			const isMobile = filename.endsWith('-mobile');
-			return hasNoExtension && !isMobile;
+			//const hasNoExtension = path.extname(filename) === '';
+			const hasNoExtension = path.extname(filename) === '.jpg';
+			//const isMobile = filename.endsWith('-mobile');
+			//return hasNoExtension && !isMobile;
+			return hasNoExtension;
 		});
 
 		if (toProcess.length === 0) {
@@ -29,11 +31,16 @@ const migrateExistingImages = async () => {
 
 		for (const filename of toProcess) {
 			const inputPath = path.join(dest, filename);
-			const outputFull = path.join(dest, `${filename}.jpg`); //Master
+			/*const outputFull = path.join(dest, `${filename}.jpg`); //Master
 			const outputThumb = path.join(dest, `${filename}-thumbnail.jpg`); //4k Thumb
 			const outputThumbMid = path.join(dest, `${filename}-thumbnail-mid.jpg`); //1080p/Fast mobile
 			const outputThumbLow = path.join(dest, `${filename}-thumbnail-low.jpg`); //Slow pc devices/Mid mobile
-			const outputMobileLow = path.join(dest, `${filename}-mobile-low.jpg`); //Slow mobile
+			const outputMobileLow = path.join(dest, `${filename}-mobile-low.jpg`); //Slow mobile*/
+			const outputFull = path.join(dest, `${filename.replace(/\.jpg$/i, '') }.jpg`); //Master
+			const outputThumb = path.join(dest, `${filename.replace(/\.jpg$/i, '') }-thumbnail.jpg`); //4k Thumb
+			const outputThumbMid = path.join(dest, `${filename.replace(/\.jpg$/i, '') }-thumbnail-mid.jpg`); //1080p/Fast mobile
+			const outputThumbLow = path.join(dest, `${filename.replace(/\.jpg$/i, '') }-thumbnail-low.jpg`); //Slow pc devices/Mid mobile
+			const outputMobileLow = path.join(dest, `${filename.replace(/\.jpg$/i, '') }-mobile-low.jpg`); //Slow mobile
 
 			// Skip if already migrated (both versions exist)
 			if (fs.existsSync(outputFull) && fs.existsSync(outputThumb) && fs.existsSync(outputThumbMid) && fs.existsSync(outputThumbLow) && fs.existsSync(outputMobileLow)) {
@@ -141,7 +148,7 @@ const migrateExistingImages = async () => {
 		console.error('Migration: Fatal error —', err.message);
 	}
 };
-
+/*
 const migrateDirectory = async (targetDir) => {
 	const processDir = async (dir) => {
 		try {
@@ -371,7 +378,7 @@ const migrateDirectoryPNG = async (targetDir) => {
 	await processDir(targetDir);
 	console.log(`Migration: Complete for ${targetDir}`);
 };
-
+*/
 
 // -- Image compression Manually --//
 //migrateDirectory(path.resolve('services/jpg')); // ~  Directory to copy jpg files, compress and make mobile versions
@@ -380,7 +387,7 @@ const migrateDirectoryPNG = async (targetDir) => {
 
 //migrateExistingImages();
 module.exports = {
-	migrateExistingImages,
+	migrateExistingImages/*,
 	migrateDirectory,
-	migrateDirectoryPNG
+	migrateDirectoryPNG*/
 }

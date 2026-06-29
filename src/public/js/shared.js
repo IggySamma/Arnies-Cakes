@@ -219,6 +219,7 @@ window.onscroll = function() {
     }
 };
 
+/*
 function resolveImageSrc(path) {
 	const basePath = path.replace('-mobile.jpg', '.jpg');
 
@@ -238,10 +239,53 @@ function resolveImageSrc(path) {
 
 	return basePath;
 }
+*/
+
+const tier = window.__ASSET_TIER;
+
+const assetMap = {
+	"high": "-thumbnail.jpg",
+	"mid": "-thumbnail-mid.jpg",
+	"mid-low": "-thumbnail-low.jpg",
+	"low": "-mobile-low.jpg",
+};
+const assetMapModal = {
+	"high": ".jpg",
+	"mid": "-thumbnail.jpg",
+	"mid-low": "-thumbnail-mid.jpg",
+	"low": "-thumbnail-low.jpg",
+};
+
+function applyTierToImage(path, tier, modal = false) {
+	let suffix = assetMap[tier] || assetMap.mid;
+	if (modal) {
+		suffix = assetMapModal[tier] || assetMap.mid;
+	}
+	//const suffix = assetMap[tier] || assetMap.mid;
+
+	return path.replace(/\.jpg$/i, suffix);
+}
 
 function updateAllImageSrcs(root = document) {
 	const images = root.querySelectorAll('img[src]');
 	
+	images.forEach(img => {
+		//console.log(img.getAttribute('src'))
+		const original = img.getAttribute('src');
+		if (!original) return;
+
+		const updated = applyTierToImage(original, tier);
+
+		if (updated !== original) {
+			//img.setAttribute('src', updated);
+			replaceImage(img, updated);
+		}
+	});
+}
+/*
+function updateAllImageSrcs(root = document) {
+	const images = root.querySelectorAll('img[src]');
+
 	images.forEach(img => {
 		//console.log(img.getAttribute('src'))
 		const original = img.getAttribute('src');
@@ -255,6 +299,7 @@ function updateAllImageSrcs(root = document) {
 		}
 	});
 }
+*/
 
 function replaceImage(img, newSrc) {
 	img.src = '';
@@ -264,8 +309,7 @@ function replaceImage(img, newSrc) {
 	});
 }
 
-//updateAllImageSrcs();
+updateAllImageSrcs();
 
 const path = window.location.pathname;
 
-updateAllImageSrcs();

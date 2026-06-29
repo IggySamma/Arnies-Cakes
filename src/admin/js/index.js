@@ -1,3 +1,5 @@
+//const { default: flatpickr } = require("flatpickr");
+
 let disabledDates = [];
 let confirmedEnquirys = [];
 
@@ -368,3 +370,34 @@ nextMonthBtn.addEventListener('click', () => {
 	}
 	renderCalendar(currentMonth, currentYear);
 });
+
+
+let disableDatesMode = document.getElementById("disablingDateOptions");
+let disableDatesCalendar = document.getElementById("disableDates");
+let disableDatesWrapper = document.getElementById("disableDatesWrapper");
+//let disableDateTime2 = document.getElementById("datetimeDate2")
+disableDatesWrapper.style.display = 'none'
+
+
+let defaultCalendarSettings = {
+	altInput: true,
+	altFormat: "F j, Y",
+	enableTime: false,
+	dateFormat: "Y-m-d",
+	minDate: "today",
+}
+
+disableDatesMode.addEventListener("change", () => {
+	if (disableDatesMode.value == "1") {
+		disableDatesWrapper.style.display = 'block'
+		disableDatesCalendar.flatpickr( {...defaultCalendarSettings, mode: "multiple" })
+	} else if (disableDatesMode.value == "2") {
+		disableDatesWrapper.style.display = 'block'
+		disableDatesCalendar.flatpickr({ ...defaultCalendarSettings, mode: "range" })
+	} else {
+		disableDatesWrapper.style.display = 'none'	
+	}
+})
+
+disableDatesCalendar.flatpickr(defaultCalendarSettings)
+

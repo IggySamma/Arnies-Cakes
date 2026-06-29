@@ -14,7 +14,7 @@
 .enquiriesContainer, .ordersContainer{
 	width: 100%;
 	position: relative;
-	height: 40vh;
+	/*height: 40vh;*/
 	overflow: hidden;
 	border: 1px solid #ECE3F0;
 }
@@ -73,11 +73,11 @@ h2{
 	flex-direction: column;
 	width: 100vw;
 }
-
+/*
 .ordersContainer, .ordersCalender{
 	height: 50%;
 }
-
+*/
 .ordersCalender{
 	display: flex;
 }
@@ -184,6 +184,17 @@ h2{
 .Enabled:hover{
 	background-color: #F0E9F5 !important; 
 }
+
+/*
+#disableDatesWrapper{
+	display: none;
+}*/
+
+.flatpickr-calendar{
+	position: relative;
+	top: 100% !important;
+}
+
 
 @media only screen and (min-width: 431px){
 	.navSpacer{

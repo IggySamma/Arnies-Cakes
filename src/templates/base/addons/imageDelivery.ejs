@@ -14,10 +14,6 @@
 		const fastNet =
 			conn?.effectiveType === "4g" /*&& (conn?.downlink || 0) > 5*/;
 
-		console.log("dpr:", dpr)
-		console.log("width: ", width)
-		console.log("fastNet: ", fastNet)
-
 		if (!isMobile && fastNet && width > 1950) return "high";
 		if (fastNet) return "mid";
 		if (slowNet) return "low";

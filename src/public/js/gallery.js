@@ -3,31 +3,6 @@ let galleryContainer = document.getElementById(sectionNames);
 galleryContainer.parentNode.classList.add("active");
 window.history.replaceState({},"", (window.location.pathname.replace('.html','') + '?type=' + sectionNames).toString());
 
-//const tier = window.__ASSET_TIER;
-const assetMap = {
-	"high": "-thumbnail.jpg",
-	"mid": "-thumbnail-mid.jpg",
-	"mid-low": "-thumbnail-low.jpg",
-	"low": "-mobile-low.jpg",
-};
-const assetMapModal = {
-	"high": ".jpg",
-	"mid": "-thumbnail.jpg",
-	"mid-low": "-thumbnail-mid.jpg",
-	"low": "-thumbnail-low.jpg",
-};
-
-function applyTierToImage(path, tier, modal = false) {
-	let suffix = assetMap[tier] || assetMap.mid;
-	if(modal){
-		suffix = assetMapModal[tier] || assetMap.mid;
-	} 
-	//const suffix = assetMap[tier] || assetMap.mid;
-
-	return path.replace(/\.jpg$/i, suffix);
-}
-
-
 let links = document.querySelectorAll('.carousel-button');
 links.forEach(link => {
   if (link.innerHTML.replace(' ','') == sectionNames){
@@ -318,96 +293,6 @@ function observerEntity(){
   observer.observe(infiniteScrollDiv);
 }
 
-/*
-function insertImages(lastStop, data, colSet){
-  let stopAt = 0;
-  if(columnsSetAs === "LG"){
-    if(data.length < lastStop + 16){
-      stopAt = data.length;
-    } else {
-      stopAt = lastStop + 16;
-    }
-  } else {
-    if(data.length < lastStop + 2){
-      stopAt = data.length;
-    } else {
-      stopAt = lastStop + 2;
-    }
-  }
-
-  if(lastStop >= stopAt){
-    return 
-  }
-
-  for(let i = lastStop; i < stopAt; i++){
-    if(colSet[colLength].includes("w50")){
-
-      let imageContainer = createGalleryElement(
-        'div', {}
-        ,"imageWrapper " + colSet[colLength].replace("w50", "") + " m-0 p-0");
-      galleryWrapper[colCounter].appendChild(imageContainer);
-
-      imageContainer.appendChild(createGalleryElement('img',{src:data[i].Path, loading: "lazy", "data-bs-toggle": "modal", "data-bs-target": "#lightBox", "onclick": "activeId('" + data[i].ID + "')"},
-        "img" + " Type:" + data[i].Type + " ID:" + data[i].ID  + " " + colSet[colLength] + " m-0 p-1"));
-
-      colCounter = colCounter-1
-    } else if(colSet[colLength].includes("w51")){
-        /*if adjacent half image in column exist shrink*/
-      /*if(galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50")[galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50").length-1].style.width === "100%"){
-        galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50")[galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50").length-1].style.width = "50%"
-      }  
-      let imageContainer = galleryWrapper[colCounter].getElementsByClassName("imageWrapper")[galleryWrapper[colCounter].getElementsByClassName("imageWrapper").length-1]
-      imageContainer.appendChild(
-        createGalleryElement('img',{src:data[i].Path, loading: "lazy", "data-bs-toggle": "modal", "data-bs-target": "#lightBox", "onclick": "activeId('" + data[i].ID  + "')"},
-        "img" + " Type:" + data[i].Type + " ID:" + data[i].ID  + " " + colSet[colLength] + " m-0 p-1"));
-    } else {
-      galleryWrapper[colCounter].appendChild(createGalleryElement('img',{src:data[i].Path, loading: "lazy", "data-bs-toggle": "modal", "data-bs-target": "#lightBox", "onclick": "activeId('" + data[i].ID + "')"},
-        "img" + " Type:" + data[i].Type + " ID:" + data[i].ID  + " " + colSet[colLength] + " m-0 p-1"));
-    } 
-    if(colCounter === checkColumnsSet()){
-      colCounter = 0;
-    } else {
-      colCounter++;
-    }
-
-    if(colLength === colSet.length - 1){
-      colLength = 0;
-    } else {
-      colLength++ ;
-    }
-    
-  }
-  /*if adjacent half image in column !exist expand*/
-  /*if(galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50").length > galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w51").length){
-    galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50")[galleryWrapper[galleryWrapper.length-1].getElementsByClassName("w50").length-1].style.width = "100%";
-  }
-
-  lastGalleryIdx = stopAt;
-}*/
-/*
-function getImageSrc(path) {
-	const basePath = path.replace('-mobile.jpg', '.jpg');
-
-	if (!navigator.connection) {
-		return columnsSetAs !== 'LG'
-			? basePath.replace('.jpg', '-mobile.jpg')
-			: basePath;
-	}
-
-	const { effectiveType, saveData } = navigator.connection;
-
-	const isSlowConnection = saveData ||
-		effectiveType === 'slow-2g' ||
-		effectiveType === '2g' ||
-		effectiveType === '3g';
-
-	if (columnsSetAs !== 'LG' || isSlowConnection) {
-		return basePath.replace('.jpg', '-mobile.jpg');
-	}
-
-	return basePath;
-}*/
-
 function insertImages(lastStop, data, colSet) {
 	let stopAt = 0;
 	if (columnsSetAs === "LG") {
@@ -429,14 +314,24 @@ function insertImages(lastStop, data, colSet) {
 	for (let i = lastStop; i < stopAt; i++) {
 		//let imgSrc = getImageSrc(data[i].Path);
 		let imgSrc = applyTierToImage(data[i].Path, window.__ASSET_TIER);
+		let galleryElement = createGalleryElement(
+			'img', 
+			{ 
+				src: imgSrc, 
+				"data-bs-toggle": "modal", 
+				"data-bs-target": "#lightBox", 
+				"onclick": "activeId('" + data[i].ID + "')",
+				"alt": `Assorted ${data[i].Type} from home bakery`
+			},
+			"img" + " Type:" + data[i].Type + " ID:" + data[i].ID + " " + colSet[colLength] + " m-0 p-1"
+		);
 
 		if (colSet[colLength].includes("w50")) {
 			let imageContainer = createGalleryElement(
 				'div', {}
 				, "imageWrapper " + colSet[colLength].replace("w50", "") + " m-0 p-0");
 			galleryWrapper[colCounter].appendChild(imageContainer);
-			imageContainer.appendChild(createGalleryElement('img', { src: imgSrc,/* loading: "lazy",*/ "data-bs-toggle": "modal", "data-bs-target": "#lightBox", "onclick": "activeId('" + data[i].ID + "')" },
-				"img" + " Type:" + data[i].Type + " ID:" + data[i].ID + " " + colSet[colLength] + " m-0 p-1"));
+			imageContainer.appendChild(galleryElement);
 			colCounter = colCounter - 1
 		} else if (colSet[colLength].includes("w51")) {
 			/*if adjacent half image in column exist shrink*/
@@ -444,12 +339,9 @@ function insertImages(lastStop, data, colSet) {
 				galleryWrapper[galleryWrapper.length - 1].getElementsByClassName("w50")[galleryWrapper[galleryWrapper.length - 1].getElementsByClassName("w50").length - 1].style.width = "50%"
 			}
 			let imageContainer = galleryWrapper[colCounter].getElementsByClassName("imageWrapper")[galleryWrapper[colCounter].getElementsByClassName("imageWrapper").length - 1]
-			imageContainer.appendChild(
-				createGalleryElement('img', { src: imgSrc,/* loading: "lazy",*/ "data-bs-toggle": "modal", "data-bs-target": "#lightBox", "onclick": "activeId('" + data[i].ID + "')" },
-					"img" + " Type:" + data[i].Type + " ID:" + data[i].ID + " " + colSet[colLength] + " m-0 p-1"));
+			imageContainer.appendChild(galleryElement);
 		} else {
-			galleryWrapper[colCounter].appendChild(createGalleryElement('img', { src: imgSrc,/* loading: "lazy",*/ "data-bs-toggle": "modal", "data-bs-target": "#lightBox", "onclick": "activeId('" + data[i].ID + "')" },
-				"img" + " Type:" + data[i].Type + " ID:" + data[i].ID + " " + colSet[colLength] + " m-0 p-1"));
+			galleryWrapper[colCounter].appendChild(galleryElement);
 		}
 		if (colCounter === checkColumnsSet()) {
 			colCounter = 0;

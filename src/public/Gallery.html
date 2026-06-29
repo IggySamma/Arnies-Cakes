@@ -3,13 +3,13 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
-<html>
+<html lang="en">
 
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Arnie's Cakes</title>
-	<meta name="description" content="">
+	<meta name="description" content="View our custom cake gallery featuring birthday cakes, wedding cakes, cupcakes, cookies, and desserts. Discover beautifully designed homemade creations for every occasion.">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script>
 	window.__ASSET_TIER = (function () {
@@ -27,10 +27,6 @@
 		const fastNet =
 			conn?.effectiveType === "4g" /*&& (conn?.downlink || 0) > 5*/;
 
-		console.log("dpr:", dpr)
-		console.log("width: ", width)
-		console.log("fastNet: ", fastNet)
-
 		if (!isMobile && fastNet && width > 1950) return "high";
 		if (fastNet) return "mid";
 		if (slowNet) return "low";
@@ -40,11 +36,12 @@
 	
 
 	<script src="./js/bootstrap.js"></script>
+	<script src="./js/shared.js"></script>
 	<link rel="stylesheet" href="./styling/bootstrap.css">
 	<link rel="stylesheet" href="./styling/gallery.css">
 	<link rel="stylesheet" href="./styling/shared.css">
 	<link rel="stylesheet" href="./styling/index.css">
-	<link rel="canonical" href="/gallery?type=All" />
+	<link rel="canonical" href="https://www.arniescakes.ie/Gallery?type=All" />
 </head>
 
 
@@ -53,14 +50,14 @@
 	<nav id="navbar" class="navbar fixed-top navbar-expand-lg m-0 p-1" style="top: 0px;">
 	<div class="container-fluid m-0 p-0 navContainer">
 		<button class="navbar-toggler navbar-logo-collapse justify-content-start collapsed ms-2" type="button" id="toggling" data-bs-toggle="collapse"
-			data-bs-target="#navbarSupportedContent">
-			<a href="/">
-				<img class="navBarLogoCollapsed" src="/images/home logo.png">
+			data-bs-target="#navbarSupportedContent" aria-label="Button to go back to the homepage" >
+			<a href="/" aria-label="Link to homepage" style="font-size: 24px">
+				<img class="navBarLogoCollapsed" src="/images/home logo.png" alt="Arnies Cakes logo">
 			</a>
 		</button>
 
 		<button class="navbar-toggler justify-content-end collapsed ms-2" type="button" id="toggling" data-bs-toggle="collapse"
-			data-bs-target="#navbarSupportedContent">
+			data-bs-target="#navbarSupportedContent" aria-label="Hamburger menu">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 

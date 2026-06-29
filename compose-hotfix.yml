@@ -15,10 +15,10 @@ services:
 
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
-      timeout: 10s
-      retries: 30
-      interval: 10s
+      timeout: 20s
+      retries: 10
       start_period: 40s
+      interval: 30s
 
   db_hotfix_init:
     build:
@@ -30,7 +30,8 @@ services:
     env_file:
       - ./.env.prod
     volumes:
-       - /volumeUSB1/usbshare/arnies-cakes/hotfixes:/hotfix:ro
+      #- ./init-scripts/hotfix/db-hotfix.sql:/hotfix/db-hotfix.sql:ro
+      - ./init-scripts/hotfix:/hotfix:ro
     entrypoint: /bin/sh
     command: >
       -c "
@@ -40,9 +41,11 @@ services:
       done;
       echo 'DB is fully query-ready';
       echo 'Running DB hotfix (one-shot)...';
-      mysql -h db -u root -p$$MYSQL_ROOT_PASSWORD $$MYSQL_DATABASE < /hotfix/db-hotfix.sql;
+      mysql -h db -u root -p$$MYSQL_ROOT_PASSWORD $$MYSQL_DATABASE < /hotfix/db-hotfix.sql;     
       echo 'DB hotfix complete';
       "
+    #mysql -h db -u root -p$$MYSQL_ROOT_PASSWORD $$MYSQL_DATABASE < /hotfix/db-hotfix.sql;
+
   asset_init:
     image: alpine:3.20
     volumes:
@@ -66,7 +69,7 @@ services:
     image: arnies-cakes:latest
     command: ["node", "src/server.js"]
     env_file:
-      - ./src/config/.env.prod
+      - ./src/config/.env.dev
     environment:
       - NODE_ENV=production
       - DB_HOST=db
@@ -84,44 +87,7 @@ services:
       db_hotfix_init:
         condition: service_completed_successfully
 
-#volumes:
-#  db_data:
-#  gallery_data:
-#  images_data:
-
-#Mikeflix
 volumes:
   db_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /volumeUSB1/usbshare/arnies-cakes/db
-
   gallery_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /volumeUSB1/usbshare/arnies-cakes/src/public/gallery
-
   images_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /volumeUSB1/usbshare/arnies-cakes/src/public/images
-
-  hotfixes:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /volumeUSB1/usbshare/arnies-cakes/hotfixes
-
-  dbdump:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /volumeUSB1/usbshare/arnies-cakes/dbdump
