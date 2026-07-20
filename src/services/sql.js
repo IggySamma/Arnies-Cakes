@@ -536,6 +536,50 @@ function updatesFlavours(flavours, headers, value, ID, done) {
 		done(null);
 	}
 }
+/*
+function addDisableDates(dates, isRange, res) {
+	serverConfig.connection.execute(
+		'INSERT INTO disableddates (Date, IsRange) VALUES(?, ?);'
+		[dates, isRange],
+		function (err, results) {
+			if (err) {
+				console.log(err);
+				res.json(new Error(err));
+			} else {
+				var obj = JSON.parse(JSON.stringify(results));
+				res.json(obj);
+			}
+		}
+	);
+};*/
+
+function addDisableDates(dates, isRange = 'No') {
+	return new Promise((resolve, reject) => {
+		serverConfig.connection.execute(
+			'INSERT INTO disableddates (Date, IsRange) VALUES (?, ?)',
+			[dates, isRange],
+			function (err, results) {
+				if (err) return reject(err);
+				resolve(results);
+			}
+		);
+	});
+}
+
+function removeDisableDates(dates) {
+	return new Promise((resolve, reject) => {
+		serverConfig.connection.execute(
+			'DELETE FROM disableddates WHERE DATE = ?',
+			[dates],
+			function (err, results) {
+				if (err) return reject(err);
+				resolve(results);
+			}
+		);
+	});
+}
+
+
 
 module.exports = {
 	getEnquiriesMainHeaders,
@@ -558,5 +602,7 @@ module.exports = {
 	requestEnquiryByID,
 	adminSelect,
 	updatesFlavours,
-	adminSelectQuery
+	adminSelectQuery,
+	addDisableDates,
+	removeDisableDates
 }

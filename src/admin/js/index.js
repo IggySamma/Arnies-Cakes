@@ -371,33 +371,261 @@ nextMonthBtn.addEventListener('click', () => {
 	renderCalendar(currentMonth, currentYear);
 });
 
+/*---------------------------------  Disable Dates  ------------------------------------*/
 
-let disableDatesMode = document.getElementById("disablingDateOptions");
-let disableDatesCalendar = document.getElementById("disableDates");
-let disableDatesWrapper = document.getElementById("disableDatesWrapper");
-//let disableDateTime2 = document.getElementById("datetimeDate2")
-disableDatesWrapper.style.display = 'none'
+const datesMode = document.getElementById("DateOptions");
+const disableDatesCalendar = document.getElementById("disableDates");
+const disableDatesWrapper = document.getElementById("disableDatesWrapper");
+const disableSubmitWrapper = document.getElementById("submitWrapper");
+const disableSubmitButton = document.getElementById("submit");
+const disableEnable = document.getElementById("disableEnable");
+const enableLabel = document.getElementById("enableDatesLabel");
+const disableLabel = document.getElementById("disableDatesLabel");
+const dateOptionsWrapper = document.getElementById("DateOptionsWrapper");
 
+
+function hide(...elements) {
+	elements.forEach(el => el.style.display = 'none');
+}
+
+function show(...elements) {
+	elements.forEach(el => el.style.display = 'block');
+}
+
+hide(
+	/*disablingDateOptionsWrapper,
+	enablingDateOptionsWrapper,*/
+	dateOptionsWrapper,
+	disableDatesWrapper,
+	disableSubmitWrapper,
+	enableLabel,
+	disableLabel
+);
+
+let alreadyDisabledDates;
+let overrideEnabledDates = [];
+
+/*fetch('/api/disabledDates', {
+	method: 'POST'
+})
+.then(response => {
+	response.json().then(data => {
+		//console.log(data)
+		alreadyDisabledDates = data;
+		//console.log(alreadyDisabledDates)
+		disableDatesCalendar.flatpickr(defaultCalendarSettings);
+	})
+})*/
+
+(async () => {
+	const res = await fetch('/api/disabledDates', { method: 'POST' });
+	const data = await res.json();
+	alreadyDisabledDates = data;
+	console.log(alreadyDisabledDates);
+})();
+
+
+function isOverride(date) {
+	return overrideEnabledDates.includes(date);
+}
 
 let defaultCalendarSettings = {
 	altInput: true,
 	altFormat: "F j, Y",
 	enableTime: false,
 	dateFormat: "Y-m-d",
-	minDate: "today",
-}
+	disableMobile: false,
+	"plugins": [new confirmDatePlugin({})],
+	onClose: function () {
+		if (disableDatesCalendar.value !== '') {
+			show(disableSubmitWrapper);
+		} else {
+			hide(disableSubmitWrapper);
+		};
+	},
+	onDayCreate: function (dObj, dStr, fp, dayElem) {
+		const dateStr = fp.formatDate(dayElem.dateObj, "Y-m-d");
+		//console.log(alreadyDisabledDates.Date);
 
-disableDatesMode.addEventListener("change", () => {
-	if (disableDatesMode.value == "1") {
-		disableDatesWrapper.style.display = 'block'
-		disableDatesCalendar.flatpickr( {...defaultCalendarSettings, mode: "multiple" })
-	} else if (disableDatesMode.value == "2") {
-		disableDatesWrapper.style.display = 'block'
-		disableDatesCalendar.flatpickr({ ...defaultCalendarSettings, mode: "range" })
+		if (alreadyDisabledDates.Date.includes(dateStr)) {
+			if (disableEnable.value == "1"){
+				dayElem.classList.add("disabled-highlight");
+			} else if (disableEnable.value == "2") {
+				dayElem.classList.add("enabled-highlight");
+			}
+		}
+	}
+};
+
+
+disableEnable.addEventListener("change", () => {
+	if (disableEnable.value == "1") {
+		hide(
+			/*disablingDateOptionsWrapper,
+			enablingDateOptionsWrapper,*/
+			disableDatesWrapper,
+			disableSubmitWrapper,
+			enableLabel,
+			disableLabel
+		);
+		show(DateOptionsWrapper, disableLabel);
+	} else if (disableEnable.value == "2") {
+		hide(
+			/*disablingDateOptionsWrapper,
+			enablingDateOptionsWrapper,*/
+			disableDatesWrapper,
+			disableSubmitWrapper,
+			enableLabel,
+			disableLabel
+		);
+		show(DateOptionsWrapper, enableLabel);
 	} else {
-		disableDatesWrapper.style.display = 'none'	
+		hide(
+			/*disablingDateOptionsWrapper,
+			enablingDateOptionsWrapper,*/
+			dateOptionsWrapper,
+			disableDatesWrapper,
+			disableSubmitWrapper,
+			enableLabel,
+			disableLabel
+		);
+	};
+});
+
+datesMode.addEventListener("click", () => {
+	if (datesMode.value == "1" || datesMode.value == "2") {
+		show(disableDatesWrapper);
+		if (disableEnable.value == "1"){ //Disable
+			if (datesMode.value == "1") {
+				if (disableDatesCalendar._flatpickr) {
+					disableDatesCalendar._flatpickr.destroy();
+				}
+				disableDatesCalendar.flatpickr({
+					...defaultCalendarSettings,
+					minDate: new Date().fp_incr(2),
+					maxDate: new Date().fp_incr(730),
+					disable: alreadyDisabledDates.Date,
+					disableMobile: false,
+					mode: "multiple"
+				});
+			} else {
+				if (disableDatesCalendar._flatpickr) {
+					disableDatesCalendar._flatpickr.destroy();
+				}
+				disableDatesCalendar.flatpickr({
+					...defaultCalendarSettings,
+					minDate: new Date().fp_incr(2),
+					maxDate: new Date().fp_incr(730),
+					disable: [],
+					disableMobile: false,
+					mode: "range"
+				});
+			}
+		} else if (disableEnable.value == "2") { //Enable
+			if (datesMode.value == "1") {
+				if (disableDatesCalendar._flatpickr) {
+					disableDatesCalendar._flatpickr.destroy();
+				}
+				disableDatesCalendar.flatpickr({
+					...defaultCalendarSettings,
+					minDate: new Date().fp_incr(2),
+					maxDate: new Date().fp_incr(730),
+					enable: alreadyDisabledDates.Date,
+					disableMobile: false,
+					mode: "multiple"
+				});
+			} else {
+				if (disableDatesCalendar._flatpickr) {
+					disableDatesCalendar._flatpickr.destroy();
+				}
+				disableDatesCalendar.flatpickr({
+					...defaultCalendarSettings,
+					minDate: new Date().fp_incr(2),
+					maxDate: new Date().fp_incr(730),
+					disable: [],
+					disableMobile: false,
+					mode: "range"
+				});
+			}
+		}
+		
+		
+	} else {
+		hide(disableDatesWrapper);
+	};
+});
+
+
+
+disableSubmitButton.addEventListener("click", () => {
+	if (datesMode.value == '1' || datesMode.value == '2') {
+		if (disableDatesCalendar.value !== '') {
+			const formData = new FormData();
+			let error = false
+			let isRange;
+			let toDisable;
+
+			if (datesMode.value == "1") {
+				isRange = false;
+			} else if (datesMode.value == "2") {
+				isRange = true;
+			} else {
+				error = true;
+				throw new Error("isRange not attached correctly");
+				alert("isRange not attached correctly");
+			}
+			console.log(disableEnable);
+			console.log(disableEnable.value);
+			if (disableEnable.value == "1") { //Disable)
+				toDisable = true
+			} else if (disableEnable.value == "2"){
+				toDisable = false
+			} else {
+				error = true;
+				throw new Error("Enable/Disable not attached correctly");
+				alert("Enable/Disable not attached correctly");
+			}
+
+			if(!error) {
+				formData.append("Dates", disableDatesCalendar.value);
+				formData.append("isRange", isRange);
+				formData.append("toDisable", toDisable);
+
+				fetch('/api/addDisableDates', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						Dates: disableDatesCalendar.value,
+						isRange: isRange,
+						toDisable: toDisable,
+					})
+				})
+				.then((res) => {
+					if (res.status === 200) {
+						location.reload();
+						//console.log(res);
+					} else if (res.status = 403){
+						location.reload();
+					} else {
+						console.log(res);
+					}
+				});
+			}
+
+			
+		
+		} else {
+			throw new Error("Disabled Dates is blank");
+			alert("Disabled Dates is blank");
+		}
+	} else {
+		throw new Error("Please select a mode for date disabling");
+		alert("Please select a mode for date disabling");
 	}
 })
 
-disableDatesCalendar.flatpickr(defaultCalendarSettings)
+
+
 

@@ -429,23 +429,24 @@ function getEnquiriesSubHeadersPreRender(main, rebuild = false) {
 /*------------------------------- Enquiries Calendar ------------------------------------*/
 
 function getDisabledDates(){
-   serverConfig.connection.execute(
-        'SELECT * FROM disableddates;',
-        function (err, results) {
-            if (err) {
-                console.log(err)
-            } else {
-                storeDisabledDates(JSON.parse(JSON.stringify(results)));
-            }
-        }
-   );
+	return new Promise((resolve, reject) => {
+		serverConfig.connection.execute(
+			'SELECT * FROM disableddates;',
+			function (err, results) {
+				if (err) return reject(err);
+				//console.log("New Dates: ", results)
+				storeDisabledDates(JSON.parse(JSON.stringify(results)));
+				resolve(results);
+			}
+		);
+	});
 }
-
 
 function storeDisabledDates(data){
     globals.disabledDates = new globals.disabledDatesContructor
     for(let i = 0; i < data.length; i++){
         if(data[i].IsRange === "Yes"){
+		//console.log(data[i].Date)
             let tempObj = {
                 "from": data[i].Date.slice(0, 10),
                 "to": data[i].Date.slice(11, 22)
@@ -454,6 +455,7 @@ function storeDisabledDates(data){
             globals.disabledDates.Date.push(tempObj);
             globals.disabledDates.IsRange.push(data[i].IsRange);
         } else {
+		//console.log(data[i].Date)
             globals.disabledDates.ID.push(data[i].ID);
             globals.disabledDates.Date.push(data[i].Date.slice(0, 10));
             globals.disabledDates.IsRange.push(data[i].IsRange);
@@ -531,69 +533,6 @@ function createDateArrayFromDateRanges(fromString, toString){
 
 /*------------------------------- Admin Page Functions ------------------------------------*/
 
-/*
-function adminUpdateFlavours(req, res){
-	
-	let buffer = JSON.parse(JSON.stringify(req.body));
-	let counter;
-	console.log(buffer);
-	if(('Heading' in buffer) && ('HID' in buffer)){
-		if ('Type' in buffer) {
-			//console.log(parseSpaces(buffer['Type']));
-			updateFlavours(
-				buffer['Heading'], 
-				buffer['HID'], 
-				'Type', 
-				parseSpaces(buffer['Type'])
-			);
-		}
-		if ('Flavours' in buffer) {
-			//console.log(parseSpaces(buffer['Flavours']));
-			//console.log(splitIntoArray(parseSpaces(buffer['Flavours']), ','));
-			updateFlavours(
-				buffer['Heading'], 
-				buffer['HID'], 
-				'Flavours', 
-				splitIntoArray(parseSpaces(buffer['Flavours']), ',')
-			);
-		}
-		if ('Text' in buffer) {
-			//console.log(parseSpaces(buffer['Text']));
-			//console.log(splitIntoArray(parseSpaces(buffer['Text']), ','));
-			updateFlavours(
-				buffer['Heading'],
-				buffer['HID'],
-				'Flavours',
-				splitIntoArray(parseSpaces(buffer['Text']), ',')
-			);
-		}
-		if ('MinOrder' in buffer) {
-			//console.log(parseSpaces(buffer['MinOrder']));
-			updateFlavours(
-				buffer['Heading'], 
-				buffer['HID'], 
-				'minOrder', 
-				parseSpaces(buffer['MinOrder'])
-			);
-		}
-		if ('Step' in buffer) {
-			//console.log(parseSpaces(buffer['Step']));
-			updateFlavours(
-				buffer['Heading'], 
-				buffer['HID'], 
-				'Step', 
-				parseSpaces(buffer['Step'])
-			);
-		}
-	}
-	serverConfig.rebuildAllPages = true;
-	console.log(serverConfig.rebuildAllPages);
-	getFlavours();
-	serverConfig.rebuildAllPages = false;
-	console.log(serverConfig.rebuildAllPages);
-	//res.sendStatus(200);
-}*/
-
 function adminUpdateFlavours(req, res) {
 	const buffer = JSON.parse(JSON.stringify(req.body));
 	const jobs = [];
@@ -642,48 +581,6 @@ function adminUpdateFlavours(req, res) {
 	});
 }
 
-/*function updateFlavours(heading, hid, column, value) {
-	let headers, flavours = undefined;
-	let ID;
-	hid === '2,3' ? ID = 2 : ID = hid;
-
-	if (column === 'minOrder' || column === 'Step') {
-		value = Number(value);
-	}
-
-	let flavoursCol = ['Type', 'Text', 'Flavours'];
-	let mainheadersCol = ['Type', 'Flavours', 'minOrder', 'Step'];
-	let subheadersCol = ['Type', 'minOrder', 'Step'];
-
-
-	if (flavoursCol.includes(column)) {
-		flavours = `UPDATE flavours SET ${column} = ? WHERE ID = ?;`
-		console.log('flavours set')
-	}
-
-	if (heading === 'Main') {
-		if (mainheadersCol.includes(column)) {
-			headers = `UPDATE mainheaders SET ${column} = ? WHERE flavoursRecId = ?;`
-			console.log('mainHeaders set')
-		}
-
-		if (!(headers === undefined && flavours === undefined)) {
-			sqlQuery.updatesFlavours(flavours, headers, column, value, ID);
-		}
-	} else if (heading === 'Sub') {
-		if (subheadersCol.includes(column)) {
-			headers = `UPDATE subheaders SET ${column} = ? WHERE flavoursRecId = ?;`
-			console.log('subHeaders set')
-		}
-
-		if (!(headers === undefined && flavours === undefined)) {
-			console.log("Attempting update...");
-			sqlQuery.updatesFlavours(flavours, headers, column, value, ID);
-			console.log("Updated");
-		}
-	}
-
-}*/
 
 async function updateFlavours(heading, hid, column, value, done) {
 	let headers, flavours = undefined;
@@ -767,6 +664,82 @@ function runSeries(tasks, done) {
 	next();
 }
 
+async function handleDisableDates(req, res) {
+	let buffer = JSON.parse(JSON.stringify(req.body));
+	let dates = [];
+
+	try {
+		if(buffer.isRange === undefined) {
+			return res.status(400).json({ error: "Missing isRange" });
+		}
+
+		if (buffer.toDisable === undefined) {
+			return res.status(400).json({ error: "Missing toDisable" });
+		}
+		
+		if(buffer.Dates === undefined) {
+			return res.status(400).json({ error: "Missing Dates" });
+		}
+
+		if(buffer.isRange) {
+			const datesBuffer = buffer.Dates?.replace(" to ", ",");
+			if (!datesBuffer) return res.status(400).json({ error: "Missing Dates in range buffer" });
+		
+			const { fromDate, range } = daysBetween(datesBuffer);
+			dates = returnDatesArray(fromDate, range);
+
+		} else {
+			dates = buffer.Dates;
+		}
+
+		const array = dates.split(',').map(d => d.trim()).filter(Boolean);
+		const tasks = array.map(date =>
+			buffer.toDisable ? sqlQuery.addDisableDates(date) : sqlQuery.removeDisableDates(date)
+		);
+
+		await Promise.all(tasks);
+		await getDisabledDates();
+		return res.json({ success: true});
+	} 
+	catch (err) {
+		console.error(err);
+		return res.status(500).json({ error: err.message });
+	}
+}
+
+
+function daysBetween(array) {
+	const fromDate = new Date(array.split(',')[0]);
+	const toDate = new Date(array.split(',')[1]);
+	const msPerDay = 1000 * 60 * 60 * 24;
+	const diffMs = toDate - fromDate;
+	const range = Math.round(diffMs / msPerDay);
+
+	return { fromDate, range };
+}
+
+function returnDatesArray(start, range) {
+	if(start === undefined) {
+		return new Error("No start date");
+	}
+
+	if(range === undefined || range == 0){
+		return new Error("No Range set");
+	}
+
+	let buffer = "";
+
+	for(let i = 0; i <= range; i++){
+		const d = new Date(start);
+		d.setUTCDate(d.getUTCDate() + i);
+
+		const dateStr = d.toISOString().split('T')[0];
+		buffer != "" ? buffer = buffer + ", " + dateStr: buffer = dateStr;
+	}
+
+	return buffer;
+}
+
 /*------------------------------- Bootup ------------------------------------*/
 
 getDisabledDates();
@@ -786,5 +759,6 @@ module.exports = {
 	adminUpdateFlavours,
 	multerParser,
 	processImages,
-	updateFlavours
+	updateFlavours,
+	handleDisableDates
 }

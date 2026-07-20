@@ -17,6 +17,7 @@
 	/*height: 40vh;*/
 	overflow: hidden;
 	border: 1px solid #ECE3F0;
+	flex-direction: column;
 }
 
 table {
@@ -71,7 +72,7 @@ h2{
 .orderingContainer{
 	display: inline-flex;
 	flex-direction: column;
-	width: 100vw;
+	width: 100%;
 }
 /*
 .ordersContainer, .ordersCalender{
@@ -185,15 +186,41 @@ h2{
 	background-color: #F0E9F5 !important; 
 }
 
-/*
-#disableDatesWrapper{
-	display: none;
-}*/
-
 .flatpickr-calendar{
 	position: relative;
-	top: 100% !important;
+	top: 35% !important;
 }
+
+.disabled-highlight {
+	background: #ff4d4f33;
+	color: rgba(57, 57, 57, 0.3) !important;
+	border-radius: 4px;
+	position: relative;
+}
+
+.disabled-highlight::after {
+	content: "";
+	color: rgba(57, 57, 57, 0.1) !important;
+	position: absolute;
+	inset: 2px;
+	border: 1px dashed #ff4d4f;
+	pointer-events: none;
+}
+
+.enabled-highlight {
+	background: #ff4d4f33;
+	border-radius: 4px;
+	position: relative;
+}
+
+.enabled-highlight::after {
+	content: "";
+	position: absolute;
+	inset: 2px;
+	border: 1px dashed #ff4d4f;
+	pointer-events: none;
+}
+
 
 
 @media only screen and (min-width: 431px){

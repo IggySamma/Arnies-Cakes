@@ -50,6 +50,9 @@ serverConfig.initApp().then((app) => {
 
 	app.post('/api/adminSelect', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.adminSelect(req, res) });
 	app.post('/api/updateFlavours', serverConfig.ensureAuthenticated, parsers.multerParser.none(), (req, res) => { parsers.adminUpdateFlavours(req, res) });
+	app.post('/api/addDisableDates', serverConfig.ensureAuthenticated, (req, res) => { parsers.handleDisableDates(req, res) });
+
+
 
 }).catch((err) => {
 	console.error('Failed to initialize app:', err);
