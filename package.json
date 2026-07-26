@@ -33,7 +33,7 @@
     "passport-google-oauth20": "^2.0.0",
     "passport-google-oidc": "^0.1.0",
     "promise": "^8.3.0",
-    "sharp": "^0.34.5",
+    "sharp": "^0.35.0",
     "uid-safe": "^2.1.5"
   }
 }
