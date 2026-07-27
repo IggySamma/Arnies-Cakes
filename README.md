@@ -1,38 +1,46 @@
-Project Overview:
+# 🌐 ArniesCakes
 
-	This project is focused on building a website for my significant other's hobby. It serves as both a personal endeavor to support their interests and a learning platform for me to explore and deepen my understanding of web development. The goal is to gain practical experience and transition into the development world.
+A custom website built to support my significant other's hobby — and to sharpen my own web development skills along the way.
 
-Technological Approach:
+## 📖 Overview
 
-	In this project, my goal is to primarily utilize vanilla JavaScript, minimizing reliance on external frameworks. To enhance development efficiency and ensure a polished, functional result, I am incorporating a select set of essential libraries.
+This project serves a dual purpose: it's a personal endeavor to build something meaningful for someone I care about, and it's a hands-on learning platform for deepening my understanding of web development. The long-term goal is to gain real, practical experience and use it as a stepping stone into a career in development.
 
-Technologies and Libraries Used:
+## 🛠️ Technical Approach
 
-	Frontend:
+The philosophy behind this project is simple: **learn the fundamentals first**. I'm primarily building with vanilla JavaScript, keeping reliance on frameworks to a minimum. Where a library genuinely improves development speed or the quality of the final product, I bring in a small, well-chosen set of tools rather than reaching for a heavyweight framework.
 
-		Bootstrap 5.3: For responsive and modern UI components.
+## 🧰 Tech Stack
 
-		Flatpicker: Lightweight calendar and date picker for user interaction.
+### Frontend
+| Technology | Purpose |
+|---|---|
+| **Bootstrap 5.3** | Responsive, modern UI components |
+| **Flatpickr** | Lightweight calendar and date picker |
 
-	Backend:
+### Backend
+| Technology | Purpose |
+|---|---|
+| **Node.js** | JavaScript runtime for server-side execution |
+| **Express.js** | Minimal, flexible web application framework |
+| **EJS** | Templating engine for dynamic HTML rendering |
 
-		Node.js: Runtime environment for executing JavaScript server-side.
+### Database
+| Technology | Purpose |
+|---|---|
+| **MySQL** | Relational database management system |
+| **MySQL2** | MySQL client for Node.js with prepared statements & promise support |
 
-		Express.js: Minimal and flexible Node.js web application framework.
-
-		EJS: Templating engine for generating dynamic HTML pages.
-
-	Database:
-
-		MySQL: Relational database management system.
-
-		MySQL2: MySQL client for Node.js, supporting prepared statements and promises.
-
-	APIs:
-
-		Google APIs: Integration for additional functionality, including authentication and more.
+### APIs
+| Technology | Purpose |
+|---|---|
+| **Google APIs** | Authentication and additional integrations |
 
 
-Future Goals:
+## 🎯 Future Goals
 
-	As I continue to develop this project, my primary objectives are to enhance my skills in JavaScript, improve my understanding of web technologies, and eventually expand into more advanced development frameworks and practices.
+This project is as much about growth as it is about the end product. Moving forward, I'm aiming to:
+
+- Deepen my command of core JavaScript
+- Build a stronger, more practical understanding of web technologies
+- Gradually expand into more advanced frameworks and development practices
