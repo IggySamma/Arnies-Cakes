@@ -225,7 +225,9 @@ function isNotEmptyEnquirie(data){
     for (var i = 0; i < Object.keys(data).length; i++) {
         if (Object.values(data)[i] != "" && Object.values(data)[i] != "0") {
             adjData[Object.keys(data)[i]] = Object.values(data)[i];         
-        }
+        } else {
+		return new Error("No Data")
+	}
     };
     return adjData;
 };
@@ -254,6 +256,8 @@ function attachTextBody(adjData, photos, res){
     let date = ""
     let start = false;
     let finish = false;
+
+    //console.log(adjData)
 
     let tableHeader = {
         "Item": "Item",
@@ -410,14 +414,12 @@ function getEnquiriesSubHeadersPreRender(main, rebuild = false) {
 				res.json(new Error(err));
 			} else {
 				var obj = JSON.parse(JSON.stringify(results));
-				//console.log(obj)
 				const sub = obj.map( item => ({
 					...item,
 					Header: 'Sub'
 				}));
 
 				const headers = [...main, ...sub];
-				//console.log(headers)
 				if (serverConfig.rebuildAllPages || rebuild ) {
 					templates.saveNewPublicFile('Enquiries.html', headers, 'Enquiries.ejs')
 				}
@@ -446,7 +448,6 @@ function storeDisabledDates(data){
     globals.disabledDates = new globals.disabledDatesContructor
     for(let i = 0; i < data.length; i++){
         if(data[i].IsRange === "Yes"){
-		//console.log(data[i].Date)
             let tempObj = {
                 "from": data[i].Date.slice(0, 10),
                 "to": data[i].Date.slice(11, 22)
@@ -455,7 +456,6 @@ function storeDisabledDates(data){
             globals.disabledDates.Date.push(tempObj);
             globals.disabledDates.IsRange.push(data[i].IsRange);
         } else {
-		//console.log(data[i].Date)
             globals.disabledDates.ID.push(data[i].ID);
             globals.disabledDates.Date.push(data[i].Date.slice(0, 10));
             globals.disabledDates.IsRange.push(data[i].IsRange);

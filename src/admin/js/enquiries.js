@@ -1,19 +1,23 @@
 let fpDate = false;
 let fpEvent = false;
 
-(function () {
-    "use strict";
-    var form = document.getElementById("form");
+function modalSubmit() {
+   	"use strict";
+    	var form = document.getElementById("form");
+	var submit = document.getElementById("footerForm");
 
-    form.addEventListener("submit", function (event) {
-      if (!form.checkValidity()) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
+	//console.log(submit)
 
-      form.classList.add("was-validated");
-    });
-  })();
+	submit.addEventListener("submitEnquiry", function (event) {
+		event.preventDefault();
+		if (!form.checkValidity()) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
+
+		form.classList.add("was-validated");
+	});
+};
 
 function loadCalender(){
     fetch('/api/disabledDates', {
@@ -29,12 +33,12 @@ function loadCalender(){
                 altInput: true,
                 altFormat: "F j, Y",
                 allowInput: false,
-                defaultDate: data.MinDate,
+		defaultDate: new Date().fp_incr(1),
                 enableTime: false,
                 dateFormat: "Y-m-d",
-                minDate: data.MinDate,
+		minDate: new Date().fp_incr(1),
                 maxDate: new Date().fp_incr(730),
-                disable: data.Date,
+                /*disable: data.Date,*/
                 disableMobile: false,
                 plugins: [new confirmDatePlugin({})],
                 onClose: ()=> {fpDate = true},
@@ -96,7 +100,6 @@ function loadCalender(){
     })
 }
 
-loadCalender();
 
 function enableDisable(id){
     const box = document.getElementById(id);
@@ -179,14 +182,16 @@ function updatePlaceholder(id) {
 }
 
 
-const form = document.getElementById("form");
+const form = document.getElementById("footerForm");
 form.addEventListener("submit", submitEnquirie);
 
 
 function submitEnquirie(file){
 	file.preventDefault();
 	document.body.style.cursor = 'wait';
-	document.getElementById("submit").disabled = true;
+	//document.getElementById("submitEnquiry").disabled = true;
+
+	console.log("Submit button hit");
 	
 	const formData = new FormData();
 	let errors = false;
@@ -208,7 +213,7 @@ function submitEnquirie(file){
 	} 
    
 	if (!errors) {
-		fetch('/api/submitEnquirie', {
+		/*fetch('/api/submitEnquirie', {
 			method: 'POST',
 			body: formData,
 		})
@@ -242,7 +247,7 @@ function submitEnquirie(file){
 			}
 			document.getElementById("submit").disabled = false;     
 			document.body.style.cursor = 'auto';
-		});
+		});*/
 	}
 };
 

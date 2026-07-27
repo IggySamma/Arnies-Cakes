@@ -137,6 +137,8 @@ function deleteDisabledDate(req, res, ID){
 
 /*--------------------------- Enquirie functions --------------------- */
 
+const safe = (val) => (val === undefined || val === null ? "" : String(val));
+
 function storeNewEnquirie(res, data, cb){
     	//console.log(data)
 
@@ -154,24 +156,28 @@ function storeNewEnquirie(res, data, cb){
 
 	return new Promise((resolve, reject) => {
 		let storeLink = [
-			date = data['Date of Event'],
+			date = safe(data['Date of Event']),
 			Confirmed = "No",
 			Link = "",
 			Completed = "No",
-			Name = data.Name,
-			Order = JSON.parse(JSON.stringify(data.Order)),
-			Message = data.Message,
-			Allergy = data.Allergies,
-			Allergy_Message = allergy_Message,
-			Email = data.Email,
-			ColDel = colDel,
-			ColDelDate = colDelDate,
+			Name = safe(data.Name),
+			Order = safe(JSON.parse(JSON.stringify(data.Order))),
+			Message = safe(data.Message),
+			Allergy = safe(data.Allergies),
+			Allergy_Message = safe(allergy_Message),
+			Email = safe(data.Email),
+			ColDel = safe(colDel),
+			ColDelDate = safe(colDelDate),
+			Address = safe(data.Address),
+			number = safe(data.Number),
+			Price = 0,
+			PricePaid = 0
 		]
 
 		//console.log(storeLink);
 
 		serverConfig.connection.execute(
-		'INSERT INTO enquiries(Date, Confirmed, Link, Completed, Name, Order_Details, Message, Allergy, Allergy_Message, Email, ColDel, ColDelDate) Values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+		'INSERT INTO enquiries(Date, Confirmed, Link, Completed, Name, Order_Details, Message, Allergy, Allergy_Message, Email, ColDel, ColDelDate, Address, Number, Price, PricePaid) Values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?);',
 		storeLink,
 		function (err) {
 			if (err) {
@@ -210,7 +216,8 @@ function storeEnquirieLink(newDate, newLink, nID, res){
 function getAllEnquiries(){
     return new Promise((resolve, reject) => {
         serverConfig.connection.execute(
-             'SELECT * FROM enquiries ;', 
+             'SELECT * FROM enquiries WHERE Confirmed <> ?;', 
+	     ['Declined'],
             function (err, results) {
                 if (err) {
                     console.log(err);
