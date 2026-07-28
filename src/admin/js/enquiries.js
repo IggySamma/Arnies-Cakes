@@ -1,7 +1,7 @@
 let fpDate = false;
 let fpEvent = false;
 
-function modalSubmit() {
+export function modalSubmit() {
    	"use strict";
     	var form = document.getElementById("form");
 	var submit = document.getElementById("footerForm");
@@ -18,8 +18,8 @@ function modalSubmit() {
 		form.classList.add("was-validated");
 	});
 };
-
-function loadCalender(){
+/*
+export function loadCalender(){
     fetch('/api/disabledDates', {
         method: 'POST'
     })
@@ -39,10 +39,10 @@ function loadCalender(){
 		minDate: new Date().fp_incr(1),
                 maxDate: new Date().fp_incr(730),
                 /*disable: data.Date,*/
-                disableMobile: false,
-                plugins: [new confirmDatePlugin({})],
-                onClose: ()=> {fpDate = true},
-                onChange: function(selectedDate, dateStr, instance){
+                /*disableMobile: false,
+                /*plugins: [new confirmDatePlugin({})],
+                onClose: ()=> {fpDate = true},*/
+                /*onChange: function(selectedDate, dateStr/*, instance*//*){
                     const formattedDate = new Date(selectedDate).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'long',
@@ -70,9 +70,9 @@ function loadCalender(){
                         defaultMinute: 0,
                         minuteIncrement: 15,
                         disableMobile: false,
-                        plugins: [new confirmDatePlugin({})],
-                        onClose: ()=> {fpEvent = true},
-                    });
+                        /*plugins: [new confirmDatePlugin({})],
+                        onClose: ()=> {fpEvent = true},*/
+                /*    });
 
                     flatpickrEvents[0].value = dateStr.split(' ', 1) + ", 12:00";
                     flatpickrEvents[1].value =formattedDate + ", 12:00";
@@ -94,14 +94,14 @@ function loadCalender(){
                 defaultMinute: 0,
                 minuteIncrement: 15,
                 disableMobile: false,
-                plugins: [new confirmDatePlugin({})]
-            });
+                /*plugins: [new confirmDatePlugin({})]*/
+        /*    });
         })
     })
 }
+*/
 
-
-function enableDisable(id){
+export function enableDisable(id){
     const box = document.getElementById(id);
     if (box.disabled == false) {
         box.disabled = true; 
@@ -130,63 +130,63 @@ function enableDisable(id){
     }
 }
 
-function updatePlaceholder(id) {
-    const incrementCheckBox = document.getElementById(id + "CheckBox1");
-    const cakeSize = document.getElementById(id+"CakeSize");
-    const check = document.querySelectorAll("[id$='CheckBox']");
-    const flavours = document.querySelectorAll("[class^='Flavours']");
+export function updatePlaceholder(id) {
+	const incrementCheckBox = document.getElementById(id + "CheckBox1");
+	const cakeSize = document.getElementById(id+"CakeSize");
+	const check = document.querySelectorAll("[id$='CheckBox']");
+	const flavours = document.querySelectorAll("[class^='Flavours']");
 
-    if (id != '') {
-        if (document.getElementById(id + "CheckBox").checked) {
-            incrementCheckBox.setAttribute("placeholder", incrementCheckBox.min);
-            incrementCheckBox.value = incrementCheckBox.min;
-            incrementCheckBox.disabled = false;
-            if (cakeSize != null){
-                cakeSize.disabled = false;
-                cakeSize.style.display = "block";
-            }
-        } else {
-            incrementCheckBox.setAttribute("placeholder", "0");
-            incrementCheckBox.value = "";
-            incrementCheckBox.disabled = true;
-            if (cakeSize != null){
-                cakeSize.value = "";
-                cakeSize.disabled = true;
-                cakeSize.style.display = "none";
-            }
+	if (id != '') {
+		if (document.getElementById(id + "CheckBox").checked) {
+		incrementCheckBox.setAttribute("placeholder", incrementCheckBox.min);
+		incrementCheckBox.value = incrementCheckBox.min;
+		incrementCheckBox.disabled = false;
+		if (cakeSize != null){
+			cakeSize.disabled = false;
+			cakeSize.style.display = "block";
+		}
+		} else {
+		incrementCheckBox.setAttribute("placeholder", "0");
+		incrementCheckBox.value = "";
+		incrementCheckBox.disabled = true;
+		if (cakeSize != null){
+			cakeSize.value = "";
+			cakeSize.disabled = true;
+			cakeSize.style.display = "none";
+		}
 
-        }
-    } else {
-        flavours.forEach( item => {
-            if(item.firstElementChild.checked == true && item.parentElement.firstElementChild.checked == false){
-                item.firstElementChild.checked = false;
-                updatePlaceholder(item.firstElementChild.id.replace("CheckBox",""));
-            }
-        })
-    }
+		}
+	} else {
+		flavours.forEach( item => {
+		if(item.firstElementChild.checked == true && item.parentElement.firstElementChild.checked == false){
+			item.firstElementChild.checked = false;
+			updatePlaceholder(item.firstElementChild.id.replace("CheckBox",""));
+		}
+		})
+	}
 
-    var counter = 0;
+	var counter = 0;
 
 
-    check.forEach(item => {
-         if (item.parentElement.parentElement.id != "mainHeader" ){
-            item.checked? counter++ : "";
-        }
-    })
+	check.forEach(item => {
+		if (item.parentElement.parentElement.id != "mainHeader" ){
+		item.checked? counter++ : "";
+		}
+	})
 
-    if (counter > 0) {
-        check.forEach(item => { item.removeAttribute("required") })
-    } else {
-        check.forEach(item => { item.setAttribute("required","") })
-    }
+	if (counter > 0) {
+		check.forEach(item => { item.removeAttribute("required") })
+	} else {
+		check.forEach(item => { item.setAttribute("required","") })
+	}
 }
+window.updatePlaceholder = updatePlaceholder;
+
+/*const form = document.getElementById("footerForm");
+form.addEventListener("submit", submitEnquirie);*/
 
 
-const form = document.getElementById("footerForm");
-form.addEventListener("submit", submitEnquirie);
-
-
-function submitEnquirie(file){
+/*function submitEnquirie(file){
 	file.preventDefault();
 	document.body.style.cursor = 'wait';
 	//document.getElementById("submitEnquiry").disabled = true;
@@ -248,8 +248,8 @@ function submitEnquirie(file){
 			document.getElementById("submit").disabled = false;     
 			document.body.style.cursor = 'auto';
 		});*/
-	}
-};
+/*	}
+};*/
 
 function validation(formData){
 	const name = document.getElementById("fullNameInput");
@@ -267,6 +267,11 @@ function validation(formData){
 	const allergyMessage = document.getElementById("AllergyInput");
 	const photo = document.getElementById("files");
 	const address = document.getElementById("AddressInput");
+	const fullPrice = document.getElementById("fullPrice");
+	const paidFull = document.getElementById("paidFull");
+	const paidDeposit = document.getElementById("paidDeposit");
+	const paidNone = document.getElementById("paidNone");
+	const depositPaid = document.getElementById("depositPaid");
 	let cakeQuantity = 0;
 
 	const emailRegEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -352,7 +357,7 @@ function validation(formData){
 		
 		} else if (item.disabled == false && item.value != ""){
 		counter++;
-		var obj = {
+		let obj = {
 			"Item": "Cake",
 			"Flavour": item.parentElement.previousElementSibling.innerHTML,
 			"Cake Size": item.value,
@@ -365,30 +370,30 @@ function validation(formData){
 
 	order.forEach(item => {
 		if (item.parentElement.parentElement.id != "Cake" && item.parentElement.parentElement.className.includes("itemWrapper") && item.checked == true){
-		counter++;
-		var obj = {
-			"Item": item.parentElement.parentElement.id,
-			"Flavour": item.nextElementSibling.innerHTML,
-			"Quantity": document.getElementById(item.id+1).value
-		}
-		formData.append("Order", JSON.stringify(obj))
+			counter++;
+			let obj = {
+				"Item": item.parentElement.parentElement.id,
+				"Flavour": item.nextElementSibling.innerHTML,
+				"Quantity": document.getElementById(item.id+1).value
+			}
+			formData.append("Order", JSON.stringify(obj))
 
 		} else if (item.parentElement.parentElement.id != "mainHeader"  && !(item.id.startsWith("Cake")) && item.parentElement.className.startsWith("Flavours") && item.checked == true){
-		counter++;
-		var obj = {
-			"Item": item.parentElement.parentElement.id,
-			"Flavour": item.nextElementSibling.innerHTML,
-			"Quantity": document.getElementById(item.id+1).value
-		}
-		formData.append("Order", JSON.stringify(obj))
+			counter++;
+			let obj = {
+				"Item": item.parentElement.parentElement.id,
+				"Flavour": item.nextElementSibling.innerHTML,
+				"Quantity": document.getElementById(item.id+1).value
+			}
+			formData.append("Order", JSON.stringify(obj))
 
 		} else if (item.parentElement.parentElement.id != "mainHeader" && !(item.id.startsWith("Cake")) && item.checked == true) {
-		counter++;
-		var obj = {
-			"Item": item.nextElementSibling.innerHTML,
-			"Quantity": document.getElementById(item.id+1).value
-		}
-		formData.append("Order", JSON.stringify(obj))
+			counter++;
+			let obj = {
+				"Item": item.nextElementSibling.innerHTML,
+				"Quantity": document.getElementById(item.id+1).value
+			}
+			formData.append("Order", JSON.stringify(obj))
 		}
 	})
 
@@ -424,7 +429,37 @@ function validation(formData){
 		formData.append("Allergies Information", allergyMessage.value);
 	}
 
-	if (photo.value == "" && cakeQuantity != 0){
+	if (fullPrice.value == "") {
+		const error = new Error("Please enter price of the order");
+		error.focus = "fullPrice";
+		throw error;
+	} else {
+		formData.append("fullPrice", fullPrice.value);
+	}
+
+	if (!(paidFull.checked && paidDeposit.checked && paidNone.checked)) {
+		const error = new Error("Please select prepayment");
+		error.focus = "paidFull";
+		throw error;
+	} else {
+		if(paidFull.checked) {
+			formData.append("portionPaid", "Full");
+		} else if (paidDeposit.checked) {
+			formData.append("portionPaid", "Deposit");
+			if(depositPaid.value == "") {
+				const error = new Error("Please enter ammount already paid");
+				error.focus = "depositPaid";
+				throw error;
+			} else {
+				formData.append("depositPaid", depositPaid.value);
+			}
+		} else if (paidNone.checked) {
+			formData.append("portionPaid", "None");
+		}
+	}
+
+
+	/*if (photo.value == "" && cakeQuantity != 0){
 		const error = new Error("Please attach example of designs you'd like for your order.");
 		error.focus = "files";
 		throw error;
@@ -439,5 +474,5 @@ function validation(formData){
 		}
 		formData.append("clientPhotos", file);
 		}
-	}
+	}*/
 }

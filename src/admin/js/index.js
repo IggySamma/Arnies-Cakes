@@ -1,8 +1,21 @@
+//ESLint:
+import { createElement } from './shared.js';
+import { modalSubmit } from './enquiries.js';
+import { enableDisable } from './enquiries.js';
+import { updatePlaceholder } from './enquiries.js';
+
+window.getAllEnquiries = getAllEnquiries;
+window.updateModal = updateModal;
+window.paidReveal = paidReveal;
+window.requestFullEnquiry = requestFullEnquiry;
+
+
+
 //const { default: flatpickr } = require("flatpickr");
 
 //const { createElement } = require("react");
 
-let disabledDates = [];
+//let disabledDates = [];
 let confirmedEnquirys = [];
 let confirmedEnquirysTemp = [];
 
@@ -37,7 +50,7 @@ async function fetchDisabledDates() {
 	}
 	});
 
-	disabledDates = datesArray;
+	//disabledDates = datesArray;
 	//renderCalendar(currentMonth, currentYear);
 }
 
@@ -52,7 +65,8 @@ function getAllEnquiries() {
 		displayEnquiries(data);
 	})
 }
-
+/*
+//Old for Enquiery moved to calendar
 function requestFullEnquiry(enquiry){
 	let id = String(enquiry.parentElement.parentElement.firstChild.innerHTML);
 	id = {id}
@@ -66,8 +80,31 @@ function requestFullEnquiry(enquiry){
 	.then(data => {
 		updateModal(data[0])
 	})
+}*/
+
+function requestFullEnquiry(enquiry) {
+	const card = enquiry.closest('.event-card');
+	let id;
+
+	if (card) {
+		id = card.dataset.enquiryId;
+	} else {
+		id = String(enquiry.parentElement.parentElement.firstChild.innerHTML);
+	}
+
+	fetch('/api/requestEnquiry', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ id }),
+		credentials: "include",
+	})
+		.then(response => response.json())
+		.then(data => {
+			updateModal(data[0]);
+		});
 }
 
+/*
 function confirmEnquiry(enquiry){
 	let id = enquiry.parentElement.parentElement.firstChild.innerHTML;
 	const response = confirm(`All details are updated for enquiry ${id}?`);
@@ -87,8 +124,8 @@ function confirmEnquiry(enquiry){
 			}
 		});
 	}
-}
-
+}*/
+/*
 function declineEnquiry(enquiry){
 	let id = enquiry.parentElement.parentElement.firstChild.innerHTML;
 	
@@ -108,17 +145,7 @@ function declineEnquiry(enquiry){
 			}
 		});
 	}
-}
-
-function confirmation(){
-	const response = confirm("Are you sure you want to delete ?");
-	const parentPath = document.getElementsByClassName('ID:' + imageId)[0].src;;
-	const pathSrc = parentPath.substring(parentPath.lastIndexOf('/'));
-	
-	if (response) {
-		deletePicture(imageId, pathSrc.substring(1));
-	}
-  }
+}*/
 
 /*
 function deleteEnquiry(enquiry){
@@ -161,7 +188,7 @@ function displayEnquiries(data){
 			const tr = createElement('tr', {}, "");
 			table.appendChild(tr);
 
-			tableData = [row.ID, row.Name, row.Date, row.Link, "Action"];
+			let tableData = [row.ID, row.Name, row.Date, row.Link, "Action"];
 			tableData.forEach(column => {
 				if(`${column}`.includes("https")){
 					const td = createElement('td', {}, "");
@@ -172,7 +199,7 @@ function displayEnquiries(data){
 				} else if(`${column}`.includes("Action")){
 					const td = createElement('td', {}, "");
 
-					const confirm = createElement('a', { onclick: "requestFullEnquiry(this)", 'data-bs-toggle': 'modal' , 'data-bs-target':'#confirmEnquiry'}, "", "Fill out details");
+					const confirm = createElement('a', { /*onclick: "requestFullEnquiry(this)", */'data-bs-toggle': 'modal' , 'data-bs-target':'#confirmEnquiry'}, "", "Fill out details");
 
 					td.appendChild(confirm);
 					tr.appendChild(td);
@@ -187,9 +214,8 @@ function displayEnquiries(data){
 		}
 	})
 	
-	console.log(confirmedEnquirysTemp);
-	console.log(confirmedEnquirys);
-	//Sequencing callbackseeeeeeeeeeeeeeeee
+	//console.log(confirmedEnquirysTemp);
+	//console.log(confirmedEnquirys);
 	//earliestOrderDate();
 	//console.log(earliestDate)
 	fetchDisabledDates();
@@ -202,30 +228,22 @@ class modalMapping {
 
 	static fieldMapValues = {
 		Address: "AddressInput",
-		/*Allergy: "",*/
 		Allergy_Message: "AllergyInput",
-		/*ColDel: "",*/
 		ColDelDate: "datetimeEvent",
-		/*Completed: "",
-		Confirmed: "",*/
 		Date: "datetimeDate",
 		Email: "emailInput",
-		/*ID: " ",
-		Link: "",*/
 		Message: "EnquirieInput",
 		Name: "fullNameInput",
 		Number: "numberInput",
-		//Order_Details: "",
 		Price: "fullPrice",
 		PricePaid: "depositPaid"
-	}
+	};
 
 	clearFields() {
 		for (const id of Object.values(modalMapping.fieldMapValues)) {
 			if (!id) continue;
 
 			const element = document.getElementById(id);
-
 			if (element) {
 				element.value = "";
 			}
@@ -237,103 +255,92 @@ class modalMapping {
 			const element = document.getElementById(id);
 			if (element) {
 				element.value = this[field] ?? "";
-				//element.InnerHtml = this[field] ?? "";
 			}
 		}
 
 		this.tickUpdates();
 	}
 
-	updateFlatpickr(){
-		const element = document.getElementById("datetimeDate");
-		const element2 = document.getElementById("datetimeEvent");
-		element.value = this.Date.split(",")[0] ?? "";
-		element2.value = this.ColDelDate.replace(", ", "T") ?? "";
+	updateFlatpickr() {
+		const dateInput = document.getElementById("datetimeDate");
+		const eventInput = document.getElementById("datetimeEvent");
 
-		var flatpickrDate = document.getElementById("datetimeDate");
-		var flatpickrEvent = document.getElementById("datetimeEvent");
-		var flatpickrEvents = document.getElementsByClassName("flatpickrEvent")
+		if (!dateInput || !eventInput) return;
 
-		flatpickrDate.flatpickr({
+		dateInput.value = this.Date?.split(",")[0] ?? "";
+		eventInput.value = this.ColDelDate?.replace(", ", "T") ?? "";
+
+		const flatpickrEvents = document.getElementsByClassName("flatpickrEvent");
+
+		dateInput.flatpickr({
 			altInput: true,
 			altFormat: "F j, Y",
 			allowInput: false,
-			defaultDate: this.Date.split(",")[0] ?? "",
+			defaultDate: this.Date?.split(",")[0] ?? "",
 			enableTime: false,
 			dateFormat: "Y-m-d",
-			//minDate: new Date().fp_incr(0),
 			maxDate: new Date().fp_incr(730),
-			/*disable: data.Date,*/
 			disableMobile: false,
-			plugins: [new confirmDatePlugin({})],
-			onClose: () => { fpDate = true },
-			onChange: function (selectedDate, dateStr, instance) {
+			onChange: function (selectedDate, dateStr) {
 				const formattedDate = new Date(selectedDate).toLocaleDateString('en-US', {
 					year: 'numeric',
 					month: 'long',
 					day: 'numeric'
 				});
-				const col = document.getElementById("Collection")
-				const del = document.getElementById("Delivery")
 
-				col.removeAttribute("disabled")
-				del.removeAttribute("disabled")
+				const col = document.getElementById("Collection");
+				const del = document.getElementById("Delivery");
+				if (col) col.removeAttribute("disabled");
+				if (del) del.removeAttribute("disabled");
 
-				flatpickrEvent.flatpickr({
+				const anchorDate = new Date(dateStr.split(' ', 1)[0]);
+
+				eventInput.flatpickr({
 					altInput: true,
 					altFormat: "F j, Y, H:i",
 					allowInput: false,
-					defaultDate: new Date(dateStr.split(' ', 1)) + ", 12:00",
+					defaultDate: `${anchorDate}, 12:00`,
 					enableTime: true,
 					dateFormat: "Y-m-d, H:i",
-					minDate: new Date(dateStr.split(' ', 1)).fp_incr(-2),
-					maxDate: new Date(dateStr.split(' ', 1)).fp_incr(1),
-					enable: [new Date(dateStr.split(' ', 1)).fp_incr(-2), new Date(dateStr.split(' ', 1)).fp_incr(-1), new Date(dateStr.split(' ', 1))],
+					minDate: anchorDate.fp_incr(-2),
+					maxDate: anchorDate.fp_incr(1),
+					enable: [anchorDate.fp_incr(-2), anchorDate.fp_incr(-1), anchorDate],
 					minTime: "10:00",
 					maxTime: "20:00",
 					defaultHour: 12,
 					defaultMinute: 0,
 					minuteIncrement: 15,
-					disableMobile: false,
-					plugins: [new confirmDatePlugin({})],
-					onClose: () => { fpEvent = true },
+					disableMobile: false
 				});
 
-				flatpickrEvents[0].value = dateStr.split(' ', 1) + ", 12:00";
-				flatpickrEvents[1].value = formattedDate + ", 12:00";
+				if (flatpickrEvents[0]) flatpickrEvents[0].value = `${dateStr.split(' ', 1)[0]}, 12:00`;
+				if (flatpickrEvents[1]) flatpickrEvents[1].value = `${formattedDate}, 12:00`;
 			}
 		});
-		flatpickrEvent.flatpickr({
+
+		eventInput.flatpickr({
 			altInput: true,
 			altFormat: "F j, Y, H:i",
 			allowInput: false,
-			//defaultDate: data.MinDate + " 12:00",
-			defaultDate: this.ColDelDate.replace(", ", "T") ?? "",
+			defaultDate: this.ColDelDate?.replace(", ", "T") ?? "",
 			enableTime: true,
 			dateFormat: "Y-m-d H:i",
-			//minDate: data.MinDate,
-			//minDate: new Date().fp_incr(0),
 			maxDate: new Date().fp_incr(730),
-			//disable: data.Date,
-			//minTime: "10:00",
-			//maxTime: "18:00",
 			defaultHour: 12,
 			defaultMinute: 0,
 			minuteIncrement: 15,
-			disableMobile: false,
-			plugins: [new confirmDatePlugin({})]
+			disableMobile: false
 		});
-
 	}
 
-	tickUpdates(){
-		if(this.Allergy === 'Yes!') {
+	tickUpdates() {
+		if (this.Allergy === 'Yes!') {
 			this.enableTickByID("AllergyYes");
-			enableDisable('AllergyNo')
+			enableDisable('AllergyNo');
 		} else if (this.Allergy === 'No') {
 			this.enableTickByID("AllergyNo");
-			enableDisable('AllergyYes')
-		} 
+			enableDisable('AllergyYes');
+		}
 
 		if (this.ColDel === 'Collection') {
 			this.enableTickByID("Collection");
@@ -344,41 +351,75 @@ class modalMapping {
 			enableDisable('Collection');
 			this.updateFlatpickr();
 		}
+		this.updatePaidStatus();
 		this.orderParse();
 	}
+	
+	updatePaidStatus() {
+		const price = Number(this.Price) || 0;
+		const pricePaid = Number(this.PricePaid) || 0;
 
-	enableTickByID(id){
-		var element = document.getElementById(id);
+		if (pricePaid === 0) {
+			this.enableTickByID("paidNone");
+		} else if (price === pricePaid) {
+			this.enableTickByID("paidFull");
+		} else {
+			this.enableTickByID("paidDeposit");
+
+			const depositPaidContainer = document.getElementById("depositPaidContainer");
+			if (depositPaidContainer) {
+				depositPaidContainer.style.display = "block";
+			}
+		}
+	}
+
+	enableTickByID(id) {
+		const element = document.getElementById(id);
+		if (!element) return;
+
 		element.checked = true;
 		element.disabled = false;
 		element.removeAttribute("required");
 	}
 
 	disableTickByID(id) {
-		var element = document.getElementById(id);
+		const element = document.getElementById(id);
+		if (!element) return;
+
 		element.checked = false;
 		element.disabled = true;
 		element.setAttribute("required", "");
 	}
 
-	orderParse(){
-		const order = JSON.parse(this.Order_Details)
-			.map(item => JSON.parse(item))
+	orderParse() {
+		if (!this.Order_Details) return;
+
+		let raw = this.Order_Details.trim();
+		if (!raw.startsWith('[')) {
+			raw = `[${raw}]`;
+		}
+
+		const order = JSON.parse(raw)
+			.map(item => typeof item === "string" ? JSON.parse(item) : item)
 			.map(item =>
 				Object.fromEntries(
 					Object.entries(item).map(([key, value]) => [
-						key,
-						typeof value === "string" ? value.trim() : value
+						key, typeof value === "string" ? value.trim() : value
 					])
 				)
 			);
-		//console.log(order);
+
 		this.orderUpdate(order);
 	}
 
 	orderUpdate(data) {
 		data.forEach(item => {
-			const product = item.Item.trim();
+			const hasFlavour = Boolean(item.Flavour);
+
+			const product = hasFlavour
+				? item.Item?.trim() || ""
+				: (item.Item?.trim() || "").replace(/\s+/g, "");
+
 			const flavour = item.Flavour?.trim() || "";
 
 			const ids = {
@@ -399,14 +440,12 @@ class modalMapping {
 				updatePlaceholder(product + flavour);
 
 				const cakeSize = document.getElementById(ids.cakeSize);
-
 				if (cakeSize) {
 					cakeSize.value = item["Cake Size"];
 				}
 			}
 
 			const quantity = document.getElementById(ids.quantity);
-
 			if (quantity) {
 				quantity.value = item.Quantity;
 				quantity.disabled = false;
@@ -416,305 +455,58 @@ class modalMapping {
 
 	enableIfExists(id) {
 		const element = document.getElementById(id);
-
 		if (element) {
 			element.checked = true;
 		}
 	}
 
-
 	resetInputs() {
-		document.querySelectorAll('input')
-			.forEach(input => {
-				switch (input.type) {
-					case "checkbox":
-						input.checked = false;
-						break;
-
-					case "radio":
-						input.checked = false;
-						break;
-
-					default:
-						input.value = "";
-				}
-
-				//input.disabled = false;
-			});
+		document.querySelectorAll('input').forEach(input => {
+			switch (input.type) {
+				case "checkbox":
+				case "radio":
+					input.checked = false;
+					break;
+				default:
+					input.value = "";
+			}
+		});
 	}
-
 
 	modalDestroy() {
 		this.clearFields();
-		let checkboxes = document.querySelectorAll('input[type="checkbox"]');
-		checkboxes.forEach(checkbox => {
-			if (checkbox.checked === true) {
+
+		document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+			if (checkbox.checked) {
 				this.disableTickByID(checkbox.id);
 			}
-			if (checkbox.disabled === true) {
+			if (checkbox.disabled) {
 				checkbox.disabled = false;
-				checkbox.setAttribute("required", "")
+				checkbox.setAttribute("required", "");
 			}
 		});
+
 		this.resetInputs();
 	}
 }
 
-/*function modalDestroy() {
-	let checkboxes = document.querySelectorAll('input[type="checkbox"]');
-
-	checkboxes.forEach(checkbox => {
-		checkbox.checked = false;
-	});
-}*/
-
 function updateModal(data){
 	console.log(data)
-
+	document.getElementById("confirmEnquiryID").innerHTML = `ID: ${data.ID}`
 	let modalData = new modalMapping(data);
 	modalData.update();
 
 	let dismissButton = document.getElementById("dismissEnquiry");
 
+	//Clears previous listeners
+	dismissButton.parentNode.replaceChild(dismissButton.cloneNode(true), dismissButton);
+	dismissButton = document.getElementById("dismissEnquiry");
+
 	dismissButton.addEventListener("click", () => {
-		//let modalData = new modalMapping();
-		//modalData.update();
 		modalData.modalDestroy();
 	});
-/*
-	let id = document.getElementById("confirmEnquiryID");
-	id.innerHTML = `ID: ${data.ID}`
-	const ids = [
-		"confirmEnquiyID", "fullNameInput",
-		"emailInput", "numberInput",
-		
-	]
-*/
-
-/*
-	var flatpickrDate = document.getElementById("datetimeDate");
-	var flatpickrEvent = document.getElementById("datetimeEvent");
-	var flatpickrEvents = document.getElementsByClassName("flatpickrEvent")
-
-	flatpickrDate.flatpickr({
-		altInput: true,
-		altFormat: "F j, Y",
-		allowInput: false,
-		defaultDate: new Date().fp_incr(0),
-		enableTime: false,
-		dateFormat: "Y-m-d",
-		minDate: new Date().fp_incr(0),
-		maxDate: new Date().fp_incr(730),
-		/*disable: data.Date,*/
-		/*disableMobile: false,
-		plugins: [new confirmDatePlugin({})],
-		onClose: () => { fpDate = true },
-		onChange: function (selectedDate, dateStr, instance) {
-			const formattedDate = new Date(selectedDate).toLocaleDateString('en-US', {
-				year: 'numeric',
-				month: 'long',
-				day: 'numeric'
-			});
-			const col = document.getElementById("Collection")
-			const del = document.getElementById("Delivery")
-
-			col.removeAttribute("disabled")
-			del.removeAttribute("disabled")
-
-			flatpickrEvent.flatpickr({
-				altInput: true,
-				altFormat: "F j, Y, H:i",
-				allowInput: false,
-				defaultDate: new Date(dateStr.split(' ', 1)) + ", 12:00",
-				enableTime: true,
-				dateFormat: "Y-m-d, H:i",
-				minDate: new Date(dateStr.split(' ', 1)).fp_incr(-2),
-				maxDate: new Date(dateStr.split(' ', 1)).fp_incr(1),
-				enable: [new Date(dateStr.split(' ', 1)).fp_incr(-2), new Date(dateStr.split(' ', 1)).fp_incr(-1), new Date(dateStr.split(' ', 1))],
-				minTime: "10:00",
-				maxTime: "20:00",
-				defaultHour: 12,
-				defaultMinute: 0,
-				minuteIncrement: 15,
-				disableMobile: false,
-				plugins: [new confirmDatePlugin({})],
-				onClose: () => { fpEvent = true },
-			});
-
-			flatpickrEvents[0].value = dateStr.split(' ', 1) + ", 12:00";
-			flatpickrEvents[1].value = formattedDate + ", 12:00";
-		}
-	});
-	flatpickrEvent.flatpickr({
-		altInput: true,
-		altFormat: "F j, Y, H:i",
-		allowInput: false,
-		//defaultDate: data.MinDate + " 12:00",
-		defaultDate: new Date().fp_incr(0),
-		enableTime: true,
-		dateFormat: "Y-m-d H:i",
-		//minDate: data.MinDate,
-		minDate: new Date().fp_incr(0),
-		maxDate: new Date().fp_incr(730),
-		//disable: data.Date,
-		//minTime: "10:00",
-		//maxTime: "18:00",
-		defaultHour: 12,
-		defaultMinute: 0,
-		minuteIncrement: 15,
-		disableMobile: false,
-		plugins: [new confirmDatePlugin({})]
-	});*/
 }
 
-function updateInnerHTMLByID(inner, ID){
-	let temp = document.getElementById(ID);
-	temp.innerHTML = inner
-}
-
-/*---------------- calendar System ---------------------------*/
-
-const calendarDates = document.querySelector('.calendar-dates');
-const monthYear = document.getElementById('month-year');
-const prevMonthBtn = document.getElementById('prev-month');
-const nextMonthBtn = document.getElementById('next-month');
-
-let currentDate = new Date();
-let currentMonth = currentDate.getMonth();
-let currentYear = currentDate.getFullYear();
-let earliestDate;
-
-const months = [
-	'January', 'February', 'March', 'April', 'May', 'June', 
-	'July', 'August', 'September', 'October', 'November', 'December'
-];
-
-function earliestOrderDate(){
-	const div = document.getElementById("next-order-date");
-	if(confirmedEnquirys.length > 0) {
-		for(let i = 0; i < confirmedEnquirys.length; i++){
-			if(i == 0) {
-				earliestDate = confirmedEnquirys[i].Date.split(",")[0];
-			}
-
-			if(earliestDate > confirmedEnquirys[i].Date.split(",")[0]){
-				earliestDate = confirmedEnquirys[i].Date.split(",")[0];
-			}
-		}
-	} else {
-		earliestDate = "No orders";
-	}
-
-	if(earliestDate != "No orders"){
-		earliestDate = reverseDate(earliestDate);
-	}
-
-	div.innerHTML = `Next order Date: ${earliestDate}`
-}
-
-function reverseDate(date){
-	let temp = date.split("-")
-	temp.reverse();
-	return temp.join("-");
-}
-
-function renderCalendar(month, year) {
-	calendarDates.innerHTML = '';
-	monthYear.textContent = `${months[month]} ${year}`;
-
-	var firstDay = new Date(year, month, 1).getDay();
-	firstDay--;
-
-	const daysInMonth = new Date(year, month +1, 0).getDate();
-  
-	// Create blanks for days of the week before the first day
-	for (let i = 0; i < firstDay; i++) {
-	  const blank = createElement('div', {'disabled': ''}, 'calendar-box Disable');
-	  calendarDates.appendChild(blank);
-	}
-  
-	const today = new Date();
-	const uMonth = month < 10? '0' + Number(month+1) : Number(month+1);
-
-	// Populate the days
-	for (let i = 1; i <= daysInMonth; i++) {
-		const dDate = i < 10? '0' + i: i;
-		const nDate = year + '-' + uMonth +  '-' + dDate;
-		let day;
-
-		/*console.log("Date: " + nDate + " : ", nDate == confirmedEnquirys[0].Date.split(',')[0])*/
-
-		if (nDate == today.toISOString().split('T')[0]) {
-			day = createElement('div', {'id': nDate, 'disabled': ''}, 'current-date calendar-box Disable', i);
-		} else if (nDate < today.toISOString().split('T')[0]) {
-			day = createElement('div', {'id': nDate, 'disabled': ''}, 'disabled-past calendar-box Disable', i);
-		} else if(checkDisabled(nDate)) {
-			day = createElement('div', {'id': nDate, 'disabled': ''}, 'disabled-busy calendar-box Disable', i);
-		} else {
-			day = createElement('div', {'id': nDate, 'disabled': ''}, 'calendar-box Disable', i);
-		}
-
-		checkEnquiryDate(nDate, day)
-
-		calendarDates.appendChild(day);
-	}
-}
-
-function checkDisabled(date){
-	if(disabledDates.length > 0){
-		for(let i = 0; i < disabledDates.length; i++){
-			 if(date == disabledDates[i]){
-				return true
-			 }
-		}
-	}
-	return false
-}
-
-function checkEnquiryDate(date, element){
-	if(confirmedEnquirys.length > 0){
-		for(let i = 0; i < confirmedEnquirys.length; i++){
-			if(confirmedEnquirys[i].Date.split(',')[0] === date) {
-				return addEnquiryOverview(confirmedEnquirys[i], element);
-			}
-		}
-	}
-	return
-}
-
-function addEnquiryOverview(data, element){
-	element.removeAttribute('disabled')
-	if(element.classList.contains('Disable')){
-		element.classList.remove('Disable')
-	}
-	element.classList.add('Enabled')
-	let div = createElement('div', {id: 'enq:' + data.ID, 'onclick': 'selectEnquiry(this)'}, 'rounded-4 enquiry m-0 p-1', data.Name)
-	element.appendChild(div)	
-	/*let div2 = createElement('div', {id: 'enq:' + data.ID}, 'rounded-5 enquiry m-0 p-1', data.Name)
-	element.appendChild(div2)	
-	let div3 = createElement('div', {id: 'enq:' + data.ID}, 'rounded-5 enquiry m-0 p-1', data.Name)
-	element.appendChild(div3)*/
-}
-
-
-/*prevMonthBtn.addEventListener('click', () => {
-	currentMonth--;
-	if (currentMonth < 0) {
-		currentMonth = 11;
-		currentYear--;
-	}
-	renderCalendar(currentMonth, currentYear);
-});
-
-nextMonthBtn.addEventListener('click', () => {
-	currentMonth++;
-	if (currentMonth > 11) {
-		currentMonth = 0;
-		currentYear++;
-	}
-	renderCalendar(currentMonth, currentYear);
-});
-*/
 
 /*---------------------------------  Disable Dates  ------------------------------------*/
 
@@ -738,8 +530,6 @@ function show(...elements) {
 }
 
 hide(
-	/*disablingDateOptionsWrapper,
-	enablingDateOptionsWrapper,*/
 	dateOptionsWrapper,
 	disableDatesWrapper,
 	disableSubmitWrapper,
@@ -748,19 +538,6 @@ hide(
 );
 
 let alreadyDisabledDates;
-let overrideEnabledDates = [];
-
-/*fetch('/api/disabledDates', {
-	method: 'POST'
-})
-.then(response => {
-	response.json().then(data => {
-		//console.log(data)
-		alreadyDisabledDates = data;
-		//console.log(alreadyDisabledDates)
-		disableDatesCalendar.flatpickr(defaultCalendarSettings);
-	})
-})*/
 
 (async () => {
 	const res = await fetch('/api/disabledDates', { method: 'POST' });
@@ -768,18 +545,13 @@ let overrideEnabledDates = [];
 	alreadyDisabledDates = data;
 })();
 
-
-function isOverride(date) {
-	return overrideEnabledDates.includes(date);
-}
-
 let defaultCalendarSettings = {
 	altInput: true,
 	altFormat: "F j, Y",
 	enableTime: false,
 	dateFormat: "Y-m-d",
 	disableMobile: false,
-	"plugins": [new confirmDatePlugin({})],
+	/*"plugins": [new confirmDatePlugin({})],*/
 	onClose: function () {
 		if (disableDatesCalendar.value !== '') {
 			show(disableSubmitWrapper);
@@ -805,28 +577,22 @@ let defaultCalendarSettings = {
 disableEnable.addEventListener("change", () => {
 	if (disableEnable.value == "1") {
 		hide(
-			/*disablingDateOptionsWrapper,
-			enablingDateOptionsWrapper,*/
 			disableDatesWrapper,
 			disableSubmitWrapper,
 			enableLabel,
 			disableLabel
 		);
-		show(DateOptionsWrapper, disableLabel);
+		show(dateOptionsWrapper, disableLabel);
 	} else if (disableEnable.value == "2") {
 		hide(
-			/*disablingDateOptionsWrapper,
-			enablingDateOptionsWrapper,*/
 			disableDatesWrapper,
 			disableSubmitWrapper,
 			enableLabel,
 			disableLabel
 		);
-		show(DateOptionsWrapper, enableLabel);
+		show(dateOptionsWrapper, enableLabel);
 	} else {
 		hide(
-			/*disablingDateOptionsWrapper,
-			enablingDateOptionsWrapper,*/
 			dateOptionsWrapper,
 			disableDatesWrapper,
 			disableSubmitWrapper,
@@ -905,7 +671,7 @@ disableSubmitButton.addEventListener("click", () => {
 	if (datesMode.value == '1' || datesMode.value == '2') {
 		if (disableDatesCalendar.value !== '') {
 			const formData = new FormData();
-			let error = false
+			var error = false
 			let isRange;
 			let toDisable;
 
@@ -915,8 +681,8 @@ disableSubmitButton.addEventListener("click", () => {
 				isRange = true;
 			} else {
 				error = true;
-				throw new Error("isRange not attached correctly");
 				alert("isRange not attached correctly");
+				//throw new Error("isRange not attached correctly");
 			}
 			console.log(disableEnable);
 			console.log(disableEnable.value);
@@ -926,8 +692,8 @@ disableSubmitButton.addEventListener("click", () => {
 				toDisable = false
 			} else {
 				error = true;
-				throw new Error("Enable/Disable not attached correctly");
 				alert("Enable/Disable not attached correctly");
+				//throw new Error("Enable/Disable not attached correctly");
 			}
 
 			if(!error) {
@@ -950,7 +716,7 @@ disableSubmitButton.addEventListener("click", () => {
 					if (res.status === 200) {
 						location.reload();
 						//console.log(res);
-					} else if (res.status = 403){
+					} else if (res.status === 403){
 						location.reload();
 					} else {
 						console.log(res);
@@ -961,12 +727,12 @@ disableSubmitButton.addEventListener("click", () => {
 			
 		
 		} else {
-			throw new Error("Disabled Dates is blank");
 			alert("Disabled Dates is blank");
+			throw new Error("Disabled Dates is blank");
 		}
 	} else {
-		throw new Error("Please select a mode for date disabling");
 		alert("Please select a mode for date disabling");
+		throw new Error("Please select a mode for date disabling");
 	}
 })
 
@@ -976,72 +742,6 @@ function returnFromTodayString(days = 0) {
 	date = date.toISOString().split('T')[0];
 	return date;
 }
-/*
-const { createCalendar, createViewMonthAgenda } = window.SXCalendar;
-const { createDragAndDropPlugin } = window.SXDragAndDrop;
-
-const plugins = [
-	createDragAndDropPlugin(),
-]
-
-
-const calendar = createCalendar({
-	views: [createViewMonthAgenda()],
-	firstDayOfWeek: 1,
-	selectedDate: returnFromTodayString(),
-	isDark: false,
-	minDate: returnFromTodayString(),
-	maxDate: returnFromTodayString(365),
-	monthGridOptions: {
-		nEventsPerDay: 4,
-	},
-	showWeekNumbers: true,
-	isResponsive: false,
-	skipAnimations: false,
-	events: [
-		{
-			id: '1',
-			title: 'Johns Cake',
-			description: 'testing description',
-			location: 'D24V9HK',
-			start: '2026-07-23',
-			end: '2026-07-23'
-		},
-		{
-			id: '1',
-			title: 'Johns Cake',
-			start: '2026-07-23',
-			end: '2026-07-23'
-		},
-		{
-			id: '1',
-			title: 'Johns Cake',
-			start: '2026-07-23',
-			end: '2026-07-23'
-		},
-		{
-			id: '1',
-			title: 'Johns Cake',
-			start: '2026-07-24',
-			end: '2026-07-24'
-		},
-		{
-			id: '1',
-			title: 'Johns Cake',
-			start: '2026-07-25',
-			end: '2026-07-25'
-		},
-		{
-			id: '1',
-			title: 'Johns Cake',
-			start: '2026-07-25',
-			end: '2026-07-25'
-		},
-	],
-	plugins,
-})
-
-calendar.render(document.getElementById("calendar"))*/
 
 const { createCalendar, createViewMonthGrid } = window.SXCalendar;
 const { createEventsServicePlugin } = window.SXEventsService;
@@ -1094,7 +794,7 @@ calendar.render(document.getElementById('calendar'));
 
 // populate "Next Upcoming Event" on load
 renderNextUpcomingEvent();
-
+/*
 function renderDayDetails(dateStr) {
 	const allEvents = eventsService.getAll();
 
@@ -1128,6 +828,63 @@ function renderDayDetails(dateStr) {
             </div>
         `).join('')}
     `;
+}*/
+
+function parseOrderDetails(raw) {
+	if (!raw) return [];
+
+	let str = raw.trim();
+	if (!str.startsWith('[')) {
+		str = `[${str}]`;
+	}
+
+	try {
+		return JSON.parse(str)
+			.map(item => typeof item === "string" ? JSON.parse(item) : item);
+	} catch (err) {
+		console.error("Failed to parse order details:", err, raw);
+		return [];
+	}
+}
+
+function renderOrderTable(rawOrderDetails) {
+	const items = parseOrderDetails(rawOrderDetails);
+
+	if (items.length === 0) return '';
+
+	// Only include columns that have at least one non-empty value across all items
+	const possibleColumns = [
+		{ key: "Item", label: "Item", type: "text" },
+		{ key: "Flavour", label: "Flavour", type: "text" },
+		{ key: "Cake Size", label: "Size", type: "numeric" },
+		{ key: "Quantity", label: "Qty", type: "numeric" }
+	];
+
+	const columns = possibleColumns.filter(col =>
+		items.some(item => item[col.key] !== undefined && item[col.key] !== "")
+	);
+
+	const headerRow = columns.map(col =>
+		`<th class="col-${col.type}">${col.label}</th>`
+	).join('');
+
+	const bodyRows = items.map(item => {
+		const cells = columns.map(col =>
+			`<td class="col-${col.type}">${item[col.key] ?? ''}</td>`
+		).join('');
+		return `<tr>${cells}</tr>`;
+	}).join('');
+
+	return `
+		<table class="table table-sm order-table">
+			<thead>
+				<tr>${headerRow}</tr>
+			</thead>
+			<tbody>
+				${bodyRows}
+			</tbody>
+		</table>
+	`;
 }
 
 function renderNextUpcomingEvent() {
@@ -1162,65 +919,98 @@ function renderNextUpcomingEvent() {
     `;
 }
 
-async function loadEvents() {
-	//const res = await fetch('/api/events', { method: 'POST' });
-	//const events = await res.json();
-	const events = [
-		{
-			calendarId: 'Arnies',
-			id: '1',
-			title: 'Johns Cake',
-			description: 'testing description',
-			delivery: 'delivery',
-			location: 'hells kitchen',
-			time: '14:30',
-			price: '500',
-			start: '2026-07-23',
-			end: '2026-07-23'
-		},
-		{
-			calendarId: 'Arnies',
-			id: '1',
-			title: 'Mikes Cake',
-			delivery: 'collection',
-			start: '2026-07-23',
-			end: '2026-07-23'
-		},
-		{
-			calendarId: 'Arnies',
-			id: '1',
-			title: 'Johns Cake',
-			start: '2026-07-23',
-			end: '2026-07-23'
-		},
-		{
-			calendarId: 'Arnies',
-			id: '1',
-			title: 'Johns Cake',
-			start: '2026-07-24',
-			end: '2026-07-24'
-		},
-		{
-			calendarId: 'Arnies',
-			id: '1',
-			title: 'Johns Cake',
-			start: '2026-07-25',
-			end: '2026-07-25'
-		},
-		{
-			calendarId: 'Arnies',
-			id: '1',
-			title: 'Johns Cake',
-			start: '2026-07-25',
-			end: '2026-07-25'
-		}
-	]
+function renderDayDetails(dateStr) {
+	const allEvents = eventsService.getAll();
 
-	events.forEach(ev => {
-		calendar.eventsService.add(ev);
+	const dayEvents = allEvents.filter(ev => {
+		const start = ev.start.toString().split('T')[0];
+		const end = ev.end.toString().split('T')[0];
+		return dateStr >= start && dateStr <= end;
 	});
 
-	renderNextUpcomingEvent(); // refresh once, after all events are added
+	if (dayEvents.length === 0) {
+		detailsPanel.innerHTML = `
+            <h3>${dateStr}</h3>
+            <p style="color:#888;">No events on this day.</p>
+        `;
+		return;
+	}
+
+	detailsPanel.innerHTML = `
+        <h3>${dateStr}</h3>
+        ${dayEvents.map(ev => `
+            <div class="event-card" style="position: relative;" data-enquiry-id="${ev.id}">
+                <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    style="position: absolute; top: 10px; right: 10px;"
+                    onclick="requestFullEnquiry(this)"
+                    data-bs-toggle="modal"
+                    data-bs-target="#confirmEnquiry"
+                >Edit</button>
+                <a
+                    target="_blank"
+                    class="btn btn-sm btn-outline-secondary"
+                    style="position: absolute; top: 10px; right: 60px;"
+                    href="${ev.link}"
+                >Email</a>
+                <strong>${ev.title}</strong><br/>
+                <small>📅 ${ev.start.toString().split('T')[0]}</small>
+                <p>
+			${ev.time ? `🕑 ${ev.time}<br/>` : ''}
+                        ${ev.delivery ? `🚗 ${ev.delivery}<br/>` : ''}
+                        ${ev.location ? `🌎 ${ev.location}<br/>` : ''}
+			${ev.number ? `📞 ${ev.number}<br/>` : ''}
+                        ${ev.price ? `💸 ${ev.price}<br/>` : ''}
+                        ${ev.paid ? `💲 ${ev.paid}<br/>` : ''}
+			${ev.allergy ? `🤒 ${ev.allergy}<br/>` : ''}
+                        ${ev.description ? `📒 ${ev.description}<br/>` : ''}
+                </p>
+                ${renderOrderTable(ev.order)}
+            </div>
+        `).join('')}
+    `;
+}
+
+function mapEnquiryToEvent(enquiry) {
+	const [datePart, timePart] = (enquiry.ColDelDate || "").split(",").map(s => s.trim());
+
+	return {
+		calendarId: 'Arnies',
+		id: enquiry.ID? String(enquiry.ID) : '',
+		link: enquiry.Link ? enquiry.Link : '',
+		title: enquiry.Name? enquiry.Name : '',
+		order: enquiry.Order_Details? enquiry.Order_Details : '',
+		description: enquiry.Message? "Description: " + enquiry.Message : '',
+		delivery: enquiry.ColDel? enquiry.ColDel : '',
+		location: enquiry.Address? "Address: " + enquiry.Address : '',
+		time: timePart ? "Time: " + timePart : '',
+		price: enquiry.Price? "Price: " + enquiry.Price : '',
+		paid: enquiry.PricePaid? "Paid: " + enquiry.PricePaid : '',
+		allergy: enquiry.Allergy === 'Yes!' ? "Allergy: Yes, " + enquiry.Allergy_Message : 'Allergy: No',
+		//allergyMessage: enquiry.Allergy === 'Yes!' ? "Allergy Message: " + enquiry.Allergy_Message : '',
+		number: enquiry.Number ? "Number: " + enquiry.Number : '',
+		start: datePart ? datePart : '',
+		end: datePart ? datePart : ''
+	};
+}
+
+async function loadEvents() {
+	const res = await fetch('/api/allConfirmedEnquiries', { method: 'POST' });
+
+	if (!res.ok) {
+		throw new Error(`Failed to load events: ${res.status}`);
+	}
+
+	const enquiries = await res.json();
+	console.log(enquiries);
+
+	enquiries
+		.map(mapEnquiryToEvent)
+		.forEach(ev => calendar.eventsService.add(ev));
+
+
+	renderNextUpcomingEvent(); 
 }
 
 
@@ -1268,11 +1058,11 @@ async function loadEnquiryForm() {
 		const paidContainer = createElement("div", {}, "mb-3");
 		const paidContainerLabel = createElement("label", { "for": "paidContainer" }, "form-label", "How much has been paid ?");
 		const paidBreak = createElement("br", {}, "");
-		const paidFullInput = createElement("input", { "id": "paidFull", "type": "checkbox", "onclick": 'paidReveal("paidFull")' }, "form-check-input mx-1 px-1");
+		const paidFullInput = createElement("input", { "id": "paidFull", "type": "checkbox", "onclick": 'paidReveal("")' }, "form-check-input mx-1 px-1");
 		const paidFullLabel = createElement("label", { "for": "paidFull" }, "form-label", "Full");
-		const paidDepositInput = createElement("input", { "id": "paidDeposit", "type": "checkbox", "onclick": 'paidReveal("paidDeposit")' }, "form-check-input mx-1 px-1");
+		const paidDepositInput = createElement("input", { "id": "paidDeposit", "type": "checkbox", "onclick": 'paidReveal("")' }, "form-check-input mx-1 px-1");
 		const paidDepositLabel = createElement("label", { "for": "paidDeposit" }, "form-label", "Deposit");
-		const paidNoneInput = createElement("input", { "id": "paidNone", "type": "checkbox", "onclick": 'paidReveal("paidNone")'}, "form-check-input mx-1 px-1");
+		const paidNoneInput = createElement("input", { "id": "paidNone", "type": "checkbox", "onclick": 'paidReveal("")'}, "form-check-input mx-1 px-1");
 		const paidNoneLabel = createElement("label", { "for": "paidNone" }, "form-label", "None");
 		const paidInputInvalid = createElement("div", {}, "invalid-feedback", "Please select payment details");
 
@@ -1288,7 +1078,7 @@ async function loadEnquiryForm() {
 		form.appendChild(paidContainer);
 
 		const depositPaidContainer = createElement("div", { "id": "depositPaidContainer"}, "mb-3");
-		const depositPaidLabel = createElement("label", { "for": "depositPaid" }, "form-label", "deposit Paid:");
+		const depositPaidLabel = createElement("label", { "for": "depositPaid" }, "form-label", "Deposit Paid:");
 		const depositPaidInput = createElement("textarea", { "id": "depositPaid", "type": "text", "rows": "1" }, "form-control form-control-lg");
 		const depositPaidInputInvalid = createElement("div", {}, "invalid-feedback", "Missing Deposit Price");
 
@@ -1309,7 +1099,7 @@ async function loadEnquiryForm() {
 
 loadEnquiryForm();
 
-function paidReveal(ID){
+function paidReveal(amount = ""){
 	const full = document.getElementById("paidFull");
 	const deposit = document.getElementById("paidDeposit");
 	const none = document.getElementById("paidNone");
@@ -1319,7 +1109,7 @@ function paidReveal(ID){
 
 	if(full.checked) {
 		hide(depositPaidContainer);
-		depositPaidInput.value = "";
+		depositPaidInput.value = amount
 		depositPaidInput.removeAttribute("required", "");
 		full.disabled = false;
 		deposit.disabled = true;
@@ -1338,7 +1128,7 @@ function paidReveal(ID){
 
 	if (none.checked) {
 		hide(depositPaidContainer);
-		depositPaidInput.value = "";
+		depositPaidInput.value = amount;
 		depositPaidInput.removeAttribute("required");
 		full.disabled = true;
 		deposit.disabled = true;
@@ -1346,7 +1136,7 @@ function paidReveal(ID){
 		return
 	}
 
-	depositPaidInput.value = "";
+	depositPaidInput.value = amount;
 	depositPaidInput.removeAttribute("required");
 	hide(depositPaidContainer);
 	full.disabled = false;

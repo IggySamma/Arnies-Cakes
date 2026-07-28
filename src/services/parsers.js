@@ -4,7 +4,9 @@ const sqlQuery = require('./sql.js');
 const serverConfig = require('../config/config.js');
 const fs = require('fs');
 const multer = require("multer");
-const { text } = require('body-parser');
+const path = require('path');
+const sharp = require('sharp');
+//const { text } = require('body-parser');
 const templates = require('../utils/fileRendering.js');
 
 /*------------------------------- Gallery ------------------------------------*/
@@ -17,7 +19,7 @@ function getAllFromGallery() { /*This functions duplicated in sql.js*/
 		'SELECT * FROM gallery ORDER BY ID ASC;',
 		function (err, results) {
 			if(err){
-				res.json(new Error(err));
+				return new Error(JSON.parse((err)));
 			}else{
 				globals.gallery = JSON.parse(JSON.stringify(results));
 			}
@@ -362,7 +364,8 @@ function getFlavours(done) {
 function storeFlavours(data){
 	globals.flavours = new globals.flavoursConstructor;
 
-	const re = new RegExp(/["\[\]]|null/g)
+	//const re = new RegExp(/["\[\]]|null/g);
+	const re = new RegExp(/["[\]]|null/g);
 
 	for(let i = 0; i < data.length; i++){
 		globals.flavours.ID.push(data[i].ID);
@@ -371,10 +374,6 @@ function storeFlavours(data){
 		globals.flavours.Text.push(String(data[i].Text).replace(re,"").split(","));
 		globals.flavours.Flavours.push(String(data[i].Flavours).replace(re,"").split(","));
 	}
-
-    	//console.log("Flavours stored");
-	/*serverConfig.rebuildAllPages && templates.saveNewPublicFile('Flavours.html', globals.flavours, 'Flavours.ejs');
-	serverConfig.rebuildAllPages && getEnquiriesHeadersPreRender();*/
 
 	if (serverConfig.rebuildAllPages) {
 		templates.saveNewPublicFile('Flavours.html', globals.flavours, 'Flavours.ejs');
@@ -390,7 +389,7 @@ function getEnquiriesHeadersPreRender(rebuild = false) {
 		function (err, results) {
 			if (err) {
 				console.log(err);
-				res.json(new Error(err));
+				return new Error(err);
 			} else {
 				const obj = JSON.parse(JSON.stringify(results));
 				
@@ -410,8 +409,7 @@ function getEnquiriesSubHeadersPreRender(main, rebuild = false) {
 		'SELECT * FROM subheaders;',
 		function (err, results) {
 			if (err) {
-				console.log(err);
-				res.json(new Error(err));
+				return new Error(err);
 			} else {
 				var obj = JSON.parse(JSON.stringify(results));
 				const sub = obj.map( item => ({
@@ -490,7 +488,7 @@ function deleteDates(ID){
         function (err, results) {
             if (err) {
                 console.log(err);
-                res.json(new Error(err));
+		results.json(new Error(err));
             } else {
                 getDisabledDates();
                 console.log("Deleted old disabled date ID: " + ID);
@@ -600,8 +598,6 @@ async function updateFlavours(heading, hid, column, value, done) {
 
 
 	if (flavoursCol.includes(column)) {
-
-
 		flavours = `UPDATE flavours SET ${column} = ? WHERE ID = ?;`;
 	}
 
@@ -666,9 +662,10 @@ function runSeries(tasks, done) {
 
 async function handleDisableDates(req, res) {
 	let buffer = JSON.parse(JSON.stringify(req.body));
-	let dates = [];
-
+	
 	try {
+		let dates = [];
+		
 		if(buffer.isRange === undefined) {
 			return res.status(400).json({ error: "Missing isRange" });
 		}

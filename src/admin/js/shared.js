@@ -1,8 +1,11 @@
+window.buildFooter = buildFooter;
+window.buildNavBar = buildNavBar;
+
 if (!(window.location.pathname.includes('Gallery'))){
     window.history.replaceState({},"", (window.location.pathname.replace('.html','')).toString())
 }
 
-function createElement(type, attributes = {}, classes = "", innerHTML = "") {
+export function createElement(type, attributes = {}, classes = "", innerHTML = "") {
     const element = document.createElement(type);
     if (classes) element.className = classes;
     for (let key in attributes) {
@@ -12,19 +15,19 @@ function createElement(type, attributes = {}, classes = "", innerHTML = "") {
     return element;
 }
 
-function appendChildren(parent, children) {
+export function appendChildren(parent, children) {
     children.forEach(child => parent.appendChild(child));
 }
 
 /*Side Scroll*/
-function createImageColumn(src) {
+export function createImageColumn(src) {
     const col = createElement('div', {}, "col p-0 my-1 py-1");
     const img = createElement('img', { src, loading: "lazy" }, "homeImage");
     col.appendChild(img);
     return col;
 }
 
-function buildSideScroll() {
+export function buildSideScroll() {
     const attach = document.getElementById("sideScroll");
     attach.className = "row sideScrollContainer m-0 p-0";
 
@@ -183,7 +186,8 @@ footerItems.forEach(item => {
 
 var prevScrollpos = window.scrollY;
 if (!(document.getElementById("navbar") === null || document.getElementById("navbar") === undefined)){
-    var navCollapse = new bootstrap.Collapse(document.getElementById("navbar"));
+    //var navCollapse = 
+    new bootstrap.Collapse(document.getElementById("navbar"));
 }
 
 var scrollThreshold = 15;

@@ -39,7 +39,7 @@ serverConfig.initApp().then((app) => {
 	app.post('/api/upload', serverConfig.ensureAuthenticated, parsers.galleryUpload.array("myFiles"), parsers.processImages, (req, res) => { parsers.uploadFiles(req, res) });
 	app.post('/api/deleteGallery', serverConfig.ensureAuthenticated, (req, res) => { parsers.deleteFromGallery(req, res) });
 	app.post('/api/adminGallery', serverConfig.ensureAuthenticated, (req, res) => { utils.filterGallery(req, res) });
-	app.get('/api/refreshGallery', serverConfig.ensureAuthenticated, (req, res) => { parsers.getAllFromGallery() });
+	app.get('/api/refreshGallery', serverConfig.ensureAuthenticated, (/*req, res*/) => { parsers.getAllFromGallery() });
 	app.post('/api/allEnquiries', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.getAllEnquiries().then(data => res.json(data)) });
 	app.post('/api/allConfirmedEnquiries', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.getAllConfirmedEnquiries().then(data => res.json(data)) });
 	app.post('/api/confirmEnquiry', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.confirmEnquiry(req, res) });

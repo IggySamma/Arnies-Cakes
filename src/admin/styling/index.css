@@ -1,3 +1,7 @@
+:root {
+	--arnies-color: #D3BBDD;
+}
+
 .navSpacer{
 	position: relative;
     	top: 60px;
@@ -177,20 +181,20 @@ h2{
 }
 
 .Disable{
-	aspect-ratio: 1/1 !important;
+	aspect-ratio: 1/1 !important; /* eslint-disable-line css/no-important */
 	text-align: center;
 	margin: auto;
 	width: 100%;
-	cursor: default !important;
+	cursor: default !important; /* eslint-disable-line css/no-important */
 }
 
 .enquiry{
-	aspect-ratio: unset !important;
+	aspect-ratio: unset !important; /* eslint-disable-line css/no-important */ 
 	background-color: #D3BBDD;
 	width: 100%;
 	font-size: 0.8rem;
 	text-align: center;
-	margin-top: 10px !important;
+	margin-top: 10px !important; /* eslint-disable-line css/no-important */
 }
 
 .enquiry:nth-child(even){
@@ -202,24 +206,24 @@ h2{
 }
 
 .Enabled:hover{
-	background-color: #F0E9F5 !important; 
+	background-color: #F0E9F5 !important; /* eslint-disable-line css/no-important */ 
 }
 
 .flatpickr-calendar{
 	position: relative;
-	top: 35% !important;
+	top: 35% !important; /* eslint-disable-line css/no-important */
 }
 
 .disabled-highlight {
 	background: #ff4d4f33;
-	color: rgba(57, 57, 57, 0.3) !important;
+	color: rgba(57, 57, 57, 0.3) !important; /* eslint-disable-line css/no-important */
 	border-radius: 4px;
 	position: relative;
 }
 
 .disabled-highlight::after {
 	content: "";
-	color: rgba(57, 57, 57, 0.1) !important;
+	color: rgba(57, 57, 57, 0.1) !important; /* eslint-disable-line css/no-important */
 	position: absolute;
 	inset: 2px;
 	border: 1px dashed #ff4d4f;
@@ -307,7 +311,7 @@ h2{
 }
 
 .sx__month-grid-day__header-date.sx__is-today {
-	background-color: unset !important;
+	background-color: unset !important; /* eslint-disable-line css/no-important */
 	color:#000000;
 }
 
@@ -324,9 +328,35 @@ h2{
 }
 
 .sidebar {
-	width: 300px;
+	width: 350px;
 	max-height: 800px;
 	overflow-y: auto;
+}
+
+.order-table {
+	width: 100%;
+	table-layout: fixed;
+	font-size: 0.75rem;
+}
+
+.order-table th,
+.order-table td {
+	padding: 2px 4px;
+	/*overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;*/
+	word-break: break-word;
+	white-space: normal;
+}
+
+.order-table th.col-text,
+.order-table td.col-text {
+	width: 35%;
+}
+
+.order-table th.col-numeric,
+.order-table td.col-numeric {
+	width: 12%;
 }
 
 #next-event {
