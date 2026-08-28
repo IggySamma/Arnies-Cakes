@@ -10,9 +10,13 @@
   src: local('Halimun'), url('./fonts/Halimun.ttf') format('truetype');
 }
 
-.navSpacer {
+/*.navSpacer {
 	position: relative;
 	top: 60px;
+}*/
+
+.navSpacer {
+	padding-top: 60px;
 }
 
 body{
@@ -346,16 +350,20 @@ a:active {
 .vpw100{width: 100vw;}
 
 #navbarSupportedContent{
-  overflow: visible !important;
+  overflow: visible !important; /* eslint-disable-line css/no-important */
 }
 
 @media only screen and (min-width: 400px){
   .footerLogo{height: 80px;}
 
-  .navSpacer {
+  /*.navSpacer {
   	position: relative;
   	top: 110px;
-  }
+  }*/
+
+    .navSpacer {
+    	padding-top: 110px;
+    }
 }
 
 @media only screen and (min-width: 992px){  
@@ -537,7 +545,7 @@ a:active {
 
 
   /* desktop height % */
-  .d-h10{height: 10% !important;}
+  .d-h10{height: 10% !important;} 
 
   .d-h20{height: 20% !important;}
   

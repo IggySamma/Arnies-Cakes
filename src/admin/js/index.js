@@ -3,12 +3,14 @@ import { createElement } from './shared.js';
 import { modalSubmit } from './enquiries.js';
 import { enableDisable } from './enquiries.js';
 import { updatePlaceholder } from './enquiries.js';
+import { loadCalender, validation } from './enquiries.js';
 
 window.getAllEnquiries = getAllEnquiries;
 window.updateModal = updateModal;
 window.paidReveal = paidReveal;
 window.requestFullEnquiry = requestFullEnquiry;
-
+window.enableDisable = enableDisable;
+window.setID = setID;
 
 
 //const { default: flatpickr } = require("flatpickr");
@@ -16,7 +18,7 @@ window.requestFullEnquiry = requestFullEnquiry;
 //const { createElement } = require("react");
 
 //let disabledDates = [];
-let confirmedEnquirys = [];
+let confirmedEnquirys = []; /* eslint-disable-line */
 let confirmedEnquirysTemp = [];
 
 async function getDisabledDates() {
@@ -65,22 +67,6 @@ function getAllEnquiries() {
 		displayEnquiries(data);
 	})
 }
-/*
-//Old for Enquiery moved to calendar
-function requestFullEnquiry(enquiry){
-	let id = String(enquiry.parentElement.parentElement.firstChild.innerHTML);
-	id = {id}
-	fetch('/api/requestEnquiry', {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify(id),
-		credentials: "include",
-	})
-	.then(response => response.json())
-	.then(data => {
-		updateModal(data[0])
-	})
-}*/
 
 function requestFullEnquiry(enquiry) {
 	const card = enquiry.closest('.event-card');
@@ -199,7 +185,7 @@ function displayEnquiries(data){
 				} else if(`${column}`.includes("Action")){
 					const td = createElement('td', {}, "");
 
-					const confirm = createElement('a', { /*onclick: "requestFullEnquiry(this)", */'data-bs-toggle': 'modal' , 'data-bs-target':'#confirmEnquiry'}, "", "Fill out details");
+					const confirm = createElement('a', { /*onclick: "requestFullEnquiry(this)", */'data-bs-toggle': 'modal' , 'data-bs-target':'#confirmEnquiry', 'onclick':'setID(this)'}, "", "Fill out details");
 
 					td.appendChild(confirm);
 					tr.appendChild(td);
@@ -344,11 +330,16 @@ class modalMapping {
 
 		if (this.ColDel === 'Collection') {
 			this.enableTickByID("Collection");
-			enableDisable('Delivery');
+			hide(document.getElementById("AddressField"));
+			//enableDisable('Delivery');
+			
 			this.updateFlatpickr();
 		} else if (this.ColDel === 'Delivery') {
 			this.enableTickByID("Delivery");
-			enableDisable('Collection');
+			show(document.getElementById("AddressField"));
+			
+			//enableDisable('Collection');
+			
 			this.updateFlatpickr();
 		}
 		this.updatePaidStatus();
@@ -487,6 +478,8 @@ class modalMapping {
 		});
 
 		this.resetInputs();
+
+		document.getElementById("confirmEnquiryID").innerHTML = `ID: `
 	}
 }
 
@@ -507,6 +500,139 @@ function updateModal(data){
 	});
 }
 
+function setID(data) {
+	//Presumes first column in table is ID
+	const idValue = data.parentElement.parentElement.firstChild.innerHTML;
+	document.getElementById("confirmEnquiryID").innerHTML = `ID: ${idValue}`;
+
+	const modalConfirm = document.getElementById("submitEnquiry");
+	const modalReject = document.getElementById("rejectEnquiry");
+
+	if (!modalConfirm || !modalReject) return;
+
+	removeOldListeners(modalConfirm, 'click');
+	removeOldListeners(modalReject, 'click');
+
+	modalConfirm.addEventListener('click', (e) => {
+		e.preventDefault();
+		submitEnquiry();
+	});
+
+	modalReject.addEventListener('click', (e) => {
+		e.preventDefault();
+		rejectEnquiry();
+	});
+
+	loadCalender();
+}
+
+function removeOldListeners(element, type) {
+	while (element && element.parentNode) {
+		try {
+			if (type in element) {
+				element.removeEventListener(type, null);
+			}
+		} catch (err) { 
+			console.log(err);
+		}
+		break;
+	}
+}
+
+function submitEnquiry(event){
+	if (event) event.preventDefault();
+
+	const formData = new FormData();
+	let errors = false;
+
+	const idElement = document.getElementById("confirmEnquiryID");
+	let enquiryId;
+	if (idElement && idElement.textContent.includes('ID: ')) {
+		enquiryId = parseInt(idElement.textContent.replace('ID: ', ''));
+		formData.append("ID", enquiryId);
+	}
+
+	try {
+		validation(formData);
+	} catch (error) {
+		errors = true;
+		handleValidationErrors(error, formData);
+	}
+
+	if (!errors) {
+		submitToBackend(formData);
+	}
+};
+
+function submitToBackend(formData) {
+	fetch('/api/updateEnquirie', {
+		method: 'POST',
+		body: formData,
+	})
+	.then((res) => handleResponse(res))
+	.catch(() => {
+		document.body.style.cursor = 'auto';
+		if (document.getElementById("submit"))
+			document.getElementById("submit").disabled = false;
+	});
+}
+
+function handleValidationErrors(error, formData) {
+	document.body.style.cursor = 'auto';
+	const submitBtn = document.getElementById("submit");
+	if (submitBtn) submitBtn.disabled = false;
+
+	// Focus handling
+	if (error.focus == "datetimeDate" || error.focus == "datetimeEvent") {
+		document.getElementById(error.focus).nextElementSibling.focus();
+	} else {
+		document.getElementById(error.focus).focus();
+	}
+
+	alert(error.message);
+}
+
+
+function handleResponse(response) {
+	switch (response.status) {
+		case 200:
+			window.location.href = "/enquiriesty";
+			break;
+		default:
+			try {
+				const errorElementId = response.statusText.toLowerCase();
+				throw new Error(`Server error: ${response.statusText}`, { focus: errorElementId });
+			} catch (e) {
+				handleValidationErrors(e, formData);
+			}
+	}
+
+	document.body.style.cursor = 'auto';
+	if (document.getElementById("submit"))
+		document.getElementById("submit").disabled = false;
+}
+
+function rejectEnquiry(){
+	let id = document.getElementById("confirmEnquiryID").innerHTML.split(' ')[1]
+	const response = confirm(`Are you sure you want to decline the enquiry id: ${id} ?`);
+
+	if (response) {
+		fetch('/api/declineEnquiry', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ id }),
+			credentials: "include",
+		})
+		.then((res) => {
+			if (res.status === 200) {
+				location.reload();
+			} else {
+				console.log(res);
+			}
+		});
+	}
+};
+
 
 /*---------------------------------  Disable Dates  ------------------------------------*/
 
@@ -521,11 +647,11 @@ const disableLabel = document.getElementById("disableDatesLabel");
 const dateOptionsWrapper = document.getElementById("DateOptionsWrapper");
 
 
-function hide(...elements) {
+export function hide(...elements) {
 	elements.forEach(el => el.style.display = 'none');
 }
 
-function show(...elements) {
+export function show(...elements) {
 	elements.forEach(el => el.style.display = 'block');
 }
 
@@ -937,39 +1063,43 @@ function renderDayDetails(dateStr) {
 	}
 
 	detailsPanel.innerHTML = `
-        <h3>${dateStr}</h3>
-        ${dayEvents.map(ev => `
-            <div class="event-card" style="position: relative;" data-enquiry-id="${ev.id}">
-                <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary"
-                    style="position: absolute; top: 10px; right: 10px;"
-                    onclick="requestFullEnquiry(this)"
-                    data-bs-toggle="modal"
-                    data-bs-target="#confirmEnquiry"
-                >Edit</button>
-                <a
-                    target="_blank"
-                    class="btn btn-sm btn-outline-secondary"
-                    style="position: absolute; top: 10px; right: 60px;"
-                    href="${ev.link}"
-                >Email</a>
-                <strong>${ev.title}</strong><br/>
-                <small>📅 ${ev.start.toString().split('T')[0]}</small>
-                <p>
-			${ev.time ? `🕑 ${ev.time}<br/>` : ''}
-                        ${ev.delivery ? `🚗 ${ev.delivery}<br/>` : ''}
-                        ${ev.location ? `🌎 ${ev.location}<br/>` : ''}
-			${ev.number ? `📞 ${ev.number}<br/>` : ''}
-                        ${ev.price ? `💸 ${ev.price}<br/>` : ''}
-                        ${ev.paid ? `💲 ${ev.paid}<br/>` : ''}
-			${ev.allergy ? `🤒 ${ev.allergy}<br/>` : ''}
-                        ${ev.description ? `📒 ${ev.description}<br/>` : ''}
-                </p>
-                ${renderOrderTable(ev.order)}
-            </div>
-        `).join('')}
-    `;
+		<h3>${dateStr}</h3>
+		${dayEvents.map(ev => `
+		<div class="event-card" style="position: relative;" data-enquiry-id="${ev.id}">
+			<button
+			type="button"
+			class="btn btn-sm btn-outline-secondary"
+			style="position: absolute; top: 10px; right: 10px;"
+			onclick="requestFullEnquiry(this)"
+			data-bs-toggle="modal"
+			data-bs-target="#confirmEnquiry"
+			>Edit</button>
+			<a
+			target="_blank"
+			class="btn btn-sm btn-outline-secondary"
+			style="position: absolute; top: 10px; right: 60px;"
+			href="${ev.link}"
+			>Email</a>
+			<strong>${ev.title}</strong><br/>
+			<small>📅 ${ev.start.toString().split('T')[0]}</small>
+			<p>
+				${ev.time ? `🕑 ${ev.time}<br/>` : ''}
+				${ev.delivery ? `🚗 ${ev.delivery}<br/>` : ''}
+				${ev.location ? `🌎 ${ev.location}<br/>` : ''}
+				${ev.number ? `📞 ${ev.number}<br/>` : ''}
+				${ev.price ? `💸 ${ev.price}<br/>` : ''}
+				${ev.paid ? `💲 ${ev.paid}<br/>` : ''}
+				${ev.allergy ? `🤒 ${ev.allergy}<br/>` : ''}
+				${ev.description ? `📒 ${ev.description}<br/>` : ''}
+			</p>
+			${renderOrderTable(ev.order)}
+		</div>
+		`).join('')}
+	`;
+
+	if (window.matchMedia('(max-width: 768px)').matches) {
+		detailsPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+	}
 }
 
 function mapEnquiryToEvent(enquiry) {
@@ -1003,7 +1133,7 @@ async function loadEvents() {
 	}
 
 	const enquiries = await res.json();
-	console.log(enquiries);
+	//console.log(enquiries);
 
 	enquiries
 		.map(mapEnquiryToEvent)

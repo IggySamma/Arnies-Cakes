@@ -8,6 +8,7 @@ const path = require('path');
 const sharp = require('sharp');
 //const { text } = require('body-parser');
 const templates = require('../utils/fileRendering.js');
+const convert = require('heic-convert');
 
 /*------------------------------- Gallery ------------------------------------*/
 
@@ -27,19 +28,6 @@ function getAllFromGallery() { /*This functions duplicated in sql.js*/
 	);
 }
 
-/*
-const galleryUpload = multer({ 
-    	//dest: "./public/gallery", //Dev
-	//dest: globals.publicGallery, //Docker
-	dest: serverConfig.isDocker ? globals.publicGallery : globals.devGallery,
-	fileFilter(req, file, cb) {
-		if (!file.originalname.match(/\.(png|PNG|jpg|JPG|jpeg|JPEG)$/)){
-		cb(new Error('Please upload an image.'));
-		}
-		cb(undefined, true);
-	},
-});
-*/
 
 const galleryUpload = multer({
 	storage: multer.memoryStorage(),
@@ -50,102 +38,147 @@ const galleryUpload = multer({
 		cb(undefined, true);
 	},
 });
-/*
+
+
 const processImages = async (req, res, next) => {
-	if (!req.files || req.files.length === 0) return next();
-
-	try {
-		const dest = serverConfig.isDocker ? globals.publicGallery : globals.devGallery;
-
-		const processed = await Promise.all(
-			req.files.map(async (file) => {
-				const originalName = path.parse(file.originalname).name;
-				const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}-${originalName}.jpg`;
-				const outputPath = path.join(dest, filename);
-
-				await sharp(file.buffer)
-					.rotate()
-					.toFormat('jpeg', {
-						quality: 85,
-						mozjpeg: true,
-						chromaSubsampling: '4:4:4',
-					})
-					.toFile(outputPath);
-
-				return {
-					...file,
-					filename,
-					path: outputPath,
-					mimetype: 'image/jpeg',
-				};
-			})
-		);
-
-		req.files = processed; // overwrite with processed versions
-		next();
-	} catch (err) {
-		next(err);
+	if (!req.files || req.files.length === 0) {
+		return next();
 	}
-};*/
 
-const processImages = async (req, res, next) => {
-	if (!req.files || req.files.length === 0) return next();
 	try {
-		const dest = serverConfig.isDocker ? globals.publicGallery : globals.devGallery;
+		const dest = serverConfig.isDocker
+			? globals.publicGallery
+			: globals.devGallery;
 
 		const processed = await Promise.all(
 			req.files.map(async (file) => {
+
+				// --------------------------------
+				// Convert HEIC/HEIF → JPEG first
+				// --------------------------------
+
+				let imageBuffer = file.buffer;
+
+				const extension = path
+					.extname(file.originalname)
+					.toLowerCase();
+
+				if (extension === '.heic' || extension === '.heif') {
+					imageBuffer = await convert({
+						buffer: file.buffer,
+						format: 'JPEG',
+						quality: 1
+					});
+				}
+
+				// --------------------------------
+				// Generate filenames
+				// --------------------------------
+
 				const originalName = path.parse(file.originalname).name;
-				const uniquePrefix = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
-				const filename = `${uniquePrefix}-${originalName}.jpg`;
-				const filenameMobile = `${uniquePrefix}-${originalName}-mobile.jpg`;
+				const uniquePrefix =
+					`${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
-				const outputPath = path.join(dest, filename);
-				const outputPathMobile = path.join(dest, filenameMobile);
+				const filename =
+					`${uniquePrefix}-${originalName}.jpg`;
 
-				// Shared sharp pipeline base
-				const pipeline = sharp(file.buffer).rotate();
 
-				// Full quality version
+				const outputFull = path.join(dest, `${filename.replace(/\.jpg$/i, '') }.jpg`); //Master
+				const outputThumb = path.join(dest, `${filename.replace(/\.jpg$/i, '') }-thumbnail.jpg`); //4k Thumb
+				const outputThumbMid = path.join(dest, `${filename.replace(/\.jpg$/i, '') }-thumbnail-mid.jpg`); //1080p/Fast mobile
+				const outputThumbLow = path.join(dest, `${filename.replace(/\.jpg$/i, '') }-thumbnail-low.jpg`); //Slow pc devices/Mid mobile
+				const outputMobileLow = path.join(dest, `${filename.replace(/\.jpg$/i, '') }-mobile-low.jpg`); //Slow mobile
+
+				// --------------------------------
+				// Sharp
+				// --------------------------------
+
+				const pipeline = sharp(imageBuffer).rotate();
+
 				await pipeline
 					.clone()
 					.toFormat('jpeg', {
-						quality: 85,
+						//quality: 85,
+						quality: 100,
 						mozjpeg: true,
 						chromaSubsampling: '4:4:4',
 					})
-					.toFile(outputPath);
+					.toFile(outputFull);
 
-				// Mobile version — resize longest side to 1440px, never upscale
 				await pipeline
 					.clone()
 					.resize({
-						width: 1440,
-						height: 1440,
-						fit: 'inside',        // maintains aspect ratio, fits within 1440x1440
-						withoutEnlargement: true, // don't upscale small images
+						width: 3600,
+						height: 3600,
+						fit: 'inside',
+						withoutEnlargement: true,
 					})
 					.toFormat('jpeg', {
-						quality: 75,          // slightly lower — mobile screens don't need as much
+						quality: 85,
 						mozjpeg: true,
-						chromaSubsampling: '4:2:0', // fine for mobile, saves more space
+						chromaSubsampling: '4:2:0',
 					})
-					.toFile(outputPathMobile);
+					.toFile(outputThumb);
+
+				await pipeline
+					.clone()
+					.resize({
+						width: 2400,
+						height: 2400,
+						fit: 'inside',
+						withoutEnlargement: true,
+					})
+					.toFormat('jpeg', {
+						quality: 75,
+						mozjpeg: true,
+						chromaSubsampling: '4:2:0',
+					})
+					.toFile(outputThumbMid);
+
+				await pipeline
+					.clone()
+					.resize({
+						width: 1400,
+						height: 1400,
+						fit: 'inside',
+						withoutEnlargement: true,
+					})
+					.toFormat('jpeg', {
+						quality: 65,
+						mozjpeg: true,
+						chromaSubsampling: '4:2:0',
+					})
+					.toFile(outputThumbLow);
+
+				await pipeline
+					.clone()
+					.resize({
+						width: 1100,
+						height: 1100,
+						fit: 'inside',
+						withoutEnlargement: true,
+					})
+					.toFormat('jpeg', {
+						quality: 60,
+						mozjpeg: true,
+						chromaSubsampling: '4:2:0',
+					})
+					.toFile(outputMobileLow);
 
 				return {
 					...file,
-					filename,
-					filenameMobile,
-					path: outputPath,
-					pathMobile: outputPathMobile,
-					mimetype: 'image/jpeg',
+					pathFull: filename,
+					mimetype: 'image/jpeg'
 				};
+
 			})
 		);
 
 		req.files = processed;
+
 		next();
+
 	} catch (err) {
 		next(err);
 	}
@@ -161,20 +194,12 @@ const clientUpload = multer({
 });
 
 const multerParser = multer();
-/*
-function uploadFiles(req, res) {
-    for (var i = 0; i < req.files.length; i++) {
-        sqlQuery.insertNewToGallery(req.body.name, "/gallery/" + req.files[i].filename);
-    }
-    getAllFromGallery();
-    res.redirect('/admin')
-}*/
 
 function uploadFiles(req, res) {
-	const mainFiles = req.files.filter(file => !file.filename.endsWith('-mobile.jpg'));
+	const mainFiles = req.files;
 
 	for (var i = 0; i < mainFiles.length; i++) {
-		sqlQuery.insertNewToGallery(req.body.name, "/gallery/" + mainFiles[i].filename);
+		sqlQuery.insertNewToGallery(req.body.name, "/gallery/" + mainFiles[i].pathFull);
 	}
 	getAllFromGallery();
 	res.redirect('/admin/Gallery?type=All');
@@ -184,30 +209,20 @@ async function deleteFromGallery(req, res){
     	let data = req.body;
     	//let path = '/gallery/' + data.Path //local
 	let path = '/gallery/' + data.Path //Docker
+	path = decodeURIComponent(path);
 	let unlinkPath = serverConfig.isDocker ? globals.publicGallery : globals.devGallery;
 
 	try {
 		let exists = await sqlQuery.checkGalleryByID(data.ID, path);
 		//'public/gallery/' //local
 		if (exists) {
-			fs.unlink(unlinkPath + data.Path, (err) => {
-				if (err) {
-					console.error("Failed to delete file. Path requested + Error: ", unlinkPath + data.Path + err);
-				} else {
-					console.log("File deleted successfully. Path requested:", unlinkPath + data.Path);
-				}
-			});
+			const item = data.Path;
+			const itemPaths = ['.jpg', '-thumbnail-low.jpg', '-thumbnail-mid.jpg', '-thumbnail.jpg', '-mobile-low.jpg'];
+			const itemValues = itemPaths.values();
+			for (let items of itemValues) {
+				deleteFromFolder(unlinkPath, item.replace('.jpg', items), res);
+			}
 
-			// Delete mobile version if it exists
-			const mobilePath = data.Path.replace('.jpg', '-mobile.jpg');
-			fs.unlink(unlinkPath + mobilePath, (err) => {
-				if (err && err.code !== 'ENOENT') {
-					// ENOENT = file not found, safe to ignore for older uploads
-					console.error("Failed to delete mobile file. Path requested + Error: ", unlinkPath + mobilePath + err);
-				} else if (!err) {
-					console.log("Mobile file deleted successfully. Path requested:", unlinkPath + mobilePath);
-				}
-			});
 
 			await sqlQuery.deleteFromGalleryByID(data.ID, res);
 		} else {
@@ -218,6 +233,23 @@ async function deleteFromGallery(req, res){
 		res.sendStatus(500);
 	}
 };
+
+function deleteFromFolder(path, item, res){
+	try {
+		fs.unlink(path + item, (err) => {
+			if (err && err.code !== 'ENOENT') {
+				// ENOENT = file not found, safe to ignore for older uploads
+				console.error("Failed to delete mobile file. Path requested + Error: ", path + item + err);
+			} else if (!err) {
+				console.log("Mobile file deleted successfully. Path requested:", path + item);
+			}
+		});
+	} catch (error) {
+		console.log("Error: ", error);
+		res.sendStatus(500);
+	}
+	
+}
 
 
 /*------------------------------- Enquiries ------------------------------------*/
@@ -327,19 +359,6 @@ function attachTextBody(adjData, photos, res){
     })
 }
 /*------------------------------- Flavours ------------------------------------*/
-/*
-function getFlavours(){
-   serverConfig.connection.execute(
-        'SELECT * FROM flavours;',
-        function (err, results) {
-            if (err) {
-                console.log(err);
-            } else {
-                storeFlavours(JSON.parse(JSON.stringify(results)));
-            }
-        }
-   );
-}*/
 
 function getFlavours(done) {
 	serverConfig.connection.execute(

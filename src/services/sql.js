@@ -37,31 +37,30 @@ function deleteFromGalleryByID(ID, res){
 }
 
 function checkGalleryByID(ID, path){
-    return new Promise((resolve, reject) => {
-        let check = [
-            //ID: 
-	    ID,
-            //Path: 
-	    path,
-	]
-    
-        serverConfig.connection.execute(
-            'SELECT * FROM gallery WHERE ID= ? AND Path= ? LIMIT 1;',
-            check,
-            function (err, results){
-                if (err){
-                    console.log(err)
-                    return reject(false);
-                } else {
-                    if((results[0].ID == ID) && (results[0].Path == path)){
-                        return resolve(true);
-                    } else {
-                        return resolve(false);
-                    }
-                }
-            }
-        );
-    })
+	return new Promise((resolve, reject) => {
+		let check = [
+			//ID: 
+			ID,
+			//Path: 
+			path,
+		]
+		serverConfig.connection.execute(
+		'SELECT * FROM gallery WHERE ID= ? AND Path= ? LIMIT 1;',
+		check,
+		function (err, results){
+			if (err){
+				console.log(err);
+				return reject(false);
+			} else {
+			if ((results[0].ID == ID) && (results[0].Path == path)){
+				return resolve(true);
+			} else {
+				return resolve(false);
+			}
+			}
+		}
+		);
+	})
 }
 
 /*------------------------------- Enquiries ------------------------------------*/

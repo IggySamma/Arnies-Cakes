@@ -1,5 +1,9 @@
+import { show, hide } from './index.js';
+import confirmDatePlugin from './confirmDate-wrapper.js';
+
 let fpDate = false;
 let fpEvent = false;
+
 
 export function modalSubmit() {
    	"use strict";
@@ -18,7 +22,7 @@ export function modalSubmit() {
 		form.classList.add("was-validated");
 	});
 };
-/*
+
 export function loadCalender(){
     fetch('/api/disabledDates', {
         method: 'POST'
@@ -39,10 +43,10 @@ export function loadCalender(){
 		minDate: new Date().fp_incr(1),
                 maxDate: new Date().fp_incr(730),
                 /*disable: data.Date,*/
-                /*disableMobile: false,
-                /*plugins: [new confirmDatePlugin({})],
-                onClose: ()=> {fpDate = true},*/
-                /*onChange: function(selectedDate, dateStr/*, instance*//*){
+                disableMobile: false,
+                plugins: [new confirmDatePlugin({})],
+                onClose: ()=> {fpDate = true},
+                onChange: function(selectedDate, dateStr, instance){
                     const formattedDate = new Date(selectedDate).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'long',
@@ -55,24 +59,24 @@ export function loadCalender(){
                     del.removeAttribute("disabled")
 
                     flatpickrEvent.flatpickr({ 
-                        altInput: true,
-                        altFormat: "F j, Y, H:i",
-                        allowInput: false,
-                        defaultDate: new Date(dateStr.split(' ', 1)) + ", 12:00",
-                        enableTime: true,
-                        dateFormat: "Y-m-d, H:i",
-                        minDate: new Date(dateStr.split(' ', 1)).fp_incr(-2),
-                        maxDate: new Date(dateStr.split(' ', 1)).fp_incr(1),
-                        enable: [new Date(dateStr.split(' ', 1)).fp_incr(-2), new Date(dateStr.split(' ', 1)).fp_incr(-1), new Date(dateStr.split(' ', 1))],
-                        minTime: "10:00",
-                        maxTime: "20:00",
-                        defaultHour: 12,
-                        defaultMinute: 0,
-                        minuteIncrement: 15,
-                        disableMobile: false,
-                        /*plugins: [new confirmDatePlugin({})],
-                        onClose: ()=> {fpEvent = true},*/
-                /*    });
+			altInput: true,
+			altFormat: "F j, Y, H:i",
+			allowInput: false,
+			defaultDate: new Date(dateStr.split(' ', 1)) + ", 12:00",
+			enableTime: true,
+			dateFormat: "Y-m-d, H:i",
+			minDate: new Date().fp_incr(1),
+			maxDate: new Date().fp_incr(730),
+			    enable: [new Date(dateStr.split(' ', 1)).fp_incr(-3), new Date(dateStr.split(' ', 1)).fp_incr(-2), new Date(dateStr.split(' ', 1)).fp_incr(-1), new Date(dateStr.split(' ', 1)), new Date(dateStr.split(' ', 1)).fp_incr(1)],
+			minTime: "00:00",
+			maxTime: "23:59",
+			defaultHour: 12,
+			defaultMinute: 0,
+			minuteIncrement: 15,
+			disableMobile: false,
+			plugins: [new confirmDatePlugin({})],
+			onClose: ()=> {fpEvent = true},
+                    });
 
                     flatpickrEvents[0].value = dateStr.split(' ', 1) + ", 12:00";
                     flatpickrEvents[1].value =formattedDate + ", 12:00";
@@ -94,12 +98,12 @@ export function loadCalender(){
                 defaultMinute: 0,
                 minuteIncrement: 15,
                 disableMobile: false,
-                /*plugins: [new confirmDatePlugin({})]*/
-        /*    });
+                plugins: [new confirmDatePlugin({})]
+           });
         })
     })
 }
-*/
+
 
 export function enableDisable(id){
     const box = document.getElementById(id);
@@ -117,18 +121,23 @@ export function enableDisable(id){
         if (box.disabled == true){
             	document.getElementById("colDel").innerHTML = 'Delivery of order date & time:';
 		document.getElementById("AddressInput").setAttribute("required", "");
+		show(document.getElementById("AddressField"));
         } else {
             	document.getElementById("colDel").innerHTML = '';
+		hide(document.getElementById("AddressField"));
         }
     } else if (id == "Delivery") {
         if (box.disabled == true){
             	document.getElementById("colDel").innerHTML = 'Collection of order date & time:';
 		document.getElementById("AddressInput").removeAttribute("required");
+		hide(document.getElementById("AddressField"));
         } else {
             	document.getElementById("colDel").innerHTML = '';
+		hide(document.getElementById("AddressField"));
         }
     }
 }
+
 
 export function updatePlaceholder(id) {
 	const incrementCheckBox = document.getElementById(id + "CheckBox1");
@@ -251,7 +260,7 @@ form.addEventListener("submit", submitEnquirie);*/
 /*	}
 };*/
 
-function validation(formData){
+export function validation(formData){
 	const name = document.getElementById("fullNameInput");
 	const email = document.getElementById("emailInput");
 	const number = document.getElementById("numberInput");
@@ -265,7 +274,7 @@ function validation(formData){
 	const allergyYes = document.getElementById("AllergyYes");
 	const allergyNo = document.getElementById("AllergyNo");
 	const allergyMessage = document.getElementById("AllergyInput");
-	const photo = document.getElementById("files");
+	//const photo = document.getElementById("files");
 	const address = document.getElementById("AddressInput");
 	const fullPrice = document.getElementById("fullPrice");
 	const paidFull = document.getElementById("paidFull");
@@ -442,6 +451,9 @@ function validation(formData){
 		error.focus = "paidFull";
 		throw error;
 	} else {
+		console.log("paid full: ", paidFull.checked)
+		console.log("portionPaid: ", paidDeposit.checked)
+		console.log("none: ", paidNone.checked)
 		if(paidFull.checked) {
 			formData.append("portionPaid", "Full");
 		} else if (paidDeposit.checked) {

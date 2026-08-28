@@ -71,14 +71,13 @@ input[type="checkbox"]:checked ~ .Flavours {
 
 .incrementalNumberBoxStyle{
     width: 50px;
-    height: 30px;
+    height: 22px;
     right: 0px;
     top: 0px;
     position: absolute;
     font-size: 16px;
     font-weight: bold;
     text-align: center;
-    align-self: left;
 }
 
 input[id="Collection"]:checked ~ .datetimeEvent, input[id="Delivery"]:checked ~ .datetimeEvent  {
