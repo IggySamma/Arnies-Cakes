@@ -191,75 +191,6 @@ export function updatePlaceholder(id) {
 }
 window.updatePlaceholder = updatePlaceholder;
 
-/*const form = document.getElementById("footerForm");
-form.addEventListener("submit", submitEnquirie);*/
-
-
-/*function submitEnquirie(file){
-	file.preventDefault();
-	document.body.style.cursor = 'wait';
-	//document.getElementById("submitEnquiry").disabled = true;
-
-	console.log("Submit button hit");
-	
-	const formData = new FormData();
-	let errors = false;
-
-	try {
-		validation(formData);
-	} catch (error) {
-		errors = true;
-		if (error.focus == "datetimeDate" || error.focus == "datetimeEvent") {
-			document.body.style.cursor = 'auto';
-			document.getElementById("submit").disabled = false;
-			document.getElementById(error.focus).nextElementSibling.focus();  
-		} else {
-			document.body.style.cursor = 'auto';
-			document.getElementById("submit").disabled = false;
-			document.getElementById(error.focus).focus();
-		}
-		alert(error);
-	} 
-   
-	if (!errors) {
-		/*fetch('/api/submitEnquirie', {
-			method: 'POST',
-			body: formData,
-		})
-		.then((res) => {
-			switch(res.status) {
-				case 405:
-					alert("Email provided is invalid");
-					document.getElementById("emailInput").focus();
-					break;
-				case 406:
-					alert("Mobile number is invalid");
-					document.getElementById("numberInput").focus();
-					break;
-				case 407:
-					alert("Incorrect file attached. Only .Png, .Jpg, .Jpeg allowed");
-					document.getElementById("files").focus();
-					break;
-				case 500:
-					alert("Something went wrong, please check file is .Png | .Jpg | .Jpeg format. Otherwise please contact us on our social links instead");
-					document.getElementById("files").focus();
-					break;
-                case 504:
-                        alert("Something went wrong, please contact us on our social links instead");
-                        break;
-				case 200:
-					window.location.href = "/enquiriesty";
-					break;
-				default:
-					document.getElementById("submit").disabled = false;
-					document.body.style.cursor = 'auto';
-			}
-			document.getElementById("submit").disabled = false;     
-			document.body.style.cursor = 'auto';
-		});*/
-/*	}
-};*/
-
 export function validation(formData){
 	const name = document.getElementById("fullNameInput");
 	const email = document.getElementById("emailInput");
@@ -274,7 +205,6 @@ export function validation(formData){
 	const allergyYes = document.getElementById("AllergyYes");
 	const allergyNo = document.getElementById("AllergyNo");
 	const allergyMessage = document.getElementById("AllergyInput");
-	//const photo = document.getElementById("files");
 	const address = document.getElementById("AddressInput");
 	const fullPrice = document.getElementById("fullPrice");
 	const paidFull = document.getElementById("paidFull");
@@ -446,14 +376,12 @@ export function validation(formData){
 		formData.append("fullPrice", fullPrice.value);
 	}
 
-	if (!(paidFull.checked && paidDeposit.checked && paidNone.checked)) {
+	if (!(paidFull.checked || paidDeposit.checked || paidNone.checked)) {
 		const error = new Error("Please select prepayment");
 		error.focus = "paidFull";
 		throw error;
 	} else {
-		console.log("paid full: ", paidFull.checked)
-		console.log("portionPaid: ", paidDeposit.checked)
-		console.log("none: ", paidNone.checked)
+
 		if(paidFull.checked) {
 			formData.append("portionPaid", "Full");
 		} else if (paidDeposit.checked) {
@@ -469,22 +397,4 @@ export function validation(formData){
 			formData.append("portionPaid", "None");
 		}
 	}
-
-
-	/*if (photo.value == "" && cakeQuantity != 0){
-		const error = new Error("Please attach example of designs you'd like for your order.");
-		error.focus = "files";
-		throw error;
-	} else if (photo.value == "" && cakeQuantity == 0){
-		formData.append("clientPhotos", "")
-	} else{
-		for (let i = 0; i < photo.files.length; i++) {
-		const file = photo.files[i];
-		const validTypes = ["image/png", "image/jpeg", "image/jpg"];
-		if (!validTypes.includes(file.type)) {
-			throw new Error("Please upload a file with .png, .jpg, or .jpeg format.");
-		}
-		formData.append("clientPhotos", file);
-		}
-	}*/
 }

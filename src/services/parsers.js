@@ -756,6 +756,53 @@ function returnDatesArray(start, range) {
 	return buffer;
 }
 
+const safe = (val) => (val === undefined || val === null ? "" : String(val));
+
+function parseBodyUpdateEnquiry(req, res){
+	let data = req.body
+	let ColDel;
+	let ColDelDate;
+	let deposit;
+
+	if(safe(data.Collection) == 'Yes') {
+		ColDel = "Collection";
+		ColDelDate = safe(data["Date of collection"]);
+	} else { 
+		ColDel = "Delivery";
+		ColDelDate = safe(data["Date of delivery"]);
+	}
+
+	if (safe(data.portionPaid) == 'Deposit'){
+		deposit = safe(data.depositPaid)
+	} else if (data.portionPaid == 'Full'){
+		deposit = safe(data.fullPrice)
+	} else if (data.portionPaid == 'None'){
+		deposit = 0;
+	}
+	
+	let obj = {
+		Name: safe(data.Name),
+		Email: safe(data.Email),
+		Number: safe(data.Number),
+		Date: safe(data["Date of Event"]),
+		ColDel: ColDel,
+		ColDelDate: ColDelDate,
+		Order_Details: JSON.stringify(data.Order),
+		Message: safe(data.Message),
+		Allergy: safe(data.Allergies),
+		Allergy_Message: safe(data["Allergies Information"]),
+		Price: safe(data.fullPrice),
+		PricePaid: deposit,
+		Address: safe(data.Address),
+		Confirmed: 'Yes',
+		ID: safe(data.ID)
+	}
+
+	sqlQuery.updateEnquiry(obj, res);
+
+	
+}
+
 /*------------------------------- Bootup ------------------------------------*/
 
 getDisabledDates();
@@ -776,5 +823,6 @@ module.exports = {
 	multerParser,
 	processImages,
 	updateFlavours,
-	handleDisableDates
+	handleDisableDates,
+	parseBodyUpdateEnquiry
 }

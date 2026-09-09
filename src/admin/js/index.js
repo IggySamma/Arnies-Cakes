@@ -385,22 +385,74 @@ class modalMapping {
 	orderParse() {
 		if (!this.Order_Details) return;
 
-		let raw = this.Order_Details.trim();
-		if (!raw.startsWith('[')) {
-			raw = `[${raw}]`;
+		let order;
+
+		// -----------------------------
+		// Parse Order_Details
+		// -----------------------------
+		try {
+			let raw = this.Order_Details.trim();
+
+			// First parse the outer JSON
+			let parsed = JSON.parse(raw);
+
+			// Handle double-encoded JSON
+			if (typeof parsed === 'string') {
+				raw = parsed.trim();
+
+				if (raw.startsWith('[')) {
+					parsed = JSON.parse(raw);
+				} else {
+					// Handle:
+					// "{\"Item\":\"Cake\"},{\"Item\":\"Cakesicles\"}"
+					parsed = JSON.parse(`[${ raw }]`);
+				}
+			}
+
+			// Allow a single object
+			if (!Array.isArray(parsed)) {
+				parsed = [parsed];
+			}
+
+			// Handle arrays containing JSON strings
+			order = parsed
+				.map(item => {
+					if (typeof item === 'string') {
+						return JSON.parse(item);
+					}
+
+					return item;
+				})
+				.map(item =>
+					Object.fromEntries(
+						Object.entries(item).map(([key, value]) => [
+							key,
+							typeof value === 'string'
+								? value.trim()
+								: value
+						])
+					)
+				);
+
+		} catch (error) {
+			console.error('Failed to parse Order_Details:', {
+				raw: this.Order_Details,
+				error
+			});
+
+			return;
 		}
 
-		const order = JSON.parse(raw)
-			.map(item => typeof item === "string" ? JSON.parse(item) : item)
-			.map(item =>
-				Object.fromEntries(
-					Object.entries(item).map(([key, value]) => [
-						key, typeof value === "string" ? value.trim() : value
-					])
-				)
-			);
-
-		this.orderUpdate(order);
+		// -----------------------------
+		// Update the UI
+		// -----------------------------
+		try {
+			this.orderUpdate(order);
+		} catch (error) {
+			console.error('Failed to update order UI:', error, {
+				order
+			});
+		}
 	}
 
 	orderUpdate(data) {
@@ -486,6 +538,31 @@ class modalMapping {
 function updateModal(data){
 	console.log(data)
 	document.getElementById("confirmEnquiryID").innerHTML = `ID: ${data.ID}`
+	const modalConfirm = document.getElementById("submitEnquiry");
+	const modalReject = document.getElementById("rejectEnquiry");
+	const modalComplete = document.getElementById("completeEnquiry");
+
+	if (!modalConfirm || !modalReject || !modalComplete) return;
+
+	removeOldListeners(modalConfirm, 'click');
+	removeOldListeners(modalReject, 'click');
+	removeOldListeners(modalComplete, 'click');
+
+
+	modalConfirm.addEventListener('click', (e) => {
+		e.preventDefault();
+		submitEnquiry();
+	});
+
+	modalReject.addEventListener('click', (e) => {
+		e.preventDefault();
+		rejectEnquiry();
+	});
+
+	modalComplete.addEventListener('click', (e) => {
+		e.preventDefault();
+		completeEnquiry();
+	});
 	let modalData = new modalMapping(data);
 	modalData.update();
 
@@ -507,11 +584,14 @@ function setID(data) {
 
 	const modalConfirm = document.getElementById("submitEnquiry");
 	const modalReject = document.getElementById("rejectEnquiry");
+	const modalComplete = document.getElementById("completeEnquiry");
 
-	if (!modalConfirm || !modalReject) return;
+	if (!modalConfirm || !modalReject || !modalComplete) return;
 
 	removeOldListeners(modalConfirm, 'click');
 	removeOldListeners(modalReject, 'click');
+	removeOldListeners(modalComplete, 'click');
+
 
 	modalConfirm.addEventListener('click', (e) => {
 		e.preventDefault();
@@ -521,6 +601,11 @@ function setID(data) {
 	modalReject.addEventListener('click', (e) => {
 		e.preventDefault();
 		rejectEnquiry();
+	});
+
+	modalComplete.addEventListener('click', (e) => {
+		e.preventDefault();
+		completeEnquiry();
 	});
 
 	loadCalender();
@@ -565,16 +650,28 @@ function submitEnquiry(event){
 };
 
 function submitToBackend(formData) {
-	fetch('/api/updateEnquirie', {
-		method: 'POST',
-		body: formData,
-	})
-	.then((res) => handleResponse(res))
-	.catch(() => {
-		document.body.style.cursor = 'auto';
-		if (document.getElementById("submit"))
-			document.getElementById("submit").disabled = false;
-	});
+    fetch('/api/updateEnquirie', {
+        method: 'POST',
+        body: formData,
+    })
+    .then((res) => {
+        if (res.status === 200) {
+            window.location.reload();
+            return;
+        }
+
+        throw new Error(`Request failed: ${ res.status } `);
+    })
+    .catch((err) => {
+        console.error(err);
+
+        document.body.style.cursor = 'auto';
+
+        const submit = document.getElementById("submit");
+        if (submit) {
+            submit.disabled = false;
+        }
+    });
 }
 
 function handleValidationErrors(error, formData) {
@@ -630,6 +727,27 @@ function rejectEnquiry(){
 				console.log(res);
 			}
 		});
+	}
+};
+
+function completeEnquiry() {
+	let id = document.getElementById("confirmEnquiryID").innerHTML.split(' ')[1]
+	const response = confirm(`You're about to complete the enquiry id: ${id} is this correct ?`);
+
+	if (response) {
+		fetch('/api/completeEnquiry', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ id }),
+			credentials: "include",
+		})
+			.then((res) => {
+				if (res.status === 200) {
+					location.reload();
+				} else {
+					console.log(res);
+				}
+			});
 	}
 };
 
@@ -959,16 +1077,45 @@ function renderDayDetails(dateStr) {
 function parseOrderDetails(raw) {
 	if (!raw) return [];
 
-	let str = raw.trim();
-	if (!str.startsWith('[')) {
-		str = `[${str}]`;
-	}
-
 	try {
-		return JSON.parse(str)
-			.map(item => typeof item === "string" ? JSON.parse(item) : item);
+		let str = raw.trim();
+
+		// First parse the outer JSON
+		let parsed = JSON.parse(str);
+
+		// If the result is a string, it may contain:
+		// - a JSON array
+		// - comma-separated JSON objects
+		if (typeof parsed === "string") {
+			str = parsed.trim();
+
+			if (str.startsWith('[')) {
+				parsed = JSON.parse(str);
+			} else {
+				// Wrap comma-separated objects in an array
+				parsed = JSON.parse(`[${ str }]`);
+			}
+		}
+
+		// Allow a single object as well
+		if (!Array.isArray(parsed)) {
+			parsed = [parsed];
+		}
+
+		// Preserve original behaviour:
+		// array items can themselves be JSON strings
+		return parsed.map(item =>
+			typeof item === "string"
+				? JSON.parse(item)
+				: item
+		);
+
 	} catch (err) {
-		console.error("Failed to parse order details:", err, raw);
+		console.error("Failed to parse order details:", {
+			error: err,
+			raw
+		});
+
 		return [];
 	}
 }
@@ -1133,7 +1280,7 @@ async function loadEvents() {
 	}
 
 	const enquiries = await res.json();
-	//console.log(enquiries);
+	console.log(enquiries);
 
 	enquiries
 		.map(mapEnquiryToEvent)

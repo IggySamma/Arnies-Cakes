@@ -308,6 +308,24 @@ function declineEnquiry(req, res){
 	);
 }
 
+function completeEnquiry(req, res) {
+	let data = req.body;
+	let ID = data.id;
+
+	serverConfig.connection.execute(
+		'UPDATE enquiries SET Completed = "Yes" WHERE ID = ?',
+		[ID],
+		function (err/*, results*/) {
+			if (err) {
+				console.log(err);
+				res.json([new Error(err)]);
+			} else {
+				res.sendStatus(200);
+			}
+		}
+	);
+}
+
 function deleteEnquiry(req, res){
 	let data = req.body;
 	let ID = data.id;
@@ -512,6 +530,131 @@ function removeDisableDates(dates) {
 	});
 }
 
+function updateEnquiry(obj, res) {
+	return new Promise(() => {
+		serverConfig.connection.execute(
+			`UPDATE enquiries
+			SET 
+				Name = ?,
+				Email = ?,
+				Number = ?,
+				Date = ?,
+				ColDel = ?,
+				ColDelDate = ?,
+				Address = ?,
+				Order_Details = ?,
+				Message = ?,
+				Allergy = ?,
+				Allergy_Message = ?,
+				Price = ?,
+				PricePaid = ?,
+				Confirmed = ?
+			WHERE ID = ?`,
+			[
+				obj.Name,
+				obj.Email,
+				obj.Number,
+				obj.Date,
+				obj.ColDel,
+				obj.ColDelDate,
+				obj.Address,
+				obj.Order_Details,
+				obj.Message,
+				obj.Allergy,
+				obj.Allergy_Message,
+				obj.Price,
+				obj.PricePaid,
+				obj.Confirmed,
+				obj.ID
+			],
+			function (err){
+				if (err) {
+					console.error(err);
+					return res.status(500).json({
+						success: false,
+						error: err.message
+					});
+				} else {
+					return res.status(200).json({
+						success: true
+					});
+				}
+				
+			}
+		);
+	})
+}
+
+
+/*
+function storeNewEnquirie(res, data, cb) {
+	//console.log(data)
+
+	let colDel, colDelDate, allergy_Message;
+
+	if ('Collection' in data) {
+		colDel = 'Collection';
+		colDelDate = data['Date of collection'];
+	} else {
+		colDel = 'Delivery';
+		colDelDate = data['Date of delivery']
+	}
+
+	data.Allergies === 'No' ? allergy_Message = '' : allergy_Message = data["Allergies Information"];
+
+	return new Promise((resolve) => {
+		let storeLink = [
+			//date: 
+			safe(data['Date of Event']),
+			//Confirmed: 
+			"No",
+			//Link: 
+			"",
+			//Completed: 
+			"No",
+			//Name: 
+			safe(data.Name),
+			//Order: 
+			safe(JSON.parse(JSON.stringify(data.Order))),
+			//Message: 
+			safe(data.Message),
+			//Allergy: 
+			safe(data.Allergies),
+			//Allergy_Message: 
+			safe(allergy_Message),
+			//Email: 
+			safe(data.Email),
+			//ColDel: 
+			safe(colDel),
+			//ColDelDate: 
+			safe(colDelDate),
+			//Address: 
+			safe(data.Address),
+			//number: 
+			safe(data.Number),
+			//Price: 
+			0,
+			//PricePaid: 
+			0
+		]
+
+		//console.log(storeLink);
+
+		serverConfig.connection.execute(
+			'INSERT INTO enquiries(Date, Confirmed, Link, Completed, Name, Order_Details, Message, Allergy, Allergy_Message, Email, ColDel, ColDelDate, Address, Number, Price, PricePaid) Values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?);',
+			storeLink,
+			function (err) {
+				if (err) {
+					console.log(err);
+					console.log(storeLink);
+					res.sendStatus(500);
+				} else {
+					resolve(cb())
+				}
+			});
+	})
+}*/
+
 
 
 module.exports = {
@@ -537,5 +680,7 @@ module.exports = {
 	updatesFlavours,
 	adminSelectQuery,
 	addDisableDates,
-	removeDisableDates
+	removeDisableDates,
+	updateEnquiry,
+	completeEnquiry
 }

@@ -44,6 +44,7 @@ serverConfig.initApp().then((app) => {
 	app.post('/api/allConfirmedEnquiries', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.getAllConfirmedEnquiries().then(data => res.json(data)) });
 	app.post('/api/confirmEnquiry', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.confirmEnquiry(req, res) });
 	app.post('/api/declineEnquiry', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.declineEnquiry(req, res) });
+	app.post('/api/completeEnquiry', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.completeEnquiry(req, res) });
 	app.post('/api/deleteEnquiry', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.deleteEnquiry(req, res) });
 	app.post('/api/requestEnquiry', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.requestEnquiryByID(req, res, req.body.id) });
 	app.post('/api/requestConfirmedEnquiry', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.requestConfirmedEnquiryByID(req, res, req.body.id) });
@@ -51,6 +52,7 @@ serverConfig.initApp().then((app) => {
 	app.post('/api/adminSelect', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.adminSelect(req, res) });
 	app.post('/api/updateFlavours', serverConfig.ensureAuthenticated, parsers.multerParser.none(), (req, res) => { parsers.adminUpdateFlavours(req, res) });
 	app.post('/api/addDisableDates', serverConfig.ensureAuthenticated, (req, res) => { parsers.handleDisableDates(req, res) });
+	app.post('/api/updateEnquirie', serverConfig.ensureAuthenticated, parsers.multerParser.none(),(req, res) => { parsers.parseBodyUpdateEnquiry(req, res)});
 
 
 

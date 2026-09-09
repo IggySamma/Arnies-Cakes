@@ -1,3 +1,15 @@
+Admin Calendar completed order mark as green
+
+
+
+
+
+
+
+
+
+
+
 Redo admin pages
 
 Setup individual pages per type of actions.
@@ -45,3 +57,6 @@ Add JSON-LD TO ALL PAGES WHEN LIVE - Updates robots.txt & sitemap.xml with corre
     }
   }
 </script>
+
+
+

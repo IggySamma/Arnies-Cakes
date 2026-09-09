@@ -357,7 +357,7 @@ async function initApp() {
 				httpOnly: true,
 				secure: isProd,
 				/*maxAge: 1000 * 60 * 60, // 1 hour*/
-				maxAge: 60 * 60 * 500, //30 mins
+				maxAge: isProd ? 60 * 60 * 500 : 60 * 60 * 50000, //30 mins //50 hours Dev longer timeout
 				//maxAge: 60 * 1000, //1 min
 				sameSite: 'lax',
 			},
