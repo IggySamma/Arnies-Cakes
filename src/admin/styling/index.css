@@ -389,6 +389,14 @@ h2{
 	border-radius: 6px;
 }
 
+.event-rejected {
+	background: #C98D98;
+}
+
+.event-completed {
+	background: #CFE6D7;
+}
+
 
 @media (max-width: 768px) {
 	.layout {

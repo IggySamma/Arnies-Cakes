@@ -258,7 +258,7 @@ function getAllConfirmedEnquiries(){
 	return new Promise((resolve/*, reject*/) => {
 		serverConfig.connection.execute(
 		//'SELECT * FROM confirmedenquiries WHERE Completed = "No" AND Confirmed = "Yes";', 
-		'SELECT * FROM enquiries WHERE Completed = "No" AND Confirmed = "Yes";', 
+		'SELECT * FROM enquiries WHERE Confirmed = "Yes";', 
 		function (err, results) {
 			if (err) {
 			console.log(err);
@@ -289,21 +289,44 @@ function confirmEnquiry(req, res){
 	);
 }
 
-
-function declineEnquiry(req, res){
+function declineEnquiry(req, res) {
 	let data = req.body;
 	let ID = data.id;
 
 	serverConfig.connection.execute(
-		'UPDATE enquiries SET Confirmed = "Rejected" WHERE ID = ?', 
+		'SELECT Confirmed FROM enquiries WHERE ID = ?',
 		[ID],
-		function (err/*, results*/) {
-		if (err) {
-			console.log(err);
-			res.json([new Error(err)]);
-		} else {
-			res.sendStatus(200);
-		}
+		function (err, results) {
+			if (err) {
+				console.log(err);
+				return res.json([new Error(err)]);
+			}
+
+			if (results.length === 0) {
+				return res.status(404).json({ error: 'Enquiry not found' });
+			}
+
+			const confirmed = results[0].Confirmed;
+
+			let query;
+			if (confirmed === 'Yes') {
+				query = 'UPDATE enquiries SET Completed = "Rejected" WHERE ID = ?';
+			} else {
+				query = 'UPDATE enquiries SET Confirmed = "Rejected" WHERE ID = ?';
+			}
+
+			serverConfig.connection.execute(
+				query,
+				[ID],
+				function (err) {
+					if (err) {
+						console.log(err);
+						return res.json([new Error(err)]);
+					}
+
+					res.sendStatus(200);
+				}
+			);
 		}
 	);
 }

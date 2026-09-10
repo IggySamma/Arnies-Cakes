@@ -1007,11 +1007,29 @@ const calendar = createCalendar({
 				onContainer: '#000000',
 			},
 		},
+
+		Completed: {
+			colorName: 'Completed',
+			lightColors: {
+				main: '#5F9871',
+				container: '#CFE6D7',
+				onContainer: '#000000',
+			},
+		},
+
+		Declined: {
+			colorName: 'Declined',
+			lightColors: {
+				main: '#C98D98',
+				container: '#D19BA5',
+				onContainer: '#000000',
+			},
+		},
 	},
 	firstDayOfWeek: 1,
 	selectedDate: returnFromTodayString(),
 	isDark: false,
-	minDate: returnFromTodayString(),
+	minDate: returnFromTodayString(-365),
 	maxDate: returnFromTodayString(365),
 	monthGridOptions: {
 		nEventsPerDay: 1,
@@ -1036,43 +1054,7 @@ const calendar = createCalendar({
 
 calendar.render(document.getElementById('calendar'));
 
-// populate "Next Upcoming Event" on load
 renderNextUpcomingEvent();
-/*
-function renderDayDetails(dateStr) {
-	const allEvents = eventsService.getAll();
-
-	const dayEvents = allEvents.filter(ev => {
-		const start = ev.start.toString().split('T')[0];
-		const end = ev.end.toString().split('T')[0];
-		return dateStr >= start && dateStr <= end;
-	});
-
-	if (dayEvents.length === 0) {
-		detailsPanel.innerHTML = `
-            <h3>${dateStr}</h3>
-            <p style="color:#888;">No events on this day.</p>
-        `;
-		return;
-	}
-
-	detailsPanel.innerHTML = `
-        <h3>${dateStr}</h3>
-        ${dayEvents.map(ev => `
-            <div class="event-card">
-                <strong>${ev.title}</strong><br/>
-                <small>📅 ${ev.start.toString().split('T')[0]}</small>
-		<p>
-			${ev.delivery ? `🚗 ${ev.delivery}<br/>` : ''}
-			${ev.time ? `🕑 ${ev.time}<br/>` : ''}
-			${ev.location ? `📍 ${ev.location}<br/>` : ''}
-			${ev.price ? `💸 ${ev.price}<br/>` : ''}
-			${ev.description ? `📒 ${ev.description}<br/>` : ''}
-		</p>
-            </div>
-        `).join('')}
-    `;
-}*/
 
 function parseOrderDetails(raw) {
 	if (!raw) return [];
@@ -1166,7 +1148,7 @@ function renderNextUpcomingEvent() {
 
 	const upcoming = allEvents
 		.map(ev => ({ ...ev, startDate: ev.start.toString().split('T')[0] }))
-		.filter(ev => ev.startDate >= todayStr)
+		.filter(ev => ev.completed === 'No' && ev.startDate >= todayStr)
 		.sort((a, b) => a.startDate.localeCompare(b.startDate));
 
 	if (upcoming.length === 0) {
@@ -1209,27 +1191,44 @@ function renderDayDetails(dateStr) {
 		return;
 	}
 
+
 	detailsPanel.innerHTML = `
-		<h3>${dateStr}</h3>
-		${dayEvents.map(ev => `
-		<div class="event-card" style="position: relative;" data-enquiry-id="${ev.id}">
+		<h3> ${ dateStr }</h3>
+			${
+				dayEvents.map(ev => {
+					const completed = ev.completed === 'Yes';
+					const rejected = ev.completed === 'Rejected';
+
+					return `
+		<div class="event-card ${completed ? 'event-completed' : ''} ${rejected ? 'event-rejected' : ''}" style="position: relative;" data-enquiry-id="${ev.id}">
 			<button
-			type="button"
-			class="btn btn-sm btn-outline-secondary"
-			style="position: absolute; top: 10px; right: 10px;"
-			onclick="requestFullEnquiry(this)"
-			data-bs-toggle="modal"
-			data-bs-target="#confirmEnquiry"
+				type="button"
+				class="btn btn-sm btn-outline-secondary"
+				style="position: absolute; top: 10px; right: 10px;"
+				onclick="requestFullEnquiry(this)"
+				data-bs-toggle="modal"
+				data-bs-target="#confirmEnquiry"
 			>Edit</button>
+
 			<a
-			target="_blank"
-			class="btn btn-sm btn-outline-secondary"
-			style="position: absolute; top: 10px; right: 60px;"
-			href="${ev.link}"
+				target="_blank"
+				class="btn btn-sm btn-outline-secondary"
+				style="position: absolute; top: 10px; right: 60px;"
+				href="${ev.link}"
 			>Email</a>
-			<strong>${ev.title}</strong><br/>
-			<small>📅 ${ev.start.toString().split('T')[0]}</small>
+
+			<strong>
+				${ev.title}${completed ? ' - Completed' : ''}${rejected ? ' - Rejected' : ''}
+			</strong><br/>
+
+			<small>
+				
+				📅 ${ev.start.toString().split('T')[0]}
+				
+			</small>
+
 			<p>
+				
 				${ev.time ? `🕑 ${ev.time}<br/>` : ''}
 				${ev.delivery ? `🚗 ${ev.delivery}<br/>` : ''}
 				${ev.location ? `🌎 ${ev.location}<br/>` : ''}
@@ -1238,11 +1237,17 @@ function renderDayDetails(dateStr) {
 				${ev.paid ? `💲 ${ev.paid}<br/>` : ''}
 				${ev.allergy ? `🤒 ${ev.allergy}<br/>` : ''}
 				${ev.description ? `📒 ${ev.description}<br/>` : ''}
+				
 			</p>
+			
 			${renderOrderTable(ev.order)}
+		
 		</div>
-		`).join('')}
+		`;
+				}).join('')
+	}
 	`;
+
 
 	if (window.matchMedia('(max-width: 768px)').matches) {
 		detailsPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -1253,7 +1258,8 @@ function mapEnquiryToEvent(enquiry) {
 	const [datePart, timePart] = (enquiry.ColDelDate || "").split(",").map(s => s.trim());
 
 	return {
-		calendarId: 'Arnies',
+		//calendarId: 'Arnies',
+		calendarId: enquiry.Completed === 'Yes' ? 'Completed' : enquiry.Completed === 'Rejected'? 'Declined': 'Arnies',
 		id: enquiry.ID? String(enquiry.ID) : '',
 		link: enquiry.Link ? enquiry.Link : '',
 		title: enquiry.Name? enquiry.Name : '',
@@ -1268,7 +1274,8 @@ function mapEnquiryToEvent(enquiry) {
 		//allergyMessage: enquiry.Allergy === 'Yes!' ? "Allergy Message: " + enquiry.Allergy_Message : '',
 		number: enquiry.Number ? "Number: " + enquiry.Number : '',
 		start: datePart ? datePart : '',
-		end: datePart ? datePart : ''
+		end: datePart ? datePart : '',
+		completed: enquiry.Completed? enquiry.Completed : ''
 	};
 }
 
