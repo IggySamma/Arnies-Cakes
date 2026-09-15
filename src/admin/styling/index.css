@@ -35,7 +35,7 @@
 .enquiriesContainer, .ordersContainer{
 	/*width: 100%;*/
 	position: relative;
-	height: 100%;
+	height: calc(((100vh - 120px))-20px);
 	overflow: visible;
 	border: 1px solid #ECE3F0;
 	flex-direction: column;
@@ -246,7 +246,7 @@ h2{
 }
 
 
-@media only screen and (min-width: 431px){
+@media only screen and (min-width: 441px){
 	.navSpacer{
 		/*position: relative;*/
 		padding-top: 110px;
@@ -269,12 +269,9 @@ h2{
 		flex: 3 0 0;
 	}
 
-
-	/*.enquiriesList h1{
-		font-size: 2rem;
-	}*/
-
-
+	.enquiriesList {
+		height: calc(((100vh - 120px))-20px)
+	}
 
 	.calendar {
 		width: 25vw;
@@ -286,6 +283,16 @@ h2{
 		aspect-ratio: 1/1.75;
 		display: flex;
 		flex-direction: column;
+	}
+
+	.sx__month-grid-day__header-date{
+		height: 50px !important; /* eslint-disable-line css/no-important */
+		width: 50px !important; /* eslint-disable-line css/no-important */
+		font-size: 1rem !important; /* eslint-disable-line css/no-important */
+	}
+	
+	.sx__month-grid-day__header-day-name{
+		font-size: unset !important; /* eslint-disable-line css/no-important */
 	}
     
 }
@@ -313,8 +320,25 @@ h2{
 }
 
 .sx__month-grid-day__header-date.sx__is-today {
-	background-color: unset !important; /* eslint-disable-line css/no-important */
+	background-color: var(--arnies-color) !important; /* eslint-disable-line css/no-important */
 	color:#000000;
+}
+
+.btn-lilac{
+	--bs-btn-color: #000;
+	--bs-btn-bg: var(--arnies-color);
+	--bs-btn-border-color: var(--arnies-color);
+	--bs-btn-hover-color: #000;
+	--bs-btn-hover-bg: var(--arnies-color);
+	--bs-btn-hover-border-color: var(--arnies-color);
+	--bs-btn-focus-shadow-rgb: 11, 172, 204;
+	--bs-btn-active-color: #000;
+	--bs-btn-active-bg: var(--arnies-color);
+	--bs-btn-active-border-color: var(--arnies-color);
+	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+	--bs-btn-disabled-color: #000;
+	--bs-btn-disabled-bg: var(--arnies-color);
+	--bs-btn-disabled-border-color: var(--arnies-color);
 }
 
 .layout {
@@ -325,8 +349,8 @@ h2{
 
 #calendar {
 	flex: 1;
-	/*height: 400px;
-	max-height: 90vh;*/
+	height: calc(((100vh - 130px)));
+	/*max-height: 90vh;*/
 }
 
 .sidebar {
@@ -425,4 +449,3 @@ h2{
 		padding-bottom: 80px;
 	}
 }
-

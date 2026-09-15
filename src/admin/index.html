@@ -29,6 +29,8 @@
 		
 		<script src="https://cdn.jsdelivr.net/npm/@schedule-x/calendar@2.2.0/dist/core.umd.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/@schedule-x/events-service@2.2.0/dist/core.umd.js"></script>
+		<script type="module" ssrc="https://cdn.jsdelivr.net/npm/@schedule-x/calendar-controls@4.8.0/+esm"></script>
+		<script src="https://cdn.jsdelivr.net/npm/temporal-polyfill@0.3.0/global.js"></script>
 		
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@schedule-x/theme-default@2.2.0/dist/index.css">
 
@@ -56,10 +58,10 @@
 				<div class="col enquiriesContainer m-1 p-1">
 
 					<div class="row disableDatesWrapper m-1 p-1">
-						<h1 class="m-1 p-1">Disabled ordering dates</h1>
+						<h1 class="m-1 p-1"><b><label for="disableEnable">Do you want to enable or disable dates ?</label></b></h1>
 						<div class="container text-center m-0 p-0">
 							<div class="row">
-								<label for="disableEnable">Do you want to enable or disable dates ?</label>
+								
 								<div class="btn-group">
 									<select id="disableEnable" class="form-control">
 										<option value="0" selected min="2" max="3">Please select an option</option>
@@ -85,24 +87,30 @@
 									<input class="form-control" id="disableDates" placeholder="Select Dates...">
 								</div>
 								<div class="btn-group mt-3 submit-group" id="submitWrapper">
-									<button type="submit" class="btn btn-primary" id="submitDisable">Submit</button>
+									<button type="submit" class="btn btn-lilac" id="submitDisable">Submit</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="row enquiriesList m-0 p-0">
-						<h1 class="m-1 p-1" id="inboxHeader">Inbox</h1>
+						<h1 class="m-1 p-1" id="inboxHeader"><b>Inbox</b></h1>
 						
 						<div class="col inboxTable m-0 p-0">
 							<table id="enquiries"></table>
 						</div>
 					</div>
-
+					<div class="row manualEnquiryContainer m-1 p-1">
+						<a data-bs-toggle="modal" data-bs-target="#confirmEnquiry" class="btn btn-lilac" id="manualEnquiry" onclick="createNewEnquiry()">Add order to calendar</a>
+					</div>
+					<div class="row notesContainer m-0 p-0 pe-1">
+						<h1 class="m-1 p-1" id="notesHeader"><b>Notes</b></h1>
+						<textarea class="form-control noteTextArea" rows="10" aria-label="With textarea" id="notes"></textarea>
+					</div>
 					
 				</div>
 				<div class="col ordersContainer m-1 p-1">
 					<div class="row ordersCalender m-0 p-0">
-						<h1 class="m-1 p-1">Calendar View</h1>
+						<!--<h1 class="m-1 p-1"><b>Calendar View</b></h1>-->
 						<!--<div class="col" id="calendar">
 
 						</div>-->
@@ -172,6 +180,6 @@
 		<script type="module" src="/admin/js/shared.js" onload="buildNavBar();"></script>
 		<!--<script src="/admin/js/enquiriesConfirm.js"></script>-->
 		<script type="module" src="/admin/js/enquiries.js"></script>
-		<script type="module" src="/admin/js/index.js" onload="getAllEnquiries()"></script>
+		<script type="module" src="/admin/js/index.js" onload="init()"></script>
 	</body>
 </html>

@@ -331,6 +331,46 @@ function declineEnquiry(req, res) {
 	);
 }
 
+function getAdminNotes(req, res){
+	serverConfig.connection.execute(
+		'SELECT notes FROM notes WHERE ID = 1',
+		function (err, results) {
+			if (err) {
+				console.log(err);
+				return res.status(500).json({ error: err.message });
+			}
+
+			if (!results || results.length === 0) {
+				return res.json({ notes: '' });
+			}
+
+			return res.json({
+				notes: results[0].notes ?? ''
+			});
+		}
+	)
+}
+
+function updateAdminNotes(req, res) {
+	const notes = req.body ?? {};
+	serverConfig.connection.execute(
+		'UPDATE notes SET notes = ? WHERE ID = 1',
+		[JSON.stringify(notes)],
+		function (err) {
+			if (err) {
+				console.log(err);
+				return res.status(500).json({
+					error: err.message
+				});
+			}
+
+			return res.status(200).json({
+				success: true
+			});
+		}
+	);
+}
+
 function completeEnquiry(req, res) {
 	let data = req.body;
 	let ID = data.id;
@@ -705,5 +745,7 @@ module.exports = {
 	addDisableDates,
 	removeDisableDates,
 	updateEnquiry,
-	completeEnquiry
+	completeEnquiry,
+	updateAdminNotes,
+	getAdminNotes
 }

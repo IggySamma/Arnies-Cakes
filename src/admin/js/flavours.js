@@ -1,4 +1,7 @@
+//ESLint:
+import { createElement } from './shared.js';
 //const { createElement } = require("react");
+window.getFlavours = getFlavours;
 
 let control = document.getElementById("actionInput");
 let controlContainers = [

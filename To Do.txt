@@ -1,62 +1,42 @@
-Admin Calendar completed order mark as green
-
-
-
-
-
-
-
-
-
-
-
 Redo admin pages
 
 Setup individual pages per type of actions.
 
-Index     - will be enquires tracker, block dates, accepted orders.
---Complete -- Gallery   - for adding/removing gallery photos.
+-- Complete -- Index     - will be enquires tracker, block dates, accepted orders.
+-- Complete -- Gallery   - for adding/removing gallery photos.
 --Out of Scope -- Can be updated through sftp access -- Flavours  - for adding additional items and flavours to enquires and flavours pages.
 Order     - for calculating price for orders.
 Catalog   - Update pricing of items
 
-Unconfirmed by half, then upcoming orders
-Upcomming orders is a calender with the names
-On click of date select name and see details for the order.
 
-Confirm enquiry pops up to add with information initial sent and can then be modified to update before submit.
+On LIVE
+Clear out old Enquiries
 
-Enquiries page that can be sent and it copies to clipboard to paste into chat.
+-- Complete -- Get rid of > "Disabled ordering dates" & "Calendar View"
+-- Complete -- "Do you want to enable or disable dates" as header
+-- Complete -- Make notes Bold
 
-Add JSON-LD TO ALL PAGES WHEN LIVE - Updates robots.txt & sitemap.xml with correct url and submit 
+-- Complete -- Update display dates to dd-mm-yyyy
 
-<script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "Bakery",
-    "name": "Arnie's Cakes",
-    "description": "Homemade custom cakes, treats, and desserts for any occasion, made in Dublin. Specializing in personalized cakes and treats for birthdays, weddings, and all events.",
-    "url": "https://www.arniescakes.ie",
-    "email": "mailto:arniescakes@gmail.com",
-    "sameAs": [
-      "https://www.facebook.com/arniescakes",
-      "https://www.instagram.com/arnies_cakes"
-    ],
-    "logo": "https://www.arniescakes.ie/images/home%20logo.png",
-    "image": "https://www.arniescakes.ie/images/index/Kids%20Cakes/5.jpg",
-    "hasMenu": "https://www.arniescakes.ie/flavours",
-    "product": {
-      "@type": "Product",
-      "name": "Custom Cakes & Treats",
-      "description": "Custom cakes, treats, and desserts baked to order for all occasions. Order your cake for birthdays, weddings, and special events.",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "EUR",
-        "url": "https://www.arniescakes.ie/Enquiries"
-      }
-    }
-  }
-</script>
+-- Complete -- Make Calendar and enquiries go to bottom of page.
+-- Complete -- Calendar month drop down not working in form.
+-- Complete -- Arrow to go back on calendar
+Drop down on Calendar to select month and year - Discord image for inspiration
 
+Make Calendar numbers bigger and days of the weeks bigger.
+Todays date to be circled and pop more.
+
+
+Bug Number column.
+
+"Add order to calendar" above notes as button.
+Sticky notes section under unconfirmed.
+
+
+
+-- Complete -- Fix mobile version
+
+
+-- Complete -- About me page - Missing background on mobile
 
 

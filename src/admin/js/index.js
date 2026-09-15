@@ -11,6 +11,8 @@ window.paidReveal = paidReveal;
 window.requestFullEnquiry = requestFullEnquiry;
 window.enableDisable = enableDisable;
 window.setID = setID;
+window.createNewEnquiry = createNewEnquiry;
+window.init = init;
 
 
 //const { default: flatpickr } = require("flatpickr");
@@ -20,6 +22,11 @@ window.setID = setID;
 //let disabledDates = [];
 let confirmedEnquirys = []; /* eslint-disable-line */
 let confirmedEnquirysTemp = [];
+
+function init(){
+	getAllEnquiries();
+	getNotes();
+}
 
 async function getDisabledDates() {
 	const response = await fetch('/api/disabledDates', { method: 'POST' });
@@ -67,6 +74,59 @@ function getAllEnquiries() {
 		displayEnquiries(data);
 	})
 }
+
+function createNewEnquiry(){
+	fetch('/api/newManualEnquiry',{
+		method: 'POST',
+		header: {'Content-Type': 'application/json'},
+		credentials: "include",
+	})
+	.then(response => response.json())
+	.then(data => {
+		setID(data.ID);
+	})
+}
+
+function updateNotes() {
+	let notes = document.getElementById("notes").innerHTML;
+
+	fetch('/api/updateAdminNotes', {
+		method: 'POST',
+		headers: {'Content-Type': 'application/json'},
+		credentials: 'include',
+		body: JSON.stringify({ notes })
+	})
+		.then(response => response.json())
+		.then(data => {
+			console.log(data);
+		})
+		.catch(error => {
+			console.error(error);
+		});
+}
+
+function getNotes(){
+	fetch('/api/getAdminNotes',{
+		method: 'GET',
+		header: {'Content-Type': 'application/json'},
+		credentials: "include",
+	})
+	.then(response => response.json())
+	.then(data => {
+		let notes = document.getElementById("notes");
+		console.log(JSON.parse(JSON.stringify(data.notes)))
+		notes.innerHTML = JSON.parse(JSON.stringify(data.notes));
+		notes.addEventListener('onclick', notesFocusOut());
+	})
+}
+
+function notesFocusOut(){
+	let notes = document.getElementById("notes");
+	//removeOldListeners(notes, 'click');
+	removeOldListeners(notes, 'focusout');
+	notes.addEventListener('focusout', updateNotes);
+}
+
 
 function requestFullEnquiry(enquiry) {
 	const card = enquiry.closest('.event-card');
@@ -247,7 +307,7 @@ class modalMapping {
 		this.tickUpdates();
 	}
 
-	updateFlatpickr() {
+	/*updateFlatpickr() {
 		const dateInput = document.getElementById("datetimeDate");
 		const eventInput = document.getElementById("datetimeEvent");
 
@@ -267,6 +327,7 @@ class modalMapping {
 			dateFormat: "Y-m-d",
 			maxDate: new Date().fp_incr(730),
 			disableMobile: false,
+			closeOnSelect: false,
 			onChange: function (selectedDate, dateStr) {
 				const formattedDate = new Date(selectedDate).toLocaleDateString('en-US', {
 					year: 'numeric',
@@ -316,6 +377,136 @@ class modalMapping {
 			defaultMinute: 0,
 			minuteIncrement: 15,
 			disableMobile: false
+		});
+	}*/
+
+	updateFlatpickr() {
+		const dateInput = document.getElementById("datetimeDate");
+		const eventInput = document.getElementById("datetimeEvent");
+
+		if (!dateInput || !eventInput) return;
+
+		const initialDate = this.Date?.split(",")[0] ?? "";
+		const initialEventDate = this.ColDelDate?.replace(", ", "T") ?? "";
+
+		// Create the date picker only once
+		if (!this.datePicker) {
+			this.datePicker = flatpickr(dateInput, { /* eslint-disable-line  */
+				altInput: true,
+				altFormat: "F j, Y",
+				allowInput: false,
+				enableTime: false,
+				dateFormat: "Y-m-d",
+				maxDate: new Date().fp_incr(730),
+				disableMobile: false,
+				closeOnSelect: false,
+
+				// Avoid Firefox's native month <select> behaviour
+				monthSelectorType: "static",
+				static: true,
+
+				onOpen: () => {
+					const modalBody = document.getElementById("modal-body");
+					if (modalBody) modalBody.style.overflow = "visible";
+					console.log('FLATPICKR: opened')
+				},
+				onClose: () => {
+					const modalBody = document.getElementById("modal-body");
+					if (modalBody) modalBody.style.overflow = "auto";
+					console.log('FLATPICKR: closed', new Error().stack)
+				},
+
+				onChange: (selectedDates, dateStr) => {
+					if (!selectedDates.length) return;
+
+					const anchorDate = selectedDates[0];
+
+					const formattedDate = anchorDate.toLocaleDateString("en-US", {
+						year: "numeric",
+						month: "long",
+						day: "numeric"
+					});
+
+					const col = document.getElementById("Collection");
+					const del = document.getElementById("Delivery");
+
+					if (col) col.removeAttribute("disabled");
+					if (del) del.removeAttribute("disabled");
+
+					// Create the event picker only once
+					if (!this.eventPicker) {
+						this.createEventPicker(eventInput);
+					}
+
+					this.eventPicker.set(
+						"minDate",
+						anchorDate.fp_incr(-2)
+					);
+
+					this.eventPicker.set(
+						"maxDate",
+						anchorDate.fp_incr(1)
+					);
+
+					this.eventPicker.set(
+						"enable",
+						[
+							anchorDate.fp_incr(-2),
+							anchorDate.fp_incr(-1),
+							anchorDate
+						]
+					);
+
+					this.eventPicker.setDate(
+						`${dateStr}, 12:00`,
+						false
+					);
+
+					const flatpickrEvents =
+						document.getElementsByClassName("flatpickrEvent");
+
+					if (flatpickrEvents[0]) {
+						flatpickrEvents[0].value =
+							`${dateStr}, 12:00`;
+					}
+
+					if (flatpickrEvents[1]) {
+						flatpickrEvents[1].value =
+							`${formattedDate}, 12:00`;
+					}
+				}
+			});
+		}
+
+		// Create the event picker only once
+		if (!this.eventPicker) {
+			this.createEventPicker(eventInput);
+		}
+
+		if (initialDate) {
+			this.datePicker.setDate(initialDate, false);
+		}
+
+		if (initialEventDate) {
+			this.eventPicker.setDate(initialEventDate, false);
+		}
+	}
+
+
+	createEventPicker(eventInput) {
+		this.eventPicker = flatpickr(eventInput, { /* eslint-disable-line  */
+			altInput: true,
+			altFormat: "F j, Y, H:i",
+			allowInput: false,
+			enableTime: true,
+			dateFormat: "Y-m-d, H:i",
+			maxDate: new Date().fp_incr(730),
+			defaultHour: 12,
+			defaultMinute: 0,
+			minuteIncrement: 15,
+			disableMobile: false,
+			monthSelectorType: "static",
+			static: true
 		});
 	}
 
@@ -535,6 +726,13 @@ class modalMapping {
 	}
 }
 
+document.addEventListener("focusin", (e) => {
+	if (e.target.closest(".flatpickr-calendar")) {
+		e.stopImmediatePropagation();
+	}
+}, true);
+
+
 function updateModal(data){
 	console.log(data)
 	document.getElementById("confirmEnquiryID").innerHTML = `ID: ${data.ID}`
@@ -674,7 +872,7 @@ function submitToBackend(formData) {
     });
 }
 
-function handleValidationErrors(error, formData) {
+function handleValidationErrors(error/*, formData*/) {
 	document.body.style.cursor = 'auto';
 	const submitBtn = document.getElementById("submit");
 	if (submitBtn) submitBtn.disabled = false;
@@ -689,7 +887,7 @@ function handleValidationErrors(error, formData) {
 	alert(error.message);
 }
 
-
+/*
 function handleResponse(response) {
 	switch (response.status) {
 		case 200:
@@ -707,7 +905,7 @@ function handleResponse(response) {
 	document.body.style.cursor = 'auto';
 	if (document.getElementById("submit"))
 		document.getElementById("submit").disabled = false;
-}
+}*/
 
 function rejectEnquiry(){
 	let id = document.getElementById("confirmEnquiryID").innerHTML.split(' ')[1]
@@ -980,80 +1178,132 @@ disableSubmitButton.addEventListener("click", () => {
 	}
 })
 
-function returnFromTodayString(days = 0) {
+/*function returnFromTodayString(days = 0) {
 	let date = new Date();
 	date.setDate(date.getDate() + days);
 	date = date.toISOString().split('T')[0];
 	return date;
-}
-
+}*/
 const { createCalendar, createViewMonthGrid } = window.SXCalendar;
 const { createEventsServicePlugin } = window.SXEventsService;
 
-const eventsService = createEventsServicePlugin();
+import { createCalendarControlsPlugin } from './CalendarControls.js';
+/*import { response } from 'express';*/
+
+const calendarElement = document.getElementById('calendar');
 const detailsPanel = document.getElementById('day-details');
 const nextEventPanel = document.getElementById('next-event');
 
-document.documentElement.style.setProperty('--arnies-color', '#D3BBDD');
+const calendarControls = createCalendarControlsPlugin();
+const eventsService = createEventsServicePlugin();
 
-const calendar = createCalendar({
-	views: [createViewMonthGrid()],
-	calendars: {
-		Arnies: {
-			colorName: 'Arnies',
-			lightColors: {
-				main: '#D3BBDD',
-				container: '#E0D2E4',
-				onContainer: '#000000',
+document.documentElement.style.setProperty(
+	'--arnies-color',
+	'#D3BBDD'
+);
+
+function returnFromTodayString(days = 0) {
+	const date = new Date();
+
+	date.setDate(date.getDate() + days);
+
+	const year = date.getFullYear();
+	const month = String(date.getMonth() + 1).padStart(2, '0');
+	const day = String(date.getDate()).padStart(2, '0');
+
+	return `${year}-${month}-${day}`;
+}
+
+const today = returnFromTodayString();
+
+const calendar = createCalendar(
+	{
+		views: [
+			createViewMonthGrid(),
+		],
+
+		calendars: {
+			Arnies: {
+				colorName: 'Arnies',
+
+				lightColors: {
+					main: '#D3BBDD',
+					container: '#E0D2E4',
+					onContainer: '#000000',
+				},
+			},
+
+			Completed: {
+				colorName: 'Completed',
+
+				lightColors: {
+					main: '#5F9871',
+					container: '#CFE6D7',
+					onContainer: '#000000',
+				},
+			},
+
+			Declined: {
+				colorName: 'Declined',
+
+				lightColors: {
+					main: '#C98D98',
+					container: '#D19BA5',
+					onContainer: '#000000',
+				},
 			},
 		},
 
-		Completed: {
-			colorName: 'Completed',
-			lightColors: {
-				main: '#5F9871',
-				container: '#CFE6D7',
-				onContainer: '#000000',
-			},
+		firstDayOfWeek: 1,
+
+		selectedDate: today,
+
+		isDark: false,
+
+		minDate: '2018-01-01',
+
+		maxDate: returnFromTodayString(365),
+
+		monthGridOptions: {
+			nEventsPerDay: 1,
 		},
 
-		Declined: {
-			colorName: 'Declined',
-			lightColors: {
-				main: '#C98D98',
-				container: '#D19BA5',
-				onContainer: '#000000',
+		showWeekNumbers: true,
+
+		isResponsive: false,
+
+		skipAnimations: false,
+
+		events: [],
+
+		callbacks: {
+
+			onClickDate(date) {
+				renderDayDetails(date);
+			},
+
+			onEventClick(calendarEvent) {
+
+				const dateStr = calendarEvent.start
+					.toString()
+					.split('T')[0];
+
+				renderDayDetails(dateStr);
+			},
+
+			onClickPlusEvents(date) {
+				renderDayDetails(date.toString());
 			},
 		},
 	},
-	firstDayOfWeek: 1,
-	selectedDate: returnFromTodayString(),
-	isDark: false,
-	minDate: returnFromTodayString(-365),
-	maxDate: returnFromTodayString(365),
-	monthGridOptions: {
-		nEventsPerDay: 1,
-	},
-	showWeekNumbers: true,
-	isResponsive: false,
-	skipAnimations: false,
-	events: [],
-	callbacks: {
-		onClickDate(date) {
-			renderDayDetails(date);
-		},
-		onEventClick(calendarEvent) {
-			const dateStr = calendarEvent.start.toString().split('T')[0];
-			renderDayDetails(dateStr);
-		},
-		onClickPlusEvents(date) {
-			renderDayDetails(date.toString());
-		}
-	}
-}, [eventsService]);
 
-calendar.render(document.getElementById('calendar'));
+	[
+		eventsService,
+		calendarControls,
+	]
+);
 
+calendar.render(calendarElement);
 renderNextUpcomingEvent();
 
 function parseOrderDetails(raw) {
@@ -1144,7 +1394,9 @@ function renderOrderTable(rawOrderDetails) {
 
 function renderNextUpcomingEvent() {
 	const allEvents = eventsService.getAll();
-	const todayStr = new Date().toISOString().split('T')[0];
+	const [year, month, day] = new Date().toISOString().split('T')[0].split('-');
+	const todayStr = `${day}-${month}-${year}`;
+
 
 	const upcoming = allEvents
 		.map(ev => ({ ...ev, startDate: ev.start.toString().split('T')[0] }))
@@ -1164,7 +1416,7 @@ function renderNextUpcomingEvent() {
         <h4>Next Upcoming Event</h4>
         <div class="event-card">
             	<strong>${next.title}</strong><br/>
-            	<small>📅 ${next.start.toString().split('T')[0]}</small>
+            	<small>📅 ${next.start.toString().split('T')[0].split('-').reverse().join('-') }</small>
 		<p>
 			${next.delivery ? `🚗 ${next.delivery}` : ''}
 			${next.time ? `🕑 ${next.time}` : ''}
@@ -1182,6 +1434,8 @@ function renderDayDetails(dateStr) {
 		const end = ev.end.toString().split('T')[0];
 		return dateStr >= start && dateStr <= end;
 	});
+
+	dateStr = dateStr.split('-').reverse().join('-')
 
 	if (dayEvents.length === 0) {
 		detailsPanel.innerHTML = `
@@ -1223,7 +1477,7 @@ function renderDayDetails(dateStr) {
 
 			<small>
 				
-				📅 ${ev.start.toString().split('T')[0]}
+				📅 ${ev.start.toString().split('T')[0].split('-').reverse().join('-')}
 				
 			</small>
 

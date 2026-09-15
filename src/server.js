@@ -53,6 +53,8 @@ serverConfig.initApp().then((app) => {
 	app.post('/api/updateFlavours', serverConfig.ensureAuthenticated, parsers.multerParser.none(), (req, res) => { parsers.adminUpdateFlavours(req, res) });
 	app.post('/api/addDisableDates', serverConfig.ensureAuthenticated, (req, res) => { parsers.handleDisableDates(req, res) });
 	app.post('/api/updateEnquirie', serverConfig.ensureAuthenticated, parsers.multerParser.none(),(req, res) => { parsers.parseBodyUpdateEnquiry(req, res)});
+	app.post('/api/updateAdminNotes', serverConfig.ensureAuthenticated, parsers.multerParser.none(), (req, res) => { sqlQuery.updateAdminNotes(req, res) });
+	app.get('/api/getAdminNotes', serverConfig.ensureAuthenticated, (req, res) => { sqlQuery.getAdminNotes(req, res) });
 
 
 
