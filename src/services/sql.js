@@ -352,13 +352,15 @@ function getAdminNotes(req, res){
 }
 
 function updateAdminNotes(req, res) {
-	const notes = req.body ?? {};
+	const notes = req.body.notes ?? '';
+	
 	serverConfig.connection.execute(
 		'UPDATE notes SET notes = ? WHERE ID = 1',
-		[JSON.stringify(notes)],
+		[notes],
 		function (err) {
 			if (err) {
 				console.log(err);
+
 				return res.status(500).json({
 					error: err.message
 				});

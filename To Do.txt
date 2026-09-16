@@ -23,8 +23,12 @@ Clear out old Enquiries
 -- Complete -- Arrow to go back on calendar
 Drop down on Calendar to select month and year - Discord image for inspiration
 
-Make Calendar numbers bigger and days of the weeks bigger.
-Todays date to be circled and pop more.
+-- Complete -- Make Calendar numbers bigger and days of the weeks bigger.
+-- Complete -- Todays date to be circled and pop more.
+
+next upcoming event is wrong, showing past date
+
+Not to add new enquiry from manual
 
 
 Bug Number column.

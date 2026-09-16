@@ -78,16 +78,17 @@ function getAllEnquiries() {
 function createNewEnquiry(){
 	fetch('/api/newManualEnquiry',{
 		method: 'POST',
-		header: {'Content-Type': 'application/json'},
+		headers: {'Content-Type': 'application/json'},
 		credentials: "include",
 	})
 	.then(response => response.json())
 	.then(data => {
+		console.log(data);
 		setID(data.ID);
-	})
+	});
 }
 
-function updateNotes() {
+/*function updateNotes() {
 	let notes = document.getElementById("notes").innerHTML;
 
 	fetch('/api/updateAdminNotes', {
@@ -103,9 +104,9 @@ function updateNotes() {
 		.catch(error => {
 			console.error(error);
 		});
-}
+}*/
 
-function getNotes(){
+/*function getNotes(){
 	fetch('/api/getAdminNotes',{
 		method: 'GET',
 		header: {'Content-Type': 'application/json'},
@@ -118,15 +119,80 @@ function getNotes(){
 		notes.innerHTML = JSON.parse(JSON.stringify(data.notes));
 		notes.addEventListener('onclick', notesFocusOut());
 	})
+}*/
+
+let notesSaveTimeout;
+let lastSavedNotes = null;
+
+function getNotes() {
+	fetch('/api/getAdminNotes', {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		credentials: 'include'
+	})
+		.then(response => response.json())
+		.then(data => {
+			const notes = document.getElementById('notes');
+
+			const savedNotes = data.notes ?? '';
+
+			notes.value = savedNotes;
+			lastSavedNotes = savedNotes;
+
+			notes.addEventListener('input', notesChanged);
+			notes.addEventListener('focusout', updateNotes);
+		})
+		.catch(error => {
+			console.error('Failed to get notes:', error);
+		});
 }
 
-function notesFocusOut(){
-	let notes = document.getElementById("notes");
-	//removeOldListeners(notes, 'click');
-	removeOldListeners(notes, 'focusout');
-	notes.addEventListener('focusout', updateNotes);
+
+function notesChanged() {
+	clearTimeout(notesSaveTimeout);
+
+	notesSaveTimeout = setTimeout(() => {
+		updateNotes();
+	}, 1000);
 }
 
+
+function updateNotes() {
+	clearTimeout(notesSaveTimeout);
+
+	const notes = document.getElementById('notes').value;
+
+	if (notes === lastSavedNotes) {
+		//console.log('Notes unchanged - not saving');
+		return;
+	}
+
+	//console.log('Saving notes:', notes);
+
+	fetch('/api/updateAdminNotes', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		credentials: 'include',
+		body: JSON.stringify({
+			notes: notes
+		})
+	})
+		.then(response => response.json())
+		.then(data => {
+			//console.log('Notes saved:', data);
+
+			if (data.success) {
+				lastSavedNotes = notes;
+			}
+		})
+		.catch(error => {
+			console.error('Failed to save notes:', error);
+		});
+}
 
 function requestFullEnquiry(enquiry) {
 	const card = enquiry.closest('.event-card');
@@ -776,8 +842,15 @@ function updateModal(data){
 }
 
 function setID(data) {
-	//Presumes first column in table is ID
-	const idValue = data.parentElement.parentElement.firstChild.innerHTML;
+
+	let idValue;
+
+	if (typeof data === 'number' || typeof data === 'string') {
+		idValue = data;
+	} else {
+		idValue = data.parentElement.parentElement.firstChild.innerHTML;
+	}
+
 	document.getElementById("confirmEnquiryID").innerHTML = `ID: ${idValue}`;
 
 	const modalConfirm = document.getElementById("submitEnquiry");
@@ -1541,7 +1614,6 @@ async function loadEvents() {
 	}
 
 	const enquiries = await res.json();
-	console.log(enquiries);
 
 	enquiries
 		.map(mapEnquiryToEvent)

@@ -358,6 +358,31 @@ function attachTextBody(adjData, photos, res){
         utils.sendEmails(ID[ID.length -1].ID, adjData, textBody, photos, res, date);
     })
 }
+
+function newManualEnquiry(req, res) {
+	sqlQuery.storeNewEnquirie(res, {
+						"Date of Event": "",
+						"Name": "",
+						"Order": {},
+						"Message": "",
+						"Allergies": "No",
+						"Allergies Information": "",
+						"Email": "",
+						"Date of delivery": "",
+						"Address": "",
+						"Number": ""
+					}, sqlQuery.getAllEnquiries)
+	.then(ID => {
+		return res.status(200).json({
+			success: true,
+			ID: ID[ID.length - 1].ID
+		});
+	})
+}
+
+
+
+
 /*------------------------------- Flavours ------------------------------------*/
 
 function getFlavours(done) {
@@ -824,5 +849,6 @@ module.exports = {
 	processImages,
 	updateFlavours,
 	handleDisableDates,
-	parseBodyUpdateEnquiry
+	parseBodyUpdateEnquiry,
+	newManualEnquiry
 }
