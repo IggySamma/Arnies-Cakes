@@ -88,38 +88,7 @@ function createNewEnquiry(){
 	});
 }
 
-/*function updateNotes() {
-	let notes = document.getElementById("notes").innerHTML;
 
-	fetch('/api/updateAdminNotes', {
-		method: 'POST',
-		headers: {'Content-Type': 'application/json'},
-		credentials: 'include',
-		body: JSON.stringify({ notes })
-	})
-		.then(response => response.json())
-		.then(data => {
-			console.log(data);
-		})
-		.catch(error => {
-			console.error(error);
-		});
-}*/
-
-/*function getNotes(){
-	fetch('/api/getAdminNotes',{
-		method: 'GET',
-		header: {'Content-Type': 'application/json'},
-		credentials: "include",
-	})
-	.then(response => response.json())
-	.then(data => {
-		let notes = document.getElementById("notes");
-		console.log(JSON.parse(JSON.stringify(data.notes)))
-		notes.innerHTML = JSON.parse(JSON.stringify(data.notes));
-		notes.addEventListener('onclick', notesFocusOut());
-	})
-}*/
 
 let notesSaveTimeout;
 let lastSavedNotes = null;
@@ -216,72 +185,6 @@ function requestFullEnquiry(enquiry) {
 		});
 }
 
-/*
-function confirmEnquiry(enquiry){
-	let id = enquiry.parentElement.parentElement.firstChild.innerHTML;
-	const response = confirm(`All details are updated for enquiry ${id}?`);
-	
-	if(response){
-		fetch('/api/confirmEnquiry', {
-			method: 'POST',
-			headers: {'Content-Type': 'application/json' },
-			body: JSON.stringify({id}),
-			credentials: "include",
-		})
-		.then((res) => {
-			if(res.status === 200){
-				location.reload();
-			} else {
-				console.log(res);
-			}
-		});
-	}
-}*/
-/*
-function declineEnquiry(enquiry){
-	let id = enquiry.parentElement.parentElement.firstChild.innerHTML;
-	
-
-	if(response) {
-		fetch('/api/declineEnquiry', {
-			method: 'POST',
-			headers: {'Content-Type': 'application/json' },
-			body: JSON.stringify({id}),
-			credentials: "include",
-		})
-		.then((res) => {
-			if(res.status === 200){
-				location.reload();
-			} else {
-				console.log(res);
-			}
-		});
-	}
-}*/
-
-/*
-function deleteEnquiry(enquiry){
-	let id = enquiry.parentElement.parentElement.firstChild.innerHTML;
-	const response = confirm(`Are you sure you want to delete enquiry ${id} ?`);
-	
-	if (response) {
-		fetch('/api/deleteEnquiry', {
-			method: 'POST',
-			headers: {'Content-Type': 'application/json' },
-			body: JSON.stringify({id}),
-			credentials: "include",
-		})
-		.then((res) => {
-			if(res.status === 200){
-				location.reload();
-			} else {
-				console.log(res);
-			}
-		});
-	}
-}
-*/
-
 function displayEnquiries(data){
 	const table = document.getElementById("enquiries");
 
@@ -372,79 +275,6 @@ class modalMapping {
 
 		this.tickUpdates();
 	}
-
-	/*updateFlatpickr() {
-		const dateInput = document.getElementById("datetimeDate");
-		const eventInput = document.getElementById("datetimeEvent");
-
-		if (!dateInput || !eventInput) return;
-
-		dateInput.value = this.Date?.split(",")[0] ?? "";
-		eventInput.value = this.ColDelDate?.replace(", ", "T") ?? "";
-
-		const flatpickrEvents = document.getElementsByClassName("flatpickrEvent");
-
-		dateInput.flatpickr({
-			altInput: true,
-			altFormat: "F j, Y",
-			allowInput: false,
-			defaultDate: this.Date?.split(",")[0] ?? "",
-			enableTime: false,
-			dateFormat: "Y-m-d",
-			maxDate: new Date().fp_incr(730),
-			disableMobile: false,
-			closeOnSelect: false,
-			onChange: function (selectedDate, dateStr) {
-				const formattedDate = new Date(selectedDate).toLocaleDateString('en-US', {
-					year: 'numeric',
-					month: 'long',
-					day: 'numeric'
-				});
-
-				const col = document.getElementById("Collection");
-				const del = document.getElementById("Delivery");
-				if (col) col.removeAttribute("disabled");
-				if (del) del.removeAttribute("disabled");
-
-				const anchorDate = new Date(dateStr.split(' ', 1)[0]);
-
-				eventInput.flatpickr({
-					altInput: true,
-					altFormat: "F j, Y, H:i",
-					allowInput: false,
-					defaultDate: `${anchorDate}, 12:00`,
-					enableTime: true,
-					dateFormat: "Y-m-d, H:i",
-					minDate: anchorDate.fp_incr(-2),
-					maxDate: anchorDate.fp_incr(1),
-					enable: [anchorDate.fp_incr(-2), anchorDate.fp_incr(-1), anchorDate],
-					minTime: "10:00",
-					maxTime: "20:00",
-					defaultHour: 12,
-					defaultMinute: 0,
-					minuteIncrement: 15,
-					disableMobile: false
-				});
-
-				if (flatpickrEvents[0]) flatpickrEvents[0].value = `${dateStr.split(' ', 1)[0]}, 12:00`;
-				if (flatpickrEvents[1]) flatpickrEvents[1].value = `${formattedDate}, 12:00`;
-			}
-		});
-
-		eventInput.flatpickr({
-			altInput: true,
-			altFormat: "F j, Y, H:i",
-			allowInput: false,
-			defaultDate: this.ColDelDate?.replace(", ", "T") ?? "",
-			enableTime: true,
-			dateFormat: "Y-m-d H:i",
-			maxDate: new Date().fp_incr(730),
-			defaultHour: 12,
-			defaultMinute: 0,
-			minuteIncrement: 15,
-			disableMobile: false
-		});
-	}*/
 
 	updateFlatpickr() {
 		const dateInput = document.getElementById("datetimeDate");
@@ -844,9 +674,13 @@ function updateModal(data){
 function setID(data) {
 
 	let idValue;
+	let tempMode;
 
 	if (typeof data === 'number' || typeof data === 'string') {
 		idValue = data;
+		document.getElementById("confirmEnquiryID").classList.add("tempMode");
+		tempMode = true;
+		
 	} else {
 		idValue = data.parentElement.parentElement.firstChild.innerHTML;
 	}
@@ -856,12 +690,14 @@ function setID(data) {
 	const modalConfirm = document.getElementById("submitEnquiry");
 	const modalReject = document.getElementById("rejectEnquiry");
 	const modalComplete = document.getElementById("completeEnquiry");
+	const modalDismiss = document.getElementById("dismissEnquiry");
 
-	if (!modalConfirm || !modalReject || !modalComplete) return;
+	if (!modalConfirm || !modalReject || !modalComplete || !modalDismiss) return;
 
 	removeOldListeners(modalConfirm, 'click');
 	removeOldListeners(modalReject, 'click');
 	removeOldListeners(modalComplete, 'click');
+	removeOldListeners(modalDismiss, 'click');
 
 
 	modalConfirm.addEventListener('click', (e) => {
@@ -878,6 +714,19 @@ function setID(data) {
 		e.preventDefault();
 		completeEnquiry();
 	});
+
+	if (tempMode) {
+		const modal = document.getElementById('form');
+
+		modal.addEventListener('hidden.bs.modal', () => {
+			rejectEnquiry();
+		});
+		modalDismiss.addEventListener('click', () => {
+			rejectEnquiry();
+		});
+		modalComplete.style.display = 'none'
+	}
+
 
 	loadCalender();
 }
@@ -960,31 +809,24 @@ function handleValidationErrors(error/*, formData*/) {
 	alert(error.message);
 }
 
-/*
-function handleResponse(response) {
-	switch (response.status) {
-		case 200:
-			window.location.href = "/enquiriesty";
-			break;
-		default:
-			try {
-				const errorElementId = response.statusText.toLowerCase();
-				throw new Error(`Server error: ${response.statusText}`, { focus: errorElementId });
-			} catch (e) {
-				handleValidationErrors(e, formData);
-			}
+function rejectEnquiry(){
+	let div = document.getElementById("confirmEnquiryID") 
+	let id = div.innerHTML.split(' ')[1]
+	let tempMode = false;
+	let response;
+
+	if(div.classList.contains('tempMode')){
+		tempMode = true
+	} 
+
+	if (!(tempMode)){
+		response = confirm(`Are you sure you want to decline the enquiry id: ${id} ?`);
+	} else {
+		document.getElementById("confirmEnquiryID").classList.remove("tempMode");
 	}
 
-	document.body.style.cursor = 'auto';
-	if (document.getElementById("submit"))
-		document.getElementById("submit").disabled = false;
-}*/
 
-function rejectEnquiry(){
-	let id = document.getElementById("confirmEnquiryID").innerHTML.split(' ')[1]
-	const response = confirm(`Are you sure you want to decline the enquiry id: ${id} ?`);
-
-	if (response) {
+	if (response || tempMode) {
 		fetch('/api/declineEnquiry', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
@@ -1469,11 +1311,12 @@ function renderNextUpcomingEvent() {
 	const allEvents = eventsService.getAll();
 	const [year, month, day] = new Date().toISOString().split('T')[0].split('-');
 	const todayStr = `${day}-${month}-${year}`;
+	const todayStrAF = `${year}-${month}-${day}`;
 
 
 	const upcoming = allEvents
 		.map(ev => ({ ...ev, startDate: ev.start.toString().split('T')[0] }))
-		.filter(ev => ev.completed === 'No' && ev.startDate >= todayStr)
+		.filter(ev => ev.completed === 'No' && ev.startDate >= todayStrAF)
 		.sort((a, b) => a.startDate.localeCompare(b.startDate));
 
 	if (upcoming.length === 0) {

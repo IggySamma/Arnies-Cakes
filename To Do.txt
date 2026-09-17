@@ -26,15 +26,15 @@ Drop down on Calendar to select month and year - Discord image for inspiration
 -- Complete -- Make Calendar numbers bigger and days of the weeks bigger.
 -- Complete -- Todays date to be circled and pop more.
 
-next upcoming event is wrong, showing past date
+-- Complete -- next upcoming event is wrong, showing past date
 
-Not to add new enquiry from manual
+-- Complete -- Not to add new enquiry from manual
 
 
 Bug Number column.
 
-"Add order to calendar" above notes as button.
-Sticky notes section under unconfirmed.
+-- Complete -- "Add order to calendar" above notes as button.
+-- Complete -- Sticky notes section under unconfirmed.
 
 
 
